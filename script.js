@@ -748,11 +748,8 @@
     render();
   }
 
-  // cheer.gif's own frames aren't consistently composed — around
-  // ~320-400ms into playback it briefly jumps to a different, badly
-  // cropped pose. Cutting playback back to the still image well before
-  // that window keeps the swap inside the gif's clean frames.
-  var CHEER_GIF_MS = 280;
+  // 7 frames at 80ms each: one full loop is 560ms.
+  var CHEER_GIF_MS = 580;
 
   function cheer() {
     if (cheerPlaying) return;
