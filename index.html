@@ -3,97 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#3a0014" />
+    <meta name="theme-color" content="#170006" />
     <meta
       name="description"
-      content="TSUKUMO99 LIVE — DICE AWAY，演唱会企划占位网站。"
+      content="TSUKUMO99 presents ŹOOĻ — DiŹ WORLD TOUR 2026。非官方同人企划，模拟选座购票 + 电子票导出演示。"
     />
-    <meta property="og:title" content="TSUKUMO99 LIVE — DICE AWAY" />
-    <meta property="og:description" content="TSUKUMO99 LIVE — DICE AWAY" />
+    <meta property="og:title" content="ŹOOĻ · DiŹ WORLD TOUR 2026 — TSUKUMO99" />
+    <meta property="og:description" content="非官方同人企划：Once and for all, dice away." />
     <meta property="og:image" content="assets/hero.jpg" />
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%233a0014'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff86bd'/%3E%3Ccircle cx='20' cy='44' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23fff4f7'/%3E%3C/svg%3E"
     />
-    <title>TSUKUMO99 LIVE — DICE AWAY</title>
+    <title>ŹOOĻ · DiŹ WORLD TOUR 2026 — TSUKUMO99</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="page-shell">
-      <header class="site-header">
-        <a class="wordmark" href="#top" aria-label="返回首页">
-          <span class="wordmark-main">TSUKUMO<span>99</span></span>
-          <span class="wordmark-sub">LIVE PROJECT</span>
-        </a>
-
-        <div class="status-pill">
-          <span class="status-dot" aria-hidden="true"></span>
-          COMING SOON
-        </div>
-      </header>
-
-      <main id="top" class="hero">
-        <div class="hero-art" aria-hidden="true">
-          <img
-            src="assets/hero.jpg"
-            alt=""
-            width="1800"
-            height="2400"
-            fetchpriority="high"
-          />
-          <div class="hero-art-shade"></div>
-        </div>
-
-        <div class="spotlight spotlight-one" aria-hidden="true"></div>
-        <div class="spotlight spotlight-two" aria-hidden="true"></div>
-        <div class="noise" aria-hidden="true"></div>
-
-        <section class="hero-copy" aria-labelledby="event-title">
-          <p class="eyebrow"><span>99</span> / SPECIAL LIVE PROJECT</p>
-
-          <h1 id="event-title">
-            <span class="title-top">TSUKUMO99</span>
-            <span class="title-live">LIVE</span>
-            <span class="title-away">DICE AWAY</span>
-          </h1>
-
-          <div class="event-line" aria-hidden="true">
-            <span></span>
-            <i>♦</i>
-            <span></span>
-          </div>
-
-        </section>
-
-        <div class="cheer-zone">
-          <button
-            id="cheer-button"
-            class="cheer-button"
-            type="button"
-            aria-label="点击挥动荧光棒应援一次"
-            data-gif="assets/cheer.gif"
-            data-still="assets/cheer-still.png"
-          >
-            <span class="cheer-image-wrap">
-              <img
-                id="cheer-image"
-                src="assets/cheer-still.png"
-                alt="挥动彩色荧光棒的角色"
-                width="1536"
-                height="1774"
-              />
-            </span>
-          </button>
-        </div>
-
-        <footer class="site-footer">
-          <span>UNOFFICIAL FAN PROJECT</span>
-          <span class="footer-rule"></span>
-          <span>WEB PREVIEW / 2026</span>
-        </footer>
-      </main>
-    </div>
-
+    <div id="app"></div>
     <script src="script.js"></script>
   </body>
 </html>
