@@ -86,6 +86,51 @@ button {
   filter: drop-shadow(0 1rem 1.4rem rgba(23, 0, 6, 0.52));
 }
 
+.cheer-btn::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 10% -14% -8%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 60%,
+    rgba(255, 244, 247, 0.85) 0%,
+    rgba(255, 134, 189, 0.6) 25%,
+    rgba(236, 0, 80, 0.28) 48%,
+    transparent 72%
+  );
+  filter: blur(0.6rem);
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cheer-btn::after {
+  content: "+1";
+  position: absolute;
+  z-index: 3;
+  top: 24%;
+  right: 4%;
+  padding: 0.28rem 0.46rem;
+  border: 1px solid rgba(255, 244, 247, 0.7);
+  border-radius: 999px;
+  background: rgba(255, 244, 247, 0.94);
+  color: var(--wine);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cheer-btn.is-playing::before {
+  animation: cheerGlow 580ms ease-out;
+}
+
+.cheer-btn.is-playing::after {
+  animation: cheerPlus 580ms ease-out;
+}
+
 .lang-btn.active {
   color: var(--paper);
 }
@@ -160,14 +205,6 @@ button {
 @keyframes popIn {
   0% { opacity: 0; transform: translateY(14px) scale(0.97); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.cheer-on-glow {
-  animation: cheerGlow 580ms ease-out;
-}
-
-.cheer-on-plus {
-  animation: cheerPlus 580ms ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {

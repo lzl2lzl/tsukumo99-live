@@ -74,11 +74,10 @@
     step: "zone",
     zoneId: null,
     name: "",
-    ticket: null,
-    cheerOn: false,
-    cheerNonce: 0
+    ticket: null
   };
 
+  var cheerPlaying = false;
   var cheerTimer = null;
   var heroImg = new Image();
   heroImg.src = "assets/hero.jpg";
@@ -139,20 +138,10 @@
   // -------------------------------------------------------- cheer button
 
   function cheerButtonHtml(size) {
-    var cheerOn = state.cheerOn;
-    var glow = cheerOn
-      ? '<span aria-hidden="true" class="cheer-on-glow" style="position:absolute;z-index:0;inset:10% -14% -8%;border-radius:50%;background:radial-gradient(circle at 50% 60%,rgba(255,244,247,.85) 0%,rgba(255,134,189,.6) 25%,rgba(236,0,80,.28) 48%,transparent 72%);filter:blur(.6rem);mix-blend-mode:screen;"></span>' +
-        '<span aria-hidden="true" class="cheer-on-plus" style="position:absolute;z-index:3;top:24%;right:4%;padding:.28rem .46rem;border:1px solid rgba(255,244,247,.7);border-radius:999px;background:rgba(255,244,247,.94);color:var(--wine);font-family:var(--mono);font-size:.62rem;font-weight:700;">+1</span>'
-      : "";
-    var animatedImg = cheerOn
-      ? '<img src="assets/cheer.gif?play=' + state.cheerNonce + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;mix-blend-mode:multiply;filter:contrast(1.08) saturate(1.08);"/>'
-      : "";
     return (
       '<button type="button" class="cheer-btn" data-act="cheer" aria-label="cheer" style="position:relative;width:100%;aspect-ratio:1536/1774;display:block;padding:0;border:0;background:transparent;cursor:pointer;filter:drop-shadow(0 ' + size + ' 1.2rem rgba(23,0,6,.45));">' +
-        glow +
         '<span style="position:absolute;z-index:1;inset:0;overflow:hidden;-webkit-mask-image:radial-gradient(ellipse 67% 72% at 50% 64%,#000 58%,transparent 91%);mask-image:radial-gradient(ellipse 67% 72% at 50% 64%,#000 58%,transparent 91%);">' +
-          '<img src="assets/cheer-still.png" alt="" style="width:100%;height:100%;object-fit:contain;object-position:center bottom;mix-blend-mode:multiply;filter:contrast(1.08) saturate(1.08);user-select:none;-webkit-user-drag:none;"/>' +
-          animatedImg +
+          '<img class="cheer-img" src="assets/cheer-still.png" alt="" style="width:100%;height:100%;object-fit:contain;object-position:center bottom;mix-blend-mode:multiply;filter:contrast(1.08) saturate(1.08);user-select:none;-webkit-user-drag:none;"/>' +
         "</span>" +
       "</button>"
     );
@@ -753,13 +742,25 @@
   }
 
   function cheer() {
+    if (cheerPlaying) return;
+    cheerPlaying = true;
     clearTimeout(cheerTimer);
-    state.cheerOn = true;
-    state.cheerNonce = Date.now();
-    render();
+    var nonce = Date.now();
+    var btns = app.querySelectorAll(".cheer-btn");
+    btns.forEach(function (btn) {
+      var img = btn.querySelector(".cheer-img");
+      btn.classList.remove("is-playing");
+      img.src = "assets/cheer.gif?play=" + nonce;
+      void btn.offsetWidth;
+      btn.classList.add("is-playing");
+    });
     cheerTimer = setTimeout(function () {
-      state.cheerOn = false;
-      render();
+      btns.forEach(function (btn) {
+        var img = btn.querySelector(".cheer-img");
+        img.src = "assets/cheer-still.png";
+        btn.classList.remove("is-playing");
+      });
+      cheerPlaying = false;
     }, 580);
   }
 
