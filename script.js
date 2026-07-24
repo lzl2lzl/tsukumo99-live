@@ -160,7 +160,6 @@
           "</div>" +
           '<p style="margin:.3rem 0 0;font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(.95rem,4.5vw,1.2rem);letter-spacing:.02em;color:var(--paper);opacity:.92;">' + esc(tt.tagline) + "</p>" +
           '<a href="#tour" class="btn-cta" style="margin-top:1rem;display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.6rem;border-radius:.3rem;box-shadow:0 10px 30px rgba(236,0,80,.45);">' + esc(tt.getTickets) + ' <span style="font-size:1rem;">↓</span></a>' +
-          '<span style="margin-top:.65rem;display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:var(--muted);"><span style="display:inline-block;animation:bob 1.8s ease-in-out infinite;">↓</span>' + esc(tt.scroll) + "</span>" +
         "</div>" +
       "</main>" +
       "</div>"
@@ -189,7 +188,6 @@
           '<p style="margin:1.1rem 0 0;font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(1rem,1.9vw,1.45rem);letter-spacing:.02em;color:var(--paper);opacity:.92;text-wrap:pretty;">' + esc(tt.tagline) + "</p>" +
           '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:1.8rem;">' +
             '<a href="#tour" class="btn-cta" style="display:inline-flex;align-items:center;gap:.6rem;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.6rem;border-radius:.3rem;box-shadow:0 10px 30px rgba(236,0,80,.45);">' + esc(tt.getTickets) + ' <span style="font-size:1rem;">↓</span></a>' +
-            '<span style="display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--muted);"><span style="display:inline-block;animation:bob 1.8s ease-in-out infinite;">↓</span>' + esc(tt.scroll) + "</span>" +
           "</div>" +
         "</section>" +
         '<div style="position:absolute;z-index:12;right:clamp(1rem,7vw,7rem);bottom:clamp(.4rem,2vh,1.6rem);width:clamp(7.5rem,15vw,15rem);">' +
@@ -255,7 +253,6 @@
         '<div style="max-width:64rem;margin:0 auto;">' +
           '<p style="margin:0 0 .8rem;font-family:var(--mono);font-size:.66rem;font-weight:700;letter-spacing:.28em;color:var(--hot);">' + esc(tt.tourEyebrow) + "</p>" +
           '<h2 style="margin:0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.8rem,5vw,3.4rem);line-height:.95;letter-spacing:-.01em;color:var(--paper);text-wrap:balance;">' + esc(tt.tourTitle) + "</h2>" +
-          '<p style="margin:.9rem 0 0;font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;color:var(--muted);">' + esc(tt.tourSub) + "</p>" +
           '<div style="margin-top:clamp(2.2rem,5vw,4rem);display:flex;flex-direction:column;gap:clamp(1rem,2.2vw,1.7rem);">' + rows + "</div>" +
         "</div>" +
       "</section>"
