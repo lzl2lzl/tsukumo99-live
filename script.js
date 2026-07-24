@@ -125,23 +125,6 @@
     );
   }
 
-  // ------------------------------------------------------------ hero badge
-
-  function heroBadgeHtml(tt, boxed) {
-    if (boxed === false) {
-      return (
-        '<p style="margin:.7rem 0 0;max-width:30rem;font-family:var(--mono);font-size:.54rem;font-weight:700;letter-spacing:.04em;line-height:1.6;color:var(--pink);opacity:.85;text-wrap:pretty;">' +
-        "⚠ " + esc(tt.heroBadge) +
-        "</p>"
-      );
-    }
-    return (
-      '<p style="margin:.9rem 0 0;display:inline-flex;max-width:34rem;font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.05em;line-height:1.6;padding:.5rem .7rem;border:1px solid rgba(255,134,189,.4);border-radius:.3rem;background:rgba(23,0,6,.55);color:var(--pink);text-wrap:pretty;">' +
-      "⚠ " + esc(tt.heroBadge) +
-      "</p>"
-    );
-  }
-
   // -------------------------------------------------------- cheer button
 
   function cheerButtonHtml(size) {
@@ -176,7 +159,6 @@
             '<span style="font-family:var(--mono);font-weight:700;font-size:.58rem;letter-spacing:.22em;color:var(--pink);">WORLD TOUR 2026</span>' +
           "</div>" +
           '<p style="margin:.3rem 0 0;font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(.95rem,4.5vw,1.2rem);letter-spacing:.02em;color:var(--paper);opacity:.92;">' + esc(tt.tagline) + "</p>" +
-          heroBadgeHtml(tt, false) +
           '<a href="#tour" class="btn-cta" style="margin-top:1rem;display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.6rem;border-radius:.3rem;box-shadow:0 10px 30px rgba(236,0,80,.45);">' + esc(tt.getTickets) + ' <span style="font-size:1rem;">↓</span></a>' +
           '<span style="margin-top:.65rem;display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:var(--muted);"><span style="display:inline-block;animation:bob 1.8s ease-in-out infinite;">↓</span>' + esc(tt.scroll) + "</span>" +
         "</div>" +
@@ -205,7 +187,6 @@
             '<span style="font-family:var(--mono);font-weight:700;font-size:clamp(.68rem,1.2vw,.95rem);letter-spacing:.3em;color:var(--pink);">WORLD TOUR 2026</span>' +
           "</div>" +
           '<p style="margin:1.1rem 0 0;font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(1rem,1.9vw,1.45rem);letter-spacing:.02em;color:var(--paper);opacity:.92;text-wrap:pretty;">' + esc(tt.tagline) + "</p>" +
-          heroBadgeHtml(tt) +
           '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:1.8rem;">' +
             '<a href="#tour" class="btn-cta" style="display:inline-flex;align-items:center;gap:.6rem;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.6rem;border-radius:.3rem;box-shadow:0 10px 30px rgba(236,0,80,.45);">' + esc(tt.getTickets) + ' <span style="font-size:1rem;">↓</span></a>' +
             '<span style="display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--muted);"><span style="display:inline-block;animation:bob 1.8s ease-in-out infinite;">↓</span>' + esc(tt.scroll) + "</span>" +
