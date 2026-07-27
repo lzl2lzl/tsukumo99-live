@@ -236,8 +236,8 @@
 
   function renderCheerFloating() {
     return (
-      '<div style="position:fixed;z-index:65;right:clamp(.7rem,3.2vw,1.6rem);bottom:clamp(5.5rem,20vh,9.5rem);width:clamp(3.8rem,10vw,5rem);pointer-events:none;">' +
-        '<div style="pointer-events:auto;">' + cheerButtonHtml(".5rem") + "</div>" +
+      '<div style="position:fixed;z-index:65;right:clamp(.7rem,3.2vw,1.8rem);bottom:clamp(5.5rem,20vh,9.5rem);width:clamp(5.2rem,11vw,8.5rem);pointer-events:none;">' +
+        '<div style="pointer-events:auto;">' + cheerButtonHtml(".6rem") + "</div>" +
       "</div>"
     );
   }
