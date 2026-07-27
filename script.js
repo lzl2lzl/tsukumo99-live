@@ -92,6 +92,22 @@
     }
   }
 
+  function loadCheerPos() {
+    try {
+      var raw = localStorage.getItem("cheerPos");
+      if (!raw) return null;
+      var p = JSON.parse(raw);
+      if (typeof p.x === "number" && typeof p.y === "number") return p;
+    } catch (e) {}
+    return null;
+  }
+
+  function saveCheerPos(pos) {
+    try {
+      localStorage.setItem("cheerPos", JSON.stringify(pos));
+    } catch (e) {}
+  }
+
   var state = {
     lang: "cn",
     open: false,
@@ -100,7 +116,8 @@
     zoneId: null,
     name: "",
     ticket: null,
-    showInAppHint: isInAppBrowser() && !inAppHintDismissed()
+    showInAppHint: isInAppBrowser() && !inAppHintDismissed(),
+    cheerPos: loadCheerPos()
   };
 
   var cheerPlaying = false;
@@ -235,9 +252,13 @@
   }
 
   function renderCheerFloating() {
+    var pos = state.cheerPos;
+    var posStyle = pos
+      ? ("left:" + pos.x + "px;top:" + pos.y + "px;right:auto;bottom:auto;")
+      : "right:clamp(.7rem,3.2vw,1.8rem);bottom:clamp(5.5rem,20vh,9.5rem);";
     return (
-      '<div style="position:fixed;z-index:65;right:clamp(.7rem,3.2vw,1.8rem);bottom:clamp(5.5rem,20vh,9.5rem);width:clamp(5.2rem,11vw,8.5rem);pointer-events:none;">' +
-        '<div style="pointer-events:auto;">' + cheerButtonHtml(".6rem") + "</div>" +
+      '<div id="cheerFloat" style="position:fixed;z-index:65;' + posStyle + 'width:clamp(5.2rem,11vw,8.5rem);touch-action:none;user-select:none;cursor:grab;">' +
+        cheerButtonHtml(".6rem") +
       "</div>"
     );
   }
@@ -783,8 +804,13 @@
 
   // 7 frames at 80ms each: one full loop is 560ms.
   var CHEER_GIF_MS = 580;
+  var cheerJustDragged = false;
 
   function cheer() {
+    if (cheerJustDragged) {
+      cheerJustDragged = false;
+      return;
+    }
     if (cheerPlaying) return;
     cheerPlaying = true;
     clearTimeout(cheerTimer);
@@ -806,6 +832,87 @@
       cheerPlaying = false;
     }, CHEER_GIF_MS);
   }
+
+  // -------------------------------------------------------- cheer dragging
+
+  var cheerDrag = null;
+
+  function clampCheerPos(x, y, w, h) {
+    var margin = 4;
+    var maxX = Math.max(margin, window.innerWidth - w - margin);
+    var maxY = Math.max(margin, window.innerHeight - h - margin);
+    return {
+      x: Math.min(Math.max(x, margin), maxX),
+      y: Math.min(Math.max(y, margin), maxY)
+    };
+  }
+
+  function onCheerPointerDown(e) {
+    var el = document.getElementById("cheerFloat");
+    if (!el) return;
+    var rect = el.getBoundingClientRect();
+    cheerDrag = {
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      startLeft: rect.left,
+      startTop: rect.top,
+      w: rect.width,
+      h: rect.height,
+      moved: false
+    };
+    try {
+      el.setPointerCapture(e.pointerId);
+    } catch (err) {}
+  }
+
+  function onCheerPointerMove(e) {
+    if (!cheerDrag || e.pointerId !== cheerDrag.pointerId) return;
+    var dx = e.clientX - cheerDrag.startX;
+    var dy = e.clientY - cheerDrag.startY;
+    if (!cheerDrag.moved && Math.abs(dx) + Math.abs(dy) < 6) return;
+    cheerDrag.moved = true;
+    var el = document.getElementById("cheerFloat");
+    if (!el) return;
+    el.style.cursor = "grabbing";
+    var pos = clampCheerPos(cheerDrag.startLeft + dx, cheerDrag.startTop + dy, cheerDrag.w, cheerDrag.h);
+    el.style.left = pos.x + "px";
+    el.style.top = pos.y + "px";
+    el.style.right = "auto";
+    el.style.bottom = "auto";
+  }
+
+  function onCheerPointerUp(e) {
+    if (!cheerDrag || e.pointerId !== cheerDrag.pointerId) return;
+    var el = document.getElementById("cheerFloat");
+    if (cheerDrag.moved && el) {
+      var rect = el.getBoundingClientRect();
+      state.cheerPos = { x: rect.left, y: rect.top };
+      saveCheerPos(state.cheerPos);
+      cheerJustDragged = true;
+      el.style.cursor = "grab";
+    }
+    cheerDrag = null;
+  }
+
+  function wireCheerDrag() {
+    var el = document.getElementById("cheerFloat");
+    if (!el) return;
+    el.addEventListener("pointerdown", onCheerPointerDown);
+    el.addEventListener("pointermove", onCheerPointerMove);
+    el.addEventListener("pointerup", onCheerPointerUp);
+    el.addEventListener("pointercancel", onCheerPointerUp);
+  }
+
+  window.addEventListener("resize", function () {
+    if (!state.cheerPos) return;
+    var el = document.getElementById("cheerFloat");
+    var w = el ? el.getBoundingClientRect().width : 80;
+    var h = el ? el.getBoundingClientRect().height : 92;
+    state.cheerPos = clampCheerPos(state.cheerPos.x, state.cheerPos.y, w, h);
+    saveCheerPos(state.cheerPos);
+    render();
+  });
 
   // ---------------------------------------------------------------- wire
 
@@ -861,6 +968,7 @@
       nameInput.value = v;
       nameInput.addEventListener("input", onNameInput);
     }
+    wireCheerDrag();
   }
 
   // --------------------------------------------------------------- render
