@@ -124,8 +124,36 @@
   var cheerTimer = null;
   var heroImg = new Image();
   heroImg.src = "assets/hero.jpg";
-  var cheerPreload = new Image();
-  cheerPreload.src = "assets/cheer.gif";
+
+  // The wave is drawn frame-by-frame on a <canvas> instead of relying on an
+  // animated <img> (GIF/WebP): mobile Chrome's Data Saver / Lite mode and
+  // some OS-level "reduce motion" settings silently freeze animated GIFs on
+  // an <img> (first frame only, no error, no way to feature-detect it) —
+  // that's what kept the mobile wave dead through two earlier attempts.
+  // Canvas drawImage isn't subject to either of those, so it just always plays.
+  var cheerStillImg = new Image();
+  cheerStillImg.onload = function () { paintAllCheerIdle(); };
+  cheerStillImg.src = "assets/cheer-still.png";
+  var CHEER_FRAME_COUNT = 7;
+  var cheerFrameImgs = [];
+  for (var cfi = 0; cfi < CHEER_FRAME_COUNT; cfi++) {
+    var fimg = new Image();
+    fimg.src = "assets/cheer-frame-" + cfi + ".png";
+    cheerFrameImgs.push(fimg);
+  }
+
+  function paintCheerCanvas(canvas, img) {
+    if (!canvas || !img || !img.complete || !img.naturalWidth) return;
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  }
+
+  function paintAllCheerIdle() {
+    app.querySelectorAll(".cheer-canvas").forEach(function (c) {
+      paintCheerCanvas(c, cheerStillImg);
+    });
+  }
 
   var app = document.getElementById("app");
 
@@ -183,14 +211,14 @@
   // -------------------------------------------------------- cheer button
 
   function cheerButtonHtml(size) {
-    // NOTE: no mix-blend-mode here on purpose — combining mix-blend-mode
-    // with an animated <img> (GIF/WebP) freezes the animation on mobile
-    // WebKit/Blink even though it plays fine on desktop. The art already
-    // has real alpha transparency, so blend-mode isn't needed for that.
+    // No mix-blend-mode here — it doesn't play well with animated content on
+    // mobile WebKit/Blink either, and it's not needed since the art already
+    // has real alpha transparency. See paintCheerCanvas() for why this is a
+    // <canvas> and not an <img>.
     return (
       '<button type="button" class="cheer-btn" data-act="cheer" aria-label="cheer" style="position:relative;width:100%;aspect-ratio:1536/1774;display:block;padding:0;border:0;background:transparent;cursor:pointer;filter:drop-shadow(0 ' + size + ' 1.2rem rgba(23,0,6,.45));">' +
         '<span style="position:absolute;z-index:1;inset:0;overflow:hidden;-webkit-mask-image:radial-gradient(ellipse 67% 72% at 50% 64%,#000 58%,transparent 91%);mask-image:radial-gradient(ellipse 67% 72% at 50% 64%,#000 58%,transparent 91%);">' +
-          '<img class="cheer-img" src="assets/cheer-still.png" alt="" style="width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:contrast(1.1) saturate(1.1) brightness(.97);user-select:none;-webkit-user-drag:none;"/>' +
+          '<canvas class="cheer-canvas" width="1536" height="1774" style="width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:contrast(1.1) saturate(1.1) brightness(.97);user-select:none;-webkit-user-drag:none;"></canvas>' +
         "</span>" +
       "</button>"
     );
@@ -803,34 +831,53 @@
   }
 
   // 7 frames at 80ms each: one full loop is 560ms.
-  var CHEER_GIF_MS = 580;
-  var cheerJustDragged = false;
+  var CHEER_FRAME_MS = 80;
+  var suppressNextCheerClick = false;
 
-  function cheer() {
-    if (cheerJustDragged) {
-      cheerJustDragged = false;
-      return;
-    }
+  function playWave() {
     if (cheerPlaying) return;
     cheerPlaying = true;
     clearTimeout(cheerTimer);
-    var nonce = Date.now();
     var btns = app.querySelectorAll(".cheer-btn");
     btns.forEach(function (btn) {
-      var img = btn.querySelector(".cheer-img");
       btn.classList.remove("is-playing");
-      img.src = "assets/cheer.gif?play=" + nonce;
       void btn.offsetWidth;
       btn.classList.add("is-playing");
     });
-    cheerTimer = setTimeout(function () {
+
+    var frame = 0;
+    function step() {
+      var img = cheerFrameImgs[frame];
       btns.forEach(function (btn) {
-        var img = btn.querySelector(".cheer-img");
-        img.src = "assets/cheer-still.png";
-        btn.classList.remove("is-playing");
+        paintCheerCanvas(btn.querySelector(".cheer-canvas"), img);
       });
-      cheerPlaying = false;
-    }, CHEER_GIF_MS);
+      frame++;
+      if (frame < CHEER_FRAME_COUNT) {
+        cheerTimer = setTimeout(step, CHEER_FRAME_MS);
+      } else {
+        cheerTimer = setTimeout(function () {
+          btns.forEach(function (btn) {
+            paintCheerCanvas(btn.querySelector(".cheer-canvas"), cheerStillImg);
+            btn.classList.remove("is-playing");
+          });
+          cheerPlaying = false;
+        }, CHEER_FRAME_MS);
+      }
+    }
+    step();
+  }
+
+  // Native click handler (data-act="cheer") — pointerup below drives the
+  // actual tap-to-wave directly, so this only exists to swallow the click
+  // that the browser still fires after pointerup/setPointerCapture. Calling
+  // playWave() straight from onCheerPointerUp — not from here — is what fixed
+  // clicks doing nothing on desktop once dragging was added.
+  function cheer() {
+    if (suppressNextCheerClick) {
+      suppressNextCheerClick = false;
+      return;
+    }
+    playWave();
   }
 
   // -------------------------------------------------------- cheer dragging
@@ -885,17 +932,24 @@
   function onCheerPointerUp(e) {
     if (!cheerDrag || e.pointerId !== cheerDrag.pointerId) return;
     var el = document.getElementById("cheerFloat");
-    if (cheerDrag.moved && el) {
+    var wasMoved = cheerDrag.moved;
+    if (wasMoved && el) {
       var rect = el.getBoundingClientRect();
       state.cheerPos = { x: rect.left, y: rect.top };
       saveCheerPos(state.cheerPos);
-      cheerJustDragged = true;
       el.style.cursor = "grab";
     }
     cheerDrag = null;
+    // Always swallow the click that follows pointerup (see cheer()) and
+    // drive the wave ourselves for a plain tap — don't rely on the browser
+    // still dispatching a normal click after setPointerCapture, since on
+    // desktop that turned out to leave taps doing nothing at all.
+    suppressNextCheerClick = true;
+    if (!wasMoved) playWave();
   }
 
   function wireCheerDrag() {
+    paintAllCheerIdle();
     var el = document.getElementById("cheerFloat");
     if (!el) return;
     el.addEventListener("pointerdown", onCheerPointerDown);
