@@ -536,14 +536,14 @@
     var sm = stepMap[state.step];
     var parts = state.step === "zone" ? renderZoneStep() : state.step === "name" ? renderNameStep() : renderTicketStep();
     return (
-      '<div id="modalBackdrop" data-act="backdrop" style="position:fixed;inset:0;z-index:100;background:rgba(8,0,4,.84);backdrop-filter:blur(9px);display:flex;align-items:center;justify-content:center;padding:clamp(.6rem,3vw,2rem);">' +
+      '<div id="modalBackdrop" class="modal-backdrop" data-act="backdrop" style="position:fixed;inset:0;z-index:100;background:rgba(8,0,4,.9);display:flex;align-items:center;justify-content:center;padding:clamp(.6rem,3vw,2rem);overflow-y:auto;">' +
         '<div style="width:min(940px,100%);max-height:94svh;overflow:auto;background:linear-gradient(165deg,var(--wine),var(--ink));border:1px solid rgba(255,134,189,.28);border-radius:.6rem;box-shadow:0 30px 90px rgba(0,0,0,.6);animation:popIn 260ms ease-out;display:flex;flex-direction:column;">' +
-          '<div style="position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1.1rem,3vw,2rem);background:linear-gradient(180deg,var(--wine),rgba(58,0,20,.9));border-bottom:1px solid rgba(255,134,189,.15);backdrop-filter:blur(6px);">' +
+          '<div style="position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1.1rem,3vw,2rem);background:linear-gradient(180deg,var(--wine),rgba(58,0,20,.96));border-bottom:1px solid rgba(255,134,189,.15);">' +
             '<div style="font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.14em;color:var(--pink);">' + sm.no + ' / 03 · <span style="color:var(--paper);">' + esc(sm.label) + "</span></div>" +
             '<button type="button" data-act="close" class="modal-close" style="font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.08em;padding:.5rem .75rem;border:1px solid rgba(255,244,247,.25);border-radius:.3rem;background:transparent;color:var(--paper);cursor:pointer;text-transform:uppercase;">✕ ' + esc(tt.close) + "</button>" +
           "</div>" +
           '<div style="padding:clamp(1.2rem,3.5vw,2.4rem) clamp(1.2rem,3.5vw,2.4rem) .4rem;">' + parts.content + "</div>" +
-          '<div style="position:sticky;bottom:0;z-index:2;margin-top:auto;padding:.9rem clamp(1.2rem,3.5vw,2.4rem) clamp(1.1rem,3vw,1.6rem);background:linear-gradient(0deg,var(--wine) 65%,rgba(58,0,20,.94) 90%,rgba(58,0,20,0));border-top:1px solid rgba(255,134,189,.15);backdrop-filter:blur(6px);">' + parts.footer + "</div>" +
+          '<div style="position:sticky;bottom:0;z-index:2;margin-top:auto;padding:.9rem clamp(1.2rem,3.5vw,2.4rem) clamp(1.1rem,3vw,1.6rem);background:linear-gradient(0deg,var(--wine) 78%,rgba(58,0,20,.98) 92%,rgba(58,0,20,.85));border-top:1px solid rgba(255,134,189,.15);">' + parts.footer + "</div>" +
         "</div>" +
       "</div>"
     );

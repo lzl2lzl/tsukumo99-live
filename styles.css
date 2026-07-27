@@ -235,6 +235,16 @@ button {
   .perks-list li:nth-child(n + 4) {
     display: none !important;
   }
+
+  /* Centering the modal vertically means its position keeps recomputing
+     while the on-screen keyboard's slide-in animation resizes the visual
+     viewport, which reads as the whole dialog flickering/jumping while
+     you're typing the attendee name. Anchoring it to the top instead makes
+     it independent of that viewport-height churn. Desktop has no on-screen
+     keyboard to fight with, so it keeps the nicer vertical centering. */
+  .modal-backdrop {
+    align-items: flex-start !important;
+  }
 }
 
 /* ---------- animations ---------- */
