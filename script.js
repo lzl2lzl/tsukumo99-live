@@ -40,32 +40,57 @@
       getTickets: "选择场次", scroll: "向下滑动 · 全 17 站",
       tourEyebrow: "WORLD TOUR 2026", tourTitle: "全部巡演场次", tourSub: "17 场公演 · 11 座城市 · 横跨全球",
       from: "起", bookBtn: "选座购票", statusPlenty: "余票充足", statusFew: "仅剩少量", statusSold: "已售罄",
-      chooseZone: "选择座位档", zoneHint: "在场馆图上点选一个区域，右侧查看该档位权益与价格。", includes: "包含权益",
+      chooseZone: "选择座位档", includes: "包含权益",
       next: "下一步", back: "上一步", nameStep: "这张票印给谁？", nameLabel: "持票人姓名", namePlaceholder: "输入将印在票面上的名字", issueBtn: "生成电子票",
       ticketReady: "电子票已生成", download: "下载 PNG 票券", bookAnother: "再选一场", close: "关闭",
       lblCity: "城市", lblVenue: "场馆", lblDate: "日期", lblTier: "档位", lblZone: "区域", lblSeat: "座位", lblName: "持票人",
+      downloadHint: "无法下载？试试用浏览器打开网站！",
+      inAppHint: "检测到你可能在微信 / QQ 内置浏览器中打开 · 点击右上角「···」选择「在浏览器中打开」，下载会更顺畅",
+      inAppClose: "知道了",
+      pickZoneHint: "请选择一个座位档",
       footNote: "本网站为非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。所有场次、地址、座位、票券均为虚构，购票流程为纯前端模拟，不收集任何姓名以外的信息，更不涉及任何真实支付。仅供娱乐。" },
     en: { heroBadge: "UNOFFICIAL FAN PROJECT · THE ENTIRE CHECKOUT IS A SIMULATION · NOT A REAL TICKET, NO PAYMENT DATA COLLECTED",
       tagline: "“Once and for all, dice away.”",
       getTickets: "GET TICKETS", scroll: "SCROLL · ALL 17 STOPS",
       tourEyebrow: "WORLD TOUR 2026", tourTitle: "ALL TOUR DATES", tourSub: "17 SHOWS · 11 CITIES · WORLDWIDE",
       from: "FROM", bookBtn: "BOOK", statusPlenty: "AVAILABLE", statusFew: "FEW LEFT", statusSold: "SOLD OUT",
-      chooseZone: "CHOOSE YOUR ZONE", zoneHint: "Tap a zone on the map to see its tier perks and price on the right.", includes: "INCLUDES",
+      chooseZone: "CHOOSE YOUR ZONE", includes: "INCLUDES",
       next: "NEXT", back: "BACK", nameStep: "WHOSE NAME GOES ON IT?", nameLabel: "ATTENDEE NAME", namePlaceholder: "Name to print on the ticket", issueBtn: "ISSUE TICKET",
       ticketReady: "YOUR TICKET IS READY", download: "DOWNLOAD PNG", bookAnother: "BOOK ANOTHER", close: "CLOSE",
       lblCity: "CITY", lblVenue: "VENUE", lblDate: "DATE", lblTier: "TIER", lblZone: "ZONE", lblSeat: "SEAT", lblName: "ATTENDEE",
+      downloadHint: "Download not working? Try opening this site in your phone's browser.",
+      inAppHint: "Looks like you're in WeChat/QQ's built-in browser — tap ••• and choose “Open in Browser” for a smoother download.",
+      inAppClose: "GOT IT",
+      pickZoneHint: "Pick a seating tier",
       footNote: "An unofficial, non-commercial fan project. Not affiliated with any real artist, band, venue or ticketing service. All dates, addresses, seats and tickets are fictional; the checkout is a front-end simulation that collects nothing beyond a name and involves no real payment whatsoever. For fun only." },
     jp: { heroBadge: "非公式ファン企画 · 購入フローはすべて模擬 · 実チケットではなく、決済情報は一切収集しません",
       tagline: "“Once and for all, dice away.”",
       getTickets: "チケットを選ぶ", scroll: "下へスクロール · 全17公演",
       tourEyebrow: "WORLD TOUR 2026", tourTitle: "全ツアー日程", tourSub: "全17公演 · 11都市 · 世界各地",
       from: "より", bookBtn: "予約する", statusPlenty: "販売中", statusFew: "残りわずか", statusSold: "完売",
-      chooseZone: "ゾーンを選択", zoneHint: "マップでゾーンを選ぶと、右側に特典と料金が表示されます。", includes: "特典",
+      chooseZone: "ゾーンを選択", includes: "特典",
       next: "次へ", back: "戻る", nameStep: "チケットの名義は？", nameLabel: "氏名", namePlaceholder: "チケットに印字する名前", issueBtn: "チケット発行",
       ticketReady: "チケットが発行されました", download: "PNGを保存", bookAnother: "別の公演", close: "閉じる",
       lblCity: "都市", lblVenue: "会場", lblDate: "日付", lblTier: "ランク", lblZone: "ゾーン", lblSeat: "座席", lblName: "氏名",
+      downloadHint: "ダウンロードできない場合は、スマホの標準ブラウザでこのサイトを開き直してください。",
+      inAppHint: "WeChat / QQ内蔵ブラウザで開いている可能性があります。右上の「…」から「ブラウザで開く」を選ぶとダウンロードがスムーズです。",
+      inAppClose: "了解",
+      pickZoneHint: "座席ランクを選択してください",
       footNote: "非公式・非営利のファン企画です。実在のアーティスト・バンド・会場・チケット販売とは一切関係ありません。日程・住所・座席・チケットはすべて架空で、購入フローはフロントエンドの模擬です。氏名以外の情報は収集せず、実際の決済は一切行いません。娯楽目的のみ。" }
   };
+
+  function isInAppBrowser() {
+    var ua = (navigator.userAgent || "") + " " + (navigator.vendor || "");
+    return /MicroMessenger/i.test(ua) || /\bQQ\//i.test(ua) || /QQBrowser/i.test(ua) || /Weibo/i.test(ua);
+  }
+
+  function inAppHintDismissed() {
+    try {
+      return sessionStorage.getItem("hideInAppHint") === "1";
+    } catch (e) {
+      return false;
+    }
+  }
 
   var state = {
     lang: "cn",
@@ -74,7 +99,8 @@
     step: "zone",
     zoneId: null,
     name: "",
-    ticket: null
+    ticket: null,
+    showInAppHint: isInAppBrowser() && !inAppHintDismissed()
   };
 
   var cheerPlaying = false;
@@ -110,8 +136,9 @@
         "</button>"
       );
     }
+    var headerTop = state.showInAppHint ? "clamp(2.6rem,11vw,3.6rem)" : "0";
     return (
-      '<header style="position:fixed;z-index:60;top:0;left:0;width:100%;display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:clamp(.8rem,2.2vw,1.6rem) clamp(1rem,4vw,4rem);pointer-events:none;">' +
+      '<header style="position:fixed;z-index:60;top:' + headerTop + ';left:0;width:100%;display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:clamp(.8rem,2.2vw,1.6rem) clamp(1rem,4vw,4rem);pointer-events:none;transition:top .2s ease;">' +
         '<a href="#top" style="pointer-events:auto;display:flex;flex-direction:column;line-height:.82;filter:drop-shadow(0 2px 12px rgba(23,0,6,.55));">' +
           '<span style="font-family:var(--mono);font-size:.48rem;font-weight:700;letter-spacing:.28em;color:var(--muted);margin-bottom:.35rem;">DiŹ WORLD TOUR 2026</span>' +
           '<span style="font-family:var(--display);font-weight:700;font-size:clamp(1.2rem,2vw,1.6rem);letter-spacing:.02em;color:var(--paper);">TSUKUMO<span style="color:var(--pink);">99</span></span>' +
@@ -125,13 +152,28 @@
     );
   }
 
+  function renderInAppBanner() {
+    if (!state.showInAppHint) return "";
+    var tt = t();
+    return (
+      '<div style="position:fixed;z-index:80;top:0;left:0;right:0;display:flex;align-items:center;gap:.8rem;padding:.7rem clamp(1rem,4vw,2rem);background:linear-gradient(90deg,var(--hot),var(--crimson));box-shadow:0 4px 18px rgba(0,0,0,.35);">' +
+        '<span style="flex:1;font-family:var(--body);font-size:.68rem;line-height:1.5;color:var(--paper);">' + esc(tt.inAppHint) + "</span>" +
+        '<button type="button" data-act="dismissInApp" style="flex-shrink:0;font-family:var(--mono);font-weight:700;font-size:.6rem;letter-spacing:.08em;padding:.4rem .7rem;border:1px solid rgba(255,244,247,.5);border-radius:.3rem;background:rgba(23,0,6,.25);color:var(--paper);cursor:pointer;white-space:nowrap;">' + esc(tt.inAppClose) + "</button>" +
+      "</div>"
+    );
+  }
+
   // -------------------------------------------------------- cheer button
 
   function cheerButtonHtml(size) {
+    // NOTE: no mix-blend-mode here on purpose — combining mix-blend-mode
+    // with an animated <img> (GIF/WebP) freezes the animation on mobile
+    // WebKit/Blink even though it plays fine on desktop. The art already
+    // has real alpha transparency, so blend-mode isn't needed for that.
     return (
       '<button type="button" class="cheer-btn" data-act="cheer" aria-label="cheer" style="position:relative;width:100%;aspect-ratio:1536/1774;display:block;padding:0;border:0;background:transparent;cursor:pointer;filter:drop-shadow(0 ' + size + ' 1.2rem rgba(23,0,6,.45));">' +
         '<span style="position:absolute;z-index:1;inset:0;overflow:hidden;-webkit-mask-image:radial-gradient(ellipse 67% 72% at 50% 64%,#000 58%,transparent 91%);mask-image:radial-gradient(ellipse 67% 72% at 50% 64%,#000 58%,transparent 91%);">' +
-          '<img class="cheer-img" src="assets/cheer-still.png" alt="" style="width:100%;height:100%;object-fit:contain;object-position:center bottom;mix-blend-mode:multiply;filter:contrast(1.08) saturate(1.08);user-select:none;-webkit-user-drag:none;"/>' +
+          '<img class="cheer-img" src="assets/cheer-still.png" alt="" style="width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:contrast(1.1) saturate(1.1) brightness(.97);user-select:none;-webkit-user-drag:none;"/>' +
         "</span>" +
       "</button>"
     );
@@ -147,9 +189,6 @@
         '<img src="assets/hero.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:52% 6%;"/>' +
         '<div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,0,6,.18) 0%,transparent 26%,rgba(23,0,6,.4) 50%,rgba(23,0,6,.9) 80%,var(--ink) 100%);"></div>' +
         '<div aria-hidden="true" style="position:absolute;top:-15%;left:40%;width:6rem;height:80%;background:linear-gradient(180deg,rgba(255,219,232,.22),transparent 70%);filter:blur(1rem);transform:rotate(22deg);transform-origin:top center;animation:sweep 6s ease-in-out infinite;"></div>' +
-        '<div style="position:absolute;z-index:12;right:clamp(.5rem,4vw,1.4rem);bottom:clamp(12.5rem,42vh,17rem);width:clamp(6.5rem,27vw,9rem);">' +
-          cheerButtonHtml(".6rem") +
-        "</div>" +
         '<div style="position:absolute;left:0;right:0;bottom:0;padding:0 clamp(1.2rem,6vw,2rem) clamp(1.7rem,6vh,2.6rem);display:flex;flex-direction:column;align-items:flex-start;gap:.45rem;">' +
           '<h1 style="margin:0;font-family:var(--display);font-weight:700;font-style:italic;text-transform:uppercase;line-height:.78;">' +
             '<span style="display:block;font-size:clamp(4.5rem,27vw,8rem);letter-spacing:-.02em;color:var(--hot);filter:drop-shadow(0 .05em 0 rgba(76,0,26,.7)) drop-shadow(0 0 1.8rem rgba(236,0,80,.55));">DiŹ</span>' +
@@ -190,10 +229,15 @@
             '<a href="#tour" class="btn-cta" style="display:inline-flex;align-items:center;gap:.6rem;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.6rem;border-radius:.3rem;box-shadow:0 10px 30px rgba(236,0,80,.45);">' + esc(tt.getTickets) + ' <span style="font-size:1rem;">↓</span></a>' +
           "</div>" +
         "</section>" +
-        '<div style="position:absolute;z-index:12;right:clamp(1rem,7vw,7rem);bottom:clamp(.4rem,2vh,1.6rem);width:clamp(7.5rem,15vw,15rem);">' +
-          cheerButtonHtml(".8rem") +
-        "</div>" +
       "</main>" +
+      "</div>"
+    );
+  }
+
+  function renderCheerFloating() {
+    return (
+      '<div style="position:fixed;z-index:65;right:clamp(.7rem,3.2vw,1.6rem);bottom:clamp(5.5rem,20vh,9.5rem);width:clamp(3.8rem,10vw,5rem);pointer-events:none;">' +
+        '<div style="pointer-events:auto;">' + cheerButtonHtml(".5rem") + "</div>" +
       "</div>"
     );
   }
@@ -298,53 +342,54 @@
       var bg = sel ? "rgba(236,0,80,.22)" : "rgba(255,244,247,.04)";
       var shadow = sel ? "0 0 26px rgba(236,0,80,.5)" : "none";
       var color = z.id === "vip" ? "var(--hot)" : "var(--pink)";
-      var pad = z.id === "vip" ? "1rem" : "1.3rem 1rem";
-      var width = z.id === "vip" ? "82%;margin:.4rem auto 0;" : "100%;";
       return (
-        '<button type="button" data-act="selectZone" data-zone="' + z.id + '" style="width:' + width + 'padding:' + pad + ';border-radius:.35rem;cursor:pointer;text-align:center;border:' + border + ";background:" + bg + ";box-shadow:" + shadow + ';">' +
-          '<div style="font-family:var(--mono);font-size:.53rem;font-weight:700;letter-spacing:.16em;color:' + color + ';">' + z.tier + "</div>" +
-          '<div style="margin-top:.25rem;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(.9rem,1.8vw,1.15rem);color:var(--paper);">' + esc(z.name[lang]) + "</div>" +
+        '<button type="button" data-act="selectZone" data-zone="' + z.id + '" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.9rem 1.1rem;border-radius:.35rem;cursor:pointer;text-align:left;border:' + border + ";background:" + bg + ";box-shadow:" + shadow + ';">' +
+          '<span>' +
+            '<span style="display:block;font-family:var(--mono);font-size:.53rem;font-weight:700;letter-spacing:.16em;color:' + color + ';">' + z.tier + "</span>" +
+            '<span style="display:block;margin-top:.2rem;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(.9rem,1.8vw,1.15rem);color:var(--paper);">' + esc(z.name[lang]) + "</span>" +
+          "</span>" +
+          '<span style="flex-shrink:0;font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--hot);">◈' + z.price + "</span>" +
         "</button>"
       );
     }
 
     var vip = ZONES[0], std = ZONES[1];
-
-    var detailHtml;
-    if (!selZone) {
-      detailHtml = '<div style="min-height:11rem;display:flex;align-items:center;justify-content:center;text-align:center;padding:1.5rem;border:1px dashed rgba(255,134,189,.3);border-radius:.45rem;font-family:var(--mono);font-size:.7rem;line-height:1.7;color:var(--muted);text-wrap:pretty;">' + esc(tt.zoneHint) + "</div>";
-    } else {
+    var perksHtml = "";
+    if (selZone) {
       var perks = selZone.perks[lang].map(function (p) {
         return '<li style="display:flex;gap:.55rem;font-family:var(--body);font-size:.72rem;line-height:1.45;color:var(--paper);"><span style="color:var(--hot);flex-shrink:0;">◈</span>' + esc(p) + "</li>";
       }).join("");
-      detailHtml = (
-        '<div style="border:1px solid rgba(255,134,189,.3);border-radius:.45rem;padding:1.25rem;background:rgba(23,0,6,.4);">' +
-          '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:.6rem;">' +
-            '<span style="font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.14em;color:var(--pink);">' + selZone.tier + "</span>" +
-            '<span style="font-family:var(--display);font-weight:700;font-size:1.4rem;color:var(--hot);">◈' + selZone.price + "</span>" +
-          "</div>" +
-          '<div style="margin-top:.2rem;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.1rem;color:var(--paper);">' + esc(selZone.name[lang]) + "</div>" +
-          '<div style="margin-top:.85rem;font-family:var(--mono);font-size:.53rem;letter-spacing:.12em;color:var(--muted);">' + esc(tt.includes) + "</div>" +
-          '<ul style="margin:.5rem 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.4rem;">' + perks + "</ul>" +
-          '<button type="button" data-act="toName" class="btn-cta" style="margin-top:1.2rem;width:100%;font-family:var(--mono);font-weight:700;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;padding:.85rem;border:0;border-radius:.3rem;cursor:pointer;box-shadow:0 8px 22px rgba(236,0,80,.4);">' + esc(tt.next) + " →</button>" +
+      perksHtml = (
+        '<div style="margin-top:.9rem;border:1px solid rgba(255,134,189,.3);border-radius:.45rem;padding:1rem 1.15rem;background:rgba(23,0,6,.4);">' +
+          '<div style="font-family:var(--mono);font-size:.53rem;letter-spacing:.12em;color:var(--muted);">' + esc(tt.includes) + "</div>" +
+          '<ul class="perks-list" style="margin:.5rem 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.4rem;">' + perks + "</ul>" +
         "</div>"
       );
     }
 
-    return (
+    var content = (
       '<div>' +
         '<h3 style="margin:0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.3rem,3vw,2rem);color:var(--paper);">' + esc(tt.chooseZone) + "</h3>" +
         '<p style="margin:.55rem 0 0;font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;color:var(--pink);text-wrap:pretty;">' + ("0" + (state.stopIndex + 1)).slice(-2) + " · " + esc(cur.city[lang]) + " — " + esc(cur.venue[lang]) + " · " + cur.date + "</p>" +
-        '<div style="margin-top:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:clamp(1rem,2.5vw,1.8rem);align-items:start;">' +
-          '<div style="background:radial-gradient(ellipse at 50% -10%,rgba(236,0,80,.32),transparent 62%),#1c0009;border:1px solid rgba(255,134,189,.15);border-radius:.45rem;padding:clamp(1rem,2.5vw,1.5rem);display:flex;flex-direction:column;gap:.8rem;">' +
-            '<div style="text-align:center;font-family:var(--mono);font-size:.54rem;letter-spacing:.4em;color:var(--muted);">STAGE</div>' +
-            '<div style="height:.45rem;border-radius:99px;background:linear-gradient(90deg,transparent,var(--hot),transparent);box-shadow:0 0 22px var(--hot);"></div>' +
+        '<div style="margin-top:1.1rem;background:radial-gradient(ellipse at 50% -10%,rgba(236,0,80,.32),transparent 62%),#1c0009;border:1px solid rgba(255,134,189,.15);border-radius:.45rem;padding:clamp(.9rem,2.5vw,1.5rem);display:flex;flex-direction:column;gap:.6rem;">' +
+            '<div class="stage-deco" style="text-align:center;font-family:var(--mono);font-size:.54rem;letter-spacing:.4em;color:var(--muted);">STAGE</div>' +
+            '<div class="stage-deco" style="height:.4rem;border-radius:99px;background:linear-gradient(90deg,transparent,var(--hot),transparent);box-shadow:0 0 22px var(--hot);"></div>' +
             mapBtn(vip) + mapBtn(std) +
-          "</div>" +
-          "<div>" + detailHtml + "</div>" +
         "</div>" +
+        perksHtml +
       "</div>"
     );
+
+    var footer = selZone
+      ? (
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">' +
+          '<div style="font-family:var(--mono);font-size:.68rem;color:var(--muted);white-space:nowrap;">' + selZone.tier + ' · <span style="color:var(--hot);font-weight:700;">◈' + selZone.price + "</span></div>" +
+          '<button type="button" data-act="toName" class="btn-cta" style="flex-shrink:0;font-family:var(--mono);font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;padding:.85rem 1.4rem;border:0;border-radius:.3rem;cursor:pointer;box-shadow:0 8px 22px rgba(236,0,80,.4);">' + esc(tt.next) + " →</button>" +
+        "</div>"
+      )
+      : '<div style="text-align:center;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;color:var(--muted);padding:.65rem 0;">' + esc(tt.pickZoneHint) + "</div>";
+
+    return { content: content, footer: footer };
   }
 
   function renderNameStep() {
@@ -353,7 +398,7 @@
     var cur = computeCur();
     var selZone = computeSelZone();
     var canIssue = !!state.zoneId && state.name.trim().length > 0;
-    return (
+    var content = (
       '<div style="max-width:34rem;">' +
         '<h3 style="margin:0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.3rem,3vw,2rem);color:var(--paper);">' + esc(tt.nameStep) + "</h3>" +
         '<div style="margin-top:1.1rem;padding:.9rem 1.1rem;border:1px solid rgba(255,134,189,.2);border-radius:.4rem;background:rgba(23,0,6,.4);font-family:var(--mono);font-size:.66rem;line-height:1.7;color:var(--muted);">' +
@@ -362,13 +407,16 @@
         "</div>" +
         '<label style="display:block;margin-top:1.4rem;font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.14em;color:var(--pink);text-transform:uppercase;">' + esc(tt.nameLabel) + "</label>" +
         '<input id="nameInput" type="text" class="input-name" value="' + esc(state.name) + '" placeholder="' + esc(tt.namePlaceholder) + '" style="margin-top:.55rem;width:100%;font-family:var(--display);font-weight:500;font-size:1.35rem;letter-spacing:.02em;padding:.85rem 1rem;border:1.5px solid;border-radius:.4rem;outline:none;"/>' +
-        '<div style="display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.5rem;">' +
-          '<button type="button" data-act="backToZone" class="btn-outline" style="font-family:var(--mono);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.85rem 1.3rem;border:1px solid;border-radius:.3rem;cursor:pointer;">← ' + esc(tt.back) + "</button>" +
-          '<button type="button" id="issueBtn" data-act="issue" class="btn-cta" style="display:' + (canIssue ? "" : "none") + ';flex:1;min-width:12rem;font-family:var(--mono);font-weight:700;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;padding:.85rem 1.3rem;border:0;border-radius:.3rem;cursor:pointer;box-shadow:0 8px 22px rgba(236,0,80,.4);">' + esc(tt.issueBtn) + "</button>" +
-          '<span id="issueDisabled" style="display:' + (canIssue ? "none" : "") + ';flex:1;min-width:12rem;text-align:center;font-family:var(--mono);font-weight:700;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;padding:.85rem 1.3rem;border-radius:.3rem;background:rgba(236,0,80,.2);color:rgba(255,244,247,.5);cursor:not-allowed;">' + esc(tt.issueBtn) + "</span>" +
-        "</div>" +
       "</div>"
     );
+    var footer = (
+      '<div style="display:flex;flex-wrap:wrap;gap:.8rem;">' +
+        '<button type="button" data-act="backToZone" class="btn-outline" style="font-family:var(--mono);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.85rem 1.3rem;border:1px solid;border-radius:.3rem;cursor:pointer;">← ' + esc(tt.back) + "</button>" +
+        '<button type="button" id="issueBtn" data-act="issue" class="btn-cta" style="display:' + (canIssue ? "" : "none") + ';flex:1;min-width:10rem;font-family:var(--mono);font-weight:700;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;padding:.85rem 1.3rem;border:0;border-radius:.3rem;cursor:pointer;box-shadow:0 8px 22px rgba(236,0,80,.4);">' + esc(tt.issueBtn) + "</button>" +
+        '<span id="issueDisabled" style="display:' + (canIssue ? "none" : "") + ';flex:1;min-width:10rem;text-align:center;font-family:var(--mono);font-weight:700;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;padding:.85rem 1.3rem;border-radius:.3rem;background:rgba(236,0,80,.2);color:rgba(255,244,247,.5);cursor:not-allowed;">' + esc(tt.issueBtn) + "</span>" +
+      "</div>"
+    );
+    return { content: content, footer: footer };
   }
 
   function renderTicketStep() {
@@ -393,7 +441,7 @@
       return '<div><div style="font-family:var(--mono);font-size:.5rem;letter-spacing:.12em;color:var(--muted);">' + esc(label) + '</div><div style="font-family:var(--display);font-weight:700;font-size:1rem;color:' + (hot ? "var(--hot)" : "var(--paper)") + ';text-transform:uppercase;">' + esc(value) + "</div></div>";
     }
 
-    return (
+    var content = (
       '<div>' +
         '<h3 style="margin:0 0 1.2rem;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.3rem,3vw,2rem);color:var(--paper);">✓ ' + esc(tt.ticketReady) + "</h3>" +
         '<div style="display:flex;flex-wrap:wrap;border:2px solid var(--pink);border-radius:.5rem;overflow:hidden;background:linear-gradient(135deg,#3a0014,#170006 55%,#4c001a);box-shadow:0 20px 60px rgba(0,0,0,.5);">' +
@@ -418,12 +466,18 @@
             '<div style="font-family:var(--mono);font-size:.5rem;letter-spacing:.06em;color:var(--muted);word-break:break-all;text-align:center;">' + tkt.ticketNo + "</div>" +
           "</div>" +
         "</div>" +
-        '<div style="display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.4rem;">' +
-          '<button type="button" data-act="downloadTicket" class="btn-cta" style="flex:1;min-width:12rem;font-family:var(--mono);font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.3rem;border:0;border-radius:.3rem;cursor:pointer;box-shadow:0 8px 22px rgba(236,0,80,.4);">↓ ' + esc(tt.download) + "</button>" +
-          '<button type="button" data-act="bookAnother" class="btn-outline" style="font-family:var(--mono);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 1.3rem;border:1px solid;border-radius:.3rem;cursor:pointer;">' + esc(tt.bookAnother) + "</button>" +
-        "</div>" +
       "</div>"
     );
+    var footer = (
+      '<div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:.8rem;">' +
+          '<button type="button" data-act="downloadTicket" class="btn-cta" style="flex:1;min-width:10rem;font-family:var(--mono);font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.3rem;border:0;border-radius:.3rem;cursor:pointer;box-shadow:0 8px 22px rgba(236,0,80,.4);">↓ ' + esc(tt.download) + "</button>" +
+          '<button type="button" data-act="bookAnother" class="btn-outline" style="font-family:var(--mono);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 1.3rem;border:1px solid;border-radius:.3rem;cursor:pointer;">' + esc(tt.bookAnother) + "</button>" +
+        "</div>" +
+        '<p style="margin:.65rem 0 0;text-align:center;font-family:var(--mono);font-size:.6rem;letter-spacing:.02em;line-height:1.5;color:var(--muted);">' + esc(tt.downloadHint) + "</p>" +
+      "</div>"
+    );
+    return { content: content, footer: footer };
   }
 
   function renderModal() {
@@ -431,15 +485,16 @@
     var tt = t();
     var stepMap = { zone: { no: "01", label: tt.chooseZone }, name: { no: "02", label: tt.nameStep }, ticket: { no: "03", label: tt.ticketReady } };
     var sm = stepMap[state.step];
-    var body = state.step === "zone" ? renderZoneStep() : state.step === "name" ? renderNameStep() : renderTicketStep();
+    var parts = state.step === "zone" ? renderZoneStep() : state.step === "name" ? renderNameStep() : renderTicketStep();
     return (
       '<div id="modalBackdrop" data-act="backdrop" style="position:fixed;inset:0;z-index:100;background:rgba(8,0,4,.84);backdrop-filter:blur(9px);display:flex;align-items:center;justify-content:center;padding:clamp(.6rem,3vw,2rem);">' +
-        '<div style="width:min(940px,100%);max-height:94svh;overflow:auto;background:linear-gradient(165deg,var(--wine),var(--ink));border:1px solid rgba(255,134,189,.28);border-radius:.6rem;box-shadow:0 30px 90px rgba(0,0,0,.6);animation:popIn 260ms ease-out;">' +
-          '<div style="position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1.1rem,3vw,2rem);background:linear-gradient(180deg,var(--wine),rgba(58,0,20,.9));border-bottom:1px solid rgba(255,134,189,.15);backdrop-filter:blur(6px);">' +
+        '<div style="width:min(940px,100%);max-height:94svh;overflow:auto;background:linear-gradient(165deg,var(--wine),var(--ink));border:1px solid rgba(255,134,189,.28);border-radius:.6rem;box-shadow:0 30px 90px rgba(0,0,0,.6);animation:popIn 260ms ease-out;display:flex;flex-direction:column;">' +
+          '<div style="position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1.1rem,3vw,2rem);background:linear-gradient(180deg,var(--wine),rgba(58,0,20,.9));border-bottom:1px solid rgba(255,134,189,.15);backdrop-filter:blur(6px);">' +
             '<div style="font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.14em;color:var(--pink);">' + sm.no + ' / 03 · <span style="color:var(--paper);">' + esc(sm.label) + "</span></div>" +
             '<button type="button" data-act="close" class="modal-close" style="font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.08em;padding:.5rem .75rem;border:1px solid rgba(255,244,247,.25);border-radius:.3rem;background:transparent;color:var(--paper);cursor:pointer;text-transform:uppercase;">✕ ' + esc(tt.close) + "</button>" +
           "</div>" +
-          '<div style="padding:clamp(1.2rem,3.5vw,2.4rem);">' + body + "</div>" +
+          '<div style="padding:clamp(1.2rem,3.5vw,2.4rem) clamp(1.2rem,3.5vw,2.4rem) .4rem;">' + parts.content + "</div>" +
+          '<div style="position:sticky;bottom:0;z-index:2;margin-top:auto;padding:.9rem clamp(1.2rem,3.5vw,2.4rem) clamp(1.1rem,3vw,1.6rem);background:linear-gradient(0deg,var(--wine) 65%,rgba(58,0,20,.94) 90%,rgba(58,0,20,0));border-top:1px solid rgba(255,134,189,.15);backdrop-filter:blur(6px);">' + parts.footer + "</div>" +
         "</div>" +
       "</div>"
     );
@@ -767,6 +822,15 @@
     else if (act === "bookAnother") bookAnother();
     else if (act === "downloadTicket") downloadTicket();
     else if (act === "cheer") cheer();
+    else if (act === "dismissInApp") dismissInAppHint();
+  }
+
+  function dismissInAppHint() {
+    state.showInAppHint = false;
+    try {
+      sessionStorage.setItem("hideInAppHint", "1");
+    } catch (e) {}
+    render();
   }
 
   function onNameInput(e) {
@@ -803,10 +867,12 @@
 
   function render() {
     app.innerHTML =
+      renderInAppBanner() +
       renderHeader() +
       '<div id="top">' + renderHeroMobile() + renderHeroDesktop() + "</div>" +
       renderTour() +
       renderFooter() +
+      renderCheerFloating() +
       renderModal();
     wireEvents();
   }

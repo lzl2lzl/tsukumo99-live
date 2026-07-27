@@ -171,6 +171,16 @@ button {
   .hero-mobile {
     display: block;
   }
+
+  /* keep the booking modal's steps short enough to need no scrolling to
+     reach the action button: drop decorative chrome, cap perks to 3 */
+  .stage-deco {
+    display: none !important;
+  }
+
+  .perks-list li:nth-child(n + 4) {
+    display: none !important;
+  }
 }
 
 /* ---------- animations ---------- */
