@@ -138,7 +138,7 @@
     }
     var headerTop = state.showInAppHint ? "clamp(2.6rem,11vw,3.6rem)" : "0";
     return (
-      '<header style="position:fixed;z-index:60;top:' + headerTop + ';left:0;width:100%;display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:clamp(.8rem,2.2vw,1.6rem) clamp(1rem,4vw,4rem);pointer-events:none;transition:top .2s ease;">' +
+      '<header style="position:fixed;z-index:60;top:' + headerTop + ';left:0;width:100%;display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:clamp(.8rem,2.2vw,1.6rem) clamp(1rem,4vw,4rem);pointer-events:none;transition:top .2s ease;background:linear-gradient(180deg,rgba(15,0,4,.88) 0%,rgba(15,0,4,.6) 65%,transparent 100%);backdrop-filter:blur(8px);">' +
         '<a href="#top" style="pointer-events:auto;display:flex;flex-direction:column;line-height:.82;filter:drop-shadow(0 2px 12px rgba(23,0,6,.55));">' +
           '<span style="font-family:var(--mono);font-size:.48rem;font-weight:700;letter-spacing:.28em;color:var(--muted);margin-bottom:.35rem;">DiŹ WORLD TOUR 2026</span>' +
           '<span style="font-family:var(--display);font-weight:700;font-size:clamp(1.2rem,2vw,1.6rem);letter-spacing:.02em;color:var(--paper);">TSUKUMO<span style="color:var(--pink);">99</span></span>' +
