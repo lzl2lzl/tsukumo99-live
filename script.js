@@ -123,7 +123,7 @@
   var cheerPlaying = false;
   var cheerTimer = null;
   var heroImg = new Image();
-  heroImg.src = "assets/hero.jpg";
+  heroImg.src = "assets/hero.webp";
 
   // The wave is drawn frame-by-frame on a <canvas> instead of relying on an
   // animated <img> (GIF/WebP): mobile Chrome's Data Saver / Lite mode and
@@ -133,13 +133,30 @@
   // Canvas drawImage isn't subject to either of those, so it just always plays.
   var cheerStillImg = new Image();
   cheerStillImg.onload = function () { paintAllCheerIdle(); };
-  cheerStillImg.src = "assets/cheer-still.png";
+  cheerStillImg.src = "assets/cheer-still.webp";
   var CHEER_FRAME_COUNT = 7;
   var cheerFrameImgs = [];
   for (var cfi = 0; cfi < CHEER_FRAME_COUNT; cfi++) {
-    var fimg = new Image();
-    fimg.src = "assets/cheer-frame-" + cfi + ".png";
-    cheerFrameImgs.push(fimg);
+    cheerFrameImgs.push(new Image());
+  }
+  // The 7 wave frames (~440KB together) are only needed once someone taps
+  // the widget, not for first paint — loading them eagerly alongside
+  // hero.webp/cheer-still.webp was competing for bandwidth on slow mobile
+  // connections and was a big part of why even the idle floating widget
+  // took a long time to show up. Defer them until after everything else
+  // the initial view needs has already loaded.
+  function loadCheerFrames() {
+    if (cheerFrameImgs[0].src) return;
+    for (var i = 0; i < CHEER_FRAME_COUNT; i++) {
+      cheerFrameImgs[i].src = "assets/cheer-frame-" + i + ".webp";
+    }
+  }
+  if (document.readyState === "complete") {
+    setTimeout(loadCheerFrames, 300);
+  } else {
+    window.addEventListener("load", function () {
+      setTimeout(loadCheerFrames, 300);
+    });
   }
 
   function paintCheerCanvas(canvas, img) {
@@ -231,7 +248,7 @@
     return (
       '<div class="hero-mobile">' +
       '<main style="position:relative;min-height:100svh;overflow:hidden;background:var(--ink);">' +
-        '<img src="assets/hero.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:52% 6%;"/>' +
+        '<img src="assets/hero.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:52% 6%;"/>' +
         '<div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,0,6,.18) 0%,transparent 26%,rgba(23,0,6,.4) 50%,rgba(23,0,6,.9) 80%,var(--ink) 100%);"></div>' +
         '<div aria-hidden="true" style="position:absolute;top:-15%;left:40%;width:6rem;height:80%;background:linear-gradient(180deg,rgba(255,219,232,.22),transparent 70%);filter:blur(1rem);transform:rotate(22deg);transform-origin:top center;animation:sweep 6s ease-in-out infinite;"></div>' +
         '<div style="position:absolute;left:0;right:0;bottom:0;padding:0 clamp(1.2rem,6vw,2rem) clamp(1.7rem,6vh,2.6rem);display:flex;flex-direction:column;align-items:flex-start;gap:.45rem;">' +
@@ -256,7 +273,7 @@
       '<div class="hero-desktop">' +
       '<main style="position:relative;isolation:isolate;min-height:100svh;display:flex;align-items:center;overflow:hidden;background:linear-gradient(105deg,#1a0009 0%,#350013 46%,transparent 74%),var(--wine);width:100%;">' +
         '<div aria-hidden="true" style="position:absolute;z-index:-2;inset:0;">' +
-          '<img src="assets/hero.jpg" alt="" style="position:absolute;top:0;right:0;width:min(72%,880px);height:100%;object-fit:cover;object-position:54% 20%;filter:saturate(1.04) contrast(1.03);"/>' +
+          '<img src="assets/hero.webp" alt="" style="position:absolute;top:0;right:0;width:min(72%,880px);height:100%;object-fit:cover;object-position:54% 20%;filter:saturate(1.04) contrast(1.03);"/>' +
           '<div style="position:absolute;inset:0;background:linear-gradient(95deg,#180008 0%,rgba(24,0,8,.9) 24%,rgba(24,0,8,.35) 52%,transparent 66%),linear-gradient(0deg,rgba(23,0,6,.72),transparent 40%);"></div>' +
         "</div>" +
         '<div aria-hidden="true" style="position:absolute;z-index:-1;top:-22%;left:47%;width:8rem;height:110%;background:linear-gradient(180deg,rgba(255,219,232,.22),transparent 70%);filter:blur(1.1rem);transform:rotate(24deg);transform-origin:top center;animation:sweep 6s ease-in-out infinite;"></div>' +
@@ -895,6 +912,7 @@
   }
 
   function onCheerPointerDown(e) {
+    loadCheerFrames();
     var el = document.getElementById("cheerFloat");
     if (!el) return;
     var rect = el.getBoundingClientRect();

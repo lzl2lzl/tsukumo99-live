@@ -16,10 +16,18 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%233a0014'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff86bd'/%3E%3Ccircle cx='20' cy='44' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23fff4f7'/%3E%3C/svg%3E"
     />
     <title>ŹOOĻ · DiŹ WORLD TOUR 2026 — TSUKUMO99</title>
-    <link rel="stylesheet" href="styles.css?v=20260727g" />
+    <!--
+      The whole page is rendered client-side by script.js, so without this
+      the browser can't discover (let alone start fetching) the hero image
+      until script.js has downloaded AND run — serializing what should be
+      two things loading in parallel. This preload starts the fetch the
+      moment the HTML is parsed, same as a static <img> would.
+    -->
+    <link rel="preload" as="image" href="assets/hero.webp" fetchpriority="high" />
+    <link rel="stylesheet" href="styles.css?v=20260727h" />
   </head>
   <body>
     <div id="app"></div>
-    <script src="script.js?v=20260727g"></script>
+    <script src="script.js?v=20260727h"></script>
   </body>
 </html>
