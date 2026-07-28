@@ -226,23 +226,14 @@ button {
     display: block;
   }
 
-  /* keep the booking modal's steps short enough to need no scrolling to
-     reach the action button: drop decorative chrome, cap perks to 3 */
-  .stage-deco {
-    display: none !important;
-  }
-
-  .perks-list li:nth-child(n + 4) {
-    display: none !important;
-  }
-
   /* Centering the modal vertically means its position keeps recomputing
      while the on-screen keyboard's slide-in animation resizes the visual
      viewport, which reads as the whole dialog flickering/jumping while
      you're typing the attendee name. Anchoring it to the top instead makes
-     it independent of that viewport-height churn. Desktop has no on-screen
-     keyboard to fight with, so it keeps the nicer vertical centering. */
-  .modal-backdrop {
+     it independent of that viewport-height churn — but only the name step
+     actually opens a keyboard, so only that step gets this treatment; the
+     zone/ticket steps stay centered like desktop. */
+  .modal-backdrop.modal-anchor-top {
     align-items: flex-start !important;
   }
 }

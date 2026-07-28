@@ -40,42 +40,39 @@
       getTickets: "选择场次", scroll: "向下滑动 · 全 17 站",
       tourEyebrow: "WORLD TOUR 2026", tourTitle: "全部巡演场次", tourSub: "17 场公演 · 11 座城市 · 横跨全球",
       from: "起", bookBtn: "选座购票", statusPlenty: "余票充足", statusFew: "仅剩少量", statusSold: "已售罄",
-      chooseZone: "选择座位档", includes: "包含权益",
-      next: "下一步", back: "上一步", nameStep: "这张票印给谁？", nameLabel: "持票人姓名", namePlaceholder: "输入将印在票面上的名字", issueBtn: "生成电子票",
+      chooseZone: "选择座位档",
+      back: "上一步", nameStep: "这张票印给谁？", nameLabel: "持票人姓名", namePlaceholder: "输入将印在票面上的名字", issueBtn: "生成电子票",
       ticketReady: "电子票已生成", download: "下载 PNG 票券", bookAnother: "再选一场", close: "关闭",
       lblCity: "城市", lblVenue: "场馆", lblDate: "日期", lblTier: "档位", lblZone: "区域", lblSeat: "座位", lblName: "持票人",
       downloadHint: "无法下载？试试用浏览器打开网站！",
       inAppHint: "检测到你可能在微信 / QQ 内置浏览器中打开 · 点击右上角「···」选择「在浏览器中打开」，下载会更顺畅",
       inAppClose: "知道了",
-      pickZoneHint: "请选择一个座位档",
       footNote: "本网站为非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。所有场次、地址、座位、票券均为虚构，购票流程为纯前端模拟，不收集任何姓名以外的信息，更不涉及任何真实支付。仅供娱乐。" },
     en: { heroBadge: "UNOFFICIAL FAN PROJECT · THE ENTIRE CHECKOUT IS A SIMULATION · NOT A REAL TICKET, NO PAYMENT DATA COLLECTED",
       tagline: "“Once and for all, dice away.”",
       getTickets: "GET TICKETS", scroll: "SCROLL · ALL 17 STOPS",
       tourEyebrow: "WORLD TOUR 2026", tourTitle: "ALL TOUR DATES", tourSub: "17 SHOWS · 11 CITIES · WORLDWIDE",
       from: "FROM", bookBtn: "BOOK", statusPlenty: "AVAILABLE", statusFew: "FEW LEFT", statusSold: "SOLD OUT",
-      chooseZone: "CHOOSE YOUR ZONE", includes: "INCLUDES",
-      next: "NEXT", back: "BACK", nameStep: "WHOSE NAME GOES ON IT?", nameLabel: "ATTENDEE NAME", namePlaceholder: "Name to print on the ticket", issueBtn: "ISSUE TICKET",
+      chooseZone: "CHOOSE YOUR ZONE",
+      back: "BACK", nameStep: "WHOSE NAME GOES ON IT?", nameLabel: "ATTENDEE NAME", namePlaceholder: "Name to print on the ticket", issueBtn: "ISSUE TICKET",
       ticketReady: "YOUR TICKET IS READY", download: "DOWNLOAD PNG", bookAnother: "BOOK ANOTHER", close: "CLOSE",
       lblCity: "CITY", lblVenue: "VENUE", lblDate: "DATE", lblTier: "TIER", lblZone: "ZONE", lblSeat: "SEAT", lblName: "ATTENDEE",
       downloadHint: "Download not working? Try opening this site in your phone's browser.",
       inAppHint: "Looks like you're in WeChat/QQ's built-in browser — tap ••• and choose “Open in Browser” for a smoother download.",
       inAppClose: "GOT IT",
-      pickZoneHint: "Pick a seating tier",
       footNote: "An unofficial, non-commercial fan project. Not affiliated with any real artist, band, venue or ticketing service. All dates, addresses, seats and tickets are fictional; the checkout is a front-end simulation that collects nothing beyond a name and involves no real payment whatsoever. For fun only." },
     jp: { heroBadge: "非公式ファン企画 · 購入フローはすべて模擬 · 実チケットではなく、決済情報は一切収集しません",
       tagline: "“Once and for all, dice away.”",
       getTickets: "チケットを選ぶ", scroll: "下へスクロール · 全17公演",
       tourEyebrow: "WORLD TOUR 2026", tourTitle: "全ツアー日程", tourSub: "全17公演 · 11都市 · 世界各地",
       from: "より", bookBtn: "予約する", statusPlenty: "販売中", statusFew: "残りわずか", statusSold: "完売",
-      chooseZone: "ゾーンを選択", includes: "特典",
-      next: "次へ", back: "戻る", nameStep: "チケットの名義は？", nameLabel: "氏名", namePlaceholder: "チケットに印字する名前", issueBtn: "チケット発行",
+      chooseZone: "ゾーンを選択",
+      back: "戻る", nameStep: "チケットの名義は？", nameLabel: "氏名", namePlaceholder: "チケットに印字する名前", issueBtn: "チケット発行",
       ticketReady: "チケットが発行されました", download: "PNGを保存", bookAnother: "別の公演", close: "閉じる",
       lblCity: "都市", lblVenue: "会場", lblDate: "日付", lblTier: "ランク", lblZone: "ゾーン", lblSeat: "座席", lblName: "氏名",
       downloadHint: "ダウンロードできない場合は、スマホの標準ブラウザでこのサイトを開き直してください。",
       inAppHint: "WeChat / QQ内蔵ブラウザで開いている可能性があります。右上の「…」から「ブラウザで開く」を選ぶとダウンロードがスムーズです。",
       inAppClose: "了解",
-      pickZoneHint: "座席ランクを選択してください",
       footNote: "非公式・非営利のファン企画です。実在のアーティスト・バンド・会場・チケット販売とは一切関係ありません。日程・住所・座席・チケットはすべて架空で、購入フローはフロントエンドの模擬です。氏名以外の情報は収集せず、実際の決済は一切行いません。娯楽目的のみ。" }
   };
 
@@ -398,19 +395,18 @@
   }
 
   function renderZoneStep() {
-    var tt = t();
     var lang = state.lang;
     var cur = computeCur();
-    var selZone = computeSelZone();
 
+    // Tapping a tier picks it AND advances straight to the name step — no
+    // separate "confirm this zone" tap in between, and no perks/benefits
+    // copy to read first. The diagram + price is the whole decision.
     function mapBtn(z) {
-      var sel = state.zoneId === z.id;
-      var border = sel ? "2px solid var(--hot)" : "1px solid rgba(255,134,189,.28)";
-      var bg = sel ? "rgba(236,0,80,.22)" : "rgba(255,244,247,.04)";
-      var shadow = sel ? "0 0 26px rgba(236,0,80,.5)" : "none";
       var color = z.id === "vip" ? "var(--hot)" : "var(--pink)";
+      var width = z.id === "vip" ? "82%;margin:.4rem auto 0;" : "100%;";
+      var pad = z.id === "vip" ? "1rem" : "1.3rem 1rem";
       return (
-        '<button type="button" data-act="selectZone" data-zone="' + z.id + '" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.9rem 1.1rem;border-radius:.35rem;cursor:pointer;text-align:left;border:' + border + ";background:" + bg + ";box-shadow:" + shadow + ';">' +
+        '<button type="button" data-act="selectZone" data-zone="' + z.id + '" style="width:' + width + 'padding:' + pad + ';display:flex;align-items:center;justify-content:space-between;gap:.6rem;border-radius:.35rem;cursor:pointer;text-align:left;border:1px solid rgba(255,134,189,.28);background:rgba(255,244,247,.04);">' +
           '<span>' +
             '<span style="display:block;font-family:var(--mono);font-size:.53rem;font-weight:700;letter-spacing:.16em;color:' + color + ';">' + z.tier + "</span>" +
             '<span style="display:block;margin-top:.2rem;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(.9rem,1.8vw,1.15rem);color:var(--paper);">' + esc(z.name[lang]) + "</span>" +
@@ -421,42 +417,19 @@
     }
 
     var vip = ZONES[0], std = ZONES[1];
-    var perksHtml = "";
-    if (selZone) {
-      var perks = selZone.perks[lang].map(function (p) {
-        return '<li style="display:flex;gap:.55rem;font-family:var(--body);font-size:.72rem;line-height:1.45;color:var(--paper);"><span style="color:var(--hot);flex-shrink:0;">◈</span>' + esc(p) + "</li>";
-      }).join("");
-      perksHtml = (
-        '<div style="margin-top:.9rem;border:1px solid rgba(255,134,189,.3);border-radius:.45rem;padding:1rem 1.15rem;background:rgba(23,0,6,.4);">' +
-          '<div style="font-family:var(--mono);font-size:.53rem;letter-spacing:.12em;color:var(--muted);">' + esc(tt.includes) + "</div>" +
-          '<ul class="perks-list" style="margin:.5rem 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.4rem;">' + perks + "</ul>" +
-        "</div>"
-      );
-    }
 
     var content = (
-      '<div>' +
-        '<h3 style="margin:0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.3rem,3vw,2rem);color:var(--paper);">' + esc(tt.chooseZone) + "</h3>" +
-        '<p style="margin:.55rem 0 0;font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;color:var(--pink);text-wrap:pretty;">' + ("0" + (state.stopIndex + 1)).slice(-2) + " · " + esc(cur.city[lang]) + " — " + esc(cur.venue[lang]) + " · " + cur.date + "</p>" +
+      '<div style="max-width:28rem;">' +
+        '<p style="margin:0;font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;color:var(--pink);text-wrap:pretty;">' + esc(cur.city[lang]) + " — " + esc(cur.venue[lang]) + " · " + cur.date + "</p>" +
         '<div style="margin-top:1.1rem;background:radial-gradient(ellipse at 50% -10%,rgba(236,0,80,.32),transparent 62%),#1c0009;border:1px solid rgba(255,134,189,.15);border-radius:.45rem;padding:clamp(.9rem,2.5vw,1.5rem);display:flex;flex-direction:column;gap:.6rem;">' +
-            '<div class="stage-deco" style="text-align:center;font-family:var(--mono);font-size:.54rem;letter-spacing:.4em;color:var(--muted);">STAGE</div>' +
-            '<div class="stage-deco" style="height:.4rem;border-radius:99px;background:linear-gradient(90deg,transparent,var(--hot),transparent);box-shadow:0 0 22px var(--hot);"></div>' +
+            '<div style="text-align:center;font-family:var(--mono);font-size:.54rem;letter-spacing:.4em;color:var(--muted);">STAGE</div>' +
+            '<div style="height:.4rem;border-radius:99px;background:linear-gradient(90deg,transparent,var(--hot),transparent);box-shadow:0 0 22px var(--hot);"></div>' +
             mapBtn(vip) + mapBtn(std) +
         "</div>" +
-        perksHtml +
       "</div>"
     );
 
-    var footer = selZone
-      ? (
-        '<div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">' +
-          '<div style="font-family:var(--mono);font-size:.68rem;color:var(--muted);white-space:nowrap;">' + selZone.tier + ' · <span style="color:var(--hot);font-weight:700;">◈' + selZone.price + "</span></div>" +
-          '<button type="button" data-act="toName" class="btn-cta" style="flex-shrink:0;font-family:var(--mono);font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;padding:.85rem 1.4rem;border:0;border-radius:.3rem;cursor:pointer;box-shadow:0 8px 22px rgba(236,0,80,.4);">' + esc(tt.next) + " →</button>" +
-        "</div>"
-      )
-      : '<div style="text-align:center;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;color:var(--muted);padding:.65rem 0;">' + esc(tt.pickZoneHint) + "</div>";
-
-    return { content: content, footer: footer };
+    return { content: content, footer: "" };
   }
 
   function renderNameStep() {
@@ -467,8 +440,7 @@
     var canIssue = !!state.zoneId && state.name.trim().length > 0;
     var content = (
       '<div style="max-width:34rem;">' +
-        '<h3 style="margin:0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.3rem,3vw,2rem);color:var(--paper);">' + esc(tt.nameStep) + "</h3>" +
-        '<div style="margin-top:1.1rem;padding:.9rem 1.1rem;border:1px solid rgba(255,134,189,.2);border-radius:.4rem;background:rgba(23,0,6,.4);font-family:var(--mono);font-size:.66rem;line-height:1.7;color:var(--muted);">' +
+        '<div style="padding:.9rem 1.1rem;border:1px solid rgba(255,134,189,.2);border-radius:.4rem;background:rgba(23,0,6,.4);font-family:var(--mono);font-size:.66rem;line-height:1.7;color:var(--muted);">' +
           '<div style="color:var(--paper);">' + esc(cur.city[lang]) + " · " + esc(cur.venue[lang]) + "</div>" +
           "<div>" + cur.date + " · " + selZone.tier + " — " + esc(selZone.name[lang]) + ' · <span style="color:var(--hot);">◈' + selZone.price + "</span></div>" +
         "</div>" +
@@ -510,7 +482,6 @@
 
     var content = (
       '<div>' +
-        '<h3 style="margin:0 0 1.2rem;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.3rem,3vw,2rem);color:var(--paper);">✓ ' + esc(tt.ticketReady) + "</h3>" +
         '<div style="display:flex;flex-wrap:wrap;border:2px solid var(--pink);border-radius:.5rem;overflow:hidden;background:linear-gradient(135deg,#3a0014,#170006 55%,#4c001a);box-shadow:0 20px 60px rgba(0,0,0,.5);">' +
           '<div style="flex:1;min-width:15rem;padding:clamp(1.1rem,3vw,1.7rem);position:relative;">' +
             '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:.5rem;flex-wrap:wrap;">' +
@@ -550,18 +521,21 @@
   function renderModal() {
     if (!state.open) return "";
     var tt = t();
-    var stepMap = { zone: { no: "01", label: tt.chooseZone }, name: { no: "02", label: tt.nameStep }, ticket: { no: "03", label: tt.ticketReady } };
-    var sm = stepMap[state.step];
+    var stepLabel = { zone: tt.chooseZone, name: tt.nameStep, ticket: tt.ticketReady }[state.step];
     var parts = state.step === "zone" ? renderZoneStep() : state.step === "name" ? renderNameStep() : renderTicketStep();
+    var backdropClass = "modal-backdrop" + (state.step === "name" ? " modal-anchor-top" : "");
+    var footerHtml = parts.footer
+      ? '<div style="position:sticky;bottom:0;z-index:2;margin-top:auto;padding:.9rem clamp(1.2rem,3.5vw,2.4rem) clamp(1.1rem,3vw,1.6rem);background:linear-gradient(0deg,var(--wine) 78%,rgba(58,0,20,.98) 92%,rgba(58,0,20,.85));border-top:1px solid rgba(255,134,189,.15);">' + parts.footer + "</div>"
+      : "";
     return (
-      '<div id="modalBackdrop" class="modal-backdrop" data-act="backdrop" style="position:fixed;inset:0;z-index:100;background:rgba(8,0,4,.9);display:flex;align-items:center;justify-content:center;padding:clamp(.6rem,3vw,2rem);overflow-y:auto;">' +
+      '<div id="modalBackdrop" class="' + backdropClass + '" data-act="backdrop" style="position:fixed;inset:0;z-index:100;background:rgba(8,0,4,.9);display:flex;align-items:center;justify-content:center;padding:clamp(.6rem,3vw,2rem);overflow-y:auto;">' +
         '<div style="width:min(940px,100%);max-height:94svh;overflow:auto;background:linear-gradient(165deg,var(--wine),var(--ink));border:1px solid rgba(255,134,189,.28);border-radius:.6rem;box-shadow:0 30px 90px rgba(0,0,0,.6);animation:popIn 260ms ease-out;display:flex;flex-direction:column;">' +
           '<div style="position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1.1rem,3vw,2rem);background:linear-gradient(180deg,var(--wine),rgba(58,0,20,.96));border-bottom:1px solid rgba(255,134,189,.15);">' +
-            '<div style="font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.14em;color:var(--pink);">' + sm.no + ' / 03 · <span style="color:var(--paper);">' + esc(sm.label) + "</span></div>" +
+            '<div style="font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.05rem;color:var(--paper);">' + esc(stepLabel) + "</div>" +
             '<button type="button" data-act="close" class="modal-close" style="font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.08em;padding:.5rem .75rem;border:1px solid rgba(255,244,247,.25);border-radius:.3rem;background:transparent;color:var(--paper);cursor:pointer;text-transform:uppercase;">✕ ' + esc(tt.close) + "</button>" +
           "</div>" +
-          '<div style="padding:clamp(1.2rem,3.5vw,2.4rem) clamp(1.2rem,3.5vw,2.4rem) .4rem;">' + parts.content + "</div>" +
-          '<div style="position:sticky;bottom:0;z-index:2;margin-top:auto;padding:.9rem clamp(1.2rem,3.5vw,2.4rem) clamp(1.1rem,3vw,1.6rem);background:linear-gradient(0deg,var(--wine) 78%,rgba(58,0,20,.98) 92%,rgba(58,0,20,.85));border-top:1px solid rgba(255,134,189,.15);">' + parts.footer + "</div>" +
+          '<div style="padding:clamp(1.2rem,3.5vw,2.4rem) clamp(1.2rem,3.5vw,2.4rem) ' + (parts.footer ? ".4rem" : "clamp(1.2rem,3.5vw,2.4rem)") + ';">' + parts.content + "</div>" +
+          footerHtml +
         "</div>" +
       "</div>"
     );
@@ -804,14 +778,8 @@
 
   function selectZone(id) {
     state.zoneId = id;
+    state.step = "name";
     render();
-  }
-
-  function toName() {
-    if (state.zoneId) {
-      state.step = "name";
-      render();
-    }
   }
 
   function backToZone() {
@@ -996,7 +964,6 @@
     else if (act === "book") openBooking(parseInt(el.dataset.idx, 10));
     else if (act === "close") closeBooking();
     else if (act === "selectZone") selectZone(el.dataset.zone);
-    else if (act === "toName") toName();
     else if (act === "backToZone") backToZone();
     else if (act === "issue") issue();
     else if (act === "bookAnother") bookAnother();
