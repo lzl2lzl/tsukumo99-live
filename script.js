@@ -140,24 +140,25 @@
     cheerFrameImgs.push(new Image());
   }
   // The 7 wave frames (~440KB together) are only needed once someone taps
-  // the widget, not for first paint — loading them eagerly alongside
-  // hero.avif/cheer-still.webp was competing for bandwidth on slow mobile
-  // connections and was a big part of why even the idle floating widget
-  // took a long time to show up. Defer them until after everything else
-  // the initial view needs has already loaded.
+  // the widget, not for first paint. Waiting for window.load before even
+  // starting their fetch (an earlier attempt at this) backfired on slow
+  // connections: `load` doesn't fire until literally everything on the
+  // page is done, so on a bad network the frames didn't start downloading
+  // until well after the page had already been sitting there for a while,
+  // stacking their own download time on top of that. Instead, start them
+  // immediately but mark them low priority so hero/still still win the
+  // bandwidth race — they arrive sooner this way on both fast and slow
+  // connections.
   function loadCheerFrames() {
     if (cheerFrameImgs[0].src) return;
     for (var i = 0; i < CHEER_FRAME_COUNT; i++) {
       cheerFrameImgs[i].src = "assets/cheer-frame-" + i + ".webp";
     }
   }
-  if (document.readyState === "complete") {
-    setTimeout(loadCheerFrames, 300);
-  } else {
-    window.addEventListener("load", function () {
-      setTimeout(loadCheerFrames, 300);
-    });
-  }
+  cheerFrameImgs.forEach(function (img) {
+    img.fetchPriority = "low";
+  });
+  loadCheerFrames();
 
   function paintCheerCanvas(canvas, img) {
     if (!canvas || !img || !img.complete || !img.naturalWidth) return;
