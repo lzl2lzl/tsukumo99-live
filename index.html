@@ -240,7 +240,7 @@ main{display:block;position:relative;z-index:2;background:var(--ink);}
     <p class="tourline">World Tour 2026</p>
     <p class="tagline">“Once and for all, dice away.”</p>
     <div class="hero__cta">
-      <button class="btn btn-primary" data-i18n="cta" data-book>购票</button>
+      <a class="btn btn-primary" href="ticket.html" data-i18n="cta">购票</a>
     </div>
   </div>
 
@@ -264,7 +264,7 @@ main{display:block;position:relative;z-index:2;background:var(--ink);}
   <section class="sec" id="live">
     <div class="sec-head reveal">
       <div><p class="sec-ey"><b>02</b>Live</p><h2 class="sec-title">巡演场次</h2></div>
-      <a class="more" href="#" data-book>购票 <span>→</span></a>
+      <a class="more" href="ticket.html">购票 <span>→</span></a>
     </div>
     <div class="reveal">
       <div class="live-row"><span class="no">01</span><span class="city">广州 · SIXFACE</span><span class="date">2026.09.12</span><span class="st ok">余票</span></div>
@@ -291,7 +291,7 @@ main{display:block;position:relative;z-index:2;background:var(--ink);}
     <ul class="idx reveal">
       <li><a href="#"><span class="no">01</span>Top<span class="ar">→</span></a></li>
       <li><a href="news.html"><span class="no">02</span>News<span class="ar">→</span></a></li>
-      <li><a href="#" data-book><span class="no">03</span>Ticket<span class="ar">→</span></a></li>
+      <li><a href="ticket.html"><span class="no">03</span>Ticket<span class="ar">→</span></a></li>
       <li><a href="profile.html"><span class="no">04</span>Profile<span class="ar">→</span></a></li>
       <li><a href="shop.html"><span class="no">05</span>Shop<span class="ar">→</span></a></li>
     </ul>
@@ -312,7 +312,7 @@ main{display:block;position:relative;z-index:2;background:var(--ink);}
   <ul class="menu-list">
     <li><a href="#"><span class="no">01</span>Top</a></li>
     <li><a href="news.html"><span class="no">02</span>News</a></li>
-    <li><a href="#" data-book><span class="no">03</span>Ticket</a></li>
+    <li><a href="ticket.html"><span class="no">03</span>Ticket</a></li>
     <li><a href="profile.html"><span class="no">04</span>Profile</a></li>
     <li><a href="shop.html"><span class="no">05</span>Shop</a></li>
   </ul>
@@ -372,6 +372,5 @@ cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=n
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12,rootMargin:"0px 0px -8% 0px"});
 document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
 </script>
-<script src="booking.js"></script>
 </body>
 </html>

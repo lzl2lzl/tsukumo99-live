@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  // ---- component CSS (buttons / inputs / modal), injected once ----
+  // ---- component CSS (buttons / inputs / flow layout), injected once ----
   var css =
     ".btn-cta{background:var(--hot);color:var(--paper);}" +
     ".btn-cta:hover{background:var(--pink);color:var(--wine);}" +
@@ -12,12 +12,17 @@
     ".btn-outline:hover{border-color:var(--pink)!important;}" +
     ".input-name{background:rgba(23,0,6,.55);color:var(--paper);border-color:rgba(255,134,189,.35)!important;}" +
     ".input-name:focus{border-color:var(--hot)!important;}" +
-    ".modal-close:hover{border-color:var(--hot)!important;color:var(--hot)!important;}" +
     ".stop-book-btn:hover{background:var(--pink);color:var(--wine);}" +
     ".b-row{transition:background .18s ease,box-shadow .18s ease;}" +
     "@media(hover:hover){.b-row:hover{background:linear-gradient(90deg,rgba(236,0,80,.09),transparent 70%);box-shadow:inset 3px 0 0 var(--hot);}}" +
-    "@keyframes popIn{0%{opacity:0;transform:translateY(14px) scale(.97);}100%{opacity:1;transform:translateY(0) scale(1);}}" +
-    ".modal-backdrop.modal-anchor-top{align-items:flex-start!important;}";
+    ".tk-head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:.8rem 1.2rem;justify-content:space-between;margin-bottom:clamp(1.4rem,4vw,2.2rem);}" +
+    ".tk-crumbs{display:flex;gap:.6rem;font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.18em;color:var(--muted);width:100%;}" +
+    ".tk-crumbs span{opacity:.35;}.tk-crumbs span.on{color:var(--pink);opacity:1;}" +
+    ".tk-head h1{margin:.2rem 0 0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.8rem,5.5vw,3.2rem);line-height:.95;}" +
+    ".tk-back{font-family:var(--mono);font-weight:700;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:.5rem 0;background:none;border:0;cursor:pointer;}" +
+    ".tk-back:hover{color:var(--pink);}" +
+    ".tk-body{animation:tkIn .35s ease;}@keyframes tkIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}" +
+    ".tk-foot{margin-top:clamp(1.4rem,4vw,2.2rem);}";
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
   var STOPS = [
@@ -146,22 +151,18 @@
     return { content:content, footer:footer };
   }
 
-  function renderModal(){
-    if(!state.open) return "";
+  function renderFlow(){
     var tt=t();
     var stepLabel={stop:tt.getTickets,zone:tt.chooseZone,name:tt.nameStep,ticket:tt.ticketReady}[state.step];
     var parts=state.step==="stop"?renderStopStep():state.step==="zone"?renderZoneStep():state.step==="name"?renderNameStep():renderTicketStep();
-    var backdropClass="modal-backdrop"+(state.step==="name"?" modal-anchor-top":"");
-    var footerHtml=parts.footer?'<div style="position:sticky;bottom:0;z-index:2;margin-top:auto;padding:.9rem clamp(1.2rem,3.5vw,2.4rem) clamp(1.1rem,3vw,1.6rem);background:linear-gradient(0deg,var(--wine) 78%,rgba(58,0,20,.98) 92%,rgba(58,0,20,.85));border-top:1px solid rgba(255,134,189,.15);">'+parts.footer+'</div>':"";
-    return '<div id="modalBackdrop" class="'+backdropClass+'" style="position:fixed;inset:0;z-index:120;background:rgba(8,0,4,.9);display:flex;align-items:center;justify-content:center;padding:clamp(.6rem,3vw,2rem);overflow-y:auto;">'+
-      '<div style="width:min(940px,100%);max-height:94svh;overflow:auto;background:linear-gradient(165deg,var(--wine),var(--ink));border:1px solid rgba(255,134,189,.28);border-radius:.6rem;box-shadow:0 30px 90px rgba(0,0,0,.6);animation:popIn 260ms ease-out;display:flex;flex-direction:column;">'+
-        '<div style="position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem clamp(1.1rem,3vw,2rem);background:linear-gradient(180deg,var(--wine),rgba(58,0,20,.96));border-bottom:1px solid rgba(255,134,189,.15);">'+
-          '<div style="font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.05rem;color:var(--paper);">'+esc(stepLabel)+'</div>'+
-          '<button type="button" data-act="close" class="modal-close" style="font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.08em;padding:.5rem .75rem;border:1px solid rgba(255,244,247,.25);border-radius:.3rem;background:transparent;color:var(--paper);cursor:pointer;text-transform:uppercase;">✕ '+esc(tt.close)+'</button>'+
-        '</div>'+
-        '<div style="padding:clamp(1.2rem,3.5vw,2.4rem) clamp(1.2rem,3.5vw,2.4rem) '+(parts.footer?".4rem":"clamp(1.2rem,3.5vw,2.4rem)")+';">'+parts.content+'</div>'+
-        footerHtml+
-      '</div></div>';
+    var order=["stop","zone","name","ticket"],idx=order.indexOf(state.step);
+    var crumbs=order.map(function(s,i){return '<span class="'+(i<=idx?"on":"")+'">'+("0"+(i+1)).slice(-2)+'</span>';}).join('<span style="opacity:.25;">·</span>');
+    var back="";
+    if(state.step==="zone")back='<button type="button" data-act="backToStop" class="tk-back">← '+esc(tt.back)+'</button>';
+    else if(state.step==="name")back='<button type="button" data-act="backToZone" class="tk-back">← '+esc(tt.back)+'</button>';
+    return '<div class="tk-head"><div class="tk-crumbs">'+crumbs+'</div><h1>'+esc(stepLabel)+'</h1>'+back+'</div>'+
+      '<div class="tk-body">'+parts.content+'</div>'+
+      (parts.footer?'<div class="tk-foot">'+parts.footer+'</div>':"");
   }
 
   // ---- ticket PNG (preserved) ----
@@ -224,17 +225,18 @@
     state.ticket={stopIndex:state.stopIndex,zoneId:z.id,name:state.name.trim(),ticketNo:"ZL-DIZ-"+s.code+z.code+"-"+r(4),row:row,seat:seat};
     state.step="ticket";render();
   }
-  function pickStop(i){state.stopIndex=i;state.step="zone";render();}
-  function selectZone(id){state.zoneId=id;state.step="name";render();}
-  function backToZone(){state.step="zone";render();}
-  function bookAnother(){state.step="stop";state.stopIndex=null;state.zoneId=null;state.name="";state.ticket=null;render();}
-  function close(){state.open=false;document.body.style.overflow="";render();}
+  function scrollTop(){try{window.scrollTo({top:0,behavior:"smooth"});}catch(e){window.scrollTo(0,0);}}
+  function pickStop(i){state.stopIndex=i;state.step="zone";render();scrollTop();}
+  function selectZone(id){state.zoneId=id;state.step="name";render();scrollTop();}
+  function backToStop(){state.step="stop";state.zoneId=null;render();scrollTop();}
+  function backToZone(){state.step="zone";render();scrollTop();}
+  function bookAnother(){state.step="stop";state.stopIndex=null;state.zoneId=null;state.name="";state.ticket=null;render();scrollTop();}
 
   function onAct(e){
     var el=e.currentTarget,act=el.dataset.act;
-    if(act==="close")close();
-    else if(act==="pickStop")pickStop(parseInt(el.dataset.idx,10));
+    if(act==="pickStop")pickStop(parseInt(el.dataset.idx,10));
     else if(act==="selectZone")selectZone(el.dataset.zone);
+    else if(act==="backToStop")backToStop();
     else if(act==="backToZone")backToZone();
     else if(act==="issue")issue();
     else if(act==="bookAnother")bookAnother();
@@ -250,32 +252,22 @@
   function wireEvents(){
     var acts=root.querySelectorAll("[data-act]");
     for(var i=0;i<acts.length;i++)acts[i].addEventListener("click",onAct);
-    var bd=document.getElementById("modalBackdrop");
-    if(bd)bd.addEventListener("click",function(e){if(e.target===bd)close();});
     var ni=document.getElementById("nameInput");
     if(ni){ni.focus();var v=ni.value;ni.value="";ni.value=v;ni.addEventListener("input",onNameInput);ni.addEventListener("keydown",function(e){if(e.key==="Enter")issue();});}
   }
   function render(){
-    if(!root){root=document.createElement("div");root.id="bookingRoot";document.body.appendChild(root);}
-    root.innerHTML=renderModal();
-    if(state.open)wireEvents();
+    if(!root)return;
+    root.innerHTML=renderFlow();
+    wireEvents();
   }
 
-  function open(i){
+  // ---- init: this runs on the ticket page (needs a #ticketFlow container) ----
+  root=document.getElementById("ticketFlow");
+  if(root){
     if(window.DiZLang&&T[window.DiZLang])state.lang=window.DiZLang;
-    state.open=true;
-    if(typeof i==="number"){state.stopIndex=i;state.step="zone";}else{state.step="stop";state.stopIndex=null;}
-    state.zoneId=null;state.name="";state.ticket=null;
-    document.body.style.overflow="hidden";render();
+    var params=new URLSearchParams(location.search);
+    var sp=params.get("stop");
+    if(sp!=null&&sp!==""&&!isNaN(sp)){state.stopIndex=parseInt(sp,10);state.step="zone";}
+    render();
   }
-
-  window.Booking={ open:open };
-  // auto-wire any [data-book] trigger (optional idx via data-idx)
-  document.addEventListener("click",function(e){
-    var el=e.target.closest("[data-book]");
-    if(!el)return;
-    e.preventDefault();
-    var idx=el.getAttribute("data-idx");
-    open(idx!=null&&idx!==""?parseInt(idx,10):undefined);
-  });
 })();
