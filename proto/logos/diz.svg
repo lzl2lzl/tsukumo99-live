@@ -1,0 +1,9 @@
+<svg data-dc-tpl="13" viewBox="0 0 660 320" fill="none">
+          <g data-dc-tpl="14" transform="skewX(-13)" stroke="#fff" stroke-width="46" stroke-linecap="butt" stroke-linejoin="miter" fill="none">
+            <path data-dc-tpl="15" d="M104 286 L104 92 C224 92 258 150 258 189 C258 228 224 286 104 286"></path>
+            <path data-dc-tpl="16" d="M300 168 L300 286"></path>
+            <path data-dc-tpl="17" d="M356 110 L508 110 L366 286 L520 286"></path>
+            <path data-dc-tpl="18" d="M452 78 L506 34"></path>
+          </g>
+          <rect data-dc-tpl="19" x="262" y="104" width="46" height="46" transform="rotate(45 285 127) skewX(-13)" fill="#fff"></rect>
+        </svg>
