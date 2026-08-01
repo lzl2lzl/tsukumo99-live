@@ -1,34 +1,33 @@
 (function(){
   "use strict";
   var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var curtain=document.createElement("div");
-  curtain.className="page-curtain";
-  curtain.setAttribute("aria-hidden","true");
-  var status=document.createElement("p");
-  status.className="page-curtain__status";
-  "LOADING".split("").forEach(function(letter,index){
-    var span=document.createElement("span");
-    span.className="page-curtain__char";
-    span.textContent=letter;
-    span.style.transitionDelay=(index*55)+"ms";
-    status.appendChild(span);
-  });
-  curtain.appendChild(status);
-  document.body.prepend(curtain);
-  var chars=Array.prototype.slice.call(status.children);
-  requestAnimationFrame(function(){chars.forEach(function(char){char.classList.add("is-lit");});});
-  var revealed=false;
-  function reveal(){
-    if(revealed)return;
-    revealed=true;
-    window.setTimeout(function(){
-      curtain.classList.add("is-clear");
-      window.setTimeout(function(){curtain.className="page-curtain is-ready";},reduce?200:760);
-    },reduce?0:430);
+  var arrival=false;
+  try{arrival=sessionStorage.getItem("diz-curtain-arrival")==="1";sessionStorage.removeItem("diz-curtain-arrival");}catch(error){}
+  function makeCurtain(){
+    var el=document.createElement("div");
+    el.className="page-curtain";
+    el.setAttribute("aria-hidden","true");
+    el.innerHTML='<svg class="page-curtain__wave" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0 20 L0 12 Q 12.5 -2 25 8 T 50 8 T 75 8 T 100 8 L100 20 Z" fill="#ec0050"></path></svg><div class="page-curtain__body"></div>';
+    return el;
   }
-  if(document.readyState==="complete")reveal();
-  else window.addEventListener("load",reveal,{once:true});
-  window.setTimeout(reveal,2200);
+  function makeLoader(){
+    var el=document.createElement("div");
+    el.className="page-loader";
+    el.setAttribute("aria-hidden","true");
+    el.innerHTML='<div class="page-loader__meta">TSUKUMO99 · UNOFFICIAL FANWEB</div><svg class="page-loader__word" viewBox="0 0 700 320" aria-hidden="true"><text class="page-loader__stroke" x="70" y="250">D</text><text class="page-loader__stroke" x="265" y="250">i</text><text class="page-loader__stroke" x="335" y="250">Z</text><text class="page-loader__stroke" x="455" y="88">´</text></svg><div class="page-loader__note">请用浏览器打开 · OPEN IN A BROWSER</div>';
+    return el;
+  }
+  var curtain=makeCurtain();
+  document.body.prepend(curtain);
+  if(arrival){
+    curtain.style.transform="translateY(-8%)";
+    requestAnimationFrame(function(){requestAnimationFrame(function(){curtain.style.transform="";curtain.classList.add("is-revealing");});});
+    window.setTimeout(function(){curtain.className="page-curtain";},reduce?220:460);
+  }else{
+    var loader=makeLoader();
+    document.body.prepend(loader);
+    window.setTimeout(function(){loader.classList.add("is-leaving");window.setTimeout(function(){loader.remove();},reduce?170:620);},reduce?80:1500);
+  }
   document.addEventListener("click",function(event){
     var link=event.target.closest("a[href]");
     if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
@@ -37,10 +36,8 @@
     if(url.origin!==window.location.origin||url.pathname===window.location.pathname||link.target==="_blank"||link.hasAttribute("download")||url.protocol==="mailto:"||url.protocol==="tel:")return;
     event.preventDefault();
     document.body.classList.remove("menu-open");
-    curtain.className="page-curtain is-ready";
-    curtain.getBoundingClientRect();
-    curtain.classList.add("is-covering");
-    window.setTimeout(function(){window.location.href=url.href;},reduce?190:600);
+    curtain.className="page-curtain";curtain.style.transform="";curtain.getBoundingClientRect();curtain.classList.add("is-covering");
+    window.setTimeout(function(){try{sessionStorage.setItem("diz-curtain-arrival","1");}catch(error){}window.location.href=url.href;},reduce?190:430);
   });
-  window.addEventListener("pageshow",function(event){if(event.persisted){revealed=false;reveal();}});
+  window.addEventListener("pageshow",function(event){if(event.persisted){curtain.className="page-curtain";curtain.style.transform="";}});
 })();
