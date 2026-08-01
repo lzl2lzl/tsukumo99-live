@@ -272,23 +272,9 @@ main{display:block;position:relative;z-index:2;background:var(--ink);}
     </div>
   </section>
 
-  <section class="sec" id="profile">
-    <div class="sec-head reveal">
-      <div><p class="sec-ey"><b>03</b>Profile</p><h2 class="sec-title">乐队简介</h2></div>
-      <a class="more" href="#">View all <span>→</span></a>
-    </div>
-    <div class="pf-grid reveal">
-      <div class="pf"><span class="n">01</span><span class="q">?</span><span class="nm">Member 01</span></div>
-      <div class="pf"><span class="n">02</span><span class="q">?</span><span class="nm">Member 02</span></div>
-      <div class="pf"><span class="n">03</span><span class="q">?</span><span class="nm">Member 03</span></div>
-      <div class="pf"><span class="n">04</span><span class="q">?</span><span class="nm">Member 04</span></div>
-      <div class="pf"><span class="n">05</span><span class="q">?</span><span class="nm">Member 05</span></div>
-    </div>
-  </section>
-
   <section class="sec" id="shop">
     <div class="sec-head reveal">
-      <div><p class="sec-ey"><b>04</b>Shop</p><h2 class="sec-title">周边</h2></div>
+      <div><p class="sec-ey"><b>03</b>Shop</p><h2 class="sec-title">周边</h2></div>
       <a class="more" href="#">View all <span>→</span></a>
     </div>
     <div class="shop-grid reveal">
@@ -300,13 +286,12 @@ main{display:block;position:relative;z-index:2;background:var(--ink);}
   </section>
 
   <section class="sec" id="index">
-    <div class="sec-head reveal"><div><p class="sec-ey"><b>Index</b>Jump to</p><h2 class="sec-title">Menu</h2></div></div>
+    <div class="sec-head reveal"><div><h2 class="sec-title">Index</h2></div></div>
     <ul class="idx reveal">
       <li><a href="#"><span class="no">01</span>Top<span class="ar">→</span></a></li>
       <li><a href="#news"><span class="no">02</span>News<span class="ar">→</span></a></li>
       <li><a href="#live"><span class="no">03</span>Ticket<span class="ar">→</span></a></li>
-      <li><a href="#profile"><span class="no">04</span>Profile<span class="ar">→</span></a></li>
-      <li><a href="#shop"><span class="no">05</span>Shop<span class="ar">→</span></a></li>
+      <li><a href="#shop"><span class="no">04</span>Shop<span class="ar">→</span></a></li>
     </ul>
   </section>
 
@@ -320,15 +305,13 @@ main{display:block;position:relative;z-index:2;background:var(--ink);}
 </main>
 
 <!-- MENU -->
-<div id="menuScrim"></div>
 <nav id="menu">
   <button class="close" id="close" aria-label="关闭">✕</button>
   <ul class="menu-list">
     <li><a href="#"><span class="no">01</span>Top</a></li>
     <li><a href="#"><span class="no">02</span>News</a></li>
     <li><a href="#"><span class="no">03</span>Ticket</a></li>
-    <li><a href="#"><span class="no">04</span>Profile</a></li>
-    <li><a href="#"><span class="no">05</span>Shop</a></li>
+    <li><a href="#"><span class="no">04</span>Shop</a></li>
   </ul>
   <div class="menu-foot">
     <div class="contact">
@@ -353,10 +336,8 @@ setTimeout(function(){document.getElementById("splash").classList.add("gone");},
 
 // menu  (add ?menu=panel to preview the right-panel variant instead of the translucent fullscreen one)
 var b=document.body;
-if(location.search.indexOf("panel")>=0)b.classList.add("menu-panel");
 document.getElementById("burger").onclick=function(){b.classList.toggle("menu-open");};
 document.getElementById("close").onclick=function(){b.classList.remove("menu-open");};
-document.getElementById("menuScrim").onclick=function(){b.classList.remove("menu-open");};
 
 // language (cta only — text stays minimal)
 var STR={cn:{cta:"购票"},jp:{cta:"チケット"},en:{cta:"TICKET"}};
