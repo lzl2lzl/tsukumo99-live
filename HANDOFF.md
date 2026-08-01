@@ -22,7 +22,7 @@
 - **No real commerce/payment** anywhere. All "checkout" flows are pure front-end simulation collecting **only a name** (printed on the artifact). Never add real payment/data-collection fields.
 - **Everything fictional & obviously so:** venues (fictional chain "SIXFACE + city"), addresses, dates, seats, tickets. Tour = **11 cities / 17 shows** across CN·JP·CA·UK·IT.
 - **A non-official disclaimer must exist**, but per creator: **NOT prominent on the first screen** — a short `TSUKUMO99 · UNOFFICIAL FANWEB` mark up top + the full disclaimer in the footer. Exported artifacts carry `UNOFFICIAL / FAN-MADE, NOT A REAL TICKET`.
-- **⚠️ IP safety:** the earlier working band name **"ŹOOĻ" is DROPPED** — it collides with a real IP (IDOLiSH7's ŹOOĻ). Lead identity is **TSUKUMO99 + DiŹ**. Any future act name must avoid real/existing IP names.
+- **⚠️ IP nuance (important):** this is a **ŹOOĻ / IDOLiSH7 doujin (fan) project**. Per the creator: **do NOT brand the SITE as "ŹOOĻ"** (avoid the group name as the site's own wordmark — lead with **TSUKUMO99 + DiŹ** instead). BUT the **five members' character names ARE used as-is** (Ryo Tsukumo / Torao Mido / Toma Inumaru / Haruka Isumi / Minami Natsume / Shiro Utsugi, with roles) — that's normal doujin fan content, the creator confirmed it. **Do not strip or placeholder the member names.**
 - **Two behaviours must NOT change** from the current live site: (1) the **floating 应援/荧光棒 (cheer) widget stays draggable** (drag = move, tap = wave, no label text); (2) the **PNG ticket export** logic/style (in `script.js`) is untouched.
 
 ## 3. Scope corrections (optimized boundaries)

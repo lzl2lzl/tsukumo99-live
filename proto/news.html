@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#120005" />
+<title>News 企划公告 — TSUKUMO99 · DiŹ [proto]</title>
+<style>
+@font-face{font-family:"Oswald";font-weight:300 700;font-display:swap;src:url("../assets/fonts/oswald-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+2122;}
+@font-face{font-family:"Oswald";font-weight:300 700;font-display:swap;src:url("../assets/fonts/oswald-latin-ext.woff2") format("woff2");unicode-range:U+0100-024F,U+1E00-1EFF,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Space Mono";font-weight:400;font-display:swap;src:url("../assets/fonts/spacemono-400-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+2000-206F;}
+@font-face{font-family:"Space Mono";font-weight:700;font-display:swap;src:url("../assets/fonts/spacemono-700-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+2000-206F;}
+:root{color-scheme:dark;--ink:#120005;--wine:#3a0014;--crimson:#8d002c;--hot:#ec0050;--pink:#ff86bd;--paper:#fff4f7;--muted:#e4afbf;
+  --gold:#e0cfab;--green:#a6c9ae;--blue:#b6bccd;
+  --display:"Oswald","Noto Sans SC","Noto Sans JP",sans-serif;--mono:"Space Mono",ui-monospace,monospace;--body:"Noto Sans SC","Noto Sans JP",system-ui,sans-serif;}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{min-height:100svh;background:radial-gradient(130% 90% at 84% -8%,var(--wine),var(--ink) 56%),var(--ink);color:var(--paper);font-family:var(--body);overflow-x:hidden;-webkit-tap-highlight-color:transparent;}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
+a{color:inherit;text-decoration:none;}
+::selection{background:var(--hot);color:var(--paper);}
+
+/* ---- shared chrome: topbar ---- */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;justify-content:space-between;
+  padding:clamp(.9rem,2.5vw,1.4rem) clamp(1.1rem,4vw,2.4rem);background:linear-gradient(180deg,rgba(18,0,5,.7),transparent);}
+.brand{display:flex;flex-direction:column;gap:.18rem;line-height:1;font-family:var(--mono);}
+.brand b{color:var(--paper);font-size:.72rem;letter-spacing:.32em;}
+.brand em{font-style:normal;font-size:.45rem;letter-spacing:.26em;color:var(--muted);opacity:.7;}
+.topbar-right{display:flex;align-items:center;gap:1.1rem;}
+.lang{display:flex;gap:.55rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;}
+.lang button{color:var(--muted);opacity:.7;padding:.2rem 0;position:relative;text-transform:uppercase;}
+.lang button.on{color:var(--paper);opacity:1;}
+.lang button.on::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:2px;background:var(--hot);}
+.burger{width:34px;height:20px;position:relative;}
+.burger span{position:absolute;left:0;right:0;height:2px;background:var(--paper);transition:transform .5s cubic-bezier(.7,0,.2,1),opacity .35s;}
+.burger span:nth-child(1){top:0}.burger span:nth-child(2){top:9px}.burger span:nth-child(3){top:18px}
+body.menu-open .burger span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+body.menu-open .burger span:nth-child(2){opacity:0}
+body.menu-open .burger span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+
+/* ---- shared chrome: menu A ---- */
+#menu{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;padding:clamp(4.6rem,12vw,6rem) clamp(1.4rem,6vw,4rem) clamp(1.4rem,5vw,3rem);
+  background:rgba(16,0,6,.72);backdrop-filter:blur(20px) saturate(1.15);-webkit-backdrop-filter:blur(20px) saturate(1.15);
+  clip-path:inset(0 0 100% 0);transition:clip-path .7s cubic-bezier(.7,0,.2,1);pointer-events:none;}
+body.menu-open #menu{clip-path:inset(0 0 0 0);pointer-events:auto;}
+#menu .close{position:absolute;top:clamp(1.1rem,3vw,1.8rem);right:clamp(1.1rem,4vw,2.4rem);font-family:var(--mono);font-size:1.4rem;color:var(--paper);}
+.menu-list{list-style:none;margin:0;padding:0;flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(.1rem,1.4vh,.6rem);}
+.menu-list li{overflow:hidden;}
+.menu-list a{display:flex;align-items:baseline;gap:1rem;padding:.35rem 0;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(2.4rem,9vw,5rem);line-height:1.02;letter-spacing:-.01em;color:var(--paper);
+  transform:translateY(115%);transition:transform .6s cubic-bezier(.2,.7,.2,1),color .25s;}
+.menu-list a .no{font-family:var(--mono);font-weight:400;font-size:.7rem;letter-spacing:.1em;color:var(--muted);opacity:0;transition:opacity .4s;}
+.menu-list a:hover,.menu-list a.here{color:var(--pink);}
+body.menu-open .menu-list a{transform:translateY(0);}
+body.menu-open .menu-list a .no{opacity:1;}
+body.menu-open .menu-list li:nth-child(1) a{transition-delay:.08s}
+body.menu-open .menu-list li:nth-child(2) a{transition-delay:.16s}
+body.menu-open .menu-list li:nth-child(3) a{transition-delay:.24s}
+body.menu-open .menu-list li:nth-child(4) a{transition-delay:.32s}
+.menu-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;border-top:1px solid rgba(255,134,189,.16);padding-top:1.2rem;font-family:var(--mono);}
+.menu-foot .contact{font-size:.72rem;letter-spacing:.06em;color:var(--paper);}
+.menu-foot .contact b{display:block;color:var(--pink);font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;margin-bottom:.35rem;}
+.menu-foot .mk{font-size:.5rem;letter-spacing:.2em;color:var(--muted);opacity:.6;text-transform:uppercase;text-align:right;}
+
+/* ---- page: news ---- */
+.wrap{max-width:960px;margin:0 auto;padding:clamp(5.4rem,13vw,8rem) clamp(1.2rem,5vw,2.6rem) clamp(3rem,8vh,5rem);}
+.phead .ey{font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.28em;color:var(--pink);text-transform:uppercase;margin:0;}
+.phead .ey b{color:var(--muted);margin-right:.6rem;font-weight:400;}
+.phead h1{margin:.4rem 0 0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2.2rem,7vw,4rem);line-height:.9;}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;margin:clamp(1.4rem,3vw,2rem) 0 0;}
+.chip{font-family:var(--mono);font-weight:700;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem .85rem;border:1px solid rgba(255,134,189,.33);border-radius:999px;color:var(--pink);transition:background .2s,color .2s,border-color .2s;}
+.chip[data-cat="all"]{color:var(--pink);}
+.chip.on{background:var(--pink);color:var(--wine);border-color:var(--pink);}
+.list{margin:clamp(1.4rem,3vw,2rem) 0 0;border-top:1px solid rgba(255,134,189,.16);}
+.row{border-bottom:1px solid rgba(255,134,189,.12);}
+.row.hide{display:none;}
+.row-head{display:flex;align-items:baseline;gap:clamp(.8rem,2.5vw,1.6rem);flex-wrap:wrap;padding:clamp(.95rem,2.4vw,1.35rem) .3rem;cursor:pointer;}
+.row-head time{flex:0 0 auto;font-family:var(--mono);font-weight:700;font-size:.72rem;letter-spacing:.06em;color:var(--muted);min-width:5.6rem;}
+.tag{flex:0 0 auto;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;padding:.18rem .55rem;border:1px solid;}
+.tag.巡演{color:var(--pink);border-color:rgba(255,134,189,.4);}
+.tag.购票{color:var(--hot);border-color:rgba(236,0,80,.5);}
+.tag.周边{color:var(--gold);border-color:rgba(224,207,171,.4);}
+.tag.站点{color:var(--green);border-color:rgba(166,201,174,.4);}
+.tag.声明{color:var(--blue);border-color:rgba(182,188,205,.4);}
+.row-head .t{flex:1 1 16rem;min-width:12rem;font-size:clamp(.86rem,1.5vw,1rem);line-height:1.5;text-wrap:pretty;}
+.row-head .cv{flex:0 0 auto;font-family:var(--mono);color:var(--pink);opacity:.7;transition:transform .4s cubic-bezier(.16,1,.3,1);}
+.row.open .row-head .cv{transform:rotate(180deg);}
+.row-body{overflow:hidden;max-height:0;opacity:0;transition:max-height .5s cubic-bezier(.16,1,.3,1),opacity .4s;}
+.row.open .row-body{max-height:16rem;opacity:1;}
+.row-body p{margin:0;padding:0 .3rem clamp(1rem,2.4vw,1.4rem) 6.6rem;font-size:.8rem;line-height:1.75;color:rgba(255,244,247,.5);max-width:56ch;text-wrap:pretty;}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1);}
+.reveal.in{opacity:1;transform:none;}
+.note{margin-top:clamp(2rem,5vh,3.4rem);font-family:var(--mono);font-size:.56rem;letter-spacing:.06em;color:var(--muted);opacity:.6;}
+
+/* ---- shared chrome: cheer ---- */
+#cheer{position:fixed;z-index:70;right:clamp(.8rem,3vw,1.6rem);bottom:clamp(.8rem,3vw,1.6rem);width:clamp(64px,13vw,92px);touch-action:none;filter:drop-shadow(0 .6rem 1rem rgba(18,0,5,.5));}
+#cheer img{width:100%;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;}
+
+@media (max-width:760px){.lang{display:none;}.row-body p{padding-left:.3rem;}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important;}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html"><b>TSUKUMO99</b><em>UNOFFICIAL FANWEB</em></a>
+  <div class="topbar-right">
+    <div class="lang"><button class="on" data-lang="cn">CN</button><button data-lang="jp">JP</button><button data-lang="en">EN</button></div>
+    <button class="burger" id="burger" aria-label="菜单"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<nav id="menu">
+  <button class="close" id="close" aria-label="关闭">✕</button>
+  <ul class="menu-list">
+    <li><a href="index.html"><span class="no">01</span>Top</a></li>
+    <li><a class="here" href="news.html"><span class="no">02</span>News</a></li>
+    <li><a href="index.html#live"><span class="no">03</span>Ticket</a></li>
+    <li><a href="shop.html"><span class="no">04</span>Shop</a></li>
+  </ul>
+  <div class="menu-foot">
+    <div class="contact"><b>Contact</b>小红书 @TSUKUMO99</div>
+    <div class="mk">UNOFFICIAL FAN-MADE<br/>NOT A REAL TICKET</div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="phead reveal">
+    <p class="ey"><b>02</b>News</p>
+    <h1>企划公告</h1>
+  </div>
+
+  <div class="filters reveal">
+    <button class="chip on" data-cat="all">全部</button>
+    <button class="chip" data-cat="巡演">巡演</button>
+    <button class="chip" data-cat="购票">购票</button>
+    <button class="chip" data-cat="周边">周边</button>
+    <button class="chip" data-cat="站点">站点</button>
+    <button class="chip" data-cat="声明">声明</button>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <p class="note">虚构占位公告，待补真实文案。点标题展开详情，分类可筛选，滚动逐条淡入。此页不生成任何 PNG。</p>
+</main>
+
+<button id="cheer" aria-label="应援挥舞荧光棒"><img id="cheerImg" src="../assets/cheer-still.webp" alt="荧光棒" /></button>
+
+<script>
+var b=document.body;
+document.getElementById("burger").onclick=function(){b.classList.toggle("menu-open");};
+document.getElementById("close").onclick=function(){b.classList.remove("menu-open");};
+
+// news data (placeholder)
+var NEWS=[
+  ["2026.08.02","巡演","北京站 · 今夜开演，现场应援指南公开"],
+  ["2026.07.26","巡演","广州站 · 余票紧张，建议尽早投骰选座"],
+  ["2026.07.18","巡演","上海站 · 巡演首夜，DiŹ 正式启程"],
+  ["2026.07.15","站点","加载页与骰子交互更新，拨动开关掷骰登场"],
+  ["2026.07.08","声明","关于本站为非官方同人企划的说明（更新）"],
+  ["2026.07.01","购票","电子票 PNG 出票支持离线保存与打印无料"],
+  ["2026.06.20","巡演","上海站 · 追加场决定"],
+  ["2026.06.14","站点","主视觉「Once and for all, dice away」公开"],
+  ["2026.06.10","周边","云购物上线：挑选 → 只填名 → 可打印无料收藏"],
+  ["2026.06.03","购票","「投骰子」抽座 / 整理番号 购票功能上线"]
+];
+var list=document.getElementById("list");
+NEWS.forEach(function(n){
+  var row=document.createElement("div");row.className="row reveal";row.dataset.cat=n[1];
+  row.innerHTML='<div class="row-head"><time>'+n[0]+'</time><span class="tag '+n[1]+'">'+n[1]+'</span><span class="t">'+n[2]+'</span><span class="cv">⌄</span></div>'+
+    '<div class="row-body"><p>占位正文 —— 这里之后放这条公告的详细内容。现在只是示意用的轻文字，方便你看展开后的样式与留白。</p></div>';
+  row.querySelector(".row-head").onclick=function(){row.classList.toggle("open");};
+  list.appendChild(row);
+});
+
+// filter
+document.querySelectorAll(".chip").forEach(function(c){
+  c.onclick=function(){
+    document.querySelectorAll(".chip").forEach(function(x){x.classList.remove("on");});c.classList.add("on");
+    var cat=c.dataset.cat;
+    document.querySelectorAll(".row").forEach(function(r){r.classList.toggle("hide",cat!=="all"&&r.dataset.cat!==cat);});
+  };
+});
+
+// language (labels stay; minimal)
+document.querySelectorAll(".lang button").forEach(function(btn){btn.onclick=function(){document.querySelectorAll(".lang button").forEach(function(x){x.classList.remove("on");});btn.classList.add("on");};});
+
+// reveal
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
+
+// cheer draggable + wave
+var frames=[];for(var i=0;i<7;i++){frames.push("../assets/cheer-frame-"+i+".webp");new Image().src=frames[i];}
+var cheer=document.getElementById("cheer"),cImg=document.getElementById("cheerImg"),playing=false,drag=null;
+function wave(){if(playing)return;playing=true;var n=0,loops=0;var t=setInterval(function(){cImg.src=frames[n];n++;if(n>=7){n=0;loops++;if(loops>=2){clearInterval(t);cImg.src="../assets/cheer-still.webp";playing=false;}}},80);}
+cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRect();drag={dx:e.clientX-r.left,dy:e.clientY-r.top,moved:false};cheer.setPointerCapture(e.pointerId);});
+cheer.addEventListener("pointermove",function(e){if(!drag)return;if(Math.abs(e.movementX)+Math.abs(e.movementY)>1)drag.moved=true;var w=cheer.offsetWidth,h=cheer.offsetHeight;var nx=Math.max(4,Math.min(innerWidth-w-4,e.clientX-drag.dx)),ny=Math.max(4,Math.min(innerHeight-h-4,e.clientY-drag.dy));cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";});
+cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
+</script>
+</body>
+</html>
