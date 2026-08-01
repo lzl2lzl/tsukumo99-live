@@ -53,10 +53,12 @@ body.menu-open .burger span:nth-child(3){transform:translateY(-9px) rotate(-45de
 
 /* ---------- HERO ---------- */
 .hero{position:relative;min-height:100svh;min-height:100vh;overflow:hidden;display:flex;align-items:flex-end;}
-.hero__img{position:absolute;inset:0;background:#1a0008 url("../assets/hero.avif") no-repeat;background-size:cover;background-position:54% 18%;filter:saturate(1.05) contrast(1.03);}
+.hero__ambient{position:absolute;inset:0;background:#160007 url("../assets/hero.avif") center/cover no-repeat;filter:blur(48px) brightness(.4) saturate(1.2);transform:scale(1.2);}
+.hero__art{position:absolute;top:0;right:0;height:100%;width:auto;max-width:64%;object-fit:contain;object-position:right center;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26%);mask-image:linear-gradient(90deg,transparent 0,#000 26%);}
 .hero__scrim{position:absolute;inset:0;background:
-  radial-gradient(120% 80% at 78% 25%,transparent 0%,rgba(18,0,5,.15) 45%,rgba(18,0,5,.82) 100%),
-  linear-gradient(180deg,rgba(18,0,5,.5) 0%,transparent 22% 46%,rgba(18,0,5,.6) 78%,rgba(18,0,5,.96) 100%);}
+  linear-gradient(90deg,rgba(18,0,5,.9) 0%,rgba(18,0,5,.45) 40%,transparent 72%),
+  linear-gradient(180deg,rgba(18,0,5,.35) 0%,transparent 30% 55%,rgba(18,0,5,.55) 80%,rgba(18,0,5,.96) 100%);}
 .hero__spot{position:absolute;inset:0;background:radial-gradient(60% 50% at 30% 40%,rgba(236,0,80,.18),transparent 70%);mix-blend-mode:screen;animation:sweep 7s ease-in-out infinite;}
 @keyframes sweep{0%,100%{opacity:.35}50%{opacity:.7}}
 .hero__inner{position:relative;z-index:2;width:100%;padding:0 clamp(1.2rem,5vw,3.4rem) clamp(2rem,5vh,3.4rem);}
@@ -114,7 +116,9 @@ body.menu-panel .menu-list a{font-size:clamp(1.9rem,5vw,2.7rem);}
 #cheer img{width:100%;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;}
 
 @media (max-width:760px){
-  .hero__img{background-position:54% 8%;}
+  .hero__ambient{display:none;}
+  .hero__art{width:100%;max-width:100%;left:0;right:auto;object-fit:cover;object-position:54% 8%;-webkit-mask-image:none;mask-image:none;}
+  .hero__scrim{background:linear-gradient(180deg,rgba(18,0,5,.5) 0%,transparent 26% 50%,rgba(18,0,5,.66) 78%,rgba(18,0,5,.97) 100%);}
   .lang{display:none;}
 }
 @media (prefers-reduced-motion:reduce){
@@ -161,7 +165,8 @@ body.menu-panel .menu-list a{font-size:clamp(1.9rem,5vw,2.7rem);}
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero__img"></div>
+  <div class="hero__ambient"></div>
+  <img class="hero__art" src="../assets/hero.avif" alt="" />
   <div class="hero__scrim"></div>
   <div class="hero__spot"></div>
 
