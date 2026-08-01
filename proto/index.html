@@ -53,12 +53,11 @@ body.menu-open .burger span:nth-child(3){transform:translateY(-9px) rotate(-45de
 
 /* ---------- HERO ---------- */
 .hero{position:relative;min-height:100svh;min-height:100vh;overflow:hidden;display:flex;align-items:flex-end;}
-.hero__ambient{position:absolute;inset:0;background:#160007 url("../assets/hero.avif") center/cover no-repeat;filter:blur(48px) brightness(.4) saturate(1.2);transform:scale(1.2);}
-.hero__art{position:absolute;top:0;right:0;height:100%;width:auto;max-width:64%;object-fit:contain;object-position:right center;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26%);mask-image:linear-gradient(90deg,transparent 0,#000 26%);}
+.hero__ambient{display:none;}
+.hero__art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%;}
 .hero__scrim{position:absolute;inset:0;background:
-  linear-gradient(90deg,rgba(18,0,5,.9) 0%,rgba(18,0,5,.45) 40%,transparent 72%),
-  linear-gradient(180deg,rgba(18,0,5,.35) 0%,transparent 30% 55%,rgba(18,0,5,.55) 80%,rgba(18,0,5,.96) 100%);}
+  linear-gradient(90deg,rgba(18,0,5,.92) 0%,rgba(18,0,5,.5) 34%,rgba(18,0,5,.12) 60%,transparent 80%),
+  linear-gradient(180deg,transparent 42%,rgba(18,0,5,.5) 74%,rgba(18,0,5,.97) 100%);}
 .hero__spot{position:absolute;inset:0;background:radial-gradient(60% 50% at 30% 40%,rgba(236,0,80,.18),transparent 70%);mix-blend-mode:screen;animation:sweep 7s ease-in-out infinite;}
 @keyframes sweep{0%,100%{opacity:.35}50%{opacity:.7}}
 .hero__inner{position:relative;z-index:2;width:100%;padding:0 clamp(1.2rem,5vw,3.4rem) clamp(2rem,5vh,3.4rem);}
@@ -109,6 +108,59 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 body.menu-panel #menu{left:auto;width:min(30rem,90vw);background:rgba(16,0,6,.92);border-left:1px solid rgba(255,134,189,.2);box-shadow:-40px 0 80px rgba(0,0,0,.55);}
 body.menu-panel .menu-list a{font-size:clamp(1.9rem,5vw,2.7rem);}
 
+/* ---------- HOME SECTIONS ---------- */
+main{display:block;position:relative;z-index:2;background:var(--ink);}
+.sec{padding:clamp(3.4rem,9vh,6.5rem) clamp(1.2rem,5vw,3.4rem);border-top:1px solid rgba(255,134,189,.1);}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:clamp(1.4rem,4vh,2.4rem);}
+.sec-ey{font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.28em;color:var(--pink);text-transform:uppercase;margin:0;}
+.sec-ey b{color:var(--muted);margin-right:.6rem;font-weight:400;}
+.sec-title{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2rem,6vw,3.4rem);line-height:.95;margin:.35rem 0 0;letter-spacing:-.01em;}
+.more{font-family:var(--mono);font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--paper);white-space:nowrap;text-decoration:none;transition:color .25s;}
+.more:hover{color:var(--pink);}
+.more span{display:inline-block;transition:transform .25s;}
+.more:hover span{transform:translateX(4px);}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:none;}
+.news-row{display:flex;gap:1.2rem;align-items:baseline;padding:1rem 0;border-bottom:1px solid rgba(255,134,189,.1);text-decoration:none;color:var(--paper);transition:color .2s;}
+.news-row:hover{color:var(--pink);}
+.news-row time{font-family:var(--mono);font-size:.66rem;color:var(--muted);letter-spacing:.06em;flex-shrink:0;width:6.4rem;}
+.news-row p{margin:0;font-size:.92rem;}
+.live-row{display:flex;gap:1rem;align-items:center;padding:1rem 0;border-bottom:1px solid rgba(255,134,189,.1);}
+.live-row .no{font-family:var(--mono);color:var(--muted);font-size:.7rem;width:2rem;}
+.live-row .city{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.15rem;flex:1;}
+.live-row .date{font-family:var(--mono);color:var(--muted);font-size:.72rem;}
+.live-row .st{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .55rem;border-radius:99px;}
+.st.ok{color:var(--pink);border:1px solid rgba(255,134,189,.4);}
+.st.few{color:var(--hot);border:1px solid rgba(236,0,80,.5);}
+.st.sold{color:var(--muted);border:1px solid rgba(228,175,191,.3);opacity:.6;}
+.pf-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;}
+.pf{aspect-ratio:3/4;border:1px solid rgba(255,134,189,.16);border-radius:.5rem;background:radial-gradient(120% 80% at 50% 0%,rgba(236,0,80,.14),transparent 60%),rgba(255,244,247,.02);display:flex;flex-direction:column;justify-content:space-between;padding:1rem;transition:border-color .25s,transform .25s;}
+.pf:hover{border-color:var(--pink);transform:translateY(-4px);}
+.pf .n{font-family:var(--mono);font-size:.7rem;color:var(--muted);}
+.pf .q{font-family:var(--display);font-weight:700;font-size:2.4rem;color:var(--hot);line-height:1;}
+.pf .nm{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;}
+.shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+.gd{border:1px solid rgba(255,134,189,.14);border-radius:.5rem;overflow:hidden;transition:border-color .25s,transform .25s;}
+.gd:hover{border-color:var(--pink);transform:translateY(-4px);}
+.gd .ph{aspect-ratio:1;background:radial-gradient(120% 100% at 50% 0%,rgba(236,0,80,.2),rgba(58,0,20,.5));display:flex;align-items:center;justify-content:center;color:var(--pink);}
+.gd .ph svg{width:32%;opacity:.5;}
+.gd .meta{padding:.7rem .8rem;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.62rem;}
+.gd .meta b{color:var(--paper);font-weight:400;letter-spacing:.03em;}
+.gd .meta .pr{color:var(--hot);}
+.idx{list-style:none;margin:0;padding:0;}
+.idx a{display:flex;align-items:center;gap:1.2rem;padding:1.05rem 0;border-bottom:1px solid rgba(255,134,189,.1);text-decoration:none;color:var(--paper);
+  font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.6rem,5vw,2.6rem);transition:color .25s,padding-left .25s;}
+.idx a:hover{color:var(--pink);padding-left:.6rem;}
+.idx a .no{font-family:var(--mono);font-weight:400;font-size:.8rem;color:var(--muted);}
+.idx a .ar{margin-left:auto;transition:transform .25s,color .25s;}
+.idx a:hover .ar{transform:translateX(6px);color:var(--pink);}
+.foot{padding:clamp(2.4rem,6vh,4rem) clamp(1.2rem,5vw,3.4rem) clamp(3rem,8vh,5rem);border-top:1px solid rgba(255,134,189,.16);display:flex;flex-direction:column;gap:1.6rem;background:var(--ink);position:relative;z-index:2;}
+.foot .disc{font-family:var(--mono);font-size:.58rem;line-height:1.95;color:var(--muted);max-width:52rem;margin:0;}
+.foot .frow{display:flex;justify-content:space-between;align-items:flex-end;gap:1.2rem;flex-wrap:wrap;}
+.foot .xhs{font-family:var(--mono);font-size:.72rem;color:var(--paper);}
+.foot .xhs b{display:block;color:var(--pink);font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;margin-bottom:.3rem;}
+.foot .mk{font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;color:var(--muted);opacity:.6;text-transform:uppercase;text-align:right;}
+
 /* ---------- CHEER WIDGET (draggable, preserved) ---------- */
 #cheer{position:fixed;z-index:70;right:clamp(.8rem,3vw,1.6rem);bottom:clamp(.8rem,3vw,1.6rem);width:clamp(72px,15vw,104px);
   touch-action:none;filter:drop-shadow(0 .6rem 1rem rgba(18,0,5,.5));transition:filter .3s;}
@@ -120,6 +172,10 @@ body.menu-panel .menu-list a{font-size:clamp(1.9rem,5vw,2.7rem);}
   .hero__art{width:100%;max-width:100%;left:0;right:auto;object-fit:cover;object-position:54% 8%;-webkit-mask-image:none;mask-image:none;}
   .hero__scrim{background:linear-gradient(180deg,rgba(18,0,5,.5) 0%,transparent 26% 50%,rgba(18,0,5,.66) 78%,rgba(18,0,5,.97) 100%);}
   .lang{display:none;}
+  .pf-grid{grid-template-columns:repeat(3,1fr);}
+  .shop-grid{grid-template-columns:repeat(2,1fr);}
+  .live-row{flex-wrap:wrap;}
+  .live-row .date{margin-left:auto;}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.2s!important;}
@@ -130,7 +186,7 @@ body.menu-panel .menu-list a{font-size:clamp(1.9rem,5vw,2.7rem);}
 
 <!-- SPLASH -->
 <div id="splash">
-  <svg class="lockup-mark" viewBox="0 0 760 250" fill="currentColor" role="img" aria-label="TSUKUMO99 LIVE · DiŹ">
+  <svg class="lockup-mark" viewBox="0 0 760 300" fill="currentColor" role="img" aria-label="TSUKUMO99 LIVE · DiŹ">
     <text x="96" y="42" text-anchor="start" font-family="'Space Mono',monospace" font-weight="700" font-size="23" letter-spacing="10" fill="currentColor">TSUKUMO99 LIVE</text>
     <g transform="translate(40,70)">
       <g transform="skewX(-13)" stroke="currentColor" stroke-width="46" stroke-linecap="butt" stroke-linejoin="miter" fill="none">
@@ -189,6 +245,79 @@ body.menu-panel .menu-list a{font-size:clamp(1.9rem,5vw,2.7rem);}
 
   <div class="scrollcue"><span></span></div>
 </section>
+
+<!-- HOME SECTIONS -->
+<main>
+  <section class="sec" id="news">
+    <div class="sec-head reveal">
+      <div><p class="sec-ey"><b>01</b>News</p><h2 class="sec-title">情报</h2></div>
+      <a class="more" href="#">View all <span>→</span></a>
+    </div>
+    <div class="reveal">
+      <a class="news-row" href="#"><time>2026.08.01</time><p>DiŹ WORLD TOUR 2026 特设页公开</p></a>
+      <a class="news-row" href="#"><time>2026.07.20</time><p>广州・上海 追加公演决定</p></a>
+      <a class="news-row" href="#"><time>2026.07.05</time><p>会员限定 先行抽选 受付开始</p></a>
+    </div>
+  </section>
+
+  <section class="sec" id="live">
+    <div class="sec-head reveal">
+      <div><p class="sec-ey"><b>02</b>Live</p><h2 class="sec-title">巡演场次</h2></div>
+      <a class="more" href="#">购票 <span>→</span></a>
+    </div>
+    <div class="reveal">
+      <div class="live-row"><span class="no">01</span><span class="city">广州 · SIXFACE</span><span class="date">2026.09.12</span><span class="st ok">余票</span></div>
+      <div class="live-row"><span class="no">02</span><span class="city">上海 · SIXFACE</span><span class="date">2026.09.19</span><span class="st few">紧张</span></div>
+      <div class="live-row"><span class="no">03</span><span class="city">北京 · SIXFACE</span><span class="date">2026.09.26</span><span class="st sold">售罄</span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="profile">
+    <div class="sec-head reveal">
+      <div><p class="sec-ey"><b>03</b>Profile</p><h2 class="sec-title">乐队简介</h2></div>
+      <a class="more" href="#">View all <span>→</span></a>
+    </div>
+    <div class="pf-grid reveal">
+      <div class="pf"><span class="n">01</span><span class="q">?</span><span class="nm">Member 01</span></div>
+      <div class="pf"><span class="n">02</span><span class="q">?</span><span class="nm">Member 02</span></div>
+      <div class="pf"><span class="n">03</span><span class="q">?</span><span class="nm">Member 03</span></div>
+      <div class="pf"><span class="n">04</span><span class="q">?</span><span class="nm">Member 04</span></div>
+      <div class="pf"><span class="n">05</span><span class="q">?</span><span class="nm">Member 05</span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="shop">
+    <div class="sec-head reveal">
+      <div><p class="sec-ey"><b>04</b>Shop</p><h2 class="sec-title">周边</h2></div>
+      <a class="more" href="#">View all <span>→</span></a>
+    </div>
+    <div class="shop-grid reveal">
+      <div class="gd"><div class="ph"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="25" cy="25" r="9"/><circle cx="75" cy="25" r="9"/><circle cx="50" cy="50" r="9"/><circle cx="25" cy="75" r="9"/><circle cx="75" cy="75" r="9"/></svg></div><div class="meta"><b>アクリルスタンド</b><span class="pr">◈120</span></div></div>
+      <div class="gd"><div class="ph"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="25" cy="25" r="9"/><circle cx="75" cy="25" r="9"/><circle cx="50" cy="50" r="9"/><circle cx="25" cy="75" r="9"/><circle cx="75" cy="75" r="9"/></svg></div><div class="meta"><b>缶バッジ</b><span class="pr">◈35</span></div></div>
+      <div class="gd"><div class="ph"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="25" cy="25" r="9"/><circle cx="75" cy="25" r="9"/><circle cx="50" cy="50" r="9"/><circle cx="25" cy="75" r="9"/><circle cx="75" cy="75" r="9"/></svg></div><div class="meta"><b>トレカ</b><span class="pr">◈60</span></div></div>
+      <div class="gd"><div class="ph"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="25" cy="25" r="9"/><circle cx="75" cy="25" r="9"/><circle cx="50" cy="50" r="9"/><circle cx="25" cy="75" r="9"/><circle cx="75" cy="75" r="9"/></svg></div><div class="meta"><b>T-Shirt</b><span class="pr">◈180</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="index">
+    <div class="sec-head reveal"><div><p class="sec-ey"><b>Index</b>Jump to</p><h2 class="sec-title">Menu</h2></div></div>
+    <ul class="idx reveal">
+      <li><a href="#"><span class="no">01</span>Top<span class="ar">→</span></a></li>
+      <li><a href="#news"><span class="no">02</span>News<span class="ar">→</span></a></li>
+      <li><a href="#live"><span class="no">03</span>Ticket<span class="ar">→</span></a></li>
+      <li><a href="#profile"><span class="no">04</span>Profile<span class="ar">→</span></a></li>
+      <li><a href="#shop"><span class="no">05</span>Shop<span class="ar">→</span></a></li>
+    </ul>
+  </section>
+
+  <footer class="foot reveal">
+    <p class="disc">非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。所有场次、地址、座位、票券均为虚构，购票流程为纯前端模拟，不收集任何姓名以外的信息，更不涉及任何真实支付。仅供娱乐。</p>
+    <div class="frow">
+      <div class="xhs"><b>Contact</b>小红书 @TSUKUMO99</div>
+      <div class="mk">UNOFFICIAL FAN-MADE<br/>NOT A REAL TICKET</div>
+    </div>
+  </footer>
+</main>
 
 <!-- MENU -->
 <div id="menuScrim"></div>
@@ -254,6 +383,10 @@ cheer.addEventListener("pointermove",function(e){
   cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";
 });
 cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
+
+// scroll-reveal for home sections
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12,rootMargin:"0px 0px -8% 0px"});
+document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
 </script>
 </body>
 </html>
