@@ -14,7 +14,7 @@
     var el=document.createElement("div");
     el.className="page-loader";
     el.setAttribute("aria-hidden","true");
-    el.innerHTML='<div class="page-loader__meta">TSUKUMO99 · UNOFFICIAL FANWEB</div><svg class="page-loader__word" viewBox="0 0 700 320" aria-hidden="true"><text class="page-loader__stroke" x="70" y="250">D</text><text class="page-loader__stroke" x="265" y="250">i</text><text class="page-loader__stroke" x="335" y="250">Z</text><text class="page-loader__stroke" x="455" y="88">´</text></svg><div class="page-loader__note">请用浏览器打开 · OPEN IN A BROWSER</div>';
+    el.innerHTML='<div class="page-loader__meta">TSUKUMO99 · UNOFFICIAL FANWEB</div><svg class="page-loader__word" viewBox="0 0 700 320" fill="none" aria-hidden="true"><g transform="skewX(-13)" stroke="#fff4f7" stroke-width="46" stroke-linecap="butt" stroke-linejoin="miter" fill="none"><path class="page-loader__draw" pathLength="1" d="M104 286 L104 92 C224 92 258 150 258 189 C258 228 224 286 104 286"></path><path class="page-loader__draw" pathLength="1" d="M300 168 L300 286" style="animation-delay:.2s"></path><path class="page-loader__draw" pathLength="1" d="M356 110 L508 110 L366 286 L520 286" style="animation-delay:.35s"></path><path class="page-loader__draw" pathLength="1" d="M452 78 L506 34" style="animation-delay:.6s"></path></g></svg><div class="page-loader__note">请用浏览器打开 · OPEN IN A BROWSER</div>';
     return el;
   }
   var curtain=makeCurtain();
