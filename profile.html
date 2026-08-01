@@ -60,9 +60,9 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 
 /* stage */
 .stage{position:relative;min-height:100svh;min-height:100vh;overflow:hidden;display:grid;place-items:center;background:radial-gradient(130% 100% at 50% 40%,var(--wine),#0d0004 72%);transition:background .8s ease;}
-.field{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);width:150vw;opacity:0;filter:blur(6px);transition:opacity .5s;pointer-events:none;}
+.field{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);width:184vw;opacity:0;filter:blur(6px);transition:opacity .5s;pointer-events:none;}
 .frow{white-space:nowrap;overflow:hidden;}
-.rowInner{display:inline-flex;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(52px,8.5vw,150px);line-height:.94;letter-spacing:-.01em;will-change:transform;}
+.rowInner{display:inline-flex;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(60px,13vw,150px);line-height:.9;letter-spacing:-.01em;will-change:transform;}
 @keyframes drift{to{transform:translateX(-33.333%)}}
 .profile{position:absolute;inset:0;display:none;}
 .pbg{position:absolute;inset:0;overflow:hidden;animation:fadeBg .8s ease both;}
@@ -160,8 +160,8 @@ var phase='off',ki=null;
 function rnd(n){return Math.floor(Math.random()*n);}
 function buildField(){
   var html='';
-  for(var r=0;r<9;r++){
-    var outline=r%2===1,seq=[];for(var k=0;k<10;k++)seq.push(WORDS[(r*3+k)%WORDS.length]);
+  for(var r=0;r<15;r++){
+    var outline=r%2===1,seq=[];for(var k=0;k<12;k++)seq.push(WORDS[(r*3+k)%WORDS.length]);
     var seg=seq.map(function(w){var hot=Math.random()<0.16;
       var col=hot?'color:var(--hot);':(outline?'color:transparent;-webkit-text-stroke:2px rgba(255,134,189,.5);':'color:var(--paper);');
       return '<span style="'+col+'padding-right:.35em;">'+w+'</span>';}).join('');
@@ -201,7 +201,7 @@ function startRoll(){
   stage.style.background='radial-gradient(130% 100% at 50% 40%,#3a0014,#0d0004 72%)';
   setField(true);buildField();ribbons('enter');
   clearInterval(ki);
-  if(!reduce)ki=setInterval(function(){setKnobMember(MEMBERS[rnd(6)]);if(Math.random()<0.5)buildField();},90);
+  if(!reduce)ki=setInterval(function(){setKnobMember(MEMBERS[rnd(6)]);},110);
   fireFx();scramble('ONCE AND FOR ALL, DICE AWAY.',1000);
   field.style.transform='translate(-50%,-50%) rotate('+(-24+Math.round(Math.random()*30))+'deg) scale('+(1+Math.random()*0.16)+')';
   setTimeout(settle,reduce?0:1250);
