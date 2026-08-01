@@ -241,24 +241,44 @@
 
   // --------------------------------------------------------------- hero
 
+  // Brief requires a prominent "unofficial fan project" disclaimer on the
+  // first screen — not buried in the footer. It was defined in T.heroBadge
+  // but never rendered until now. Rendered as a slim dice-marked bar.
+  function heroDisclaimerBar(compact) {
+    var tt = t();
+    var fs = compact ? ".54rem" : "clamp(.54rem,1vw,.64rem)";
+    return (
+      '<div style="display:inline-flex;align-items:center;gap:.55rem;max-width:100%;padding:.42rem .7rem .42rem .55rem;border:1px solid rgba(255,134,189,.4);border-radius:999px;background:rgba(23,0,6,.5);backdrop-filter:blur(6px);">' +
+        '<span aria-hidden="true" style="flex-shrink:0;display:grid;grid-template-columns:repeat(3,3px);grid-auto-rows:3px;gap:2px;padding:4px;border-radius:4px;background:var(--hot);">' +
+          '<i style="background:var(--paper);border-radius:50%;"></i><i></i><i style="background:var(--paper);border-radius:50%;"></i>' +
+          '<i></i><i style="background:var(--paper);border-radius:50%;"></i><i></i>' +
+          '<i style="background:var(--paper);border-radius:50%;"></i><i></i><i style="background:var(--paper);border-radius:50%;"></i>' +
+        "</span>" +
+        '<span style="font-family:var(--mono);font-weight:700;font-size:' + fs + ';letter-spacing:.06em;line-height:1.35;color:var(--muted);text-transform:uppercase;">' + esc(tt.heroBadge) + "</span>" +
+      "</div>"
+    );
+  }
+
   function renderHeroMobile() {
     var tt = t();
     return (
       '<div class="hero-mobile">' +
       '<main style="position:relative;min-height:100svh;overflow:hidden;background:var(--ink);">' +
         '<img src="assets/hero.avif" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:52% 6%;"/>' +
-        '<div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,0,6,.18) 0%,transparent 26%,rgba(23,0,6,.4) 50%,rgba(23,0,6,.9) 80%,var(--ink) 100%);"></div>' +
+        '<div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,0,6,.5) 0%,transparent 24%,rgba(23,0,6,.35) 48%,rgba(23,0,6,.9) 80%,var(--ink) 100%);"></div>' +
         '<div aria-hidden="true" style="position:absolute;top:-15%;left:40%;width:6rem;height:80%;background:linear-gradient(180deg,rgba(255,219,232,.22),transparent 70%);filter:blur(1rem);transform:rotate(22deg);transform-origin:top center;animation:sweep 6s ease-in-out infinite;"></div>' +
-        '<div style="position:absolute;left:0;right:0;bottom:0;padding:0 clamp(1.2rem,6vw,2rem) clamp(1.7rem,6vh,2.6rem);display:flex;flex-direction:column;align-items:flex-start;gap:.45rem;">' +
-          '<h1 style="margin:0;font-family:var(--display);font-weight:700;font-style:italic;text-transform:uppercase;line-height:.78;">' +
-            '<span style="display:block;font-size:clamp(4.5rem,27vw,8rem);letter-spacing:-.02em;color:var(--hot);filter:drop-shadow(0 .05em 0 rgba(76,0,26,.7)) drop-shadow(0 0 1.8rem rgba(236,0,80,.55));">DiŹ</span>' +
+        '<div style="position:absolute;left:0;right:0;top:0;padding:clamp(4.6rem,17vw,6rem) clamp(1.2rem,6vw,2rem) 0;">' + heroDisclaimerBar(true) + "</div>" +
+        '<div style="position:absolute;left:0;right:0;bottom:0;padding:0 clamp(1.2rem,6vw,2rem) clamp(1.7rem,6vh,2.6rem);display:flex;flex-direction:column;align-items:flex-start;gap:.4rem;">' +
+          '<span style="font-family:var(--mono);font-weight:700;font-size:.56rem;letter-spacing:.34em;color:var(--pink);text-transform:uppercase;">TSUKUMO<span style="color:var(--paper);">99</span> PRESENTS</span>' +
+          '<h1 style="margin:.15rem 0 0;font-family:var(--display);font-weight:700;font-style:italic;text-transform:uppercase;line-height:.74;">' +
+            '<span style="display:block;font-size:clamp(4.8rem,29vw,8.5rem);letter-spacing:-.02em;color:var(--hot);filter:drop-shadow(0 .05em 0 rgba(76,0,26,.7)) drop-shadow(0 0 1.8rem rgba(236,0,80,.55));">DiŹ</span>' +
           "</h1>" +
-          '<div style="display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;">' +
-            '<span style="font-family:var(--display);font-weight:700;font-size:clamp(1.35rem,7.5vw,2rem);letter-spacing:.02em;color:var(--paper);text-transform:uppercase;">TSUKUMO<span style="color:var(--pink);">99</span></span>' +
-            '<span style="font-family:var(--mono);font-weight:700;font-size:.58rem;letter-spacing:.22em;color:var(--pink);">WORLD TOUR 2026</span>' +
+          '<div style="display:flex;align-items:center;gap:.55rem;margin-top:.15rem;">' +
+            '<span style="height:1px;width:1.6rem;background:var(--pink);"></span>' +
+            '<span style="font-family:var(--mono);font-weight:700;font-size:.6rem;letter-spacing:.24em;color:var(--paper);">WORLD TOUR 2026</span>' +
           "</div>" +
-          '<p style="margin:.3rem 0 0;font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(.95rem,4.5vw,1.2rem);letter-spacing:.02em;color:var(--paper);opacity:.92;">' + esc(tt.tagline) + "</p>" +
-          '<a href="#tour" class="btn-cta" style="margin-top:1rem;display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.6rem;border-radius:.3rem;box-shadow:0 10px 30px rgba(236,0,80,.45);">' + esc(tt.getTickets) + ' <span style="font-size:1rem;">↓</span></a>' +
+          '<p style="margin:.55rem 0 0;font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(.98rem,4.6vw,1.25rem);letter-spacing:.02em;color:var(--paper);opacity:.94;">' + esc(tt.tagline) + "</p>" +
+          '<a href="#tour" class="btn-cta" style="margin-top:1.1rem;display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.6rem;border-radius:.3rem;box-shadow:0 10px 30px rgba(236,0,80,.45);">' + esc(tt.getTickets) + ' <span style="font-size:1rem;">↓</span></a>' +
         "</div>" +
       "</main>" +
       "</div>"
@@ -276,17 +296,20 @@
         "</div>" +
         '<div aria-hidden="true" style="position:absolute;z-index:-1;top:-22%;left:47%;width:8rem;height:110%;background:linear-gradient(180deg,rgba(255,219,232,.22),transparent 70%);filter:blur(1.1rem);transform:rotate(24deg);transform-origin:top center;animation:sweep 6s ease-in-out infinite;"></div>' +
         '<div aria-hidden="true" style="position:absolute;z-index:-1;top:-22%;left:78%;width:8rem;height:110%;background:linear-gradient(180deg,rgba(255,219,232,.22),transparent 70%);filter:blur(1.1rem);transform:rotate(-23deg);transform-origin:top center;animation:sweep 7.5s ease-in-out infinite;"></div>' +
-        '<section style="position:relative;z-index:5;width:min(48rem,100%);padding:6.5rem clamp(1.3rem,5vw,3rem) 7rem clamp(1.3rem,7vw,8rem);">' +
-          '<h1 style="margin:0;font-family:var(--display);font-weight:700;font-style:italic;text-transform:uppercase;line-height:.76;">' +
-            '<span style="display:block;font-size:clamp(5rem,19vw,14rem);letter-spacing:-.02em;color:var(--hot);filter:drop-shadow(0 .07em 0 rgba(76,0,26,.7)) drop-shadow(0 0 2.4rem rgba(236,0,80,.5));">DiŹ</span>' +
+        '<section style="position:relative;z-index:5;width:min(52rem,100%);padding:clamp(5rem,10vh,7rem) clamp(1.3rem,5vw,3rem) clamp(3rem,7vh,5rem) clamp(1.3rem,7vw,8rem);">' +
+          '<div style="margin-bottom:clamp(1.8rem,5vh,3.2rem);">' + heroDisclaimerBar(false) + "</div>" +
+          '<span style="display:inline-block;font-family:var(--mono);font-weight:700;font-size:clamp(.66rem,1vw,.82rem);letter-spacing:.42em;color:var(--pink);text-transform:uppercase;">TSUKUMO<span style="color:var(--paper);">99</span> PRESENTS</span>' +
+          '<h1 style="margin:.7rem 0 0;font-family:var(--display);font-weight:700;font-style:italic;text-transform:uppercase;line-height:.72;">' +
+            '<span style="display:block;font-size:clamp(5.5rem,20vw,15rem);letter-spacing:-.02em;color:var(--hot);filter:drop-shadow(0 .07em 0 rgba(76,0,26,.7)) drop-shadow(0 0 2.4rem rgba(236,0,80,.5));">DiŹ</span>' +
           "</h1>" +
-          '<div style="display:flex;align-items:baseline;gap:.7rem;margin-top:.9rem;flex-wrap:wrap;">' +
-            '<span style="font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,4.5vw,2.8rem);letter-spacing:.02em;color:var(--paper);text-transform:uppercase;">TSUKUMO<span style="color:var(--pink);">99</span></span>' +
+          '<div style="display:flex;align-items:center;gap:1rem;margin-top:1.3rem;flex-wrap:wrap;">' +
+            '<span style="font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,4.5vw,2.8rem);letter-spacing:.02em;color:var(--paper);text-transform:uppercase;line-height:1;">TSUKUMO<span style="color:var(--pink);">99</span></span>' +
+            '<span aria-hidden="true" style="width:2.4rem;height:2px;background:linear-gradient(90deg,var(--hot),transparent);"></span>' +
             '<span style="font-family:var(--mono);font-weight:700;font-size:clamp(.68rem,1.2vw,.95rem);letter-spacing:.3em;color:var(--pink);">WORLD TOUR 2026</span>' +
           "</div>" +
-          '<p style="margin:1.1rem 0 0;font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(1rem,1.9vw,1.45rem);letter-spacing:.02em;color:var(--paper);opacity:.92;text-wrap:pretty;">' + esc(tt.tagline) + "</p>" +
-          '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:1.8rem;">' +
-            '<a href="#tour" class="btn-cta" style="display:inline-flex;align-items:center;gap:.6rem;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.6rem;border-radius:.3rem;box-shadow:0 10px 30px rgba(236,0,80,.45);">' + esc(tt.getTickets) + ' <span style="font-size:1rem;">↓</span></a>' +
+          '<p style="margin:1.3rem 0 0;font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(1.05rem,2vw,1.55rem);letter-spacing:.02em;color:var(--paper);opacity:.94;text-wrap:pretty;max-width:34rem;">' + esc(tt.tagline) + "</p>" +
+          '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:2rem;">' +
+            '<a href="#tour" class="btn-cta" style="display:inline-flex;align-items:center;gap:.6rem;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;padding:.95rem 1.7rem;border-radius:.3rem;box-shadow:0 10px 30px rgba(236,0,80,.45);">' + esc(tt.getTickets) + ' <span style="font-size:1rem;">↓</span></a>' +
           "</div>" +
         "</section>" +
       "</main>" +
@@ -312,56 +335,63 @@
     var tt = t();
     var lang = state.lang;
     var minPrice = Math.min.apply(null, ZONES.map(function (z) { return z.price; }));
+
+    // Departures-board layout: one typographic row per stop, hairline-
+    // separated, grouped under a sticky-feeling region header — instead of
+    // 17 near-identical gradient cards. City is the loud element; date/index
+    // read like a flight board; status + price + book sit at the trailing end.
     var rows = STOPS.map(function (s, i) {
       var firstOfRegion = i === 0 || STOPS[i - 1].country.en !== s.country.en;
       var soldOut = s.status === "sold";
-      var bookable = !soldOut;
       var statusLabel = soldOut ? tt.statusSold : s.status === "few" ? tt.statusFew : tt.statusPlenty;
       var statusColor = soldOut ? "#8d6472" : s.status === "few" ? "#ec0050" : "#ff86bd";
+
       var regionHtml = firstOfRegion
-        ? '<div style="display:flex;align-items:center;gap:.9rem;margin-top:.6rem;">' +
-            '<span style="font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(.95rem,1.9vw,1.35rem);letter-spacing:.12em;color:var(--pink);white-space:nowrap;">' + esc(s.country[lang]) + "</span>" +
+        ? '<div style="display:flex;align-items:center;gap:.9rem;margin:' + (i === 0 ? "0" : "clamp(1.4rem,3vw,2.4rem)") + ' 0 .2rem;">' +
+            '<span style="font-family:var(--mono);font-weight:700;text-transform:uppercase;font-size:.66rem;letter-spacing:.28em;color:var(--pink);white-space:nowrap;">' + esc(s.country[lang]) + "</span>" +
             '<span style="flex:1;height:1px;background:linear-gradient(90deg,var(--crimson),transparent);"></span>' +
           "</div>"
         : "";
-      var actionHtml = soldOut
-        ? '<span style="font-family:var(--mono);font-weight:700;font-size:.7rem;letter-spacing:.1em;padding:.8rem 1.3rem;border:1px solid rgba(255,244,247,.22);border-radius:.3rem;color:var(--muted);text-transform:uppercase;">' + esc(tt.statusSold) + "</span>"
-        : '<button type="button" class="stop-book-btn" data-act="book" data-idx="' + i + '" style="font-family:var(--mono);font-weight:700;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:.8rem 1.3rem;border:0;border-radius:.3rem;background:var(--hot);color:var(--paper);cursor:pointer;box-shadow:0 6px 18px rgba(236,0,80,.35);">' + esc(tt.bookBtn) + "</button>";
+
+      var trailing = soldOut
+        ? '<span style="font-family:var(--mono);font-weight:700;font-size:.68rem;letter-spacing:.1em;padding:.7rem 1.2rem;border:1px solid rgba(255,244,247,.2);border-radius:.3rem;color:var(--muted);text-transform:uppercase;white-space:nowrap;">' + esc(tt.statusSold) + "</span>"
+        : '<button type="button" class="stop-book-btn" data-act="book" data-idx="' + i + '" style="font-family:var(--mono);font-weight:700;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:.72rem 1.35rem;border:0;border-radius:.3rem;background:var(--hot);color:var(--paper);cursor:pointer;box-shadow:0 6px 18px rgba(236,0,80,.35);white-space:nowrap;">' + esc(tt.bookBtn) + "</button>";
+
       return (
-        '<div style="display:flex;flex-direction:column;gap:clamp(1rem,2.2vw,1.7rem);">' +
-          regionHtml +
-          '<div style="display:grid;grid-template-columns:clamp(3rem,7vw,5.2rem) 1fr;gap:clamp(.75rem,2vw,1.6rem);">' +
-            '<div style="position:relative;text-align:right;padding-right:1rem;">' +
-              '<div style="font-family:var(--display);font-weight:700;font-size:clamp(1.4rem,3vw,2.3rem);line-height:1;color:var(--pink);">' + ("0" + (i + 1)).slice(-2) + "</div>" +
-              '<div style="font-family:var(--mono);font-size:.56rem;letter-spacing:.02em;color:var(--muted);margin-top:.4rem;">' + s.date + "</div>" +
-              '<div style="position:absolute;top:.4rem;bottom:-1.9rem;right:0;width:2px;background:linear-gradient(180deg,var(--crimson),rgba(141,0,44,.12));"></div>' +
-              '<div style="position:absolute;top:.4rem;right:-5px;width:11px;height:11px;border-radius:50%;background:var(--hot);box-shadow:0 0 10px var(--hot);"></div>' +
-            "</div>" +
-            '<div style="position:relative;overflow:hidden;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;padding:clamp(1rem,2.2vw,1.6rem);border:1px solid rgba(255,134,189,.18);border-radius:.45rem;background:linear-gradient(135deg,var(--wine),var(--wine2));">' +
-              '<div style="min-width:10rem;flex:1;">' +
-                '<h3 style="margin:0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.25rem,2.6vw,2rem);line-height:1;letter-spacing:.01em;color:var(--paper);">' + esc(s.city[lang]) + "</h3>" +
-                '<p style="margin:.5rem 0 0;font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.06em;color:var(--pink);">' + esc(s.venue[lang]) + "</p>" +
-                '<p style="margin:.3rem 0 0;font-family:var(--body);font-size:.7rem;color:var(--muted);">' + esc(s.addr[lang]) + "</p>" +
-              "</div>" +
-              '<div style="display:flex;align-items:center;gap:clamp(.8rem,2vw,1.5rem);flex-wrap:wrap;">' +
-                '<div style="text-align:right;">' +
-                  '<div style="display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.1em;color:' + statusColor + ';"><span style="width:.4rem;height:.4rem;border-radius:50%;background:' + statusColor + ';box-shadow:0 0 6px ' + statusColor + ';"></span>' + esc(statusLabel) + "</div>" +
-                  '<div style="margin-top:.35rem;font-family:var(--mono);font-size:.6rem;color:var(--muted);">' + esc(tt.from) + " ◈" + minPrice + "</div>" +
-                "</div>" +
-                actionHtml +
-              "</div>" +
-            "</div>" +
+        regionHtml +
+        '<div class="tour-row" style="display:flex;flex-wrap:wrap;align-items:center;gap:.7rem clamp(1rem,2.4vw,2rem);padding:clamp(1rem,2.2vw,1.5rem) clamp(.4rem,1.2vw,1rem);border-bottom:1px solid rgba(255,134,189,.14);">' +
+          // index + date, monospace board style
+          '<div class="tour-idx" style="flex:0 0 auto;display:flex;align-items:baseline;gap:.7rem;min-width:8.5rem;">' +
+            '<span style="font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,3vw,2.1rem);line-height:1;color:' + (soldOut ? "var(--muted)" : "var(--hot)") + ';">' + ("0" + (i + 1)).slice(-2) + "</span>" +
+            '<span style="font-family:var(--mono);font-weight:700;font-size:.62rem;letter-spacing:.06em;color:var(--muted);">' + s.date + "</span>" +
           "</div>" +
+          // city + venue
+          '<div class="tour-city" style="flex:1 1 12rem;min-width:11rem;">' +
+            '<h3 style="margin:0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.5rem,3.2vw,2.4rem);line-height:.96;letter-spacing:.01em;color:' + (soldOut ? "var(--muted)" : "var(--paper)") + ';">' + esc(s.city[lang]) + "</h3>" +
+            '<p style="margin:.32rem 0 0;font-family:var(--mono);font-size:.64rem;font-weight:700;letter-spacing:.05em;color:var(--pink);">' + esc(s.venue[lang]) + '<span style="color:var(--muted);font-weight:400;"> · ' + esc(s.addr[lang]) + "</span></p>" +
+          "</div>" +
+          // status + price
+          '<div style="flex:0 0 auto;text-align:right;min-width:6.5rem;">' +
+            '<div style="display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.1em;color:' + statusColor + ';"><span style="width:.4rem;height:.4rem;border-radius:50%;background:' + statusColor + ';box-shadow:0 0 6px ' + statusColor + ';"></span>' + esc(statusLabel) + "</div>" +
+            '<div style="margin-top:.35rem;font-family:var(--mono);font-size:.62rem;color:var(--muted);">' + esc(tt.from) + ' <span style="color:var(--paper);font-weight:700;">◈' + minPrice + "</span></div>" +
+          "</div>" +
+          // action
+          '<div style="flex:0 0 auto;">' + trailing + "</div>" +
         "</div>"
       );
     }).join("");
 
     return (
       '<section id="tour" style="position:relative;padding:clamp(3.5rem,9vw,7.5rem) clamp(1rem,5vw,5rem) clamp(3rem,7vw,6rem);background:radial-gradient(circle at 85% 4%,rgba(236,0,80,.14),transparent 40%),var(--ink);">' +
-        '<div style="max-width:64rem;margin:0 auto;">' +
-          '<p style="margin:0 0 .8rem;font-family:var(--mono);font-size:.66rem;font-weight:700;letter-spacing:.28em;color:var(--hot);">' + esc(tt.tourEyebrow) + "</p>" +
-          '<h2 style="margin:0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.8rem,5vw,3.4rem);line-height:.95;letter-spacing:-.01em;color:var(--paper);text-wrap:balance;">' + esc(tt.tourTitle) + "</h2>" +
-          '<div style="margin-top:clamp(2.2rem,5vw,4rem);display:flex;flex-direction:column;gap:clamp(1rem,2.2vw,1.7rem);">' + rows + "</div>" +
+        '<div style="max-width:66rem;margin:0 auto;">' +
+          '<div class="tour-head" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:.7rem 1rem;">' +
+            '<div class="tour-head-title">' +
+              '<p style="margin:0 0 .7rem;font-family:var(--mono);font-size:.66rem;font-weight:700;letter-spacing:.28em;color:var(--hot);">' + esc(tt.tourEyebrow) + "</p>" +
+              '<h2 style="margin:0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.8rem,5vw,3.4rem);line-height:.95;letter-spacing:-.01em;color:var(--paper);text-wrap:balance;">' + esc(tt.tourTitle) + "</h2>" +
+            "</div>" +
+            '<p style="margin:0 0 .3rem;font-family:var(--mono);font-size:.64rem;font-weight:700;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;">' + esc(tt.tourSub) + "</p>" +
+          "</div>" +
+          '<div style="margin-top:clamp(2rem,4.5vw,3.4rem);border-top:1px solid rgba(255,134,189,.14);">' + rows + "</div>" +
         "</div>" +
       "</section>"
     );
