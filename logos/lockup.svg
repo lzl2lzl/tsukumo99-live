@@ -1,0 +1,17 @@
+<svg data-dc-tpl="28" viewBox="0 0 760 300" fill="#fff">
+          <text data-dc-tpl="29" x="96" y="42" text-anchor="start" font-family="'Space Mono', monospace" font-weight="700" font-size="23" letter-spacing="10" fill="#fff">TSUKUMO99 LIVE</text>
+          <g data-dc-tpl="30" transform="translate(40,70)">
+            <g data-dc-tpl="31" transform="skewX(-13)" stroke="#fff" stroke-width="46" stroke-linecap="butt" stroke-linejoin="miter" fill="none">
+              <path data-dc-tpl="32" d="M104 194 L104 0 C224 0 258 58 258 97 C258 136 224 194 104 194"></path>
+              <path data-dc-tpl="33" d="M300 76 L300 194"></path>
+              <path data-dc-tpl="34" d="M356 18 L508 18 L366 194 L520 194"></path>
+            </g>
+            <rect data-dc-tpl="35" x="262" y="30" width="46" height="46" transform="rotate(45 285 53) skewX(-13)" fill="#fff"></rect>
+            <g data-dc-tpl="36" transform="skewX(-13) rotate(12 512 -22)">
+              <rect data-dc-tpl="37" x="470" y="-64" width="84" height="84" rx="16" fill="none" stroke="#fff" stroke-width="11"></rect>
+              <circle data-dc-tpl="38" cx="491" cy="-43" r="8"></circle><circle data-dc-tpl="39" cx="533" cy="-43" r="8"></circle>
+              <circle data-dc-tpl="40" cx="512" cy="-22" r="8"></circle>
+              <circle data-dc-tpl="41" cx="491" cy="-1" r="8"></circle><circle data-dc-tpl="42" cx="533" cy="-1" r="8"></circle>
+            </g>
+          </g>
+        </svg>

@@ -1,38 +1,377 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#170006" />
-    <meta
-      name="description"
-      content="TSUKUMO99 presents ŹOOĻ — DiŹ WORLD TOUR 2026。非官方同人企划，模拟选座购票 + 电子票导出演示。"
-    />
-    <meta property="og:title" content="ŹOOĻ · DiŹ WORLD TOUR 2026 — TSUKUMO99" />
-    <meta property="og:description" content="非官方同人企划：Once and for all, dice away." />
-    <meta property="og:image" content="assets/hero.jpg" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%233a0014'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff86bd'/%3E%3Ccircle cx='20' cy='44' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23fff4f7'/%3E%3C/svg%3E"
-    />
-    <title>ŹOOĻ · DiŹ WORLD TOUR 2026 — TSUKUMO99</title>
-    <!--
-      The whole page is rendered client-side by script.js, so without this
-      the browser can't discover (let alone start fetching) the hero image
-      until script.js has downloaded AND run — serializing what should be
-      two things loading in parallel. This preload starts the fetch the
-      moment the HTML is parsed, same as a static <img> would.
-    -->
-    <link rel="preload" as="image" href="assets/hero.avif" type="image/avif" fetchpriority="high" />
-    <!-- Same reasoning as the hero preload above: without this the cheer
-         widget's idle image doesn't start downloading until script.js has
-         fully arrived and run, which was the main reason the widget itself
-         took several extra seconds to show up after the hero image did. -->
-    <link rel="preload" as="image" href="assets/cheer-still.webp" />
-    <link rel="stylesheet" href="styles.css?v=20260729a" />
-  </head>
-  <body>
-    <div id="app"></div>
-    <script src="script.js?v=20260729a"></script>
-  </body>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#120005" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%233a0014'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff86bd'/%3E%3Ccircle cx='20' cy='44' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23fff4f7'/%3E%3C/svg%3E">
+<title>DiŹ WORLD TOUR 2026 — TSUKUMO99 [proto]</title>
+<link rel="preload" as="image" href="assets/hero.avif" type="image/avif" fetchpriority="high" />
+<style>
+@font-face{font-family:"Oswald";font-weight:300 700;font-display:swap;src:url("assets/fonts/oswald-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+2122;}
+@font-face{font-family:"Oswald";font-weight:300 700;font-display:swap;src:url("assets/fonts/oswald-latin-ext.woff2") format("woff2");unicode-range:U+0100-024F,U+1E00-1EFF,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Space Mono";font-weight:400;font-display:swap;src:url("assets/fonts/spacemono-400-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+2000-206F;}
+@font-face{font-family:"Space Mono";font-weight:700;font-display:swap;src:url("assets/fonts/spacemono-700-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+2000-206F;}
+
+:root{
+  color-scheme:dark;
+  --ink:#120005; --wine:#3a0014; --crimson:#8d002c;
+  --hot:#ec0050; --pink:#ff86bd; --paper:#fff4f7; --muted:#e4afbf;
+  --display:"Oswald","Noto Sans SC","Noto Sans JP",sans-serif;
+  --mono:"Space Mono",ui-monospace,monospace;
+  --body:"Noto Sans SC","Noto Sans JP",system-ui,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:var(--ink);color:var(--paper);font-family:var(--body);overflow-x:hidden;-webkit-tap-highlight-color:transparent;}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
+::selection{background:var(--hot);color:var(--paper);}
+
+/* ---------- SPLASH ---------- */
+#splash{position:fixed;inset:0;z-index:200;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;transition:opacity .7s ease 1s;}
+#splash.gone{opacity:0;pointer-events:none;}
+.lockup-mark{width:min(340px,68vw);height:auto;color:var(--paper);filter:drop-shadow(0 0 1.8rem rgba(236,0,80,.4));}
+#splash .note{font-family:var(--mono);font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);text-align:center;}
+
+/* ---------- TOP BAR ---------- */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;justify-content:space-between;
+  padding:clamp(.9rem,2.5vw,1.4rem) clamp(1.1rem,4vw,2.4rem);
+  background:linear-gradient(180deg,rgba(18,0,5,.7),transparent);}
+.brand{display:flex;flex-direction:column;gap:.18rem;line-height:1;font-family:var(--mono);}
+.brand b{color:var(--paper);font-size:.72rem;letter-spacing:.32em;}
+.brand em{font-style:normal;font-size:.45rem;letter-spacing:.26em;color:var(--muted);opacity:.7;}
+.topbar-right{display:flex;align-items:center;gap:1.1rem;}
+.lang{display:flex;gap:.55rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;}
+.lang button{color:var(--muted);opacity:.7;padding:.2rem 0;position:relative;text-transform:uppercase;}
+.lang button.on{color:var(--paper);opacity:1;}
+.lang button.on::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:2px;background:var(--hot);}
+.burger{width:34px;height:20px;position:relative;}
+.burger span{position:absolute;left:0;right:0;height:2px;background:var(--paper);transition:transform .5s cubic-bezier(.7,0,.2,1),opacity .35s;}
+.burger span:nth-child(1){top:0}.burger span:nth-child(2){top:9px}.burger span:nth-child(3){top:18px}
+body.menu-open .burger span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+body.menu-open .burger span:nth-child(2){opacity:0}
+body.menu-open .burger span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:100svh;min-height:100vh;overflow:hidden;display:flex;align-items:flex-end;}
+.hero__ambient{display:none;}
+.hero__art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%;}
+.hero__scrim{position:absolute;inset:0;background:
+  linear-gradient(90deg,rgba(18,0,5,.92) 0%,rgba(18,0,5,.5) 34%,rgba(18,0,5,.12) 60%,transparent 80%),
+  linear-gradient(180deg,transparent 42%,rgba(18,0,5,.5) 74%,rgba(18,0,5,.97) 100%);}
+.hero__spot{position:absolute;inset:0;background:radial-gradient(60% 50% at 30% 40%,rgba(236,0,80,.18),transparent 70%);mix-blend-mode:screen;animation:sweep 7s ease-in-out infinite;}
+@keyframes sweep{0%,100%{opacity:.35}50%{opacity:.7}}
+.hero__inner{position:relative;z-index:2;width:100%;padding:0 clamp(1.2rem,5vw,3.4rem) clamp(2rem,5vh,3.4rem);}
+
+.diz-mark{display:block;width:clamp(240px,44vw,560px);height:auto;color:var(--paper);filter:drop-shadow(0 .05em 0 rgba(76,0,26,.55)) drop-shadow(0 0 2rem rgba(236,0,80,.45));}
+.diz-mark .acc{stroke:var(--hot);fill:var(--hot);}
+.tourline{font-family:var(--mono);font-size:.7rem;letter-spacing:.24em;color:var(--muted);margin:.9rem 0 0;text-transform:uppercase;}
+.tagline{font-family:var(--display);font-weight:300;font-style:italic;font-size:clamp(1rem,2.6vw,1.5rem);color:var(--muted);margin:.5rem 0 0;}
+.hero__cta{margin-top:clamp(1.4rem,4vh,2.2rem);}
+.btn{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-weight:700;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:.95rem 2rem;border-radius:.35rem;transition:transform .25s,background .25s,color .25s,box-shadow .25s;}
+.btn-primary{background:var(--hot);color:var(--paper);box-shadow:0 10px 30px rgba(236,0,80,.42);}
+.btn-primary:hover{background:var(--pink);color:var(--wine);transform:translateY(-2px);}
+
+.scrollcue{position:absolute;z-index:3;right:clamp(1.2rem,5vw,3.4rem);bottom:clamp(2rem,5vh,3.4rem);}
+.scrollcue span{display:block;width:1px;height:38px;background:linear-gradient(var(--pink),transparent);animation:cue 1.8s ease-in-out infinite;}
+@keyframes cue{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+
+/* ---------- MENU (default: translucent fullscreen) ---------- */
+#menuScrim{position:fixed;inset:0;z-index:99;background:rgba(8,0,4,.6);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .5s;}
+body.menu-open.menu-panel #menuScrim{opacity:1;pointer-events:auto;}
+#menu{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;
+  padding:clamp(4.6rem,12vw,6rem) clamp(1.4rem,6vw,4rem) clamp(1.4rem,5vw,3rem);
+  background:rgba(16,0,6,.72);backdrop-filter:blur(20px) saturate(1.15);-webkit-backdrop-filter:blur(20px) saturate(1.15);
+  clip-path:inset(0 0 100% 0);transition:clip-path .7s cubic-bezier(.7,0,.2,1);pointer-events:none;}
+body.menu-open #menu{clip-path:inset(0 0 0 0);pointer-events:auto;}
+#menu .close{position:absolute;top:clamp(1.1rem,3vw,1.8rem);right:clamp(1.1rem,4vw,2.4rem);font-family:var(--mono);font-size:1.4rem;color:var(--paper);}
+.menu-list{list-style:none;margin:0;padding:0;flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(.1rem,1.4vh,.6rem);}
+.menu-list li{overflow:hidden;}
+.menu-list a{display:flex;align-items:baseline;gap:1rem;padding:.35rem 0;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(2.4rem,9vw,5rem);line-height:1.02;letter-spacing:-.01em;color:var(--paper);text-decoration:none;
+  transform:translateY(115%);transition:transform .6s cubic-bezier(.2,.7,.2,1),color .25s;}
+.menu-list a .no{font-family:var(--mono);font-weight:400;font-size:.7rem;letter-spacing:.1em;color:var(--muted);opacity:0;transition:opacity .4s;}
+.menu-list a:hover{color:var(--pink);}
+body.menu-open .menu-list a{transform:translateY(0);}
+body.menu-open .menu-list a .no{opacity:1;}
+body.menu-open .menu-list li:nth-child(1) a{transition-delay:.08s}
+body.menu-open .menu-list li:nth-child(2) a{transition-delay:.16s}
+body.menu-open .menu-list li:nth-child(3) a{transition-delay:.24s}
+body.menu-open .menu-list li:nth-child(4) a{transition-delay:.32s}
+body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
+.menu-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;border-top:1px solid rgba(255,134,189,.16);padding-top:1.2rem;}
+.tsu-mark{width:150px;height:auto;color:var(--paper);opacity:.85;}
+.menu-foot .contact{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--paper);}
+.menu-foot .contact b{display:block;color:var(--pink);font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;margin-bottom:.35rem;}
+
+/* ---------- MENU variant: right panel ---------- */
+body.menu-panel #menu{left:auto;width:min(30rem,90vw);background:rgba(16,0,6,.92);border-left:1px solid rgba(255,134,189,.2);box-shadow:-40px 0 80px rgba(0,0,0,.55);}
+body.menu-panel .menu-list a{font-size:clamp(1.9rem,5vw,2.7rem);}
+
+/* ---------- HOME SECTIONS ---------- */
+main{display:block;position:relative;z-index:2;background:var(--ink);}
+.sec{padding:clamp(3.4rem,9vh,6.5rem) clamp(1.2rem,5vw,3.4rem);border-top:1px solid rgba(255,134,189,.1);}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:clamp(1.4rem,4vh,2.4rem);}
+.sec-ey{font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.28em;color:var(--pink);text-transform:uppercase;margin:0;}
+.sec-ey b{color:var(--muted);margin-right:.6rem;font-weight:400;}
+.sec-title{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2rem,6vw,3.4rem);line-height:.95;margin:.35rem 0 0;letter-spacing:-.01em;}
+.more{font-family:var(--mono);font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--paper);white-space:nowrap;text-decoration:none;transition:color .25s;}
+.more:hover{color:var(--pink);}
+.more span{display:inline-block;transition:transform .25s;}
+.more:hover span{transform:translateX(4px);}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:none;}
+.news-row{display:flex;gap:1.2rem;align-items:baseline;padding:1rem 0;border-bottom:1px solid rgba(255,134,189,.1);text-decoration:none;color:var(--paper);transition:color .2s;}
+.news-row:hover{color:var(--pink);}
+.news-row time{font-family:var(--mono);font-size:.66rem;color:var(--muted);letter-spacing:.06em;flex-shrink:0;width:6.4rem;}
+.news-row p{margin:0;font-size:.92rem;}
+.live-row{display:flex;gap:1rem;align-items:center;padding:1rem 0;border-bottom:1px solid rgba(255,134,189,.1);}
+.live-row .no{font-family:var(--mono);color:var(--muted);font-size:.7rem;width:2rem;}
+.live-row .city{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.15rem;flex:1;}
+.live-row .date{font-family:var(--mono);color:var(--muted);font-size:.72rem;}
+.live-row .st{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .55rem;border-radius:99px;}
+.st.ok{color:var(--pink);border:1px solid rgba(255,134,189,.4);}
+.st.few{color:var(--hot);border:1px solid rgba(236,0,80,.5);}
+.st.sold{color:var(--muted);border:1px solid rgba(228,175,191,.3);opacity:.6;}
+.pf-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;}
+.pf{aspect-ratio:3/4;border:1px solid rgba(255,134,189,.16);border-radius:.5rem;background:radial-gradient(120% 80% at 50% 0%,rgba(236,0,80,.14),transparent 60%),rgba(255,244,247,.02);display:flex;flex-direction:column;justify-content:space-between;padding:1rem;transition:border-color .25s,transform .25s;}
+.pf:hover{border-color:var(--pink);transform:translateY(-4px);}
+.pf .n{font-family:var(--mono);font-size:.7rem;color:var(--muted);}
+.pf .q{font-family:var(--display);font-weight:700;font-size:2.4rem;color:var(--hot);line-height:1;}
+.pf .nm{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;}
+.shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+.gd{border:1px solid rgba(255,134,189,.14);border-radius:.5rem;overflow:hidden;transition:border-color .25s,transform .25s;}
+.gd:hover{border-color:var(--pink);transform:translateY(-4px);}
+.gd .ph{aspect-ratio:1;background:radial-gradient(120% 100% at 50% 0%,rgba(236,0,80,.2),rgba(58,0,20,.5));display:flex;align-items:center;justify-content:center;color:var(--pink);}
+.gd .ph svg{width:32%;opacity:.5;}
+.gd .meta{padding:.7rem .8rem;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.62rem;}
+.gd .meta b{color:var(--paper);font-weight:400;letter-spacing:.03em;}
+.gd .meta .pr{color:var(--hot);}
+.idx{list-style:none;margin:0;padding:0;}
+.idx a{display:flex;align-items:center;gap:1.2rem;padding:1.05rem 0;border-bottom:1px solid rgba(255,134,189,.1);text-decoration:none;color:var(--paper);
+  font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.6rem,5vw,2.6rem);transition:color .25s,padding-left .25s;}
+.idx a:hover{color:var(--pink);padding-left:.6rem;}
+.idx a .no{font-family:var(--mono);font-weight:400;font-size:.8rem;color:var(--muted);}
+.idx a .ar{margin-left:auto;transition:transform .25s,color .25s;}
+.idx a:hover .ar{transform:translateX(6px);color:var(--pink);}
+.foot{padding:clamp(2.4rem,6vh,4rem) clamp(1.2rem,5vw,3.4rem) clamp(3rem,8vh,5rem);border-top:1px solid rgba(255,134,189,.16);display:flex;flex-direction:column;gap:1.6rem;background:var(--ink);position:relative;z-index:2;}
+.foot .disc{font-family:var(--mono);font-size:.58rem;line-height:1.95;color:var(--muted);max-width:52rem;margin:0;}
+.foot .frow{display:flex;justify-content:space-between;align-items:flex-end;gap:1.2rem;flex-wrap:wrap;}
+.foot .xhs{font-family:var(--mono);font-size:.72rem;color:var(--paper);}
+.foot .xhs b{display:block;color:var(--pink);font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;margin-bottom:.3rem;}
+.foot .mk{font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;color:var(--muted);opacity:.6;text-transform:uppercase;text-align:right;}
+
+/* ---------- CHEER WIDGET (draggable, preserved) ---------- */
+#cheer{position:fixed;z-index:70;right:clamp(.8rem,3vw,1.6rem);bottom:clamp(.8rem,3vw,1.6rem);width:clamp(72px,15vw,104px);
+  touch-action:none;filter:drop-shadow(0 .6rem 1rem rgba(18,0,5,.5));transition:filter .3s;}
+#cheer:active{cursor:grabbing;}
+#cheer img{width:100%;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;}
+
+@media (max-width:760px){
+  .hero__ambient{display:none;}
+  .hero__art{width:100%;max-width:100%;left:0;right:auto;object-fit:cover;object-position:54% 8%;-webkit-mask-image:none;mask-image:none;}
+  .hero__scrim{background:linear-gradient(180deg,rgba(18,0,5,.5) 0%,transparent 26% 50%,rgba(18,0,5,.66) 78%,rgba(18,0,5,.97) 100%);}
+  .lang{display:none;}
+  .pf-grid{grid-template-columns:repeat(3,1fr);}
+  .shop-grid{grid-template-columns:repeat(2,1fr);}
+  .live-row{flex-wrap:wrap;}
+  .live-row .date{margin-left:auto;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.2s!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <svg class="lockup-mark" viewBox="0 0 760 300" fill="currentColor" role="img" aria-label="TSUKUMO99 LIVE · DiŹ">
+    <text x="96" y="42" text-anchor="start" font-family="'Space Mono',monospace" font-weight="700" font-size="23" letter-spacing="10" fill="currentColor">TSUKUMO99 LIVE</text>
+    <g transform="translate(40,70)">
+      <g transform="skewX(-13)" stroke="currentColor" stroke-width="46" stroke-linecap="butt" stroke-linejoin="miter" fill="none">
+        <path d="M104 194 L104 0 C224 0 258 58 258 97 C258 136 224 194 104 194"></path>
+        <path d="M300 76 L300 194"></path>
+        <path d="M356 18 L508 18 L366 194 L520 194"></path>
+      </g>
+      <rect x="262" y="30" width="46" height="46" transform="rotate(45 285 53) skewX(-13)" fill="currentColor"></rect>
+      <g transform="skewX(-13) rotate(12 512 -22)">
+        <rect x="470" y="-64" width="84" height="84" rx="16" fill="none" stroke="currentColor" stroke-width="11"></rect>
+        <circle cx="491" cy="-43" r="8"></circle><circle cx="533" cy="-43" r="8"></circle>
+        <circle cx="512" cy="-22" r="8"></circle>
+        <circle cx="491" cy="-1" r="8"></circle><circle cx="533" cy="-1" r="8"></circle>
+      </g>
+    </g>
+  </svg>
+  <div class="note">UNOFFICIAL FANWEB · 请用浏览器打开</div>
+</div>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="brand"><b>TSUKUMO99</b><em>UNOFFICIAL FANWEB</em></div>
+  <div class="topbar-right">
+    <div class="lang">
+      <button class="on" data-lang="cn">CN</button>
+      <button data-lang="jp">JP</button>
+      <button data-lang="en">EN</button>
+    </div>
+    <button class="burger" id="burger" aria-label="菜单"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__ambient"></div>
+  <img class="hero__art" src="assets/hero.avif" alt="" />
+  <div class="hero__scrim"></div>
+  <div class="hero__spot"></div>
+
+  <div class="hero__inner">
+    <svg class="diz-mark" viewBox="0 0 660 320" fill="none" role="img" aria-label="DiŹ">
+      <g transform="skewX(-13)" stroke="currentColor" stroke-width="46" stroke-linecap="butt" stroke-linejoin="miter" fill="none">
+        <path d="M104 286 L104 92 C224 92 258 150 258 189 C258 228 224 286 104 286"></path>
+        <path d="M300 168 L300 286"></path>
+        <path d="M356 110 L508 110 L366 286 L520 286"></path>
+        <path class="acc" d="M452 78 L506 34"></path>
+      </g>
+      <rect class="acc" x="262" y="104" width="46" height="46" transform="rotate(45 285 127) skewX(-13)"></rect>
+    </svg>
+    <p class="tourline">World Tour 2026</p>
+    <p class="tagline">“Once and for all, dice away.”</p>
+    <div class="hero__cta">
+      <button class="btn btn-primary" data-i18n="cta" data-book>购票</button>
+    </div>
+  </div>
+
+  <div class="scrollcue"><span></span></div>
+</section>
+
+<!-- HOME SECTIONS -->
+<main>
+  <section class="sec" id="news">
+    <div class="sec-head reveal">
+      <div><p class="sec-ey"><b>01</b>News</p><h2 class="sec-title">情报</h2></div>
+      <a class="more" href="news.html">View all <span>→</span></a>
+    </div>
+    <div class="reveal">
+      <a class="news-row" href="#"><time>2026.08.01</time><p>DiŹ WORLD TOUR 2026 特设页公开</p></a>
+      <a class="news-row" href="#"><time>2026.07.20</time><p>广州・上海 追加公演决定</p></a>
+      <a class="news-row" href="#"><time>2026.07.05</time><p>会员限定 先行抽选 受付开始</p></a>
+    </div>
+  </section>
+
+  <section class="sec" id="live">
+    <div class="sec-head reveal">
+      <div><p class="sec-ey"><b>02</b>Live</p><h2 class="sec-title">巡演场次</h2></div>
+      <a class="more" href="#" data-book>购票 <span>→</span></a>
+    </div>
+    <div class="reveal">
+      <div class="live-row"><span class="no">01</span><span class="city">广州 · SIXFACE</span><span class="date">2026.09.12</span><span class="st ok">余票</span></div>
+      <div class="live-row"><span class="no">02</span><span class="city">上海 · SIXFACE</span><span class="date">2026.09.19</span><span class="st few">紧张</span></div>
+      <div class="live-row"><span class="no">03</span><span class="city">北京 · SIXFACE</span><span class="date">2026.09.26</span><span class="st sold">售罄</span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="shop">
+    <div class="sec-head reveal">
+      <div><p class="sec-ey"><b>03</b>Shop</p><h2 class="sec-title">周边</h2></div>
+      <a class="more" href="shop.html">View all <span>→</span></a>
+    </div>
+    <div class="shop-grid reveal">
+      <div class="gd"><div class="ph"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="25" cy="25" r="9"/><circle cx="75" cy="25" r="9"/><circle cx="50" cy="50" r="9"/><circle cx="25" cy="75" r="9"/><circle cx="75" cy="75" r="9"/></svg></div><div class="meta"><b>アクリルスタンド</b><span class="pr">◈120</span></div></div>
+      <div class="gd"><div class="ph"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="25" cy="25" r="9"/><circle cx="75" cy="25" r="9"/><circle cx="50" cy="50" r="9"/><circle cx="25" cy="75" r="9"/><circle cx="75" cy="75" r="9"/></svg></div><div class="meta"><b>缶バッジ</b><span class="pr">◈35</span></div></div>
+      <div class="gd"><div class="ph"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="25" cy="25" r="9"/><circle cx="75" cy="25" r="9"/><circle cx="50" cy="50" r="9"/><circle cx="25" cy="75" r="9"/><circle cx="75" cy="75" r="9"/></svg></div><div class="meta"><b>トレカ</b><span class="pr">◈60</span></div></div>
+      <div class="gd"><div class="ph"><svg viewBox="0 0 100 100" fill="currentColor"><circle cx="25" cy="25" r="9"/><circle cx="75" cy="25" r="9"/><circle cx="50" cy="50" r="9"/><circle cx="25" cy="75" r="9"/><circle cx="75" cy="75" r="9"/></svg></div><div class="meta"><b>T-Shirt</b><span class="pr">◈180</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="index">
+    <div class="sec-head reveal"><div><h2 class="sec-title">Index</h2></div></div>
+    <ul class="idx reveal">
+      <li><a href="#"><span class="no">01</span>Top<span class="ar">→</span></a></li>
+      <li><a href="news.html"><span class="no">02</span>News<span class="ar">→</span></a></li>
+      <li><a href="#" data-book><span class="no">03</span>Ticket<span class="ar">→</span></a></li>
+      <li><a href="profile.html"><span class="no">04</span>Profile<span class="ar">→</span></a></li>
+      <li><a href="shop.html"><span class="no">05</span>Shop<span class="ar">→</span></a></li>
+    </ul>
+  </section>
+
+  <footer class="foot reveal">
+    <p class="disc">非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。所有场次、地址、座位、票券均为虚构，购票流程为纯前端模拟，不收集任何姓名以外的信息，更不涉及任何真实支付。仅供娱乐。</p>
+    <div class="frow">
+      <div class="xhs"><b>Contact</b>小红书 @TSUKUMO99</div>
+      <div class="mk">UNOFFICIAL FAN-MADE<br/>NOT A REAL TICKET</div>
+    </div>
+  </footer>
+</main>
+
+<!-- MENU -->
+<nav id="menu">
+  <button class="close" id="close" aria-label="关闭">✕</button>
+  <ul class="menu-list">
+    <li><a href="#"><span class="no">01</span>Top</a></li>
+    <li><a href="news.html"><span class="no">02</span>News</a></li>
+    <li><a href="#" data-book><span class="no">03</span>Ticket</a></li>
+    <li><a href="profile.html"><span class="no">04</span>Profile</a></li>
+    <li><a href="shop.html"><span class="no">05</span>Shop</a></li>
+  </ul>
+  <div class="menu-foot">
+    <div class="contact">
+      <b>Contact</b>
+      小红书 @TSUKUMO99
+    </div>
+    <svg class="tsu-mark" viewBox="0 0 1000 190" fill="currentColor" role="img" aria-label="TSUKUMO99">
+      <rect x="30" y="30" width="940" height="130" rx="8" fill="none" stroke="currentColor" stroke-width="5"></rect>
+      <line x1="30" y1="95" x2="120" y2="95" stroke="currentColor" stroke-width="5" opacity=".4"></line>
+      <text x="500" y="128" text-anchor="middle" font-family="Oswald,sans-serif" font-weight="600" font-size="92" letter-spacing="14" fill="currentColor">TSUKUMO99</text>
+    </svg>
+  </div>
+</nav>
+
+<!-- CHEER WIDGET -->
+<button id="cheer" aria-label="应援挥舞荧光棒"><img id="cheerImg" src="assets/cheer-still.webp" alt="荧光棒" /></button>
+
+<script>
+// splash
+addEventListener("load",function(){setTimeout(function(){document.getElementById("splash").classList.add("gone");},300);});
+setTimeout(function(){document.getElementById("splash").classList.add("gone");},2600);
+
+// menu  (add ?menu=panel to preview the right-panel variant instead of the translucent fullscreen one)
+var b=document.body;
+document.getElementById("burger").onclick=function(){b.classList.toggle("menu-open");};
+document.getElementById("close").onclick=function(){b.classList.remove("menu-open");};
+
+// language (cta only — text stays minimal)
+var STR={cn:{cta:"购票"},jp:{cta:"チケット"},en:{cta:"TICKET"}};
+document.querySelectorAll(".lang button").forEach(function(btn){
+  btn.onclick=function(){
+    document.querySelectorAll(".lang button").forEach(function(x){x.classList.remove("on");});
+    btn.classList.add("on");
+    var s=STR[btn.dataset.lang];
+    document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(s[k])el.textContent=s[k];});
+  };
+});
+
+// cheer widget — draggable + tap to wave (no label text)
+var frames=[];for(var i=0;i<7;i++){frames.push("assets/cheer-frame-"+i+".webp");new Image().src=frames[i];}
+var cheer=document.getElementById("cheer"),cImg=document.getElementById("cheerImg"),playing=false,drag=null;
+function wave(){if(playing)return;playing=true;var n=0,loops=0;var t=setInterval(function(){cImg.src=frames[n];n++;if(n>=7){n=0;loops++;if(loops>=2){clearInterval(t);cImg.src="assets/cheer-still.webp";playing=false;}}},80);}
+cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRect();drag={dx:e.clientX-r.left,dy:e.clientY-r.top,moved:false};cheer.setPointerCapture(e.pointerId);});
+cheer.addEventListener("pointermove",function(e){
+  if(!drag)return;
+  if(Math.abs(e.movementX)+Math.abs(e.movementY)>1)drag.moved=true;
+  var w=cheer.offsetWidth,h=cheer.offsetHeight;
+  var nx=Math.max(4,Math.min(innerWidth-w-4,e.clientX-drag.dx));
+  var ny=Math.max(4,Math.min(innerHeight-h-4,e.clientY-drag.dy));
+  cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";
+});
+cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
+
+// scroll-reveal for home sections
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12,rootMargin:"0px 0px -8% 0px"});
+document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
+</script>
+<script src="booking.js"></script>
+</body>
 </html>
