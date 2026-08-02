@@ -14,15 +14,15 @@
     var el=document.createElement("div");
     el.className="page-loader";
     el.setAttribute("aria-hidden","true");
-    el.innerHTML='<div class="page-loader__meta">TSUKUMO99 · UNOFFICIAL FANWEB</div><svg class="page-loader__word" viewBox="0 0 700 320" fill="none" aria-hidden="true"><g transform="skewX(-13)" stroke="#fff4f7" stroke-width="46" stroke-linecap="butt" stroke-linejoin="miter" fill="none"><path class="page-loader__draw" pathLength="1" d="M104 286 L104 92 C224 92 258 150 258 189 C258 228 224 286 104 286"></path><path class="page-loader__draw" pathLength="1" d="M300 168 L300 286" style="animation-delay:.2s"></path><path class="page-loader__draw" pathLength="1" d="M356 110 L508 110 L366 286 L520 286" style="animation-delay:.35s"></path><path class="page-loader__draw" pathLength="1" d="M452 78 L506 34" style="animation-delay:.6s"></path></g></svg><div class="page-loader__note">请用浏览器打开 · OPEN IN A BROWSER</div>';
+    el.innerHTML='<div class="page-loader__fx" aria-hidden="true"><span class="page-loader__beam b1"></span><span class="page-loader__beam b2"></span><span class="page-loader__beam b3"></span><span class="page-loader__glow"></span></div><svg class="page-loader__word" viewBox="70 -6 620 292" fill="none" aria-hidden="true"><g transform="translate(40,70)"><g transform="skewX(-13)" stroke="#fff4f7" stroke-width="46" stroke-linecap="butt" stroke-linejoin="miter" fill="none"><path class="page-loader__draw" pathLength="1" d="M104 194 L104 0 C224 0 258 58 258 97 C258 136 224 194 104 194"></path><path class="page-loader__draw" pathLength="1" d="M300 76 L300 194" style="animation-delay:.2s"></path><path class="page-loader__draw" pathLength="1" d="M356 18 L508 18 L366 194 L520 194" style="animation-delay:.35s"></path></g><rect class="page-loader__pop" x="262" y="30" width="46" height="46" transform="rotate(45 285 53) skewX(-13)" fill="#fff4f7" style="animation-delay:.55s"></rect><g class="page-loader__pop" transform="skewX(-13) rotate(12 512 -22)" fill="#fff4f7" style="animation-delay:.68s"><rect x="470" y="-64" width="84" height="84" rx="16" fill="none" stroke="#fff4f7" stroke-width="11"></rect><circle cx="491" cy="-43" r="8"></circle><circle cx="533" cy="-43" r="8"></circle><circle cx="512" cy="-22" r="8"></circle><circle cx="491" cy="-1" r="8"></circle><circle cx="533" cy="-1" r="8"></circle></g></g></svg><div class="page-loader__gate"><b>请复制链接，用浏览器打开</b><span>Copy the link &amp; open it in your browser</span></div>';
     return el;
   }
   var curtain=makeCurtain();
   document.body.prepend(curtain);
   if(arrival){
-    curtain.style.transform="translateY(-8%)";
+    curtain.style.transform="translate3d(0,-8%,0)";
     requestAnimationFrame(function(){requestAnimationFrame(function(){curtain.style.transform="";curtain.classList.add("is-revealing");});});
-    window.setTimeout(function(){curtain.className="page-curtain";},reduce?220:460);
+    window.setTimeout(function(){curtain.className="page-curtain";},reduce?220:540);
   }else{
     var loader=makeLoader();
     document.body.prepend(loader);
@@ -37,7 +37,7 @@
     event.preventDefault();
     document.body.classList.remove("menu-open");
     curtain.className="page-curtain";curtain.style.transform="";curtain.getBoundingClientRect();curtain.classList.add("is-covering");
-    window.setTimeout(function(){try{sessionStorage.setItem("diz-curtain-arrival","1");}catch(error){}window.location.href=url.href;},reduce?190:430);
+    window.setTimeout(function(){try{sessionStorage.setItem("diz-curtain-arrival","1");}catch(error){}window.location.href=url.href;},reduce?190:450);
   });
   window.addEventListener("pageshow",function(event){if(event.persisted){curtain.className="page-curtain";curtain.style.transform="";}});
 })();

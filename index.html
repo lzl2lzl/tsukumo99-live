@@ -7,7 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%233a0014'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff86bd'/%3E%3Ccircle cx='20' cy='44' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23fff4f7'/%3E%3C/svg%3E">
 <title>DiŹ WORLD TOUR 2026 — TSUKUMO99 [proto]</title>
 <link rel="preload" as="image" href="assets/hero-desktop-square.jpg" type="image/jpeg" media="(min-width: 761px)" fetchpriority="high" />
-<link rel="preload" as="image" href="assets/hero.avif" type="image/avif" media="(max-width: 760px)" fetchpriority="high" />
+<link rel="preload" as="image" href="assets/hero-mobile.webp" type="image/webp" media="(max-width: 760px)" fetchpriority="high" />
 <link rel="stylesheet" href="page-transition.css" />
 <style>
 @font-face{font-family:"Oswald";font-weight:300 700;font-display:swap;src:url("assets/fonts/oswald-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+2122;}
@@ -207,10 +207,17 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
 .foot .cred span{color:var(--pink);font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;margin-right:.7rem;}
 
 /* ---------- CHEER WIDGET (draggable, preserved) ---------- */
-#cheer{position:fixed;z-index:70;right:clamp(.8rem,3vw,1.6rem);bottom:clamp(.8rem,3vw,1.6rem);width:clamp(72px,15vw,104px);
+#cheer{position:fixed;z-index:70;right:clamp(.8rem,3vw,1.6rem);bottom:clamp(.8rem,3vw,1.6rem);width:clamp(92px,18vw,132px);
   touch-action:none;filter:drop-shadow(0 .6rem 1rem rgba(18,0,5,.5));transition:filter .3s;}
 #cheer:active{cursor:grabbing;}
 #cheer img{width:100%;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;}
+#cheer::before{content:"";position:absolute;left:50%;top:50%;width:300%;height:300%;transform:translate(-50%,-50%) scale(.4);border-radius:50%;background:radial-gradient(circle,rgba(255,246,250,.5) 0%,rgba(255,170,206,.3) 34%,rgba(236,0,80,.14) 60%,transparent 74%);opacity:0;pointer-events:none;z-index:-1;filter:blur(9px);}
+#cheer.waving::before{animation:cheerBurst .9s ease-out both;}
+#cheer.waving{filter:drop-shadow(0 0 1.2rem rgba(255,247,250,.55)) drop-shadow(0 .5rem 1rem rgba(18,0,5,.5));}
+@keyframes cheerBurst{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}18%{opacity:.62;transform:translate(-50%,-50%) scale(1)}55%{opacity:.3;transform:translate(-50%,-50%) scale(1.35)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.7)}}
+#cheer::after{content:"";position:absolute;left:50%;top:46%;width:185%;height:185%;transform:translate(-50%,-50%) scale(.42) scaleY(.88);background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%27330%205%20228%20312%27%3E%3Cg%20stroke%3D%27%23fff%27%20stroke-width%3D%2746%27%20stroke-linecap%3D%27butt%27%20stroke-linejoin%3D%27miter%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M356%20110%20L508%20110%20L366%20286%20L520%20286%27%2F%3E%3Cpath%20d%3D%27M452%2078%20L506%2034%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") center/contain no-repeat;opacity:0;pointer-events:none;z-index:-1;filter:drop-shadow(0 0 8px rgba(255,255,255,.6)) drop-shadow(0 0 20px rgba(255,150,196,.45));}
+#cheer.waving::after{animation:cheerZ .92s cubic-bezier(.2,.7,.3,1) both;}
+@keyframes cheerZ{0%{opacity:0;transform:translate(-50%,-50%) scale(.42) scaleY(.88)}18%{opacity:.72;transform:translate(-50%,-50%) scale(1) scaleY(.88)}55%{opacity:.5;transform:translate(-50%,-50%) scale(1.2) scaleY(.88)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.55) scaleY(.88)}}
 
 .mhero{display:none;}
 @keyframes sweep{0%,100%{opacity:.35}50%{opacity:.7}}
@@ -219,7 +226,7 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
   /* Phones now use the same DiŹ stage as desktop — art goes full-bleed, copy drops to the foot. */
   .mhero{display:none;}
   .hero{background:radial-gradient(125% 80% at 50% 6%,#5a001e,#3a0014 42%,var(--ink) 82%),var(--ink);}
-  .hero-art-wrap{left:0;right:0;width:100%;}
+  .hero-art-wrap{left:0;right:0;width:100%;transform:translate3d(0,var(--hero-art-shift,0),0);transition:none;}
   .hero-art{object-position:center 12%;-webkit-mask-image:none;mask-image:none;}
   .hero-art-wrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,0,5,.5) 0%,transparent 26%,rgba(18,0,5,.3) 56%,rgba(18,0,5,.97) 100%);}
   .hero-copy{top:auto;bottom:0;height:auto;max-width:100%;padding:0 clamp(1.3rem,6vw,2rem) clamp(2.4rem,8vh,3.6rem);}
@@ -227,6 +234,8 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
   .hero-title{font-size:clamp(4.4rem,30vw,8rem);}
   .hero-tourline{font-size:11px;margin-top:14px;}
   .hero-tagline{font-size:clamp(1rem,4.4vw,1.35rem);}
+  .hero-more{margin-top:clamp(1.5rem,4.5vh,2.2rem);padding:.92rem 1.7rem;border-radius:999px;background:var(--hot);color:var(--paper);box-shadow:0 12px 28px rgba(236,0,80,.5);font-size:.72rem;letter-spacing:.14em;gap:.55rem;}
+  .hero-more svg{width:12px;height:12px;}
   .hero-flow{opacity:calc(var(--hero-stage-opacity,1) * .45);}
   .hero-typefield{opacity:.045;}
   .lang{display:none;}
@@ -278,7 +287,8 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   <div class="hero-layer hero-art-wrap" id="heroArt" aria-hidden="true">
     <picture>
       <source media="(min-width: 761px)" srcset="assets/hero-desktop-square.jpg" />
-      <img class="hero-art" src="assets/hero.avif" alt="" />
+      <source media="(max-width: 760px)" type="image/webp" srcset="assets/hero-mobile.webp" />
+      <img class="hero-art" src="assets/hero-mobile.jpg" width="840" height="1120" decoding="async" fetchpriority="high" alt="" />
     </picture>
   </div>
   <div class="hero-layer hero-beams" id="heroBeams" aria-hidden="true"><div class="hero-beam b1"></div><div class="hero-beam b2"></div><div class="hero-beam b3"></div><div class="hero-beam b4"></div><div class="hero-beam b5"></div><div class="hero-beam b6"></div><div class="hero-beam main"></div><div class="hero-beam b8"></div><div class="hero-beam b9"></div><div class="hero-beam b10"></div><div class="hero-beam side"></div><div class="hero-beam b12"></div></div>
@@ -292,30 +302,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     <p class="hero-tagline hero-anim hero-d3">“Once and for all, dice away.”</p>
     <a class="hero-more hero-anim hero-d3" href="#news" aria-label="了解更多">了解更多<svg viewBox="0 0 16 16" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v11M3.5 8.5 8 13l4.5-4.5"/></svg></a>
   </section>
-</section>
-
-<!-- MOBILE HERO (phones only — original homepage hero, unchanged) -->
-<section class="mhero" aria-labelledby="mheroTitle">
-  <img class="mhero__art" src="assets/hero.avif" alt="" />
-  <div class="mhero__scrim"></div>
-  <div class="mhero__spot"></div>
-  <div class="mhero__inner">
-    <svg class="mhero__mark" viewBox="0 0 660 320" fill="none" role="img" aria-label="DiŹ" id="mheroTitle">
-      <g transform="skewX(-13)" stroke="currentColor" stroke-width="46" stroke-linecap="butt" stroke-linejoin="miter" fill="none">
-        <path d="M104 286 L104 92 C224 92 258 150 258 189 C258 228 224 286 104 286"></path>
-        <path d="M300 168 L300 286"></path>
-        <path d="M356 110 L508 110 L366 286 L520 286"></path>
-        <path class="acc" d="M452 78 L506 34"></path>
-      </g>
-      <rect class="acc" x="262" y="104" width="46" height="46" transform="rotate(45 285 127) skewX(-13)"></rect>
-    </svg>
-    <p class="mhero__tour">World Tour 2026</p>
-    <p class="mhero__tag">“Once and for all, dice away.”</p>
-    <div class="mhero__cta">
-      <a href="ticket.html" data-i18n="cta">购票</a>
-    </div>
-  </div>
-  <div class="mhero__cue"><span></span></div>
 </section>
 
 <!-- HOME SECTIONS -->
@@ -441,7 +427,7 @@ document.querySelectorAll("button[data-lang]").forEach(function(btn){
     beams.style.transform="translate3d("+(x*5)+"px,0,0)";
     if(Math.abs(tx-x)>.001||Math.abs(ty-y)>.001)parallaxFrame=requestAnimationFrame(moveHero);else parallaxFrame=0;
   }
-  if(!reduce){
+  if(!reduce && matchMedia("(min-width:761px)").matches){
     hero.addEventListener("pointermove",function(e){var r=hero.getBoundingClientRect();tx=(e.clientX-r.left)/r.width-.5;ty=(e.clientY-r.top)/r.height-.5;if(!parallaxFrame)parallaxFrame=requestAnimationFrame(moveHero);},{passive:true});
     hero.addEventListener("pointerleave",function(){tx=0;ty=0;if(!parallaxFrame)parallaxFrame=requestAnimationFrame(moveHero);});
   }
@@ -452,6 +438,7 @@ document.querySelectorAll("button[data-lang]").forEach(function(btn){
     hero.style.setProperty("--hero-copy-opacity",String(1-progress*.9));
     hero.style.setProperty("--hero-stage-opacity",String(1-progress*.42));
     hero.style.setProperty("--hero-copy-shift",(-28*progress).toFixed(1)+"px");
+    hero.style.setProperty("--hero-art-shift",(progress*84).toFixed(1)+"px");
   }
   window.addEventListener("scroll",function(){if(!scrollFrame)scrollFrame=requestAnimationFrame(blendHeroIntoPage);},{passive:true});
   blendHeroIntoPage();
@@ -486,7 +473,7 @@ document.querySelectorAll("button[data-lang]").forEach(function(btn){
 // cheer widget — draggable + tap to wave (no label text)
 var frames=[];for(var i=0;i<7;i++){frames.push("assets/cheer-frame-"+i+".webp");new Image().src=frames[i];}
 var cheer=document.getElementById("cheer"),cImg=document.getElementById("cheerImg"),playing=false,drag=null;
-function wave(){if(playing)return;playing=true;var n=0,loops=0;var t=setInterval(function(){cImg.src=frames[n];n++;if(n>=7){n=0;loops++;if(loops>=2){clearInterval(t);cImg.src="assets/cheer-still.webp";playing=false;}}},80);}
+function wave(){if(playing)return;playing=true;cheer.classList.add("waving");var n=0,loops=0;var t=setInterval(function(){cImg.src=frames[n];n++;if(n>=7){n=0;loops++;if(loops>=2){clearInterval(t);cImg.src="assets/cheer-still.webp";playing=false;cheer.classList.remove("waving");}}},80);}
 cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRect();drag={dx:e.clientX-r.left,dy:e.clientY-r.top,moved:false};cheer.setPointerCapture(e.pointerId);});
 cheer.addEventListener("pointermove",function(e){
   if(!drag)return;
