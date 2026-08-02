@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#120005" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%233a0014'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff86bd'/%3E%3Ccircle cx='20' cy='44' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23fff4f7'/%3E%3C/svg%3E">
-<title>Shop 云购物 — TSUKUMO99 · DiŹ [proto]</title>
+<title>Shop 商店 — TSUKUMO99 · DiŹ</title>
 <link rel="stylesheet" href="page-transition.css" />
-<link rel="stylesheet" href="design-pages.css" />
 <style>
 @font-face{font-family:"Oswald";font-weight:300 700;font-display:swap;src:url("assets/fonts/oswald-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+2122;}
 @font-face{font-family:"Oswald";font-weight:300 700;font-display:swap;src:url("assets/fonts/oswald-latin-ext.woff2") format("woff2");unicode-range:U+0100-024F,U+1E00-1EFF,U+2C60-2C7F,U+A720-A7FF;}
@@ -32,6 +31,9 @@ a{color:inherit;text-decoration:none;}
 .lang button{color:var(--muted);opacity:.7;padding:.2rem 0;position:relative;text-transform:uppercase;}
 .lang button.on{color:var(--paper);opacity:1;}
 .lang button.on::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:2px;background:var(--hot);}
+.cartbtn{position:relative;display:flex;align-items:center;color:var(--paper);}
+.cartbtn .cico{width:22px;height:22px;display:block;}
+.cartbtn #cartCount{position:absolute;top:-8px;right:-9px;min-width:15px;height:15px;padding:0 3px;display:none;place-items:center;background:var(--hot);color:var(--paper);border-radius:999px;font-family:var(--mono);font-size:.5rem;font-weight:700;line-height:1;}
 .burger{width:34px;height:20px;position:relative;}
 .burger span{position:absolute;left:0;right:0;height:2px;background:var(--paper);transition:transform .5s cubic-bezier(.7,0,.2,1),opacity .35s;}
 .burger span:nth-child(1){top:0}.burger span:nth-child(2){top:9px}.burger span:nth-child(3){top:18px}
@@ -44,15 +46,17 @@ body.menu-open #menu{clip-path:inset(0 0 0 0);pointer-events:auto;}
 .menu-list{list-style:none;margin:0;padding:0;flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(.1rem,1.4vh,.6rem);}
 .menu-list li{overflow:hidden;}
 .menu-list a{display:flex;align-items:baseline;gap:1rem;padding:.35rem 0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2.4rem,9vw,5rem);line-height:1.02;letter-spacing:-.01em;color:var(--paper);transform:translateY(115%);transition:transform .6s cubic-bezier(.2,.7,.2,1),color .25s;}
-.menu-list a .no{font-family:var(--mono);font-weight:400;font-size:.7rem;letter-spacing:.1em;color:var(--muted);opacity:0;transition:opacity .4s;}
 .menu-list a:hover,.menu-list a.here{color:var(--pink);}
 body.menu-open .menu-list a{transform:translateY(0);}
-body.menu-open .menu-list a .no{opacity:1;}
 body.menu-open .menu-list li:nth-child(1) a{transition-delay:.08s}
 body.menu-open .menu-list li:nth-child(2) a{transition-delay:.16s}
 body.menu-open .menu-list li:nth-child(3) a{transition-delay:.24s}
 body.menu-open .menu-list li:nth-child(4) a{transition-delay:.32s}
 body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
+.menu-lang{display:flex;gap:.9rem;margin:0 0 clamp(1rem,3vh,1.6rem);font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;}
+.menu-lang button{color:var(--muted);opacity:.7;padding:.3rem .1rem;position:relative;text-transform:uppercase;background:none;border:0;cursor:pointer;}
+.menu-lang button.on{color:var(--paper);opacity:1;}
+.menu-lang button.on::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--hot);}
 .menu-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;border-top:1px solid rgba(255,134,189,.16);padding-top:1.2rem;font-family:var(--mono);}
 .menu-foot .contact{font-size:.72rem;letter-spacing:.06em;color:var(--paper);}
 .menu-foot .contact b{display:block;color:var(--pink);font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;margin-bottom:.35rem;}
@@ -60,31 +64,62 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 #cheer{position:fixed;z-index:70;right:clamp(.8rem,3vw,1.6rem);bottom:clamp(.8rem,3vw,1.6rem);width:clamp(64px,13vw,92px);touch-action:none;filter:drop-shadow(0 .6rem 1rem rgba(18,0,5,.5));}
 #cheer img{width:100%;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;}
 
-/* page: shop */
-.wrap{max-width:1120px;margin:0 auto;padding:clamp(5.4rem,13vw,8rem) clamp(1.2rem,5vw,2.6rem) clamp(3rem,8vh,5rem);}
-.phead .ey{font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.28em;color:var(--pink);text-transform:uppercase;margin:0;}
-.phead .ey b{color:var(--muted);margin-right:.6rem;font-weight:400;}
-.phead h1{margin:.4rem 0 0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2.2rem,7vw,4rem);line-height:.9;}
-.phead p{margin:.8rem 0 0;max-width:34rem;font-family:var(--mono);font-size:.66rem;line-height:1.9;color:var(--muted);}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.8rem,1.8vw,1.2rem);margin-top:clamp(1.8rem,4vw,2.6rem);}
-.gd{display:block;border-radius:.6rem;overflow:hidden;transition:transform .25s;}
-.gd:hover{transform:translateY(-5px);}
-.ph{position:relative;aspect-ratio:3/4;background:var(--c);padding:1.1rem;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;}
-.ph .motif{position:absolute;top:-8%;right:-6%;width:52%;color:var(--k);opacity:.16;}
-.ph .cat{font-family:var(--mono);font-weight:700;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--k);opacity:.75;}
-.ph .nm{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.1rem,2.2vw,1.5rem);line-height:1;color:var(--k);margin-top:.2rem;}
-.meta{display:flex;align-items:center;justify-content:space-between;padding:.7rem .3rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;color:var(--muted);}
-.wu{font-weight:700;font-size:.54rem;letter-spacing:.14em;color:var(--hot);border:1px solid rgba(236,0,80,.5);border-radius:999px;padding:.16rem .5rem;}
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1);}
-.reveal.in{opacity:1;transform:none;}
-.note{margin-top:clamp(2rem,5vh,3.4rem);font-family:var(--mono);font-size:.56rem;letter-spacing:.06em;color:var(--muted);opacity:.6;}
+/* page: shop overview */
+.wrap{max-width:1080px;margin:0 auto;padding:clamp(5.4rem,13vw,8rem) clamp(1.2rem,5vw,2.6rem) clamp(3rem,8vh,5rem);}
+.shop-head{margin-bottom:clamp(1.6rem,4vw,2.6rem);}
+.shop-ey{font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin:0;}
+.shop-ey b{color:var(--hot);font-style:italic;margin-right:.7rem;letter-spacing:0;}
+.shop-h1{margin:.5rem 0 0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2.2rem,7vw,4rem);line-height:.9;}
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:clamp(1rem,2.4vw,1.6rem);}
+.prod-card{display:block;text-decoration:none;color:inherit;}
+.pc-cover{position:relative;border-radius:.6rem;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.4);}
+.pc-cover img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;transition:transform .35s;}
+.prod-card:hover .pc-cover img{transform:scale(1.04);}
+.pc-badge{position:absolute;top:.7rem;left:.7rem;font-family:var(--mono);font-weight:700;font-size:.5rem;letter-spacing:.16em;color:var(--paper);background:rgba(236,0,80,.92);padding:.28rem .55rem;border-radius:999px;}
+.pc-cat{font-family:var(--mono);font-size:.54rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:.8rem;}
+.pc-title{font-family:var(--display);font-weight:700;font-style:italic;text-transform:uppercase;font-size:1.4rem;line-height:1;margin-top:.2rem;transition:color .25s;}
+.prod-card:hover .pc-title{color:var(--pink);}
+.pc-price{font-family:var(--mono);font-weight:700;font-size:.85rem;color:var(--hot);margin-top:.4rem;}
+.qtybox{display:inline-flex;align-items:center;border:1px solid rgba(255,134,189,.3);border-radius:999px;overflow:hidden;}
+.qtybox button{width:38px;height:40px;font-size:1.1rem;color:var(--paper);}
+.qtybox span{min-width:34px;text-align:center;font-family:var(--mono);font-weight:700;font-size:.9rem;}
+.qtybox.sm button{width:30px;height:32px;font-size:1rem;}
+.qtybox.sm span{min-width:26px;font-size:.8rem;}
+.btn-primary{font-family:var(--mono);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.5rem;border-radius:999px;background:var(--hot);color:var(--paper);box-shadow:0 10px 28px rgba(236,0,80,.4);}
+.shop-note{margin:clamp(2rem,5vh,3rem) 0 0;font-family:var(--mono);font-size:.56rem;line-height:1.9;color:var(--muted);opacity:.6;max-width:40rem;}
 
-@media (max-width:760px){.lang{display:none;}.grid{grid-template-columns:repeat(2,1fr);}}
+/* cart drawer */
+#cartScrim{position:fixed;inset:0;z-index:110;background:rgba(8,0,3,.55);opacity:0;pointer-events:none;transition:opacity .4s;}
+body.cart-open #cartScrim{opacity:1;pointer-events:auto;}
+#cartDrawer{position:fixed;top:0;right:0;bottom:0;z-index:120;width:min(92vw,420px);display:flex;flex-direction:column;background:#170007;border-left:1px solid rgba(255,134,189,.18);transform:translateX(100%);transition:transform .45s cubic-bezier(.7,0,.2,1);padding:clamp(1.2rem,3vw,1.8rem);gap:1rem;overflow-y:auto;}
+body.cart-open #cartDrawer{transform:none;}
+.cart-head{display:flex;align-items:center;justify-content:space-between;}
+.cart-head b{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.3rem;letter-spacing:.02em;}
+.cart-head button{font-family:var(--mono);font-size:1.1rem;color:var(--muted);}
+.cart-empty{flex:1;display:grid;place-items:center;min-height:40vh;font-family:var(--mono);font-size:.72rem;color:var(--muted);}
+.cart-items{flex:1;display:flex;flex-direction:column;gap:.9rem;}
+.cart-item{display:flex;gap:.8rem;align-items:flex-start;border-top:1px solid rgba(255,134,189,.12);padding-top:.9rem;}
+.ci-cover{width:60px;height:60px;object-fit:cover;border-radius:.4rem;flex-shrink:0;}
+.ci-mid{flex:1;min-width:0;}
+.ci-title{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:.95rem;}
+.ci-price{font-family:var(--mono);font-size:.7rem;color:var(--hot);margin:.15rem 0 .5rem;}
+.ci-remove{font-family:var(--mono);font-size:.85rem;color:var(--muted);align-self:flex-start;}
+.cart-foot{border-top:1px solid rgba(255,134,189,.16);padding-top:1rem;display:flex;flex-direction:column;gap:.7rem;}
+.cart-sub{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.cart-sub b{font-family:var(--display);font-size:1.4rem;color:var(--paper);}
+.btn-checkout{text-align:center;font-family:var(--mono);font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;padding:1rem;border-radius:.6rem;background:var(--hot);color:var(--paper);box-shadow:0 10px 28px rgba(236,0,80,.4);}
+.btn-checkout.disabled{background:rgba(236,0,80,.2);color:rgba(255,244,247,.5);pointer-events:none;box-shadow:none;}
+.btn-ghost2{font-family:var(--mono);font-weight:700;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+
+.foot{padding:clamp(2.4rem,6vh,4rem) clamp(1.2rem,5vw,3.4rem) clamp(3rem,8vh,5rem);border-top:1px solid rgba(255,134,189,.16);display:flex;flex-direction:column;gap:1.6rem;background:var(--ink);position:relative;z-index:2;}
+.foot .disc{font-family:var(--mono);font-size:.58rem;line-height:1.95;color:var(--muted);max-width:52rem;margin:0;}
+.foot .frow{display:flex;justify-content:space-between;align-items:flex-end;gap:1.2rem;flex-wrap:wrap;}
+.foot .cred{display:flex;flex-direction:column;gap:.5rem;font-family:var(--mono);font-size:.72rem;color:var(--paper);}
+.foot .cred span{color:var(--pink);font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;margin-right:.7rem;}
+.foot .mk{font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;color:var(--muted);opacity:.6;text-transform:uppercase;text-align:right;}
+
+@media (max-width:760px){.lang{display:none;}.shop-hero{grid-template-columns:1fr;}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important;}}
-.menu-lang{display:flex;gap:.9rem;margin:0 0 clamp(1rem,3vh,1.6rem);font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;}
-.menu-lang button{color:var(--muted);opacity:.7;padding:.3rem .1rem;position:relative;text-transform:uppercase;background:none;border:0;cursor:pointer;}
-.menu-lang button.on{color:var(--paper);opacity:1;}
-.menu-lang button.on::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--hot);}
 </style>
 </head>
 <body>
@@ -93,6 +128,10 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
   <a class="brand" href="index.html"><b>TSUKUMO99</b><em>UNOFFICIAL FANWEB</em></a>
   <div class="topbar-right">
     <div class="lang"><button class="on" data-lang="cn">CN</button><button data-lang="jp">JP</button><button data-lang="en">EN</button></div>
+    <button class="cartbtn" id="cartBtn" aria-label="购物车">
+      <svg class="cico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1.2 12.2a1 1 0 0 1-1 .9H8.2a1 1 0 0 1-1-.9L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      <span id="cartCount">0</span>
+    </button>
     <button class="burger" id="burger" aria-label="菜单"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -112,26 +151,34 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
     <button data-lang="en">EN</button>
   </div>
   <div class="menu-foot">
-    <div class="contact"><b>Contact</b>小红书 @TSUKUMO99</div>
-    <div class="mk">UNOFFICIAL FAN-MADE<br/>NOT A REAL TICKET</div>
+    <div class="contact"><b>Contact</b>xhs@并不知道什么叫做可爱</div>
+    <div class="mk">UNOFFICIAL FANMADE</div>
   </div>
 </nav>
 
-<div id="dcPage"></div>
+<main id="shopApp" class="wrap"></main>
+
+<footer class="foot">
+  <p class="disc">非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。所有场次、地址、座位、票券、商品与支付均为虚构，购物与结算流程为纯前端模拟，不收集任何姓名以外的信息，更不涉及任何真实支付。仅供娱乐。</p>
+  <div class="frow">
+    <div class="cred">
+      <div><span>Contact</span>xhs@并不知道什么叫做可爱</div>
+      <div><span>网页设计</span>lzl2lzl</div>
+      <div><span>主视觉</span>兰澜</div>
+    </div>
+    <div class="mk">UNOFFICIAL FANMADE</div>
+  </div>
+</footer>
+
+<div id="cartScrim"></div>
+<aside id="cartDrawer" aria-label="购物车"></aside>
 
 <button id="cheer" aria-label="应援挥舞荧光棒"><img id="cheerImg" src="assets/cheer-still.webp" alt="荧光棒" /></button>
 
-<script src="design-pages.js"></script>
 <script>
 var b=document.body;
 document.getElementById("burger").onclick=function(){b.classList.toggle("menu-open");};
 document.getElementById("close").onclick=function(){b.classList.remove("menu-open");};
-
-var DC_MOUNT=document.getElementById("dcPage"),DC_LANG="cn";
-function dcRender(){DC_MOUNT.innerHTML=window.DiZPages.renderShop(DC_LANG);window.DiZPages.wire("shop",DC_LANG,dcRender);}
-dcRender();
-document.querySelectorAll("button[data-lang]").forEach(function(btn){btn.onclick=function(){var L=btn.dataset.lang;document.querySelectorAll("button[data-lang]").forEach(function(x){x.classList.toggle("on",x.dataset.lang===L);});DC_LANG=L;dcRender();};});
-
 var frames=[];for(var i=0;i<7;i++){frames.push("assets/cheer-frame-"+i+".webp");new Image().src=frames[i];}
 var cheer=document.getElementById("cheer"),cImg=document.getElementById("cheerImg"),playing=false,drag=null;
 function wave(){if(playing)return;playing=true;var n=0,loops=0;var t=setInterval(function(){cImg.src=frames[n];n++;if(n>=7){n=0;loops++;if(loops>=2){clearInterval(t);cImg.src="assets/cheer-still.webp";playing=false;}}},80);}
@@ -139,6 +186,7 @@ cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRe
 cheer.addEventListener("pointermove",function(e){if(!drag)return;if(Math.abs(e.movementX)+Math.abs(e.movementY)>1)drag.moved=true;var w=cheer.offsetWidth,h=cheer.offsetHeight;var nx=Math.max(4,Math.min(innerWidth-w-4,e.clientX-drag.dx)),ny=Math.max(4,Math.min(innerHeight-h-4,e.clientY-drag.dy));cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";});
 cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
 </script>
+<script src="shop.js"></script>
 <script src="page-transition.js"></script>
 </body>
 </html>
