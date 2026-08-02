@@ -1,0 +1,2 @@
+[    1790ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8765/favicon.ico:0
+[   33594ms] [WARNING] [bundle] resource failed to load: SCRIPT blob:http://127.0.0.1:8765/87a59aa2-c26c-4d87-85f4-13bba852295a @ http://127.0.0.1:8765/claude%20design/DiZ%20Site%20(offline).html:51

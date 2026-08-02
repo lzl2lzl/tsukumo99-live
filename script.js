@@ -39,7 +39,7 @@
       tagline: "“Once and for all, dice away.”",
       getTickets: "选择场次", scroll: "向下滑动 · 全 17 站",
       tourEyebrow: "WORLD TOUR 2026", tourTitle: "全部巡演场次", tourSub: "17 场公演 · 11 座城市 · 横跨全球",
-      from: "起", bookBtn: "选座购票", statusPlenty: "余票充足", statusFew: "仅剩少量", statusSold: "已售罄",
+      from: "起",
       chooseZone: "选择座位档",
       back: "上一步", nameStep: "这张票印给谁？", nameLabel: "持票人姓名", namePlaceholder: "输入将印在票面上的名字", issueBtn: "生成电子票",
       ticketReady: "电子票已生成", download: "下载 PNG 票券", bookAnother: "再选一场", close: "关闭",
@@ -52,7 +52,7 @@
       tagline: "“Once and for all, dice away.”",
       getTickets: "GET TICKETS", scroll: "SCROLL · ALL 17 STOPS",
       tourEyebrow: "WORLD TOUR 2026", tourTitle: "ALL TOUR DATES", tourSub: "17 SHOWS · 11 CITIES · WORLDWIDE",
-      from: "FROM", bookBtn: "BOOK", statusPlenty: "AVAILABLE", statusFew: "FEW LEFT", statusSold: "SOLD OUT",
+      from: "FROM",
       chooseZone: "CHOOSE YOUR ZONE",
       back: "BACK", nameStep: "WHOSE NAME GOES ON IT?", nameLabel: "ATTENDEE NAME", namePlaceholder: "Name to print on the ticket", issueBtn: "ISSUE TICKET",
       ticketReady: "YOUR TICKET IS READY", download: "DOWNLOAD PNG", bookAnother: "BOOK ANOTHER", close: "CLOSE",
@@ -65,7 +65,7 @@
       tagline: "“Once and for all, dice away.”",
       getTickets: "チケットを選ぶ", scroll: "下へスクロール · 全17公演",
       tourEyebrow: "WORLD TOUR 2026", tourTitle: "全ツアー日程", tourSub: "全17公演 · 11都市 · 世界各地",
-      from: "より", bookBtn: "予約する", statusPlenty: "販売中", statusFew: "残りわずか", statusSold: "完売",
+      from: "より",
       chooseZone: "ゾーンを選択",
       back: "戻る", nameStep: "チケットの名義は？", nameLabel: "氏名", namePlaceholder: "チケットに印字する名前", issueBtn: "チケット発行",
       ticketReady: "チケットが発行されました", download: "PNGを保存", bookAnother: "別の公演", close: "閉じる",
@@ -204,7 +204,8 @@
           '<span style="font-family:var(--display);font-weight:700;font-size:clamp(1.2rem,2vw,1.6rem);letter-spacing:.02em;color:var(--paper);">TSUKUMO<span style="color:var(--pink);">99</span></span>' +
         "</a>" +
         '<div style="pointer-events:auto;display:flex;align-items:center;gap:clamp(.4rem,1.4vw,.9rem);">' +
-          '<div style="display:flex;align-items:center;gap:.1rem;padding:.26rem;border:1px solid rgba(255,244,247,.2);border-radius:999px;background:rgba(23,0,6,.55);backdrop-filter:blur(12px);">' +
+          '<nav class="site-route-nav" aria-label="Primary"><a href="#/top">Top</a><a href="#/news">News</a><a href="#/profile">Profile</a><a href="#/shop">Shop</a></nav>' +
+          '<div class="header-langs" style="display:flex;align-items:center;gap:.1rem;padding:.26rem;border:1px solid rgba(255,244,247,.2);border-radius:999px;background:rgba(23,0,6,.55);backdrop-filter:blur(12px);">' +
             langBtn("cn", "中文") + langBtn("en", "EN") + langBtn("jp", "日本語") +
           "</div>" +
         "</div>" +
@@ -278,7 +279,7 @@
             '<span style="font-family:var(--mono);font-weight:700;font-size:.6rem;letter-spacing:.24em;color:var(--paper);">WORLD TOUR 2026</span>' +
           "</div>" +
           '<p style="margin:.55rem 0 0;font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(.98rem,4.6vw,1.25rem);letter-spacing:.02em;color:var(--paper);opacity:.94;">' + esc(tt.tagline) + "</p>" +
-          '<a href="#tour" class="btn-cta" style="margin-top:1.1rem;display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.6rem;border-radius:.3rem;box-shadow:0 10px 30px rgba(236,0,80,.45);">' + esc(tt.getTickets) + ' <span style="font-size:1rem;">↓</span></a>' +
+          '<a href="#tour" aria-label="前往下一屏" style="margin-top:1.1rem;display:grid;place-items:center;width:2.8rem;height:3.5rem;border:1px solid rgba(255,134,189,.45);border-radius:999px;color:var(--paper);"><span aria-hidden="true">↓</span></a>' +
         "</div>" +
       "</main>" +
       "</div>"
@@ -309,7 +310,7 @@
           "</div>" +
           '<p style="margin:1.3rem 0 0;font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(1.05rem,2vw,1.55rem);letter-spacing:.02em;color:var(--paper);opacity:.94;text-wrap:pretty;max-width:34rem;">' + esc(tt.tagline) + "</p>" +
           '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:2rem;">' +
-            '<a href="#tour" class="btn-cta" style="display:inline-flex;align-items:center;gap:.6rem;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;padding:.95rem 1.7rem;border-radius:.3rem;box-shadow:0 10px 30px rgba(236,0,80,.45);">' + esc(tt.getTickets) + ' <span style="font-size:1rem;">↓</span></a>' +
+            '<a href="#tour" aria-label="前往下一屏" style="display:grid;place-items:center;width:2.8rem;height:3.5rem;border:1px solid rgba(255,134,189,.45);border-radius:999px;color:var(--paper);"><span aria-hidden="true">↓</span></a>' +
           "</div>" +
         "</section>" +
       "</main>" +
@@ -334,7 +335,6 @@
   function renderTour() {
     var tt = t();
     var lang = state.lang;
-    var minPrice = Math.min.apply(null, ZONES.map(function (z) { return z.price; }));
 
     // Departures-board layout: one typographic row per stop, hairline-
     // separated, grouped under a sticky-feeling region header — instead of
@@ -342,9 +342,6 @@
     // read like a flight board; status + price + book sit at the trailing end.
     var rows = STOPS.map(function (s, i) {
       var firstOfRegion = i === 0 || STOPS[i - 1].country.en !== s.country.en;
-      var soldOut = s.status === "sold";
-      var statusLabel = soldOut ? tt.statusSold : s.status === "few" ? tt.statusFew : tt.statusPlenty;
-      var statusColor = soldOut ? "#8d6472" : s.status === "few" ? "#ec0050" : "#ff86bd";
 
       var regionHtml = firstOfRegion
         ? '<div style="display:flex;align-items:center;gap:.9rem;margin:' + (i === 0 ? "0" : "clamp(1.4rem,3vw,2.4rem)") + ' 0 .2rem;">' +
@@ -353,30 +350,15 @@
           "</div>"
         : "";
 
-      var trailing = soldOut
-        ? '<span style="font-family:var(--mono);font-weight:700;font-size:.68rem;letter-spacing:.1em;padding:.7rem 1.2rem;border:1px solid rgba(255,244,247,.2);border-radius:.3rem;color:var(--muted);text-transform:uppercase;white-space:nowrap;">' + esc(tt.statusSold) + "</span>"
-        : '<button type="button" class="stop-book-btn" data-act="book" data-idx="' + i + '" style="font-family:var(--mono);font-weight:700;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:.72rem 1.35rem;border:0;border-radius:.3rem;background:var(--hot);color:var(--paper);cursor:pointer;box-shadow:0 6px 18px rgba(236,0,80,.35);white-space:nowrap;">' + esc(tt.bookBtn) + "</button>";
-
       return (
         regionHtml +
         '<div class="tour-row" style="display:flex;flex-wrap:wrap;align-items:center;gap:.7rem clamp(1rem,2.4vw,2rem);padding:clamp(1rem,2.2vw,1.5rem) clamp(.4rem,1.2vw,1rem);border-bottom:1px solid rgba(255,134,189,.14);">' +
-          // index + date, monospace board style
-          '<div class="tour-idx" style="flex:0 0 auto;display:flex;align-items:baseline;gap:.7rem;min-width:8.5rem;">' +
-            '<span style="font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,3vw,2.1rem);line-height:1;color:' + (soldOut ? "var(--muted)" : "var(--hot)") + ';">' + ("0" + (i + 1)).slice(-2) + "</span>" +
-            '<span style="font-family:var(--mono);font-weight:700;font-size:.62rem;letter-spacing:.06em;color:var(--muted);">' + s.date + "</span>" +
-          "</div>" +
+          '<span style="flex:0 0 auto;font-family:var(--mono);font-weight:700;font-size:.62rem;letter-spacing:.06em;color:var(--muted);">' + s.date + "</span>" +
           // city + venue
           '<div class="tour-city" style="flex:1 1 12rem;min-width:11rem;">' +
-            '<h3 style="margin:0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.5rem,3.2vw,2.4rem);line-height:.96;letter-spacing:.01em;color:' + (soldOut ? "var(--muted)" : "var(--paper)") + ';">' + esc(s.city[lang]) + "</h3>" +
+            '<h3 style="margin:0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.5rem,3.2vw,2.4rem);line-height:.96;letter-spacing:.01em;color:var(--paper);">' + esc(s.city[lang]) + "</h3>" +
             '<p style="margin:.32rem 0 0;font-family:var(--mono);font-size:.64rem;font-weight:700;letter-spacing:.05em;color:var(--pink);">' + esc(s.venue[lang]) + '<span style="color:var(--muted);font-weight:400;"> · ' + esc(s.addr[lang]) + "</span></p>" +
           "</div>" +
-          // status + price
-          '<div style="flex:0 0 auto;text-align:right;min-width:6.5rem;">' +
-            '<div style="display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.1em;color:' + statusColor + ';"><span style="width:.4rem;height:.4rem;border-radius:50%;background:' + statusColor + ';box-shadow:0 0 6px ' + statusColor + ';"></span>' + esc(statusLabel) + "</div>" +
-            '<div style="margin-top:.35rem;font-family:var(--mono);font-size:.62rem;color:var(--muted);">' + esc(tt.from) + ' <span style="color:var(--paper);font-weight:700;">◈' + minPrice + "</span></div>" +
-          "</div>" +
-          // action
-          '<div style="flex:0 0 auto;">' + trailing + "</div>" +
         "</div>"
       );
     }).join("");
@@ -1044,16 +1026,33 @@
   // --------------------------------------------------------------- render
 
   function render() {
+    var route = (location.hash || "#/top").slice(2).split("/")[0] || "top";
+    var page = route === "profile" && window.DiZPages
+      ? window.DiZPages.renderProfile(state.lang)
+      : route === "shop" && window.DiZPages
+        ? window.DiZPages.renderShop(state.lang)
+        : route === "news" && window.DiZPages
+          ? window.DiZPages.renderNews(state.lang)
+          : '<div id="top">' + renderHeroMobile() + renderHeroDesktop() + "</div>" + renderTour();
     app.innerHTML =
       renderInAppBanner() +
       renderHeader() +
-      '<div id="top">' + renderHeroMobile() + renderHeroDesktop() + "</div>" +
-      renderTour() +
+      page +
       renderFooter() +
       renderCheerFloating() +
       renderModal();
     wireEvents();
+    if (window.DiZPages) window.DiZPages.wire(route, state.lang, render);
+    var current = app.querySelector('.site-route-nav a[href="#/' + route + '"]');
+    if (current) current.setAttribute("aria-current", "page");
   }
+
+  window.addEventListener("hashchange", function () {
+    state.open = false;
+    document.body.style.overflow = "";
+    render();
+    window.scrollTo(0, 0);
+  });
 
   render();
 })();

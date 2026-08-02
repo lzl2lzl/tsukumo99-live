@@ -1,0 +1,264 @@
+- generic [ref=f9e2]:
+  - img "TSUKUMO99 LIVE · DiŹ" [ref=f9e255]
+  - banner:
+    - link "TSUKUMO99 UNOFFICIAL FANWEB" [ref=f9e256] [cursor=pointer]:
+      - /url: "#/top"
+      - img "TSUKUMO99" [ref=f9e257]
+      - generic [ref=f9e258]: UNOFFICIAL FANWEB
+    - generic [ref=f9e259]:
+      - generic [ref=f9e260]:
+        - button "CN" [ref=f9e261] [cursor=pointer]
+        - button "JP" [ref=f9e262] [cursor=pointer]
+        - button "EN" [ref=f9e263] [cursor=pointer]
+      - button "Menu" [ref=f9e264] [cursor=pointer]
+  - navigation:
+    - generic:
+      - list:
+        - listitem:
+          - link:
+            - /url: "#/top"
+            - generic: "01"
+            - text: Top
+        - listitem:
+          - link:
+            - /url: "#/news"
+            - generic: "02"
+            - text: News
+        - listitem:
+          - link:
+            - /url: "#/ticket"
+            - generic: "03"
+            - text: Ticket
+        - listitem:
+          - link:
+            - /url: "#/shop"
+            - generic: "04"
+            - text: Shop
+      - generic:
+        - generic: TSUKUMO99 · DiŹ WORLD TOUR 2026
+        - generic: UNOFFICIAL / FAN-MADE
+  - main [ref=f9e268]:
+    - generic [ref=f9e269]:
+      - heading "巡演与票券" [level=1] [ref=f9e277]
+      - paragraph [ref=f9e278]: 浏览全部虚构场次，选择座位档，只填写票面姓名即可生成电子票。
+    - generic [ref=f9e280]:
+      - generic [ref=f9e281]:
+        - generic [ref=f9e282]:
+          - paragraph [ref=f9e283]: WORLD TOUR 2026
+          - heading "全部巡演场次" [level=2] [ref=f9e284]
+        - paragraph [ref=f9e285]: 17 场公演 · 11 座城市 · 横跨全球
+      - generic [ref=f9e286]:
+        - generic [ref=f9e287]: 中国
+        - generic [ref=f9e290]:
+          - generic [ref=f9e291]:
+            - generic [ref=f9e292]: "01"
+            - generic [ref=f9e293]: 2026.07.18
+          - generic [ref=f9e294]:
+            - heading "上海" [level=3] [ref=f9e295]
+            - paragraph [ref=f9e296]: 上海 · 滨江文化中心 · 云锦路 88 号
+          - generic [ref=f9e297]:
+            - generic [ref=f9e298]: 仅剩少量
+            - generic [ref=f9e300]: 起 ◈499
+          - button "选座购票" [ref=f9e302] [cursor=pointer]
+        - generic [ref=f9e303]:
+          - generic [ref=f9e304]:
+            - generic [ref=f9e305]: "02"
+            - generic [ref=f9e306]: 2026.07.26
+          - generic [ref=f9e307]:
+            - heading "广州" [level=3] [ref=f9e308]
+            - paragraph [ref=f9e309]: 广州 · 珠江大剧场 · 临江大道 66 号
+          - generic [ref=f9e310]:
+            - generic [ref=f9e311]: 余票充足
+            - generic [ref=f9e313]: 起 ◈499
+          - button "选座购票" [ref=f9e315] [cursor=pointer]
+        - generic [ref=f9e316]:
+          - generic [ref=f9e317]:
+            - generic [ref=f9e318]: "03"
+            - generic [ref=f9e319]: 2026.08.02
+          - generic [ref=f9e320]:
+            - heading "北京" [level=3] [ref=f9e321]
+            - paragraph [ref=f9e322]: 北京 · 京城中央馆 · 长安西路 21 号
+          - generic [ref=f9e323]:
+            - generic [ref=f9e324]: 仅剩少量
+            - generic [ref=f9e326]: 起 ◈499
+          - button "选座购票" [ref=f9e328] [cursor=pointer]
+        - generic [ref=f9e329]: 韩国
+        - generic [ref=f9e332]:
+          - generic [ref=f9e333]:
+            - generic [ref=f9e334]: "04"
+            - generic [ref=f9e335]: 2026.08.08
+          - generic [ref=f9e336]:
+            - heading "首尔" [level=3] [ref=f9e337]
+            - paragraph [ref=f9e338]: 首尔 · 汉江巨蛋 · 麻浦大路 45
+          - generic [ref=f9e339]:
+            - generic [ref=f9e340]: 余票充足
+            - generic [ref=f9e342]: 起 ◈499
+          - button "选座购票" [ref=f9e344] [cursor=pointer]
+        - generic [ref=f9e345]: 日本
+        - generic [ref=f9e348]:
+          - generic [ref=f9e349]:
+            - generic [ref=f9e350]: "05"
+            - generic [ref=f9e351]: 2026.08.15
+          - generic [ref=f9e352]:
+            - heading "东京" [level=3] [ref=f9e353]
+            - paragraph [ref=f9e354]: 东京 · 临海竞技场 · 台场 3-6
+          - generic [ref=f9e355]:
+            - generic [ref=f9e356]: 仅剩少量
+            - generic [ref=f9e358]: 起 ◈499
+          - button "选座购票" [ref=f9e360] [cursor=pointer]
+        - generic [ref=f9e361]:
+          - generic [ref=f9e362]:
+            - generic [ref=f9e363]: "06"
+            - generic [ref=f9e364]: 2026.08.19
+          - generic [ref=f9e365]:
+            - heading "大阪" [level=3] [ref=f9e366]
+            - paragraph [ref=f9e367]: 大阪 · 中之岛音乐堂 · 中之岛 2-8
+          - generic [ref=f9e368]:
+            - generic [ref=f9e369]: 余票充足
+            - generic [ref=f9e371]: 起 ◈499
+          - button "选座购票" [ref=f9e373] [cursor=pointer]
+        - generic [ref=f9e374]:
+          - generic [ref=f9e375]:
+            - generic [ref=f9e376]: "07"
+            - generic [ref=f9e377]: 2026.08.23
+          - generic [ref=f9e378]:
+            - heading "福冈" [level=3] [ref=f9e379]
+            - paragraph [ref=f9e380]: 福冈 · 博多海湾馆 · 须崎町 1-11
+          - generic [ref=f9e381]:
+            - generic [ref=f9e382]: 仅剩少量
+            - generic [ref=f9e384]: 起 ◈499
+          - button "选座购票" [ref=f9e386] [cursor=pointer]
+        - generic [ref=f9e387]: 澳大利亚
+        - generic [ref=f9e390]:
+          - generic [ref=f9e391]:
+            - generic [ref=f9e392]: "08"
+            - generic [ref=f9e393]: 2026.08.30
+          - generic [ref=f9e394]:
+            - heading "悉尼" [level=3] [ref=f9e395]
+            - paragraph [ref=f9e396]: 悉尼 · 海港穹顶 · 达令港 12
+          - generic [ref=f9e397]:
+            - generic [ref=f9e398]: 余票充足
+            - generic [ref=f9e400]: 起 ◈499
+          - button "选座购票" [ref=f9e402] [cursor=pointer]
+        - generic [ref=f9e403]: 加拿大
+        - generic [ref=f9e406]:
+          - generic [ref=f9e407]:
+            - generic [ref=f9e408]: "09"
+            - generic [ref=f9e409]: 2026.09.05
+          - generic [ref=f9e410]:
+            - heading "多伦多" [level=3] [ref=f9e411]
+            - paragraph [ref=f9e412]: 多伦多 · 湖滨中心 · 湖岸大道 77
+          - generic [ref=f9e413]:
+            - generic [ref=f9e414]: 余票充足
+            - generic [ref=f9e416]: 起 ◈499
+          - button "选座购票" [ref=f9e418] [cursor=pointer]
+        - generic [ref=f9e419]:
+          - generic [ref=f9e420]:
+            - generic [ref=f9e421]: "10"
+            - generic [ref=f9e422]: 2026.09.09
+          - generic [ref=f9e423]:
+            - heading "温哥华" [level=3] [ref=f9e424]
+            - paragraph [ref=f9e425]: 温哥华 · 海湾展演馆 · 海堤路 44
+          - generic [ref=f9e426]:
+            - generic [ref=f9e427]: 仅剩少量
+            - generic [ref=f9e429]: 起 ◈499
+          - button "选座购票" [ref=f9e431] [cursor=pointer]
+        - generic [ref=f9e432]: 美国
+        - generic [ref=f9e435]:
+          - generic [ref=f9e436]:
+            - generic [ref=f9e437]: "11"
+            - generic [ref=f9e438]: 2026.09.14
+          - generic [ref=f9e439]:
+            - heading "纽约" [level=3] [ref=f9e440]
+            - paragraph [ref=f9e441]: 纽约 · 曼哈顿广场馆 · 第七大道 909
+          - generic [ref=f9e442]:
+            - generic [ref=f9e443]: 余票充足
+            - generic [ref=f9e445]: 起 ◈499
+          - button "选座购票" [ref=f9e447] [cursor=pointer]
+        - generic [ref=f9e448]: 英国
+        - generic [ref=f9e451]:
+          - generic [ref=f9e452]:
+            - generic [ref=f9e453]: "12"
+            - generic [ref=f9e454]: 2026.09.19
+          - generic [ref=f9e455]:
+            - heading "伦敦" [level=3] [ref=f9e456]
+            - paragraph [ref=f9e457]: 伦敦 · 泰晤士竞技场 · 河岸街 13
+          - generic [ref=f9e458]:
+            - generic [ref=f9e459]: 仅剩少量
+            - generic [ref=f9e461]: 起 ◈499
+          - button "选座购票" [ref=f9e463] [cursor=pointer]
+        - generic [ref=f9e464]:
+          - generic [ref=f9e465]:
+            - generic [ref=f9e466]: "13"
+            - generic [ref=f9e467]: 2026.09.23
+          - generic [ref=f9e468]:
+            - heading "曼彻斯特" [level=3] [ref=f9e469]
+            - paragraph [ref=f9e470]: 曼彻斯特 · 北方大厅 · 运河街 36
+          - generic [ref=f9e471]:
+            - generic [ref=f9e472]: 余票充足
+            - generic [ref=f9e474]: 起 ◈499
+          - button "选座购票" [ref=f9e476] [cursor=pointer]
+        - generic [ref=f9e477]: 法国
+        - generic [ref=f9e480]:
+          - generic [ref=f9e481]:
+            - generic [ref=f9e482]: "14"
+            - generic [ref=f9e483]: 2026.09.27
+          - generic [ref=f9e484]:
+            - heading "巴黎" [level=3] [ref=f9e485]
+            - paragraph [ref=f9e486]: 巴黎 · 塞纳穹顶 · 河畔大道 27
+          - generic [ref=f9e487]:
+            - generic [ref=f9e488]: 仅剩少量
+            - generic [ref=f9e490]: 起 ◈499
+          - button "选座购票" [ref=f9e492] [cursor=pointer]
+        - generic [ref=f9e493]: 德国
+        - generic [ref=f9e496]:
+          - generic [ref=f9e497]:
+            - generic [ref=f9e498]: "15"
+            - generic [ref=f9e499]: 2026.10.01
+          - generic [ref=f9e500]:
+            - heading "柏林" [level=3] [ref=f9e501]
+            - paragraph [ref=f9e502]: 柏林 · 施普雷会堂 · 河湾街 15
+          - generic [ref=f9e503]:
+            - generic [ref=f9e504]: 余票充足
+            - generic [ref=f9e506]: 起 ◈499
+          - button "选座购票" [ref=f9e508] [cursor=pointer]
+        - generic [ref=f9e509]: 挪威
+        - generic [ref=f9e512]:
+          - generic [ref=f9e513]:
+            - generic [ref=f9e514]: "16"
+            - generic [ref=f9e515]: 2026.10.05
+          - generic [ref=f9e516]:
+            - heading "奥斯陆" [level=3] [ref=f9e517]
+            - paragraph [ref=f9e518]: 奥斯陆 · 峡湾竞技场 · 海港路 9
+          - generic [ref=f9e519]:
+            - generic [ref=f9e520]: 仅剩少量
+            - generic [ref=f9e522]: 起 ◈499
+          - button "选座购票" [ref=f9e524] [cursor=pointer]
+        - generic [ref=f9e525]: 意大利
+        - generic [ref=f9e528]:
+          - generic [ref=f9e529]:
+            - generic [ref=f9e530]: "17"
+            - generic [ref=f9e531]: 2026.10.10
+          - generic [ref=f9e532]:
+            - heading "米兰" [level=3] [ref=f9e533]
+            - paragraph [ref=f9e534]: 米兰 · 中央竞技馆 · 河滨大道 12
+          - generic [ref=f9e535]:
+            - generic [ref=f9e536]: 余票充足
+            - generic [ref=f9e538]: 起 ◈499
+          - button "选座购票" [ref=f9e540] [cursor=pointer]
+  - contentinfo [ref=f9e541]:
+    - generic [ref=f9e542]:
+      - img "TSUKUMO99" [ref=f9e543]
+      - paragraph [ref=f9e544]: DiŹ WORLD TOUR 2026
+    - navigation [ref=f9e545]:
+      - link "Top" [ref=f9e546] [cursor=pointer]:
+        - /url: "#/top"
+      - link "News" [ref=f9e547] [cursor=pointer]:
+        - /url: "#/news"
+      - link "Ticket" [ref=f9e548] [cursor=pointer]:
+        - /url: "#/ticket"
+      - link "Shop" [ref=f9e549] [cursor=pointer]:
+        - /url: "#/shop"
+    - paragraph [ref=f9e550]: 本网站为非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。所有场次、地址、座位、票券均为虚构，购票流程为纯前端模拟，不收集任何姓名以外的信息，更不涉及任何真实支付。仅供娱乐。
+    - generic [ref=f9e551]: UNOFFICIAL / FAN-MADE · 2026
+  - button "cheer" [ref=f9e553] [cursor=pointer]: "+1"

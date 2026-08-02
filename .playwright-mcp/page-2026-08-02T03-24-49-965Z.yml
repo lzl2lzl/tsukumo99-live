@@ -1,0 +1,63 @@
+- generic [ref=f1e4]:
+  - banner [ref=f1e5]:
+    - generic [ref=f1e6]:
+      - generic [ref=f1e7]: TSUKUMO99
+      - emphasis [ref=f1e8]: UNOFFICIAL FANWEB
+    - generic [ref=f1e9]:
+      - button "中文" [ref=f1e10] [cursor=pointer]
+      - button "日本語" [ref=f1e11] [cursor=pointer]
+      - button "EN" [ref=f1e12] [cursor=pointer]
+  - main [ref=f1e13]:
+    - generic [ref=f1e14]:
+      - generic [ref=f1e16]:
+        - generic [ref=f1e17]: ⚀
+        - generic [ref=f1e18]: 场次
+      - generic [ref=f1e21]:
+        - generic [ref=f1e22]: ⚁
+        - generic [ref=f1e23]: 档位
+      - generic [ref=f1e26]:
+        - generic [ref=f1e27]: ⚂
+        - generic [ref=f1e28]: 署名
+      - generic [ref=f1e31]:
+        - generic [ref=f1e32]: ⚃
+        - generic [ref=f1e33]: 出票
+    - generic [ref=f1e553]:
+      - generic [ref=f1e554]:
+        - generic [ref=f1e555]: ✓
+        - heading "电子票已生成" [level=1] [ref=f1e556]
+      - generic [ref=f1e557]:
+        - generic [ref=f1e558]:
+          - generic [ref=f1e559]:
+            - generic [ref=f1e560]: TSUKUMO99 · DiŹ WORLD TOUR
+            - generic [ref=f1e561]: ZL-DIZ-SHV-4521
+          - generic [ref=f1e562]: DiŹ
+          - generic [ref=f1e563]:
+            - generic [ref=f1e564]:
+              - generic [ref=f1e565]: 城市
+              - generic [ref=f1e566]: 上海
+            - generic [ref=f1e567]:
+              - generic [ref=f1e568]: 日期
+              - generic [ref=f1e569]: 2026.07.18
+            - generic [ref=f1e570]:
+              - generic [ref=f1e571]: 场馆
+              - generic [ref=f1e572]: 上海 · 滨江文化中心
+            - generic [ref=f1e573]:
+              - generic [ref=f1e574]: 档位
+              - generic [ref=f1e575]: VIP
+            - generic [ref=f1e576]:
+              - generic [ref=f1e577]: 座位
+              - generic [ref=f1e578]: A-358
+            - generic [ref=f1e579]:
+              - generic [ref=f1e580]: ◈
+              - generic [ref=f1e581]: ◈999
+            - generic [ref=f1e582]:
+              - generic [ref=f1e583]: 持票人
+              - generic [ref=f1e584]: DICE
+          - generic [ref=f1e585]: UNOFFICIAL / FAN-MADE, NOT A REAL TICKET
+        - generic [ref=f1e586]:
+          - generic [ref=f1e587]: ADMIT ONE
+          - generic [ref=f1e633]: ZL-DIZ-SHV-4521
+      - generic [ref=f1e634]:
+        - button "↓ 下载 PNG 票券" [ref=f1e635] [cursor=pointer]
+        - button "再选一场" [ref=f1e636] [cursor=pointer]
+      - paragraph [ref=f1e637]: 无法下载?试试用手机浏览器打开本站。

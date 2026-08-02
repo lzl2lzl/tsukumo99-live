@@ -1,0 +1,318 @@
+- generic [ref=e1]:
+  - navigation:
+    - generic [ref=e2]: X
+    - list [ref=e19]:
+      - listitem [ref=e20] [cursor=pointer]:
+        - generic [ref=e21]: Flip
+      - listitem [ref=e23] [cursor=pointer]:
+        - generic [ref=e24]: Scroll Trigger
+      - listitem [ref=e25] [cursor=pointer]:
+        - generic [ref=e26]: Slider
+      - listitem [ref=e27] [cursor=pointer]:
+        - generic [ref=e28]: Inertia
+      - listitem [ref=e29] [cursor=pointer]:
+        - generic [ref=e30]: Text Effects
+      - listitem [ref=e31] [cursor=pointer]:
+        - generic [ref=e32]: Marquee
+  - main [ref=e34]:
+    - generic [ref=e35]:
+      - heading "make it mean more with gsap" [level=1] [ref=e37]:
+        - generic "MAKE IT MEAN" [ref=e38]:
+          - generic [ref=e39]: M
+          - generic [ref=e40]: A
+          - generic [ref=e41]: K
+          - generic [ref=e42]: E
+          - generic [ref=e43]: I
+          - generic [ref=e44]: T
+          - generic [ref=e45]: M
+          - generic [ref=e46]: E
+          - generic [ref=e47]: A
+          - generic [ref=e48]: "N"
+        - generic "MORE WITH GSAP" [ref=e49]:
+          - generic [ref=e50]: M
+          - generic [ref=e51]: O
+          - generic [ref=e52]: R
+          - generic [ref=e53]: E
+          - generic [ref=e54]: W
+          - generic [ref=e55]: I
+          - generic [ref=e56]: T
+          - generic [ref=e57]: H
+          - generic [ref=e58]: G
+          - generic [ref=e59]: S
+          - generic [ref=e60]: A
+          - generic [ref=e61]: P
+      - generic "turn gsap on" [ref=e63]:
+        - checkbox "turn gsap on" [checked] [active] [ref=e65]
+      - generic [ref=e67]:
+        - generic "Well, not just because GSAP, let’s dive into why, how and when to incorporate motion design into your websites, with some cloneable templates along the way to get you started" [ref=e68]:
+          - generic [ref=e69]: Well, not just because GSAP, let’s dive into why, how and when
+          - generic [ref=e70]: to incorporate motion design into your websites, with some
+          - generic [ref=e71]: cloneable templates along the way to get you started
+        - link [ref=e73] [cursor=pointer]:
+          - /url: "#content"
+          - generic [ref=e74]:
+            - generic "Explore templates" [ref=e75]:
+              - generic [ref=e76]: E
+              - generic [ref=e77]: x
+              - generic [ref=e78]: p
+              - generic [ref=e79]: l
+              - generic [ref=e80]: o
+              - generic [ref=e81]: r
+              - generic [ref=e82]: e
+              - generic [ref=e83]: t
+              - generic [ref=e84]: e
+              - generic [ref=e85]: m
+              - generic [ref=e86]: p
+              - generic [ref=e87]: l
+              - generic [ref=e88]: a
+              - generic [ref=e89]: t
+              - generic [ref=e90]: e
+              - generic [ref=e91]: s
+            - generic "Explore templates" [ref=e92]:
+              - generic [ref=e93]: E
+              - generic [ref=e94]: x
+              - generic [ref=e95]: p
+              - generic [ref=e96]: l
+              - generic [ref=e97]: o
+              - generic [ref=e98]: r
+              - generic [ref=e99]: e
+              - generic [ref=e100]: t
+              - generic [ref=e101]: e
+              - generic [ref=e102]: m
+              - generic [ref=e103]: p
+              - generic [ref=e104]: l
+              - generic [ref=e105]: a
+              - generic [ref=e106]: t
+              - generic [ref=e107]: e
+              - generic [ref=e108]: s
+      - generic:
+        - generic:
+          - generic:
+            - generic: SCROLL INTERACTIONS
+            - generic: SCROLL INTERACTIONS
+            - generic: SCROLL INTERACTIONS
+        - generic:
+          - generic:
+            - generic: TEXT EFFECTS
+            - generic: TEXT EFFECTS
+        - generic:
+          - generic:
+            - generic: SLIDERS
+            - generic: SLIDERS
+            - generic: SLIDERS
+            - generic: SLIDERS
+        - generic:
+          - generic:
+            - generic: Inertia Inertia
+            - generic: Inertia Inertia
+        - generic:
+          - generic:
+            - generic: MARQUEES
+            - generic: MARQUEES
+            - generic: MARQUEES
+            - generic: MARQUEES
+    - generic [ref=e109]:
+      - generic [ref=e110]:
+        - generic [ref=e111]:
+          - button "List"
+          - button "Grid" [ref=e112] [cursor=pointer]
+        - list [ref=e115]:
+          - listitem [ref=e116]:
+            - generic [ref=e117]:
+              - generic [ref=e118]: "01"
+              - heading "Hover States" [level=3] [ref=e119]
+          - listitem [ref=e122]:
+            - generic [ref=e123]:
+              - generic [ref=e124]: "02"
+              - heading "ResizinG Elements" [level=3] [ref=e125]
+          - listitem [ref=e128]:
+            - generic [ref=e129]:
+              - generic [ref=e130]: "03"
+              - heading "Timeline Control" [level=3] [ref=e131]
+          - listitem [ref=e134]:
+            - generic [ref=e135]:
+              - generic [ref=e136]: "04"
+              - heading "Shuffling positions" [level=3] [ref=e137]
+          - listitem [ref=e140]:
+            - generic [ref=e141]:
+              - generic [ref=e142]: "05"
+              - heading "Sequenced Motion" [level=3] [ref=e143]
+          - listitem [ref=e146]:
+            - generic [ref=e147]:
+              - generic [ref=e148]: "06"
+              - heading "FLEXIBLE LAYOUTS" [level=3] [ref=e149]
+        - generic [ref=e153]:
+          - generic [ref=e154] [cursor=pointer]:
+            - checkbox "Make Show and Tell Flexible" [ref=e155]
+            - generic [ref=e156]: Make Show and Tell Flexible
+          - paragraph [ref=e162]: Create seamless transitions between two visual states smoothly, not instantly. It removes the visual chaos when layouts shift, making things feel smooth, considered, and intentional.
+          - button "Copy this" [ref=e164] [cursor=pointer]
+      - generic [ref=e170]:
+        - generic "Scrolltrigger" [ref=e173]
+        - generic [ref=e176]:
+          - generic [ref=e177] [cursor=pointer]:
+            - checkbox "Scroll with purpose" [ref=e178]
+            - generic [ref=e179]: Scroll with purpose
+          - paragraph [ref=e185]: Start animations when elements enter the viewport, scrub through timelines, pin elements in place, or snap to key points as users scroll.
+          - button "Copy this" [ref=e187] [cursor=pointer]
+      - generic [ref=e193]:
+        - generic [ref=e194]:
+          - list [ref=e198]:
+            - listitem [ref=e199]:
+              - generic [ref=e201]:
+                - generic [ref=e202]: Precise
+                - generic [ref=e203]:
+                  - heading "ACTIONS" [level=3] [ref=e204]
+                  - generic [ref=e205]: GSAP turns clicks into vivid stories with precise motion, making every interaction feel intentional and alive.
+            - listitem [ref=e209]:
+              - generic [ref=e211]:
+                - generic [ref=e212]: Focus
+                - generic [ref=e213]:
+                  - heading "ATTENTION" [level=3] [ref=e214]
+                  - generic [ref=e215]: GSAP sharpens focus with smooth animations, drawing attention to your message for a lasting, memorable impact.
+            - listitem [ref=e219]:
+              - generic [ref=e221]:
+                - generic [ref=e222]: Expressive
+                - generic [ref=e223]:
+                  - heading "Motion" [level=3] [ref=e224]
+                  - generic [ref=e225]: GSAP infuses elements with expressive motion, transforming static pages into emotional, engaging journeys.
+            - listitem [ref=e229]:
+              - generic [ref=e231]:
+                - generic [ref=e232]: Powerful
+                - generic [ref=e233]:
+                  - heading "IMPACT" [level=3] [ref=e234]
+                  - generic [ref=e235]: GSAP delivers animations with powerful impact, ensuring your story resonates clearly and leaves a mark.
+            - listitem [ref=e239]:
+              - generic [ref=e241]:
+                - generic [ref=e242]: Seamless
+                - generic [ref=e243]:
+                  - heading "FLOW" [level=3] [ref=e244]
+                  - generic [ref=e245]: GSAP crafts seamless flow in motion, syncing with users to create natural, captivating interactions.
+          - generic [ref=e249]:
+            - button [ref=e250] [cursor=pointer]
+            - list [ref=e254]:
+              - listitem [ref=e255]:
+                - button [ref=e256] [cursor=pointer]
+              - listitem [ref=e257]:
+                - button [ref=e258] [cursor=pointer]
+              - listitem [ref=e259]:
+                - button [ref=e260] [cursor=pointer]
+              - listitem [ref=e261]:
+                - button [ref=e262] [cursor=pointer]
+              - listitem [ref=e263]:
+                - button [ref=e264] [cursor=pointer]
+            - button [ref=e265] [cursor=pointer]
+        - generic [ref=e270]:
+          - generic [ref=e271] [cursor=pointer]:
+            - checkbox "Endless by design" [ref=e272]
+            - generic [ref=e273]: Endless by design
+          - paragraph [ref=e279]: Ideal for smooth marquees, auto playing sliders, and loops that just keep rolling.
+          - button "Copy this" [ref=e281] [cursor=pointer]
+      - generic [ref=e297]:
+        - generic [ref=e298] [cursor=pointer]:
+          - checkbox "Feel the inertia" [ref=e299]
+          - generic [ref=e300]: Feel the inertia
+        - paragraph [ref=e306]: Continue movement from a given speed, slow naturally to a stop. Perfect for adding physicality and flow to your interface.
+        - button "Copy this" [ref=e308] [cursor=pointer]
+      - generic [ref=e314]:
+        - list [ref=e315]:
+          - listitem [ref=e316]:
+            - generic "Split Chars" [ref=e318]:
+              - generic [ref=e319]:
+                - generic [ref=e320]: S
+                - generic [ref=e321]: p
+                - generic [ref=e322]: l
+                - generic [ref=e323]: i
+                - generic [ref=e324]: t
+                - generic [ref=e325]: C
+                - generic [ref=e326]: h
+                - generic [ref=e327]: a
+                - generic [ref=e328]: r
+                - generic [ref=e329]: s
+            - generic [ref=e330]: Character Split Reveal
+          - listitem [ref=e332]:
+            - generic "Split By Words" [ref=e334]:
+              - generic [ref=e335]:
+                - generic [ref=e336]: Split
+                - generic [ref=e337]: By
+                - generic [ref=e338]: Words
+            - generic [ref=e339]: Word Split Reveal
+          - listitem [ref=e341]:
+            - generic [ref=e342]: kdfivssv
+            - generic [ref=e345]: Scramble Text Reveal
+          - listitem [ref=e347]:
+            - generic "Split Alpha" [ref=e349]
+            - generic [ref=e351]: Alpha Reveal
+          - listitem [ref=e353]:
+            - generic "From the Side" [ref=e355]:
+              - generic "From the Side" [ref=e356]:
+                - generic [ref=e357]: F
+                - generic [ref=e359]: r
+                - generic [ref=e361]: o
+                - generic [ref=e363]: m
+                - generic [ref=e365]: t
+                - generic [ref=e367]: h
+                - generic [ref=e369]: e
+                - generic [ref=e371]: S
+                - generic [ref=e373]: i
+                - generic [ref=e375]: d
+                - generic [ref=e377]: e
+            - generic [ref=e379]: SIide Char Reveal
+          - listitem [ref=e381]:
+            - generic "Up and Down" [ref=e383]:
+              - generic "Up and Down" [ref=e384]:
+                - generic [ref=e385]: U
+                - generic [ref=e387]: p
+                - generic [ref=e389]: a
+                - generic [ref=e391]: "n"
+                - generic [ref=e393]: d
+                - generic [ref=e395]: D
+                - generic [ref=e397]: o
+                - generic [ref=e399]: w
+                - generic [ref=e401]: "n"
+            - generic [ref=e403]: Up and down Reveal
+        - generic [ref=e406]:
+          - generic [ref=e407] [cursor=pointer]:
+            - checkbox "Split, animate, reveal" [ref=e408]
+            - generic [ref=e409]: Split, animate, reveal
+          - paragraph [ref=e415]: "Animate each one independently. It’s all motion, no compromise: screen readers and search engines still see the original text."
+          - button "Copy this" [ref=e417] [cursor=pointer]
+      - generic [ref=e423]:
+        - generic [ref=e424]:
+          - generic [ref=e425]:
+            - generic [ref=e426]: SCROLLTRIGGER
+            - generic [ref=e429]: MARQUEE
+          - generic [ref=e430]:
+            - generic [ref=e431]: MARQUEE
+            - generic [ref=e434]: SCROLLTRIGGER
+        - generic [ref=e436]:
+          - generic [ref=e437] [cursor=pointer]:
+            - checkbox "Marquees forever" [ref=e438]
+            - generic [ref=e439]: Marquees forever
+          - paragraph [ref=e445]: Loop endlessly. Stack images, text, or both. Marquees give rhythm to your page without needing a single click.
+          - button "Copy this" [ref=e447] [cursor=pointer]
+      - generic [ref=e454]:
+        - generic [ref=e455]:
+          - generic [ref=e456]: X
+          - generic [ref=e473]: "Bring your site to life with the power of GSAP, now even more seamlessly in Webflow. This template is your starting point to help you harness the magic of GSAP. No gatekeeping, just a resource at your disposal to start you strong with motion design. Complete with cloneable elements and best-practice tips on when, why and how to use them. Copy what you need, tweak what you like and get motion into your next build: faster, smoother and better."
+        - generic [ref=e475]:
+          - list [ref=e477]:
+            - listitem [ref=e478]:
+              - link "Flip" [ref=e479] [cursor=pointer]:
+                - /url: "#flip"
+            - listitem [ref=e481]:
+              - link "Inertia" [ref=e482] [cursor=pointer]:
+                - /url: "#inertia"
+            - listitem [ref=e484]:
+              - link "Scroll Trigger" [ref=e485] [cursor=pointer]:
+                - /url: "#scrolltrigger"
+            - listitem [ref=e487]:
+              - link "Slider" [ref=e488] [cursor=pointer]:
+                - /url: "#slider"
+            - listitem [ref=e490]:
+              - link "Split Text" [ref=e491] [cursor=pointer]:
+                - /url: "#text"
+          - generic [ref=e494]:
+            - generic [ref=e495]: ©2025
+            - link "Site by OFF+BRAND." [ref=e496] [cursor=pointer]:
+              - /url: https://itsoffbrand.com/

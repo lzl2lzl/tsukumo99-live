@@ -1,0 +1,90 @@
+- generic [ref=f9e2]:
+  - img "TSUKUMO99 LIVE · DiŹ" [ref=f9e1185]
+  - banner:
+    - link "TSUKUMO99 UNOFFICIAL FANWEB" [ref=f9e1186] [cursor=pointer]:
+      - /url: "#/top"
+      - img "TSUKUMO99" [ref=f9e1187]
+      - generic [ref=f9e1188]: UNOFFICIAL FANWEB
+    - generic [ref=f9e1189]:
+      - generic [ref=f9e1190]:
+        - button "CN" [ref=f9e1191] [cursor=pointer]
+        - button "JP" [ref=f9e1192] [cursor=pointer]
+        - button "EN" [ref=f9e1193] [cursor=pointer]
+      - button "Menu" [ref=f9e1194] [cursor=pointer]
+  - navigation:
+    - generic:
+      - list:
+        - listitem:
+          - link:
+            - /url: "#/top"
+            - generic: "01"
+            - text: Top
+        - listitem:
+          - link:
+            - /url: "#/news"
+            - generic: "02"
+            - text: News
+        - listitem:
+          - link:
+            - /url: "#/ticket"
+            - generic: "03"
+            - text: Ticket
+        - listitem:
+          - link:
+            - /url: "#/shop"
+            - generic: "04"
+            - text: Shop
+      - generic:
+        - generic: TSUKUMO99 · DiŹ WORLD TOUR 2026
+        - generic: UNOFFICIAL / FAN-MADE
+  - main [ref=f9e1198]:
+    - generic [ref=f9e1199]:
+      - heading "云周边" [level=1] [ref=f9e1207]
+      - paragraph [ref=f9e1208]: 没有付款，也不收集地址。选择一件虚构周边，生成一张可以保存的 PNG 收藏卡。
+    - generic [ref=f9e1209]:
+      - heading "选择款式" [level=2] [ref=f9e1210]
+      - generic [ref=f9e1211]:
+        - button "DIZ-01 BACKSTAGE PASS 已选择" [ref=f9e1212] [cursor=pointer]:
+          - generic [ref=f9e1213]: DIZ-01
+          - strong [ref=f9e1221]: BACKSTAGE PASS
+          - generic [ref=f9e1222]: 已选择
+        - button "DIZ-02 DICE STICKER SELECT" [ref=f9e1223] [cursor=pointer]:
+          - generic [ref=f9e1224]: DIZ-02
+          - strong [ref=f9e1232]: DICE STICKER
+          - generic [ref=f9e1233]: SELECT
+        - button "DIZ-03 TOUR RECEIPT SELECT" [ref=f9e1234] [cursor=pointer]:
+          - generic [ref=f9e1235]: DIZ-03
+          - strong [ref=f9e1243]: TOUR RECEIPT
+          - generic [ref=f9e1244]: SELECT
+        - button "DIZ-04 NIGHT POSTCARD SELECT" [ref=f9e1245] [cursor=pointer]:
+          - generic [ref=f9e1246]: DIZ-04
+          - strong [ref=f9e1254]: NIGHT POSTCARD
+          - generic [ref=f9e1255]: SELECT
+      - generic [ref=f9e1256]:
+        - generic [ref=f9e1258]:
+          - generic [ref=f9e1259]: DIZ-01
+          - strong [ref=f9e1266]: BACKSTAGE PASS
+          - emphasis [ref=f9e1267]: YOUR NAME
+          - generic [ref=f9e1268]: UNOFFICIAL / FAN-MADE
+        - generic [ref=f9e1269]:
+          - generic [ref=f9e1270]: 收藏者姓名
+          - textbox "收藏者姓名" [ref=f9e1271]:
+            - /placeholder: 输入印在收藏卡上的名字
+          - paragraph [ref=f9e1272]
+          - button "生成 PNG 收藏卡" [ref=f9e1273]
+  - contentinfo [ref=f9e1274]:
+    - generic [ref=f9e1275]:
+      - img "TSUKUMO99" [ref=f9e1276]
+      - paragraph [ref=f9e1277]: DiŹ WORLD TOUR 2026
+    - navigation [ref=f9e1278]:
+      - link "Top" [ref=f9e1279] [cursor=pointer]:
+        - /url: "#/top"
+      - link "News" [ref=f9e1280] [cursor=pointer]:
+        - /url: "#/news"
+      - link "Ticket" [ref=f9e1281] [cursor=pointer]:
+        - /url: "#/ticket"
+      - link "Shop" [ref=f9e1282] [cursor=pointer]:
+        - /url: "#/shop"
+    - paragraph [ref=f9e1283]: 本网站为非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。所有场次、地址、座位、票券均为虚构，购票流程为纯前端模拟，不收集任何姓名以外的信息，更不涉及任何真实支付。仅供娱乐。
+    - generic [ref=f9e1284]: UNOFFICIAL / FAN-MADE · 2026
+  - button "cheer" [ref=f9e1286] [cursor=pointer]: "+1"

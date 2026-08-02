@@ -1,0 +1,63 @@
+- generic [ref=f1e4]:
+  - banner [ref=f1e5]:
+    - generic [ref=f1e6]:
+      - generic [ref=f1e7]: TSUKUMO99
+      - emphasis [ref=f1e8]: UNOFFICIAL FANWEB
+    - generic [ref=f1e9]:
+      - button "中文" [ref=f1e10] [cursor=pointer]
+      - button "日本語" [ref=f1e11] [cursor=pointer]
+      - button "EN" [ref=f1e12] [cursor=pointer]
+  - main [ref=f1e13]:
+    - generic [ref=f1e14]:
+      - generic [ref=f1e16]:
+        - generic [ref=f1e17]: ⚀
+        - generic [ref=f1e18]: 场次
+      - generic [ref=f1e21]:
+        - generic [ref=f1e22]: ⚁
+        - generic [ref=f1e23]: 档位
+      - generic [ref=f1e26]:
+        - generic [ref=f1e27]: ⚂
+        - generic [ref=f1e28]: 署名
+      - generic [ref=f1e31]:
+        - generic [ref=f1e32]: ⚃
+        - generic [ref=f1e33]: 出票
+    - generic [ref=f1e498]:
+      - button "← 返回" [ref=f1e499] [cursor=pointer]
+      - heading "选择座位档" [level=1] [ref=f1e500]
+      - paragraph [ref=f1e501]: 上海 · 上海 · 滨江文化中心 · 2026.07.18
+      - generic [ref=f1e502]: STAGE
+      - generic [ref=f1e505]:
+        - button "VIP ◈999 VIP 前区站席 整理番号制 · 站席 ◈ 前区站席,最靠近舞台 ◈ 优先通道提前入场 ◈ 限定周边礼包 + 纪念挂牌" [ref=f1e506] [cursor=pointer]:
+          - generic: ⚅
+          - generic [ref=f1e507]:
+            - generic [ref=f1e508]: VIP
+            - generic [ref=f1e509]: ◈999
+          - generic [ref=f1e510]: VIP 前区站席
+          - generic [ref=f1e511]: 整理番号制 · 站席
+          - list [ref=f1e514]:
+            - listitem [ref=f1e515]:
+              - generic [ref=f1e516]: ◈
+              - generic [ref=f1e517]: 前区站席,最靠近舞台
+            - listitem [ref=f1e518]:
+              - generic [ref=f1e519]: ◈
+              - generic [ref=f1e520]: 优先通道提前入场
+            - listitem [ref=f1e521]:
+              - generic [ref=f1e522]: ◈
+              - generic [ref=f1e523]: 限定周边礼包 + 纪念挂牌
+        - button "STANDARD ◈499 普通座席 对号入座 · 系统配席 ◈ 系统自动配席(区/排/座) ◈ 标准入场通道 ◈ 电子场刊" [ref=f1e524] [cursor=pointer]:
+          - generic: ⚂
+          - generic [ref=f1e525]:
+            - generic [ref=f1e526]: STANDARD
+            - generic [ref=f1e527]: ◈499
+          - generic [ref=f1e528]: 普通座席
+          - generic [ref=f1e529]: 对号入座 · 系统配席
+          - list [ref=f1e532]:
+            - listitem [ref=f1e533]:
+              - generic [ref=f1e534]: ◈
+              - generic [ref=f1e535]: 系统自动配席(区/排/座)
+            - listitem [ref=f1e536]:
+              - generic [ref=f1e537]: ◈
+              - generic [ref=f1e538]: 标准入场通道
+            - listitem [ref=f1e539]:
+              - generic [ref=f1e540]: ◈
+              - generic [ref=f1e541]: 电子场刊

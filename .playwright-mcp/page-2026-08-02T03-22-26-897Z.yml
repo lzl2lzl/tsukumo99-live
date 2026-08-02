@@ -1,0 +1,630 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]: TSUKUMO99 · UNOFFICIAL FANWEB
+    - generic [ref=e10]: 请用浏览器打开 · OPEN IN A BROWSER
+  - banner [ref=e11]:
+    - link "TSUKUMO99 UNOFFICIAL FANWEB" [ref=e12] [cursor=pointer]:
+      - /url: index.html
+      - generic [ref=e13]: TSUKUMO99
+      - emphasis [ref=e14]: UNOFFICIAL FANWEB
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - button "CN" [ref=e17] [cursor=pointer]
+        - button "JP" [ref=e18] [cursor=pointer]
+        - button "EN" [ref=e19] [cursor=pointer]
+      - button "菜单" [ref=e20] [cursor=pointer]
+  - navigation:
+    - button "关闭": ✕
+    - list:
+      - listitem:
+        - link "01 Top":
+          - /url: index.html
+          - generic: "01"
+          - text: Top
+      - listitem:
+        - link "02 News":
+          - /url: news.html
+          - generic: "02"
+          - text: News
+      - listitem:
+        - link "03 Ticket":
+          - /url: ticket.html
+          - generic: "03"
+          - text: Ticket
+      - listitem:
+        - link "04 Profile":
+          - /url: profile.html
+          - generic: "04"
+          - text: Profile
+      - listitem:
+        - link "05 Shop":
+          - /url: shop.html
+          - generic: "05"
+          - text: Shop
+    - group "语言 / Language":
+      - button "CN"
+      - button "JP"
+      - button "EN"
+    - generic:
+      - generic:
+        - generic: Contact
+        - text: 小红书 @TSUKUMO99
+      - generic: UNOFFICIAL FAN-MADENOT A REAL TICKET
+  - generic [ref=e24]:
+    - generic:
+      - generic:
+        - generic:
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+      - generic:
+        - generic:
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+      - generic:
+        - generic:
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+      - generic:
+        - generic:
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+      - generic:
+        - generic:
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+      - generic:
+        - generic:
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+      - generic:
+        - generic:
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+      - generic:
+        - generic:
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+      - generic:
+        - generic:
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+      - generic:
+        - generic:
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+      - generic:
+        - generic:
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+      - generic:
+        - generic:
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+      - generic:
+        - generic:
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+      - generic:
+        - generic:
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+      - generic:
+        - generic:
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+          - generic: ROLL
+          - generic: WORLD TOUR
+          - generic: NO GODS
+          - generic: LAST BET
+          - generic: DICE AWAY
+          - generic: GO ALL IN
+          - generic: DICE AWAY
+          - generic: ONCE AND FOR ALL
+          - generic: TSUKUMO99
+          - generic: DiŹ
+          - generic: ALL IN
+          - generic: WINNER TAKES ALL
+    - generic [ref=e25]:
+      - generic [ref=e26]: TSUKUMO99 LIVE · DiŹ
+      - generic [ref=e27]: ONCE AND FOR ALL, DICE AWAY.
+      - switch "掷骰揭示成员" [ref=e28] [cursor=pointer]
+  - button "应援挥舞荧光棒" [ref=e40] [cursor=pointer]:
+    - img "荧光棒"

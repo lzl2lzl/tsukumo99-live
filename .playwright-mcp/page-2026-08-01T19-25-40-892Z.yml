@@ -1,0 +1,162 @@
+- generic [ref=f9e2]:
+  - img "TSUKUMO99 LIVE · DiŹ" [ref=f9e1292]
+  - banner:
+    - link [ref=f9e1293] [cursor=pointer]:
+      - /url: "#/top"
+      - img "TSUKUMO99" [ref=f9e1294]
+    - generic [ref=f9e1295]:
+      - generic [ref=f9e1296]:
+        - button "CN" [ref=f9e1297] [cursor=pointer]
+        - button "JP" [ref=f9e1298] [cursor=pointer]
+        - button "EN" [ref=f9e1299] [cursor=pointer]
+      - button "Menu" [ref=f9e1300] [cursor=pointer]
+  - navigation:
+    - generic:
+      - list:
+        - listitem:
+          - link:
+            - /url: "#/top"
+            - generic: "01"
+            - text: Top
+        - listitem:
+          - link:
+            - /url: "#/news"
+            - generic: "02"
+            - text: News
+        - listitem:
+          - link:
+            - /url: "#/ticket"
+            - generic: "03"
+            - text: Ticket
+        - listitem:
+          - link:
+            - /url: "#/shop"
+            - generic: "04"
+            - text: Shop
+      - generic:
+        - generic: TSUKUMO99 · DiŹ WORLD TOUR 2026
+        - generic: UNOFFICIAL / FAN-MADE
+  - main [ref=f9e1304]:
+    - generic [ref=f9e1305]:
+      - img "TSUKUMO99 five-member act" [ref=f9e1306]
+      - generic [ref=f9e1309]:
+        - text: TSUKUMO99 · UNOFFICIAL FANWEB
+        - img "DiŹ" [ref=f9e1310]
+        - paragraph [ref=f9e1311]: WORLD TOUR 2026
+        - blockquote [ref=f9e1312]: Once and for all, dice away.
+        - generic [ref=f9e1313]:
+          - link "查看巡演" [ref=f9e1314] [cursor=pointer]:
+            - /url: "#/ticket"
+          - link "最新情报" [ref=f9e1315] [cursor=pointer]:
+            - /url: "#news-preview"
+    - generic [ref=f9e1316]:
+      - generic [ref=f9e1317]:
+        - heading "情报" [level=2] [ref=f9e1318]
+        - link "查看全部 ↗" [ref=f9e1319] [cursor=pointer]:
+          - /url: "#/news"
+      - generic [ref=f9e1320]:
+        - article [ref=f9e1321]:
+          - time [ref=f9e1322]: 2026.08.01
+          - heading "DiŹ WORLD TOUR 2026 特设网站公开" [level=3] [ref=f9e1323]
+          - generic [ref=f9e1324]: →
+        - article [ref=f9e1325]:
+          - time [ref=f9e1326]: 2026.07.24
+          - heading "广州、上海追加公演决定" [level=3] [ref=f9e1327]
+          - generic [ref=f9e1328]: →
+        - article [ref=f9e1329]:
+          - time [ref=f9e1330]: 2026.07.12
+          - heading "第一轮云抽选受付开始" [level=3] [ref=f9e1331]
+          - generic [ref=f9e1332]: →
+    - generic [ref=f9e1333]:
+      - generic [ref=f9e1334]:
+        - heading "Live" [level=2] [ref=f9e1335]
+        - link "选择场次 ↗" [ref=f9e1336] [cursor=pointer]:
+          - /url: "#/ticket"
+      - generic [ref=f9e1337]:
+        - link "01 上海 2026.07.18 上海 · 滨江文化中心" [ref=f9e1338] [cursor=pointer]:
+          - /url: "#/ticket"
+          - generic [ref=f9e1339]: "01"
+          - strong [ref=f9e1340]: 上海
+          - time [ref=f9e1341]: 2026.07.18
+          - emphasis [ref=f9e1342]: 上海 · 滨江文化中心
+        - link "02 广州 2026.07.26 广州 · 珠江大剧场" [ref=f9e1343] [cursor=pointer]:
+          - /url: "#/ticket"
+          - generic [ref=f9e1344]: "02"
+          - strong [ref=f9e1345]: 广州
+          - time [ref=f9e1346]: 2026.07.26
+          - emphasis [ref=f9e1347]: 广州 · 珠江大剧场
+        - link "03 北京 2026.08.02 北京 · 京城中央馆" [ref=f9e1348] [cursor=pointer]:
+          - /url: "#/ticket"
+          - generic [ref=f9e1349]: "03"
+          - strong [ref=f9e1350]: 北京
+          - time [ref=f9e1351]: 2026.08.02
+          - emphasis [ref=f9e1352]: 北京 · 京城中央馆
+        - link "04 首尔 2026.08.08 首尔 · 汉江巨蛋" [ref=f9e1353] [cursor=pointer]:
+          - /url: "#/ticket"
+          - generic [ref=f9e1354]: "04"
+          - strong [ref=f9e1355]: 首尔
+          - time [ref=f9e1356]: 2026.08.08
+          - emphasis [ref=f9e1357]: 首尔 · 汉江巨蛋
+        - link "05 东京 2026.08.15 东京 · 临海竞技场" [ref=f9e1358] [cursor=pointer]:
+          - /url: "#/ticket"
+          - generic [ref=f9e1359]: "05"
+          - strong [ref=f9e1360]: 东京
+          - time [ref=f9e1361]: 2026.08.15
+          - emphasis [ref=f9e1362]: 东京 · 临海竞技场
+    - generic [ref=f9e1363]:
+      - generic [ref=f9e1364]:
+        - heading "云周边" [level=2] [ref=f9e1365]
+        - link "进入商店 ↗" [ref=f9e1366] [cursor=pointer]:
+          - /url: "#/shop"
+      - generic [ref=f9e1367]:
+        - button "DIZ-01 BACKSTAGE PASS 已选择" [ref=f9e1368] [cursor=pointer]:
+          - generic [ref=f9e1369]: DIZ-01
+          - strong [ref=f9e1377]: BACKSTAGE PASS
+          - generic [ref=f9e1378]: 已选择
+        - button "DIZ-02 DICE STICKER SELECT" [ref=f9e1379] [cursor=pointer]:
+          - generic [ref=f9e1380]: DIZ-02
+          - strong [ref=f9e1388]: DICE STICKER
+          - generic [ref=f9e1389]: SELECT
+        - button "DIZ-03 TOUR RECEIPT SELECT" [ref=f9e1390] [cursor=pointer]:
+          - generic [ref=f9e1391]: DIZ-03
+          - strong [ref=f9e1399]: TOUR RECEIPT
+          - generic [ref=f9e1400]: SELECT
+        - button "DIZ-04 NIGHT POSTCARD SELECT" [ref=f9e1401] [cursor=pointer]:
+          - generic [ref=f9e1402]: DIZ-04
+          - strong [ref=f9e1410]: NIGHT POSTCARD
+          - generic [ref=f9e1411]: SELECT
+    - generic [ref=f9e1412]:
+      - heading "Index" [level=2] [ref=f9e1413]
+      - navigation [ref=f9e1414]:
+        - link "Top 01" [ref=f9e1415] [cursor=pointer]:
+          - /url: "#/top"
+          - text: Top
+          - generic [ref=f9e1416]: "01"
+        - link "News 02" [ref=f9e1417] [cursor=pointer]:
+          - /url: "#/news"
+          - text: News
+          - generic [ref=f9e1418]: "02"
+        - link "Ticket 03" [ref=f9e1419] [cursor=pointer]:
+          - /url: "#/ticket"
+          - text: Ticket
+          - generic [ref=f9e1420]: "03"
+        - link "Shop 04" [ref=f9e1421] [cursor=pointer]:
+          - /url: "#/shop"
+          - text: Shop
+          - generic [ref=f9e1422]: "04"
+  - contentinfo [ref=f9e1423]:
+    - generic [ref=f9e1424]:
+      - img "TSUKUMO99" [ref=f9e1425]
+      - paragraph [ref=f9e1426]: DiŹ WORLD TOUR 2026
+    - navigation [ref=f9e1427]:
+      - link "Top" [ref=f9e1428] [cursor=pointer]:
+        - /url: "#/top"
+      - link "News" [ref=f9e1429] [cursor=pointer]:
+        - /url: "#/news"
+      - link "Ticket" [ref=f9e1430] [cursor=pointer]:
+        - /url: "#/ticket"
+      - link "Shop" [ref=f9e1431] [cursor=pointer]:
+        - /url: "#/shop"
+    - paragraph [ref=f9e1432]: 本网站为非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。所有场次、地址、座位、票券均为虚构，购票流程为纯前端模拟，不收集任何姓名以外的信息，更不涉及任何真实支付。仅供娱乐。
+    - generic [ref=f9e1433]: UNOFFICIAL / FAN-MADE · 2026
+  - button "cheer" [ref=f9e1435] [cursor=pointer]: "+1"

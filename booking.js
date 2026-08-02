@@ -12,12 +12,9 @@
     ".btn-outline:hover{border-color:var(--pink)!important;}" +
     ".input-name{background:rgba(23,0,6,.55);color:var(--paper);border-color:rgba(255,134,189,.35)!important;}" +
     ".input-name:focus{border-color:var(--hot)!important;}" +
-    ".stop-book-btn:hover{background:var(--pink);color:var(--wine);}" +
     ".b-row{transition:background .18s ease,box-shadow .18s ease;}" +
     "@media(hover:hover){.b-row:hover{background:linear-gradient(90deg,rgba(236,0,80,.09),transparent 70%);box-shadow:inset 3px 0 0 var(--hot);}}" +
     ".tk-head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:.8rem 1.2rem;justify-content:space-between;margin-bottom:clamp(1.4rem,4vw,2.2rem);}" +
-    ".tk-crumbs{display:flex;gap:.6rem;font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.18em;color:var(--muted);width:100%;}" +
-    ".tk-crumbs span{opacity:.35;}.tk-crumbs span.on{color:var(--pink);opacity:1;}" +
     ".tk-head h1{margin:.2rem 0 0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.8rem,5.5vw,3.2rem);line-height:.95;}" +
     ".tk-back{font-family:var(--mono);font-weight:700;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:.5rem 0;background:none;border:0;cursor:pointer;}" +
     ".tk-back:hover{color:var(--pink);}" +
@@ -49,9 +46,9 @@
     { id:"std",tier:"STANDARD",code:"S",price:499,name:{cn:"普通座席",en:"GENERAL SEATING",jp:"一般席"} }
   ];
   var T = {
-    cn:{getTickets:"选择场次",from:"起",bookBtn:"选座购票",statusPlenty:"余票充足",statusFew:"仅剩少量",statusSold:"已售罄",chooseZone:"选择座位档",back:"上一步",nameStep:"这张票印给谁？",nameLabel:"持票人姓名",namePlaceholder:"输入将印在票面上的名字",issueBtn:"生成电子票",ticketReady:"电子票已生成",download:"下载 PNG 票券",bookAnother:"再选一场",close:"关闭",lblCity:"城市",lblVenue:"场馆",lblDate:"日期",lblTier:"档位",lblZone:"区域",lblSeat:"座位",lblName:"持票人",downloadHint:"无法下载？试试用浏览器打开网站！"},
-    en:{getTickets:"CHOOSE A SHOW",from:"FROM",bookBtn:"BOOK",statusPlenty:"AVAILABLE",statusFew:"FEW LEFT",statusSold:"SOLD OUT",chooseZone:"CHOOSE YOUR ZONE",back:"BACK",nameStep:"WHOSE NAME GOES ON IT?",nameLabel:"ATTENDEE NAME",namePlaceholder:"Name to print on the ticket",issueBtn:"ISSUE TICKET",ticketReady:"YOUR TICKET IS READY",download:"DOWNLOAD PNG",bookAnother:"BOOK ANOTHER",close:"CLOSE",lblCity:"CITY",lblVenue:"VENUE",lblDate:"DATE",lblTier:"TIER",lblZone:"ZONE",lblSeat:"SEAT",lblName:"ATTENDEE",downloadHint:"Download not working? Try opening this site in your phone's browser."},
-    jp:{getTickets:"公演を選ぶ",from:"より",bookBtn:"予約する",statusPlenty:"販売中",statusFew:"残りわずか",statusSold:"完売",chooseZone:"ゾーンを選択",back:"戻る",nameStep:"チケットの名義は？",nameLabel:"氏名",namePlaceholder:"チケットに印字する名前",issueBtn:"チケット発行",ticketReady:"チケットが発行されました",download:"PNGを保存",bookAnother:"別の公演",close:"閉じる",lblCity:"都市",lblVenue:"会場",lblDate:"日付",lblTier:"ランク",lblZone:"ゾーン",lblSeat:"座席",lblName:"氏名",downloadHint:"ダウンロードできない場合は、スマホの標準ブラウザでこのサイトを開き直してください。"}
+    cn:{getTickets:"选择场次",from:"起",chooseZone:"选择座位档",back:"上一步",nameStep:"这张票印给谁？",nameLabel:"持票人姓名",namePlaceholder:"输入将印在票面上的名字",issueBtn:"生成电子票",ticketReady:"电子票已生成",download:"下载 PNG 票券",bookAnother:"再选一场",close:"关闭",lblCity:"城市",lblVenue:"场馆",lblDate:"日期",lblTier:"档位",lblZone:"区域",lblSeat:"座位",lblName:"持票人",downloadHint:"无法下载？试试用浏览器打开网站！"},
+    en:{getTickets:"CHOOSE A SHOW",from:"FROM",chooseZone:"CHOOSE YOUR ZONE",back:"BACK",nameStep:"WHOSE NAME GOES ON IT?",nameLabel:"ATTENDEE NAME",namePlaceholder:"Name to print on the ticket",issueBtn:"ISSUE TICKET",ticketReady:"YOUR TICKET IS READY",download:"DOWNLOAD PNG",bookAnother:"BOOK ANOTHER",close:"CLOSE",lblCity:"CITY",lblVenue:"VENUE",lblDate:"DATE",lblTier:"TIER",lblZone:"ZONE",lblSeat:"SEAT",lblName:"ATTENDEE",downloadHint:"Download not working? Try opening this site in your phone's browser."},
+    jp:{getTickets:"公演を選ぶ",from:"より",chooseZone:"ゾーンを選択",back:"戻る",nameStep:"チケットの名義は？",nameLabel:"氏名",namePlaceholder:"チケットに印字する名前",issueBtn:"チケット発行",ticketReady:"チケットが発行されました",download:"PNGを保存",bookAnother:"別の公演",close:"閉じる",lblCity:"都市",lblVenue:"会場",lblDate:"日付",lblTier:"ランク",lblZone:"ゾーン",lblSeat:"座席",lblName:"氏名",downloadHint:"ダウンロードできない場合は、スマホの標準ブラウザでこのサイトを開き直してください。"}
   };
 
   var state = { lang:"cn", open:false, stopIndex:null, step:"stop", zoneId:null, name:"", ticket:null };
@@ -64,19 +61,12 @@
   function computeSelZone(){ return state.zoneId ? ZONES.filter(function(z){return z.id===state.zoneId;})[0] : null; }
 
   function renderStopStep(){
-    var tt=t(),lang=state.lang,minPrice=Math.min.apply(null,ZONES.map(function(z){return z.price;}));
+    var lang=state.lang;
     var rows=STOPS.map(function(s,i){
-      var soldOut=s.status==="sold";
-      var col=soldOut?"#8d6472":s.status==="few"?"#ec0050":"#ff86bd";
-      var lbl=soldOut?tt.statusSold:s.status==="few"?tt.statusFew:tt.statusPlenty;
-      var btn=soldOut
-        ? '<span style="font-family:var(--mono);font-weight:700;font-size:.62rem;letter-spacing:.1em;padding:.55rem 1rem;border:1px solid rgba(255,244,247,.2);border-radius:.3rem;color:var(--muted);text-transform:uppercase;">'+esc(tt.statusSold)+'</span>'
-        : '<button type="button" class="stop-book-btn" data-act="pickStop" data-idx="'+i+'" style="font-family:var(--mono);font-weight:700;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.6rem 1.1rem;border:0;border-radius:.3rem;background:var(--hot);color:var(--paper);cursor:pointer;">'+esc(tt.bookBtn)+'</button>';
-      return '<div class="b-row" style="display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;padding:.85rem .5rem;border-bottom:1px solid rgba(255,134,189,.12);">'+
-        '<div style="flex:0 0 auto;display:flex;align-items:baseline;gap:.6rem;min-width:7.4rem;"><span style="font-family:var(--display);font-weight:700;font-size:1.4rem;color:'+(soldOut?"var(--muted)":"var(--hot)")+';">'+("0"+(i+1)).slice(-2)+'</span><span style="font-family:var(--mono);font-weight:700;font-size:.6rem;color:var(--muted);">'+s.date+'</span></div>'+
-        '<div style="flex:1 1 11rem;min-width:10rem;"><div style="font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.15rem;line-height:1;color:'+(soldOut?"var(--muted)":"var(--paper)")+';">'+esc(s.city[lang])+'</div><div style="margin-top:.2rem;font-family:var(--mono);font-size:.6rem;color:var(--pink);">'+esc(s.venue[lang])+'</div></div>'+
-        '<div style="flex:0 0 auto;display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.08em;color:'+col+';"><span style="width:.4rem;height:.4rem;border-radius:50%;background:'+col+';"></span>'+esc(lbl)+'</div>'+
-        '<div style="flex:0 0 auto;">'+btn+'</div></div>';
+      return '<button type="button" class="b-row" data-act="pickStop" data-idx="'+i+'" style="width:100%;display:flex;align-items:center;gap:.8rem 1.2rem;padding:1rem .6rem;border:0;border-bottom:1px solid rgba(255,134,189,.12);background:transparent;color:inherit;text-align:left;cursor:pointer;">'+
+        '<div style="flex:1 1 11rem;min-width:10rem;"><div style="font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.15rem;line-height:1;color:var(--paper);">'+esc(s.city[lang])+'</div><div style="margin-top:.28rem;font-family:var(--mono);font-size:.6rem;color:var(--pink);">'+esc(s.venue[lang])+'</div></div>'+
+        '<span style="font-family:var(--mono);font-weight:700;font-size:.62rem;color:var(--muted);">'+s.date+'</span>'+
+        '<span aria-hidden="true" style="font-family:var(--display);font-size:1.4rem;color:var(--hot);">→</span></button>';
     }).join("");
     return { content:'<div style="max-width:100%;">'+rows+'</div>', footer:"" };
   }
@@ -155,12 +145,10 @@
     var tt=t();
     var stepLabel={stop:tt.getTickets,zone:tt.chooseZone,name:tt.nameStep,ticket:tt.ticketReady}[state.step];
     var parts=state.step==="stop"?renderStopStep():state.step==="zone"?renderZoneStep():state.step==="name"?renderNameStep():renderTicketStep();
-    var order=["stop","zone","name","ticket"],idx=order.indexOf(state.step);
-    var crumbs=order.map(function(s,i){return '<span class="'+(i<=idx?"on":"")+'">'+("0"+(i+1)).slice(-2)+'</span>';}).join('<span style="opacity:.25;">·</span>');
     var back="";
     if(state.step==="zone")back='<button type="button" data-act="backToStop" class="tk-back">← '+esc(tt.back)+'</button>';
     else if(state.step==="name")back='<button type="button" data-act="backToZone" class="tk-back">← '+esc(tt.back)+'</button>';
-    return '<div class="tk-head"><div class="tk-crumbs">'+crumbs+'</div><h1>'+esc(stepLabel)+'</h1>'+back+'</div>'+
+    return '<div class="tk-head"><h1>'+esc(stepLabel)+'</h1>'+back+'</div>'+
       '<div class="tk-body">'+parts.content+'</div>'+
       (parts.footer?'<div class="tk-foot">'+parts.footer+'</div>':"");
   }

@@ -7,6 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%233a0014'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff86bd'/%3E%3Ccircle cx='20' cy='44' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23fff4f7'/%3E%3C/svg%3E">
 <title>Shop 云购物 — TSUKUMO99 · DiŹ [proto]</title>
 <link rel="stylesheet" href="page-transition.css" />
+<link rel="stylesheet" href="design-pages.css" />
 <style>
 @font-face{font-family:"Oswald";font-weight:300 700;font-display:swap;src:url("assets/fonts/oswald-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+2122;}
 @font-face{font-family:"Oswald";font-weight:300 700;font-display:swap;src:url("assets/fonts/oswald-latin-ext.woff2") format("woff2");unicode-range:U+0100-024F,U+1E00-1EFF,U+2C60-2C7F,U+A720-A7FF;}
@@ -80,6 +81,10 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 
 @media (max-width:760px){.lang{display:none;}.grid{grid-template-columns:repeat(2,1fr);}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important;}}
+.menu-lang{display:flex;gap:.9rem;margin:0 0 clamp(1rem,3vh,1.6rem);font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;}
+.menu-lang button{color:var(--muted);opacity:.7;padding:.3rem .1rem;position:relative;text-transform:uppercase;background:none;border:0;cursor:pointer;}
+.menu-lang button.on{color:var(--paper);opacity:1;}
+.menu-lang button.on::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--hot);}
 </style>
 </head>
 <body>
@@ -95,58 +100,37 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 <nav id="menu">
   <button class="close" id="close" aria-label="关闭">✕</button>
   <ul class="menu-list">
-    <li><a href="index.html"><span class="no">01</span>Top</a></li>
-    <li><a href="news.html"><span class="no">02</span>News</a></li>
-    <li><a href="ticket.html"><span class="no">03</span>Ticket</a></li>
-    <li><a href="profile.html"><span class="no">04</span>Profile</a></li>
-    <li><a class="here" href="shop.html"><span class="no">05</span>Shop</a></li>
+    <li><a href="index.html">Top</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="ticket.html">Ticket</a></li>
+    <li><a href="profile.html">Profile</a></li>
+    <li><a class="here" href="shop.html">Shop</a></li>
   </ul>
+  <div class="menu-lang" role="group" aria-label="语言 / Language">
+    <button class="on" data-lang="cn">CN</button>
+    <button data-lang="jp">JP</button>
+    <button data-lang="en">EN</button>
+  </div>
   <div class="menu-foot">
     <div class="contact"><b>Contact</b>小红书 @TSUKUMO99</div>
     <div class="mk">UNOFFICIAL FAN-MADE<br/>NOT A REAL TICKET</div>
   </div>
 </nav>
 
-<main class="wrap">
-  <div class="phead reveal">
-    <p class="ey"><b>04</b>Shop</p>
-    <h1>云购物</h1>
-    <p>非传统周边站 · 不收款、只印你的名字 · 生成即可保存打印的「无料」收藏。</p>
-  </div>
-
-  <div class="grid" id="grid"></div>
-
-  <p class="note">六款虚构收藏品，点选 → 只填名 → 浏览器 canvas 生成 PNG 无料。文案 / 商品全为占位，待补。</p>
-</main>
+<div id="dcPage"></div>
 
 <button id="cheer" aria-label="应援挥舞荧光棒"><img id="cheerImg" src="assets/cheer-still.webp" alt="荧光棒" /></button>
 
+<script src="design-pages.js"></script>
 <script>
 var b=document.body;
 document.getElementById("burger").onclick=function(){b.classList.toggle("menu-open");};
 document.getElementById("close").onclick=function(){b.classList.remove("menu-open");};
 
-var GOODS=[
-  ["贴纸","Dice Pips","#ec0050","#3d0f18"],
-  ["明信片","World Tour","#7b63b8","#241a44"],
-  ["应援收据","All In","#a6c9ae","#274332"],
-  ["小卡","DiŹ","#e0cfab","#5c4622"],
-  ["半券","Admit One","#c34a5c","#3d0f18"],
-  ["立牌","Once & For All","#b6bccd","#33384a"]
-];
-var motif='<svg class="motif" viewBox="0 0 100 100" fill="none"><rect x="24" y="24" width="52" height="52" rx="6" transform="rotate(45 50 50)" stroke="currentColor" stroke-width="4"/><circle cx="38" cy="38" r="4.5" fill="currentColor"/><circle cx="62" cy="38" r="4.5" fill="currentColor"/><circle cx="50" cy="50" r="4.5" fill="currentColor"/><circle cx="38" cy="62" r="4.5" fill="currentColor"/><circle cx="62" cy="62" r="4.5" fill="currentColor"/></svg>';
-var grid=document.getElementById("grid");
-GOODS.forEach(function(g){
-  var a=document.createElement("a");a.className="gd reveal";a.href="#";a.style.setProperty("--c",g[2]);a.style.setProperty("--k",g[3]);
-  a.innerHTML='<div class="ph">'+motif+'<span class="cat">'+g[0]+'</span><span class="nm">'+g[1]+'</span></div>'+
-    '<div class="meta"><span>'+g[0]+'</span><span class="wu">无料</span></div>';
-  grid.appendChild(a);
-});
-
-document.querySelectorAll(".lang button").forEach(function(btn){btn.onclick=function(){document.querySelectorAll(".lang button").forEach(function(x){x.classList.remove("on");});btn.classList.add("on");};});
-
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.1});
-document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
+var DC_MOUNT=document.getElementById("dcPage"),DC_LANG="cn";
+function dcRender(){DC_MOUNT.innerHTML=window.DiZPages.renderShop(DC_LANG);window.DiZPages.wire("shop",DC_LANG,dcRender);}
+dcRender();
+document.querySelectorAll("button[data-lang]").forEach(function(btn){btn.onclick=function(){var L=btn.dataset.lang;document.querySelectorAll("button[data-lang]").forEach(function(x){x.classList.toggle("on",x.dataset.lang===L);});DC_LANG=L;dcRender();};});
 
 var frames=[];for(var i=0;i<7;i++){frames.push("assets/cheer-frame-"+i+".webp");new Image().src=frames[i];}
 var cheer=document.getElementById("cheer"),cImg=document.getElementById("cheerImg"),playing=false,drag=null;

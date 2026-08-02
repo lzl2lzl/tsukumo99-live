@@ -1,0 +1,84 @@
+- generic [ref=f9e2]:
+  - img "TSUKUMO99 LIVE · DiŹ" [ref=f9e1440]
+  - banner:
+    - link [ref=f9e1441] [cursor=pointer]:
+      - /url: "#/top"
+      - img "TSUKUMO99" [ref=f9e1442]
+    - generic [ref=f9e1443]:
+      - generic [ref=f9e1444]:
+        - button "CN" [ref=f9e1445] [cursor=pointer]
+        - button "JP" [ref=f9e1446] [cursor=pointer]
+        - button "EN" [ref=f9e1447] [cursor=pointer]
+      - button "Menu" [ref=f9e1448] [cursor=pointer]
+  - navigation:
+    - generic:
+      - list:
+        - listitem:
+          - link:
+            - /url: "#/top"
+            - generic: "01"
+            - text: Top
+        - listitem:
+          - link:
+            - /url: "#/news"
+            - generic: "02"
+            - text: News
+        - listitem:
+          - link:
+            - /url: "#/ticket"
+            - generic: "03"
+            - text: Ticket
+        - listitem:
+          - link:
+            - /url: "#/shop"
+            - generic: "04"
+            - text: Shop
+      - generic:
+        - generic: TSUKUMO99 · DiŹ WORLD TOUR 2026
+        - generic: UNOFFICIAL / FAN-MADE
+  - main [ref=f9e1452]:
+    - generic [ref=f9e1453]:
+      - heading "情报" [level=1] [ref=f9e1461]
+      - paragraph [ref=f9e1462]: TSUKUMO99 与 DiŹ 的最新动态。以下内容为企划占位，之后可替换成你的正式文案。
+    - generic "News filters" [ref=f9e1463]:
+      - button "ALL" [ref=f9e1464]
+      - button "LIVE" [ref=f9e1465]
+      - button "GOODS" [ref=f9e1466]
+      - button "PROJECT" [ref=f9e1467]
+    - generic [ref=f9e1469]:
+      - article [ref=f9e1470]:
+        - time [ref=f9e1471]: 2026.08.01
+        - heading "DiŹ WORLD TOUR 2026 特设网站公开" [level=3] [ref=f9e1472]
+        - generic [ref=f9e1473]: →
+      - article [ref=f9e1474]:
+        - time [ref=f9e1475]: 2026.07.24
+        - heading "广州、上海追加公演决定" [level=3] [ref=f9e1476]
+        - generic [ref=f9e1477]: →
+      - article [ref=f9e1478]:
+        - time [ref=f9e1479]: 2026.07.12
+        - heading "第一轮云抽选受付开始" [level=3] [ref=f9e1480]
+        - generic [ref=f9e1481]: →
+      - article [ref=f9e1482]:
+        - time [ref=f9e1483]: 2026.06.30
+        - heading "DiŹ 纪念收藏卡视觉公开" [level=3] [ref=f9e1484]
+        - generic [ref=f9e1485]: →
+      - article [ref=f9e1486]:
+        - time [ref=f9e1487]: 2026.06.18
+        - heading "TSUKUMO99 LIVE 企划启动" [level=3] [ref=f9e1488]
+        - generic [ref=f9e1489]: →
+  - contentinfo [ref=f9e1490]:
+    - generic [ref=f9e1491]:
+      - img "TSUKUMO99" [ref=f9e1492]
+      - paragraph [ref=f9e1493]: DiŹ WORLD TOUR 2026
+    - navigation [ref=f9e1494]:
+      - link "Top" [ref=f9e1495] [cursor=pointer]:
+        - /url: "#/top"
+      - link "News" [ref=f9e1496] [cursor=pointer]:
+        - /url: "#/news"
+      - link "Ticket" [ref=f9e1497] [cursor=pointer]:
+        - /url: "#/ticket"
+      - link "Shop" [ref=f9e1498] [cursor=pointer]:
+        - /url: "#/shop"
+    - paragraph [ref=f9e1499]: 本网站为非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。所有场次、地址、座位、票券均为虚构，购票流程为纯前端模拟，不收集任何姓名以外的信息，更不涉及任何真实支付。仅供娱乐。
+    - generic [ref=f9e1500]: UNOFFICIAL / FAN-MADE · 2026
+  - button "cheer" [ref=f9e1502] [cursor=pointer]: "+1"

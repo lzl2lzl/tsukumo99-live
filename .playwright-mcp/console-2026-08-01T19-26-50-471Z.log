@@ -1,0 +1,2 @@
+[ 2094029ms] Uncaught TypeError: Cannot read properties of null (reading 'classList')
+    at <anonymous> (file:///D:/claude/tsukumo99-live/design-pages.js?v=20260802-pages1:124:66)

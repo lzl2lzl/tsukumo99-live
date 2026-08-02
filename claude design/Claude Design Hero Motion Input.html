@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TSUKUMO99 · DiŹ — Claude Design Hero Motion Input</title>
+<style>
+@font-face{font-family:Oswald;src:url("../assets/fonts/oswald-latin.woff2") format("woff2");font-display:swap}
+@font-face{font-family:SpaceMono;src:url("../assets/fonts/spacemono-700-latin.woff2") format("woff2");font-display:swap;font-weight:700}
+:root{--ink:#170006;--wine:#3a0014;--crimson:#8d002c;--hot:#ec0050;--pink:#ff86bd;--paper:#fff4f7;--muted:#e4afbf}
+*{box-sizing:border-box}html,body{margin:0;min-width:320px;background:var(--ink);color:var(--paper)}
+body{font-family:Arial,"Noto Sans SC",sans-serif;overflow-x:hidden}
+.hero{position:relative;isolation:isolate;min-height:100svh;overflow:hidden;background:radial-gradient(100% 110% at 72% 46%,#5d001f 0%,var(--wine) 31%,var(--ink) 72%)}
+.atmosphere{position:absolute;z-index:-8;inset:0;background:radial-gradient(ellipse at 72% 74%,rgba(236,0,80,.24),transparent 36%),linear-gradient(90deg,rgba(10,0,4,.92),rgba(23,0,6,.44) 49%,rgba(23,0,6,.08));pointer-events:none}
+
+/* COUNTER-inspired flow language, rebuilt as an offline CSS perspective field. */
+.flow{position:absolute;z-index:-7;inset:-20%;overflow:hidden;opacity:.19;perspective:700px;mask-image:radial-gradient(ellipse 73% 73% at 72% 48%,#000 5%,rgba(0,0,0,.8) 48%,transparent 86%);pointer-events:none}
+.flow-plane{position:absolute;inset:-35%;background-image:linear-gradient(rgba(255,134,189,.24) 1px,transparent 1px),linear-gradient(90deg,rgba(236,0,80,.3) 1px,transparent 1px);background-size:68px 68px;transform:rotateX(62deg) rotateZ(-8deg) translate3d(var(--flow-x,0),0,0);animation:flow 18s linear infinite;will-change:background-position,transform}
+.flow-plane:nth-child(2){opacity:.48;background-size:118px 118px;animation-duration:29s;animation-direction:reverse;transform:rotateX(67deg) rotateZ(5deg) scale(1.15)}
+.flow-scan{position:absolute;inset:-20%;background:linear-gradient(90deg,transparent 34%,rgba(255,244,247,.05) 43%,rgba(255,134,189,.32) 50%,rgba(236,0,80,.08) 57%,transparent 66%);transform:translateX(-62%);animation:scan 9s linear infinite;mix-blend-mode:screen}
+@keyframes flow{to{background-position:136px 68px}}
+@keyframes scan{to{transform:translateX(62%)}}
+
+/* A reduced version of the Profile page's typographic ribbons. */
+.type-field{position:absolute;z-index:-6;top:50%;left:51%;width:165vw;transform:translate(-50%,-50%) rotate(-11deg);opacity:.12;pointer-events:none;mask-image:linear-gradient(90deg,transparent,#000 15% 82%,transparent)}
+.type-row{overflow:hidden;white-space:nowrap;font:700 clamp(4rem,12vw,10rem)/.86 Oswald,sans-serif;text-transform:uppercase}
+.type-row span{display:inline-block;animation:marquee var(--speed,28s) linear infinite;will-change:transform}
+.type-row:nth-child(even){color:transparent;-webkit-text-stroke:1.5px rgba(255,244,247,.65)}
+.type-row:nth-child(2) span{animation-direction:reverse}.type-row:nth-child(3){color:var(--hot)}
+@keyframes marquee{to{transform:translateX(-33.333%)}}
+
+/* The fan-art key visual remains the focus. */
+.art-wrap{position:absolute;z-index:-3;inset:0 0 0 38%;pointer-events:none;transform:translate3d(var(--art-x,0),var(--art-y,0),0);transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.art-wrap::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--ink),transparent 22%),linear-gradient(0deg,var(--ink),transparent 31%);pointer-events:none}
+.art{width:100%;height:100%;object-fit:cover;object-position:54% 18%;filter:saturate(1.05) contrast(1.04) drop-shadow(-24px 24px 34px rgba(8,0,4,.58))}
+
+/* E-agent-inspired moving light, redesigned as theatrical spotlights. */
+.lights{position:absolute;z-index:-2;inset:0;overflow:hidden;pointer-events:none;mix-blend-mode:screen}
+.beam{position:absolute;top:-58%;left:var(--x);width:clamp(8rem,13vw,14rem);height:170%;transform-origin:50% 0;transform:rotate(var(--angle));background:linear-gradient(180deg,rgba(255,244,247,.36),rgba(255,134,189,.11) 47%,transparent 82%);filter:blur(18px);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);opacity:.78;animation:sway var(--time) cubic-bezier(.45,.05,.55,.95) infinite alternate;will-change:transform}
+.beam::after{content:"";position:absolute;inset:0 36%;background:linear-gradient(rgba(255,255,255,.58),transparent 72%);filter:blur(7px)}
+.beam-a{--x:57%;--angle:17deg;--time:10s}.beam-b{--x:83%;--angle:-24deg;--time:14s;opacity:.42;width:9rem;animation-delay:-5s}
+@keyframes sway{0%{transform:rotate(calc(var(--angle) - 8deg)) scaleX(.84)}52%{transform:rotate(calc(var(--angle) + 5deg)) scaleX(1.05)}100%{transform:rotate(calc(var(--angle) - 2deg)) scaleX(.92)}}
+.floor-light{position:absolute;z-index:-1;left:55%;right:-8%;bottom:-17%;height:39%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,244,247,.26),rgba(236,0,80,.12) 34%,transparent 72%);filter:blur(18px);animation:breathe 5.5s ease-in-out infinite alternate;pointer-events:none}
+@keyframes breathe{to{opacity:.58;transform:scale(1.08)}}
+
+.header{position:absolute;z-index:10;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:1.25rem clamp(1.2rem,4vw,3.5rem);font:700 .62rem/1 SpaceMono,monospace;letter-spacing:.16em;text-transform:uppercase}
+.brand{font:700 1.25rem/1 Oswald,sans-serif;letter-spacing:.02em}.brand i{font-style:normal;color:var(--pink)}
+.header nav{display:flex;gap:1.5rem}.header a{color:inherit;text-decoration:none}
+.content{position:relative;z-index:4;display:flex;min-height:100svh;align-items:center;width:min(56rem,64vw);padding:7rem clamp(1.25rem,6vw,7rem) 4rem}
+.copy{max-width:44rem}
+.disclaimer{display:inline-flex;align-items:center;max-width:42rem;padding:.55rem .75rem;border:1px solid rgba(255,134,189,.42);font:700 .58rem/1.45 SpaceMono,monospace;letter-spacing:.055em;color:var(--muted);background:rgba(23,0,6,.62)}
+.title{margin:1.65rem 0 0;font:italic 700 clamp(6rem,18vw,14rem)/.7 Oswald,sans-serif;letter-spacing:-.03em;color:var(--hot);text-shadow:0 .06em 0 #4c001a,0 18px 42px rgba(236,0,80,.34)}
+.identity{display:flex;align-items:center;gap:1rem;margin-top:1.7rem;font:700 clamp(1.4rem,3vw,2.7rem)/1 Oswald,sans-serif;text-transform:uppercase}.identity::after{content:"WORLD TOUR 2026";font:700 clamp(.6rem,1vw,.8rem)/1 SpaceMono,monospace;letter-spacing:.28em;color:var(--pink)}
+.tagline{margin:1.15rem 0 0;font:italic 500 clamp(1rem,1.8vw,1.4rem)/1.4 Oswald,sans-serif}
+.cta{display:inline-flex;margin-top:1.8rem;padding:.95rem 1.45rem;background:var(--hot);color:var(--paper);font:700 .72rem/1 SpaceMono,monospace;letter-spacing:.13em;text-decoration:none;text-transform:uppercase;box-shadow:0 12px 28px rgba(0,0,0,.3);transition:transform .2s,background .2s}.cta:hover{transform:translateY(-2px);background:var(--pink);color:var(--wine)}
+
+@media(max-width:760px){
+  .header nav{display:none}.hero{min-height:100svh}.content{align-items:flex-end;width:100%;padding:6rem 1.2rem 2rem}.copy{max-width:100%}
+  .art-wrap{inset:0}.art-wrap::after{background:linear-gradient(180deg,rgba(23,0,6,.48),transparent 24%,rgba(23,0,6,.12) 48%,rgba(23,0,6,.94) 86%,var(--ink))}
+  .title{font-size:clamp(5.3rem,28vw,8rem);margin-top:1rem}.identity{margin-top:1.1rem}.identity::after{font-size:.52rem;letter-spacing:.18em}
+  .disclaimer{font-size:.5rem}.type-field{width:260vw;opacity:.075}.type-row:nth-child(3){display:none}
+  .flow{opacity:.12}.flow-plane:nth-child(2){display:none}.beam-b{display:none}.beam-a{--x:52%;opacity:.52}
+}
+@media(prefers-reduced-motion:reduce){
+  .flow-plane,.flow-scan,.type-row span,.beam,.floor-light{animation:none!important}.art-wrap{transform:none!important}.flow-scan{transform:translateX(0);opacity:.25}
+}
+</style>
+</head>
+<body>
+<main class="hero" id="hero">
+  <div class="atmosphere" aria-hidden="true"></div>
+  <div class="flow" aria-hidden="true"><div class="flow-plane"></div><div class="flow-plane"></div><div class="flow-scan"></div></div>
+  <div class="type-field" aria-hidden="true">
+    <div class="type-row"><span>TSUKUMO99 · DICE AWAY · WORLD TOUR 2026 · TSUKUMO99 · DICE AWAY · WORLD TOUR 2026 · TSUKUMO99 · DICE AWAY · WORLD TOUR 2026 · </span></div>
+    <div class="type-row"><span>ONCE AND FOR ALL · DiŹ · ALL IN · ONCE AND FOR ALL · DiŹ · ALL IN · ONCE AND FOR ALL · DiŹ · ALL IN · </span></div>
+    <div class="type-row"><span>DiŹ · TSUKUMO99 · DiŹ · TSUKUMO99 · DiŹ · TSUKUMO99 · DiŹ · TSUKUMO99 · DiŹ · TSUKUMO99 · </span></div>
+  </div>
+  <div class="art-wrap" aria-hidden="true"><img class="art" src="../assets/hero.avif" alt=""></div>
+  <div class="lights" aria-hidden="true"><div class="beam beam-a"></div><div class="beam beam-b"></div></div>
+  <div class="floor-light" aria-hidden="true"></div>
+
+  <header class="header"><div class="brand">TSUKUMO<i>99</i></div><nav><a href="#">News</a><a href="#">Ticket</a><a href="#">Profile</a><a href="#">Shop</a></nav></header>
+  <section class="content">
+    <div class="copy">
+      <div class="disclaimer">非官方同人企划 · 全流程为模拟演示 · 并非真实门票</div>
+      <h1 class="title">DiŹ</h1>
+      <div class="identity">TSUKUMO99</div>
+      <p class="tagline">“Once and for all, dice away.”</p>
+      <a class="cta" href="#">选择场次 ↓</a>
+    </div>
+  </section>
+</main>
+<script>
+(()=>{
+  const hero=document.querySelector('#hero');
+  if(!hero||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  let tx=0,ty=0,x=0,y=0,raf=0;
+  function render(){x+=(tx-x)*.055;y+=(ty-y)*.055;hero.style.setProperty('--art-x',`${x*12}px`);hero.style.setProperty('--art-y',`${y*7}px`);hero.style.setProperty('--flow-x',`${x*-5}px`);raf=requestAnimationFrame(render)}
+  hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();tx=(e.clientX-r.left)/r.width-.5;ty=(e.clientY-r.top)/r.height-.5},{passive:true});
+  hero.addEventListener('pointerleave',()=>{tx=0;ty=0});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf);raf=0}else if(!raf)render()});
+  render();
+})();
+</script>
+</body>
+</html>

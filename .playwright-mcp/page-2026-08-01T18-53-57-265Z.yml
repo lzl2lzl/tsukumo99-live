@@ -1,0 +1,16 @@
+- generic [active] [ref=e1]:
+  - navigation:
+    - generic [ref=e2]: X
+    - list [ref=e19]:
+      - listitem [ref=e20] [cursor=pointer]:
+        - generic [ref=e21]: Flip
+      - listitem [ref=e23] [cursor=pointer]:
+        - generic [ref=e24]: Scroll Trigger
+      - listitem [ref=e25] [cursor=pointer]:
+        - generic [ref=e26]: Slider
+      - listitem [ref=e27] [cursor=pointer]:
+        - generic [ref=e28]: Inertia
+      - listitem [ref=e29] [cursor=pointer]:
+        - generic [ref=e30]: Text Effects
+      - listitem [ref=e31] [cursor=pointer]:
+        - generic [ref=e32]: Marquee

@@ -1,0 +1,53 @@
+- generic [ref=e4]:
+  - generic [ref=e5]:
+    - generic [ref=e6]: TSUKUMO99 · UNOFFICIAL FANWEB
+    - generic [ref=e13]: 请用浏览器打开 · OPEN IN A BROWSER
+  - banner:
+    - button "menu" [ref=e14] [cursor=pointer]
+    - generic [ref=e18]:
+      - button "TSUKUMO99 UNOFFICIAL FANWEB" [ref=e19] [cursor=pointer]:
+        - generic [ref=e20]: TSUKUMO99
+        - generic [ref=e21]: UNOFFICIAL FANWEB
+      - generic [ref=e22]:
+        - button "CN" [ref=e23] [cursor=pointer]
+        - button "JP" [ref=e24] [cursor=pointer]
+        - button "EN" [ref=e25] [cursor=pointer]
+  - generic:
+    - button "close": ✕
+    - navigation:
+      - button "⚀ TOP":
+        - generic: ⚀
+        - generic: TOP
+      - button "⚁ NEWS":
+        - generic: ⚁
+        - generic: NEWS
+      - button "⚂ TICKET":
+        - generic: ⚂
+        - generic: TICKET
+      - button "⚃ PROFILE":
+        - generic: ⚃
+        - generic: PROFILE
+      - button "⚄ SHOP":
+        - generic: ⚄
+        - generic: SHOP
+      - generic:
+        - generic: CONTACT
+        - generic: 小红书 · @TSUKUMO99
+  - generic:
+    - generic: TOP
+    - generic:
+      - generic:
+        - button "TOP"
+        - button "NEWS"
+        - button "TICKET"
+        - button "PROFILE"
+        - button "SHOP"
+  - main [ref=e27]:
+    - generic [ref=e29]:
+      - generic [ref=e37]:
+        - generic [ref=e38]: TSUKUMO99 LIVE
+        - generic [ref=e39]: WORLD TOUR 2026
+      - paragraph [ref=e40]: “Once and for all, dice away.”
+      - generic [ref=e41]:
+        - button "购票" [ref=e42] [cursor=pointer]
+        - generic [ref=e43]: 选公演 · 券种 · 出票
