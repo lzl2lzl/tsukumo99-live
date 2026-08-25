@@ -54,9 +54,7 @@
   var soundOn = true;
 
   Object.keys(audioFiles).forEach(function (name) {
-    var audio = new Audio(audioFiles[name]);
-    audio.preload = "auto";
-    fallbackAudio[name] = audio;
+    fallbackAudio[name] = null;
   });
 
   function padNumber(value, length) {
@@ -80,7 +78,7 @@
       masterGain.gain.setTargetAtTime(on ? 0.72 : 0, audioContext.currentTime, 0.025);
     }
     Object.keys(fallbackAudio).forEach(function (name) {
-      fallbackAudio[name].muted = !on;
+      if (fallbackAudio[name]) fallbackAudio[name].muted = !on;
     });
   }
 
@@ -163,7 +161,13 @@
       return;
     }
     var audio = fallbackAudio[name];
-    if (!audio) return;
+    if (!audio) {
+      audio = new Audio();
+      audio.preload = "auto";
+      audio.src = audioFiles[name];
+      audio.muted = !soundOn;
+      fallbackAudio[name] = audio;
+    }
     try {
       audio.pause();
       audio.currentTime = 0;
