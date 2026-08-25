@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#120005" />
+  <title>LIVE EXPERIENCE | TSUKUMO99</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%233a0014'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff86bd'/%3E%3Ccircle cx='20' cy='44' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23fff4f7'/%3E%3C/svg%3E" />
+  <link rel="preload" as="image" href="assets/hero-desktop-square.jpg" fetchpriority="high" />
+  <link rel="stylesheet" href="live-experience.css" />
+</head>
+<body>
+  <main class="live-shell" id="liveApp">
+    <div class="stage-art" aria-hidden="true"></div>
+    <div class="stage-scrim" aria-hidden="true"></div>
+    <div class="stage-grid" aria-hidden="true"></div>
+
+    <div class="light-rig" aria-hidden="true">
+      <span class="rig-light r1"></span>
+      <span class="rig-light r2"></span>
+      <span class="rig-light r3"></span>
+      <span class="rig-light r4"></span>
+      <span class="rig-light r5"></span>
+    </div>
+
+    <header class="live-head">
+      <a class="live-brand" href="index.html" aria-label="返回 TSUKUMO99 首页">
+        <b>TSUKUMO99</b>
+        <span>UNOFFICIAL FANWEB</span>
+      </a>
+      <div class="show-id" aria-label="当前公演">
+        <b id="modeLabel">LIVE EXPERIENCE</b>
+        <span>Di殴 WORLD TOUR 2026</span>
+      </div>
+      <div class="head-actions">
+        <button type="button" id="soundButton" aria-pressed="false">SOUND ON</button>
+        <button type="button" id="viewButton">FULL VIEW</button>
+        <a href="index.html">EXIT</a>
+      </div>
+    </header>
+
+    <section class="stage" aria-label="互动演出舞台">
+      <div class="stage-orbit" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="stage-die" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <div class="cutin" id="cutin" aria-hidden="true">
+        <div class="cutin-image"></div>
+        <div class="cutin-copy"><span>SPECIAL CUT-IN</span><b>CORE SIGNAL</b></div>
+      </div>
+
+      <div class="live-readout" aria-live="polite">
+        <span class="readout-kicker" id="readoutKicker">SYSTEM READY</span>
+        <strong id="readoutTitle">TOUCH THE STAGE</strong>
+        <p id="readoutBody">点亮三个核心效果，开启最终演出</p>
+        <div class="effect-state" aria-label="核心效果进度">
+          <span data-state="bubble">BUBBLE</span>
+          <span data-state="violet">VIOLET</span>
+          <span data-state="core">CORE</span>
+        </div>
+      </div>
+
+      <button class="finale-trigger" id="finaleButton" type="button" aria-hidden="true" disabled>
+        <span class="finale-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <b>OPEN THE STAGE</b>
+      </button>
+
+      <div class="burst-field" id="burstField" aria-hidden="true"></div>
+
+      <div class="control-arc" id="controlArc" aria-label="舞台效果控制">
+        <button class="stage-pad pad-beam" type="button" data-effect="beam" aria-label="触发聚光灯">
+          <span class="pad-face"><i></i></span>
+          <b>BEAM</b><small>1 / A</small>
+        </button>
+        <button class="stage-pad pad-bubble" type="button" data-effect="bubble" aria-label="触发气泡粒子">
+          <span class="pad-face"><i></i><i></i></span>
+          <b>BUBBLE</b><small>2 / S</small>
+        </button>
+        <button class="stage-pad pad-core" type="button" data-effect="core" aria-label="触发核心信号">
+          <span class="pad-face"><i></i><i></i><i></i></span>
+          <b>CORE</b><small>3 / D</small>
+        </button>
+        <button class="stage-pad pad-violet" type="button" data-effect="violet" aria-label="触发紫色扫光">
+          <span class="pad-face"><i></i><i></i><i></i><i></i></span>
+          <b>VIOLET</b><small>4 / J</small>
+        </button>
+        <button class="stage-pad pad-cheer" type="button" data-effect="cheer" aria-label="触发应援灯海">
+          <span class="pad-face"><i></i><i></i><i></i><i></i><i></i></span>
+          <b>CHEER</b><small>5 / K</small>
+        </button>
+      </div>
+    </section>
+
+    <div class="mode-gate" id="modeGate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+      <div class="gate-art" aria-hidden="true"></div>
+      <div class="gate-copy">
+        <span class="gate-label">TSUKUMO99 PRESENTS</span>
+        <h1 id="gateTitle">LIVE<br />EXPERIENCE</h1>
+        <p>选择今晚的观演方式</p>
+        <div class="mode-actions">
+          <button type="button" data-mode="live">
+            <span>进入现场</span><b>LIVE ATTENDANCE</b><small>自由触发舞台效果</small>
+          </button>
+          <button type="button" data-mode="archive">
+            <span>观看公演片段</span><b>LIVE DIGEST</b><small>自动播放约 12 秒</small>
+          </button>
+        </div>
+        <p class="gate-note" id="gateNote">点击后开启声音，建议佩戴耳机</p>
+      </div>
+    </div>
+
+    <div class="rotate-gate" role="dialog" aria-modal="true" aria-label="请将设备横向放置">
+      <div class="phone-shape"><span></span></div>
+      <b>ROTATE FOR LIVE</b>
+      <p>请将设备横向放置</p>
+      <small>如果画面没有旋转，请关闭屏幕方向锁定</small>
+    </div>
+
+    <div class="end-gate" id="endGate" role="dialog" aria-modal="true" aria-labelledby="endTitle" hidden>
+      <div class="end-copy">
+        <span id="endKicker">LIVE COMPLETE</span>
+        <h2 id="endTitle">STAGE<br />OPENED</h2>
+        <p id="endBody">今晚的舞台效果已全部点亮</p>
+        <div class="end-actions">
+          <button type="button" id="encoreButton">ENCORE</button>
+          <button type="button" id="switchModeButton">WATCH DIGEST</button>
+          <a href="index.html">BACK TO SITE</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="live-flash" aria-hidden="true"></div>
+    <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
+  </main>
+  <script src="live-experience.js"></script>
+</body>
+</html>
