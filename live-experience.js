@@ -20,6 +20,7 @@
   var hitCallout = document.getElementById("hitCallout");
   var audioStatus = document.getElementById("audioStatus");
   var laneButtons = Array.prototype.slice.call(document.querySelectorAll(".lane-button"));
+  var rhythmTracks = Array.prototype.slice.call(document.querySelectorAll(".rhythm-track"));
 
   var audioFiles = {
     bubble: "assets/audio/grape-nectar/bubble-grain.wav",
@@ -29,6 +30,16 @@
   };
   var laneEffects = ["core", "bubble", "bubble", "violet"];
   var laneLetters = ["Z", "O", "O", "L"];
+  var partCrops = [
+    { name: "脸", size: 300, x: 24, y: 24 },
+    { name: "眼睛", size: 500, x: 29, y: 24 },
+    { name: "嘴", size: 500, x: 35, y: 41 },
+    { name: "头发", size: 400, x: 19, y: 13 },
+    { name: "麦克风与手", size: 400, x: 21, y: 58 },
+    { name: "抬起的手", size: 400, x: 97, y: 63 },
+    { name: "衣领", size: 400, x: 40, y: 63 },
+    { name: "舞台服", size: 350, x: 46, y: 85 }
+  ];
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var userAgent = navigator.userAgent || "";
   var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(userAgent) ||
@@ -44,6 +55,7 @@
   var timerFrame = 0;
   var effectTimers = {};
   var statusTimer = 0;
+  var lastCropIndex = -1;
 
   var audioContext = null;
   var masterGain = null;
@@ -233,6 +245,15 @@
     hitCount.textContent = padNumber(hits, 3);
   }
 
+  function pulseTrack(lane) {
+    var track = rhythmTracks[lane];
+    if (!track) return;
+    track.classList.remove("pulse");
+    track.getBoundingClientRect();
+    track.classList.add("pulse");
+    window.setTimeout(function () { track.classList.remove("pulse"); }, 380);
+  }
+
   function hitTarget(target) {
     if (state !== "playing" || !target || target.classList.contains("hit")) return;
     var rect = target.getBoundingClientRect();
@@ -247,6 +268,7 @@
     hits += 1;
     updateScore();
     showHitCallout();
+    pulseTrack(Number(target.dataset.lane));
     triggerEffect(effect, rect.left + rect.width / 2, rect.top + rect.height / 2);
     window.setTimeout(function () { target.remove(); }, reduceMotion ? 30 : 340);
   }
@@ -255,27 +277,40 @@
     if (state !== "playing") return;
     var lane = Math.floor(Math.random() * 4);
     var target = document.createElement("button");
-    var targetX = [-36, -13, 13, 36][lane] + (-3 + Math.random() * 6);
-    var targetY = window.innerHeight * (0.54 + Math.random() * 0.07);
-    var flightTime = 4300 + Math.random() * 1500;
+    var cropIndex = Math.floor(Math.random() * partCrops.length);
+    if (cropIndex === lastCropIndex) cropIndex = (cropIndex + 1 + Math.floor(Math.random() * (partCrops.length - 1))) % partCrops.length;
+    lastCropIndex = cropIndex;
+    var crop = partCrops[cropIndex];
+    var cropX = Math.max(0, Math.min(100, crop.x + (-2 + Math.random() * 4)));
+    var cropY = Math.max(0, Math.min(100, crop.y + (-2 + Math.random() * 4)));
+    var flightTime = 4100 + Math.random() * 1300;
+    var buttonFace = laneButtons[lane].querySelector(".letter");
+    var buttonRect = buttonFace.getBoundingClientRect();
+    var spawnY = window.innerHeight * (window.matchMedia("(max-height: 500px)").matches ? 0.12 : 0.15);
+    var targetX = buttonRect.left + buttonRect.width / 2 - window.innerWidth / 2;
+    var targetY = buttonRect.top + buttonRect.height / 2 - spawnY;
     target.type = "button";
-    target.className = "flying-target" + (Math.random() < 0.16 ? " is-grape" : "");
+    target.className = "flying-target";
     target.dataset.lane = String(lane);
     target.dataset.effect = laneEffects[lane];
     target.dataset.letter = laneLetters[lane];
-    target.setAttribute("aria-label", "点击消除 " + laneLetters[lane] + " 轨道目标");
-    target.style.setProperty("--target-x", targetX + "vw");
+    target.dataset.part = crop.name;
+    target.setAttribute("aria-label", "点击消除 " + laneLetters[lane] + " 轨道的月云了" + crop.name + "目标");
+    target.style.setProperty("--target-x", targetX + "px");
     target.style.setProperty("--target-y", targetY + "px");
-    target.style.setProperty("--target-rotate", (-14 + Math.random() * 28) + "deg");
+    target.style.setProperty("--target-rotate", (-8 + Math.random() * 16) + "deg");
     target.style.setProperty("--flight-time", flightTime + "ms");
-    target.innerHTML = '<span class="ryo-orb" aria-hidden="true"></span>';
+    target.style.setProperty("--crop-size", crop.size + "%");
+    target.style.setProperty("--crop-x", cropX + "%");
+    target.style.setProperty("--crop-y", cropY + "%");
+    target.innerHTML = '<span class="note-shell" aria-hidden="true"><span class="ryo-orb"></span></span>';
     target.addEventListener("click", function () { hitTarget(target); });
     target.addEventListener("animationend", function () { target.remove(); });
     targetField.appendChild(target);
     if (reduceMotion) {
       target.style.animation = "none";
       target.style.opacity = "1";
-      target.style.transform = "translate3d(calc(-50% + " + targetX + "vw), " + targetY + "px, 0) scale(1)";
+      target.style.transform = "translate3d(calc(-50% + " + targetX + "px), calc(-50% + " + targetY + "px), 0) scale(1)";
       window.setTimeout(function () {
         if (!target.classList.contains("hit")) target.remove();
       }, flightTime);
@@ -368,6 +403,7 @@
       hitTarget(target);
       return;
     }
+    pulseTrack(lane);
     var rect = button.getBoundingClientRect();
     triggerEffect(laneEffects[lane], rect.left + rect.width / 2, rect.top + rect.height / 2);
   }
