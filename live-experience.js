@@ -10,11 +10,13 @@
   var loadStatus = document.getElementById("loadStatus");
   var resultGate = document.getElementById("resultGate");
   var resultScore = document.getElementById("resultScore");
+  var resultMaxCombo = document.getElementById("resultMaxCombo");
   var encoreButton = document.getElementById("encoreButton");
   var soundButton = document.getElementById("soundButton");
   var roundNumber = document.getElementById("roundNumber");
   var roundTimer = document.getElementById("roundTimer");
   var hitCount = document.getElementById("hitCount");
+  var comboCount = document.getElementById("comboCount");
   var targetField = document.getElementById("targetField");
   var effectLayer = document.getElementById("effectLayer");
   var hitCallout = document.getElementById("hitCallout");
@@ -30,6 +32,7 @@
   };
   var laneEffects = ["core", "bubble", "bubble", "violet"];
   var laneLetters = ["Z", "O", "O", "L"];
+  var tailAngles = [23, 8, -8, -23];
   var partCrops = [
     { name: "脸", size: 300, x: 24, y: 24 },
     { name: "眼睛", size: 500, x: 29, y: 24 },
@@ -50,12 +53,17 @@
   var mobileAccepted = false;
   var currentRound = 1;
   var hits = 0;
+  var combo = 0;
+  var maxCombo = 0;
+  var misses = 0;
   var roundEndsAt = 0;
   var spawnTimer = 0;
   var timerFrame = 0;
   var effectTimers = {};
   var statusTimer = 0;
   var lastCropIndex = -1;
+  var activeInputs = {};
+  var laneOwners = [null, null, null, null];
 
   var audioContext = null;
   var masterGain = null;
@@ -235,14 +243,16 @@
     vibrate(effect === "bubble" ? [12, 20, 12] : 20);
   }
 
-  function showHitCallout() {
-    hitCallout.classList.remove("show");
+  function showJudgment(label, tone) {
+    hitCallout.textContent = label;
+    hitCallout.className = "hit-callout judgment-" + tone;
     hitCallout.getBoundingClientRect();
     hitCallout.classList.add("show");
   }
 
   function updateScore() {
     hitCount.textContent = padNumber(hits, 3);
+    comboCount.textContent = padNumber(combo, 3);
   }
 
   function pulseTrack(lane) {
@@ -254,81 +264,248 @@
     window.setTimeout(function () { track.classList.remove("pulse"); }, 380);
   }
 
-  function hitTarget(target) {
-    if (state !== "playing" || !target || target.classList.contains("hit")) return;
-    var rect = target.getBoundingClientRect();
-    var effect = target.dataset.effect;
+  function freezeTarget(target, rect) {
     target.style.animation = "none";
     target.style.left = rect.left + "px";
     target.style.top = rect.top + "px";
     target.style.width = rect.width + "px";
     target.style.transform = "scale(1)";
     target.getBoundingClientRect();
+  }
+
+  function resolveHit(target, label, tone) {
+    if (state !== "playing" || !target || target.classList.contains("resolved")) return;
+    var rect = target.getBoundingClientRect();
+    var lane = Number(target.dataset.lane);
+    target.classList.add("resolved");
+    window.clearTimeout(target._holdTimer);
+    window.clearTimeout(target._reducedReadyTimer);
+    window.clearTimeout(target._reducedTimer);
+    freezeTarget(target, rect);
+    target.classList.remove("holding");
     target.classList.add("hit");
     hits += 1;
+    combo += 1;
+    maxCombo = Math.max(maxCombo, combo);
     updateScore();
-    showHitCallout();
-    pulseTrack(Number(target.dataset.lane));
-    triggerEffect(effect, rect.left + rect.width / 2, rect.top + rect.height / 2);
+    showJudgment(label, tone);
+    pulseTrack(lane);
+    triggerEffect(target.dataset.effect, rect.left + rect.width / 2, rect.top + rect.height / 2);
     window.setTimeout(function () { target.remove(); }, reduceMotion ? 30 : 340);
   }
 
-  function spawnTarget() {
-    if (state !== "playing") return;
-    var lane = Math.floor(Math.random() * 4);
-    var target = document.createElement("button");
+  function markMiss(target, label, tone) {
+    if (state !== "playing" || !target || target.classList.contains("resolved")) return;
+    var rect = target.getBoundingClientRect();
+    var lane = Number(target.dataset.lane);
+    target.classList.add("resolved");
+    window.clearTimeout(target._holdTimer);
+    window.clearTimeout(target._reducedReadyTimer);
+    window.clearTimeout(target._reducedTimer);
+    freezeTarget(target, rect);
+    target.classList.remove("holding");
+    target.classList.add("missed");
+    combo = 0;
+    misses += 1;
+    updateScore();
+    showJudgment(label || "MISS", tone || "miss");
+    pulseTrack(lane);
+    vibrate([14, 22, 14]);
+    window.setTimeout(function () { target.remove(); }, reduceMotion ? 30 : 300);
+  }
+
+  function findLaneCandidate(lane) {
+    var padRect = laneButtons[lane].querySelector(".letter").getBoundingClientRect();
+    var padX = padRect.left + padRect.width / 2;
+    var padY = padRect.top + padRect.height / 2;
+    var best = null;
+    Array.prototype.slice.call(targetField.querySelectorAll('.flying-target[data-lane="' + lane + '"]:not(.resolved):not(.holding)')).forEach(function (target) {
+      var rect = target.getBoundingClientRect();
+      var distance = Math.hypot(rect.left + rect.width / 2 - padX, rect.top + rect.height / 2 - padY);
+      if (!best || distance < best.distance) best = { target: target, distance: distance, padWidth: padRect.width };
+    });
+    return best;
+  }
+
+  function completeHold(target, token) {
+    if (state !== "playing" || !target || target._inputToken !== token || !target.classList.contains("holding")) return;
+    var record = activeInputs[token];
+    if (record) {
+      record.hold = false;
+      record.target = null;
+    }
+    target._inputToken = null;
+    laneButtons[Number(target.dataset.lane)].classList.remove("holding-pad");
+    resolveHit(target, target._holdGrade === "PERFECT" ? "HOLD PERFECT" : "HOLD GOOD", "hold");
+  }
+
+  function beginHold(target, token, grade) {
+    var lane = Number(target.dataset.lane);
+    var holdMs = Number(target.dataset.holdMs);
+    target._inputToken = token;
+    target._holdGrade = grade;
+    target.classList.add("holding");
+    target.style.animationPlayState = "paused";
+    activeInputs[token].hold = true;
+    activeInputs[token].target = target;
+    laneButtons[lane].classList.add("holding-pad");
+    showJudgment("HOLD", "hold");
+    pulseTrack(lane);
+    vibrate(16);
+    target._holdTimer = window.setTimeout(function () {
+      completeHold(target, token);
+    }, holdMs);
+  }
+
+  function breakHold(target, token) {
+    if (!target || target._inputToken !== token || target.classList.contains("resolved")) return;
+    var lane = Number(target.dataset.lane);
+    target._inputToken = null;
+    laneButtons[lane].classList.remove("holding-pad");
+    markMiss(target, "HOLD BREAK", "break");
+  }
+
+  function judgeLane(lane, token) {
+    var button = laneButtons[lane];
+    var candidate = findLaneCandidate(lane);
+    fireButton(button);
+    if (!candidate) {
+      showJudgment("NO NOTE", "early");
+      pulseTrack(lane);
+      vibrate(8);
+      return;
+    }
+    var perfectWindow = candidate.padWidth * 0.62;
+    var goodWindow = candidate.padWidth * 1.35;
+    if (candidate.distance > goodWindow) {
+      showJudgment("EARLY", "early");
+      pulseTrack(lane);
+      vibrate(8);
+      return;
+    }
+    var grade = candidate.distance <= perfectWindow ? "PERFECT" : "GOOD";
+    if (candidate.target.dataset.noteType === "hold") {
+      beginHold(candidate.target, token, grade);
+      return;
+    }
+    resolveHit(candidate.target, grade, grade.toLowerCase());
+  }
+
+  function handleLaneDown(lane, token) {
+    if (state !== "playing" || lane < 0 || lane > 3 || activeInputs[token] || laneOwners[lane] !== null) return;
+    laneOwners[lane] = token;
+    activeInputs[token] = { lane: lane, hold: false, target: null };
+    laneButtons[lane].classList.add("pressed");
+    judgeLane(lane, token);
+  }
+
+  function handleLaneUp(token) {
+    var record = activeInputs[token];
+    if (!record) return;
+    if (record.hold && record.target) breakHold(record.target, token);
+    laneButtons[record.lane].classList.remove("pressed", "holding-pad");
+    if (laneOwners[record.lane] === token) laneOwners[record.lane] = null;
+    delete activeInputs[token];
+  }
+
+  function releaseAllInputs(breakHolds) {
+    Object.keys(activeInputs).forEach(function (token) {
+      var record = activeInputs[token];
+      if (breakHolds && record.hold && record.target) breakHold(record.target, token);
+      laneButtons[record.lane].classList.remove("pressed", "holding-pad");
+    });
+    activeInputs = {};
+    laneOwners = [null, null, null, null];
+  }
+
+  function pickCrop() {
     var cropIndex = Math.floor(Math.random() * partCrops.length);
     if (cropIndex === lastCropIndex) cropIndex = (cropIndex + 1 + Math.floor(Math.random() * (partCrops.length - 1))) % partCrops.length;
     lastCropIndex = cropIndex;
-    var crop = partCrops[cropIndex];
+    return partCrops[cropIndex];
+  }
+
+  function spawnTarget(options) {
+    if (state !== "playing") return;
+    var config = options || {};
+    var lane = typeof config.lane === "number" ? config.lane : Math.floor(Math.random() * 4);
+    var target = document.createElement("div");
+    var crop = pickCrop();
     var cropX = Math.max(0, Math.min(100, crop.x + (-2 + Math.random() * 4)));
     var cropY = Math.max(0, Math.min(100, crop.y + (-2 + Math.random() * 4)));
-    var flightTime = 4100 + Math.random() * 1300;
+    var flightTime = config.flightTime || (4100 + Math.random() * 1300);
+    var isHold = typeof config.isHold === "boolean" ? config.isHold : Math.random() < 0.24;
+    var holdMs = Math.round(850 + Math.random() * 550);
     var buttonFace = laneButtons[lane].querySelector(".letter");
     var buttonRect = buttonFace.getBoundingClientRect();
     var spawnY = window.innerHeight * (window.matchMedia("(max-height: 500px)").matches ? 0.12 : 0.15);
     var targetX = buttonRect.left + buttonRect.width / 2 - window.innerWidth / 2;
     var targetY = buttonRect.top + buttonRect.height / 2 - spawnY;
-    target.type = "button";
-    target.className = "flying-target";
+    target.className = "flying-target" + (isHold ? " is-hold" : "");
     target.dataset.lane = String(lane);
     target.dataset.effect = laneEffects[lane];
     target.dataset.letter = laneLetters[lane];
     target.dataset.part = crop.name;
-    target.setAttribute("aria-label", "点击消除 " + laneLetters[lane] + " 轨道的月云了" + crop.name + "目标");
+    target.dataset.noteType = isHold ? "hold" : "tap";
+    target.dataset.holdMs = String(holdMs);
+    target.setAttribute("aria-hidden", "true");
     target.style.setProperty("--target-x", targetX + "px");
     target.style.setProperty("--target-y", targetY + "px");
-    target.style.setProperty("--target-rotate", (-8 + Math.random() * 16) + "deg");
+    target.style.setProperty("--target-rotate", isHold ? "0deg" : (-8 + Math.random() * 16) + "deg");
     target.style.setProperty("--flight-time", flightTime + "ms");
+    target.style.setProperty("--hold-duration", holdMs + "ms");
+    target.style.setProperty("--hold-length", Math.round(82 + holdMs * 0.065) + "px");
+    target.style.setProperty("--tail-angle", tailAngles[lane] + "deg");
     target.style.setProperty("--crop-size", crop.size + "%");
     target.style.setProperty("--crop-x", cropX + "%");
     target.style.setProperty("--crop-y", cropY + "%");
-    target.innerHTML = '<span class="note-shell" aria-hidden="true"><span class="ryo-orb"></span></span>';
-    target.addEventListener("click", function () { hitTarget(target); });
-    target.addEventListener("animationend", function () { target.remove(); });
+    target.innerHTML = (isHold ? '<span class="hold-tail"></span>' : "") + '<span class="note-shell"><span class="ryo-orb"></span></span>';
+    target.addEventListener("animationend", function (event) {
+      if (event.target === target && event.animationName === "targetFlight") markMiss(target, "MISS", "miss");
+    });
     targetField.appendChild(target);
     if (reduceMotion) {
       target.style.animation = "none";
       target.style.opacity = "1";
-      target.style.transform = "translate3d(calc(-50% + " + targetX + "px), calc(-50% + " + targetY + "px), 0) scale(1)";
-      window.setTimeout(function () {
-        if (!target.classList.contains("hit")) target.remove();
+      target.style.transform = "translate3d(calc(-50% + " + targetX * 0.64 + "px), calc(-50% + " + targetY * 0.64 + "px), 0) scale(.72)";
+      target._reducedReadyTimer = window.setTimeout(function () {
+        if (target.classList.contains("resolved")) return;
+        target.style.transform = "translate3d(calc(-50% + " + targetX + "px), calc(-50% + " + targetY + "px), 0) scale(1)";
+      }, flightTime * 0.74);
+      target._reducedTimer = window.setTimeout(function () {
+        markMiss(target, "MISS", "miss");
       }, flightTime);
     }
   }
 
+  function spawnWave() {
+    if (state !== "playing") return;
+    var flightTime = 4200 + Math.random() * 1150;
+    if (Math.random() < 0.22) {
+      var firstLane = Math.floor(Math.random() * 4);
+      var secondLane = (firstLane + 1 + Math.floor(Math.random() * 3)) % 4;
+      spawnTarget({ lane: firstLane, flightTime: flightTime, isHold: false });
+      spawnTarget({ lane: secondLane, flightTime: flightTime, isHold: false });
+      return;
+    }
+    spawnTarget({ lane: Math.floor(Math.random() * 4), flightTime: flightTime, isHold: Math.random() < 0.24 });
+  }
+
   function scheduleTarget() {
     if (state !== "playing") return;
-    var delay = 500 + Math.random() * 310;
+    var delay = 620 + Math.random() * 340;
     spawnTimer = window.setTimeout(function () {
-      spawnTarget();
+      spawnWave();
       scheduleTarget();
     }, delay);
   }
 
   function clearTargets() {
     Array.prototype.slice.call(targetField.querySelectorAll(".flying-target")).forEach(function (target) {
-      target.classList.add("round-ended");
+      window.clearTimeout(target._holdTimer);
+      window.clearTimeout(target._reducedTimer);
+      window.clearTimeout(target._reducedReadyTimer);
+      target.classList.add("resolved", "round-ended");
       window.setTimeout(function () { target.remove(); }, reduceMotion ? 20 : 260);
     });
   }
@@ -339,11 +516,13 @@
     window.clearTimeout(spawnTimer);
     window.cancelAnimationFrame(timerFrame);
     roundTimer.textContent = "00:00";
+    releaseAllInputs(false);
     laneButtons.forEach(function (button) { button.disabled = true; });
     broadcast.classList.remove("is-playing");
     clearTargets();
     playSound("full");
     resultScore.textContent = padNumber(hits, 3);
+    resultMaxCombo.textContent = padNumber(maxCombo, 3);
     window.setTimeout(function () {
       if (!isMobile || !window.matchMedia("(orientation: portrait)").matches) {
         resultGate.hidden = false;
@@ -366,6 +545,11 @@
   function startRound() {
     state = "playing";
     hits = 0;
+    combo = 0;
+    maxCombo = 0;
+    misses = 0;
+    activeInputs = {};
+    laneOwners = [null, null, null, null];
     updateScore();
     roundNumber.textContent = padNumber(currentRound, 2);
     roundTimer.textContent = "00:30";
@@ -374,11 +558,14 @@
     startButton.disabled = false;
     startButton.textContent = "START ROUND";
     loadStatus.textContent = "点击后开启声音";
-    laneButtons.forEach(function (button) { button.disabled = false; });
+    laneButtons.forEach(function (button) {
+      button.disabled = false;
+      button.classList.remove("pressed", "holding-pad");
+    });
     broadcast.classList.add("is-playing");
     roundEndsAt = performance.now() + 30000;
-    spawnTarget();
-    window.setTimeout(spawnTarget, 280);
+    spawnWave();
+    window.setTimeout(spawnWave, 340);
     scheduleTarget();
     timerFrame = window.requestAnimationFrame(updateTimer);
   }
@@ -392,20 +579,6 @@
     loadAudio().then(function () {
       startRound();
     });
-  }
-
-  function fireLane(lane) {
-    var button = laneButtons[lane];
-    if (!button || state !== "playing") return;
-    fireButton(button);
-    var target = targetField.querySelector('.flying-target[data-lane="' + lane + '"]:not(.hit)');
-    if (target) {
-      hitTarget(target);
-      return;
-    }
-    pulseTrack(lane);
-    var rect = button.getBoundingClientRect();
-    triggerEffect(laneEffects[lane], rect.left + rect.width / 2, rect.top + rect.height / 2);
   }
 
   function isPortrait() {
@@ -443,9 +616,20 @@
 
   laneButtons.forEach(function (button) {
     button.disabled = true;
-    button.addEventListener("click", function () {
-      fireLane(Number(button.dataset.lane));
+    button.addEventListener("pointerdown", function (event) {
+      event.preventDefault();
+      try { button.setPointerCapture(event.pointerId); } catch (error) {}
+      handleLaneDown(Number(button.dataset.lane), "pointer-" + event.pointerId);
     });
+    button.addEventListener("click", function (event) { event.preventDefault(); });
+    button.addEventListener("contextmenu", function (event) { event.preventDefault(); });
+  });
+
+  document.addEventListener("pointerup", function (event) {
+    handleLaneUp("pointer-" + event.pointerId);
+  });
+  document.addEventListener("pointercancel", function (event) {
+    handleLaneUp("pointer-" + event.pointerId);
   });
 
   joinButton.addEventListener("click", enterMobileLive);
@@ -460,19 +644,28 @@
   });
 
   document.addEventListener("keydown", function (event) {
-    if (state !== "playing") return;
+    if (state !== "playing" || event.repeat) return;
     var lane = { "1": 0, "2": 1, "3": 2, "4": 3 }[event.key];
     if (typeof lane === "number") {
       event.preventDefault();
-      fireLane(lane);
+      handleLaneDown(lane, "key-" + event.key);
+    }
+  });
+  document.addEventListener("keyup", function (event) {
+    var lane = { "1": 0, "2": 1, "3": 2, "4": 3 }[event.key];
+    if (typeof lane === "number") {
+      event.preventDefault();
+      handleLaneUp("key-" + event.key);
     }
   });
 
+  window.addEventListener("blur", function () { releaseAllInputs(true); });
   window.addEventListener("resize", syncOrientation);
   window.addEventListener("orientationchange", function () {
     window.setTimeout(syncOrientation, 120);
   });
   document.addEventListener("visibilitychange", function () {
+    if (document.hidden) releaseAllInputs(true);
     if (!audioContext) return;
     if (document.hidden) audioContext.suspend().catch(function () {});
     else if (soundOn) audioContext.resume().catch(function () {});

@@ -35,6 +35,7 @@
         <span>ROUND <b id="roundNumber">01</b></span>
         <strong id="roundTimer">00:30</strong>
         <span>HIT <b id="hitCount">000</b></span>
+        <span>COMBO <b id="comboCount">000</b></span>
       </div>
       <div class="head-actions">
         <button type="button" id="soundButton" aria-pressed="true">SOUND ON</button>
@@ -58,17 +59,17 @@
       <div class="effect-layer" id="effectLayer" aria-hidden="true"></div>
 
       <div class="lane-controls" aria-label="ZOOL 舞台效果按钮">
-        <button type="button" class="lane-button lane-z" data-lane="0" data-effect="core" aria-label="Z，CORE 效果">
-          <span class="letter">Z</span><b>CORE</b><small>1</small>
+        <button type="button" class="lane-button lane-z" data-lane="0" data-effect="core" aria-label="Z 轨道判定键">
+          <span class="letter">Z</span>
         </button>
-        <button type="button" class="lane-button lane-o1" data-lane="1" data-effect="bubble" aria-label="第一个 O，BUBBLE 效果">
-          <span class="letter">O</span><b>BUBBLE</b><small>2</small>
+        <button type="button" class="lane-button lane-o1" data-lane="1" data-effect="bubble" aria-label="第一个 O 轨道判定键">
+          <span class="letter">O</span>
         </button>
-        <button type="button" class="lane-button lane-o2" data-lane="2" data-effect="bubble" aria-label="第二个 O，BUBBLE 效果">
-          <span class="letter">O</span><b>BUBBLE</b><small>3</small>
+        <button type="button" class="lane-button lane-o2" data-lane="2" data-effect="bubble" aria-label="第二个 O 轨道判定键">
+          <span class="letter">O</span>
         </button>
-        <button type="button" class="lane-button lane-l" data-lane="3" data-effect="violet" aria-label="L，VIOLET 效果">
-          <span class="letter">L</span><b>VIOLET</b><small>4</small>
+        <button type="button" class="lane-button lane-l" data-lane="3" data-effect="violet" aria-label="L 轨道判定键">
+          <span class="letter">L</span>
         </button>
       </div>
     </section>
@@ -93,7 +94,7 @@
     <section class="round-gate" id="roundGate" role="dialog" aria-modal="true" aria-labelledby="roundTitle" hidden>
       <span>LIVE INTERACTION</span>
       <h1 id="roundTitle">ZOOL<br />ROUND</h1>
-      <p>月云了的随机局部会沿四条固定轨道飞来。点击目标或对应轨道按钮，每回合 30 秒。</p>
+      <p>目标进入圆键外环时按下；长条目标持续按住。支持双押，每回合 30 秒。</p>
       <button type="button" id="startButton">START ROUND</button>
       <small id="loadStatus">点击后开启声音</small>
     </section>
@@ -101,7 +102,7 @@
     <section class="result-gate" id="resultGate" role="dialog" aria-modal="true" aria-labelledby="resultTitle" hidden>
       <span>ROUND COMPLETE</span>
       <h1 id="resultTitle">HIT <b id="resultScore">000</b></h1>
-      <p>直播仍在继续，可以随时开始下一回合。</p>
+      <p>MAX COMBO <b id="resultMaxCombo">000</b>　直播仍在继续。</p>
       <div class="result-actions">
         <button type="button" id="encoreButton">NEXT ROUND</button>
         <a href="index.html">LEAVE LIVE</a>
