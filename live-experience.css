@@ -179,6 +179,16 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 .is-playing .edge-left,.is-playing .edge-right{transform:scaleY(1)}
 
 .playfield{position:absolute;inset:0;overflow:hidden}
+.rhythm-canvas{
+  position:absolute;
+  z-index:15;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  filter:drop-shadow(0 10px 1.4rem rgba(18,0,5,.7));
+}
 .performer-deck{
   --card-w:clamp(64px,6.2vw,92px);
   position:absolute;

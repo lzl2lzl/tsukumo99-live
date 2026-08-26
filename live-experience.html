@@ -66,17 +66,9 @@
           <i class="card-signal" aria-hidden="true"></i>
         </figure>
       </div>
+      <canvas class="rhythm-canvas" id="rhythmCanvas" aria-hidden="true">当前浏览器不支持 Canvas 音游画面。</canvas>
       <div class="vanishing-point" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="stage-die" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="rhythm-highway" id="rhythmHighway" aria-hidden="true">
-        <i class="rhythm-track track-z" data-track="0"></i>
-        <i class="rhythm-track track-o1" data-track="1"></i>
-        <i class="rhythm-track track-o2" data-track="2"></i>
-        <i class="rhythm-track track-l" data-track="3"></i>
-        <span class="track-edge edge-0"></span><span class="track-edge edge-1"></span>
-        <span class="track-edge edge-2"></span><span class="track-edge edge-3"></span><span class="track-edge edge-4"></span>
-      </div>
-      <div class="target-field" id="targetField" aria-live="off"></div>
       <div class="obstacle-layer" id="obstacleLayer" aria-hidden="true"></div>
       <div class="hit-callout" id="hitCallout" aria-hidden="true">HIT</div>
       <div class="effect-layer" id="effectLayer" aria-hidden="true"></div>
@@ -123,7 +115,7 @@
     <section class="round-gate" id="roundGate" role="dialog" aria-modal="true" aria-labelledby="roundTitle" hidden>
       <span>LIVE INTERACTION</span>
       <h1 id="roundTitle">ZOOL<br />ROUND</h1>
-      <p>目标进入圆键外环时按下；长条目标持续按住。支持双押，每回合 30 秒。宇都木可救场一次。</p>
+      <p>跟随舞台脉冲，在目标抵达圆键时按下；长条目标持续按住。支持双押，每回合 30 秒。宇都木可救场一次。</p>
       <button type="button" id="startButton">START ROUND</button>
       <small id="loadStatus">点击后开启声音</small>
     </section>
