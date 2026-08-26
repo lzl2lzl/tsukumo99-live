@@ -179,6 +179,66 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 .is-playing .edge-left,.is-playing .edge-right{transform:scaleY(1)}
 
 .playfield{position:absolute;inset:0;overflow:hidden}
+.performer-deck{
+  --card-w:clamp(64px,6.2vw,92px);
+  position:absolute;
+  z-index:12;
+  top:clamp(3.7rem,8vh,5.5rem);
+  left:50%;
+  width:min(80vw,1100px);
+  height:calc(var(--card-w) * 1.28);
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+.performer-card{
+  --card-accent:var(--hot);
+  position:absolute;
+  top:0;
+  width:var(--card-w);
+  aspect-ratio:.7;
+  margin:0;
+  overflow:hidden;
+  border:1px solid rgba(255,244,247,.46);
+  background:var(--ink);
+  box-shadow:0 9px 1.4rem rgba(18,0,5,.82);
+  opacity:.52;
+  filter:saturate(.72) contrast(1.1);
+  transition:opacity .3s,filter .3s,border-color .3s,box-shadow .3s;
+}
+.performer-card::before{
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:0;
+  border-bottom:3px solid var(--card-accent);
+  background:linear-gradient(180deg,transparent 52%,rgba(18,0,5,.72));
+  pointer-events:none;
+}
+.performer-card img{display:block;width:100%;height:100%;object-fit:cover;filter:contrast(1.08)}
+.performer-card.card-z{left:0;transform:perspective(620px) rotateY(10deg) translateY(8px)}
+.performer-card.card-o1{left:calc(var(--card-w) + clamp(.45rem,1vw,.85rem));transform:perspective(620px) rotateY(5deg)}
+.performer-card.card-o2{right:calc(var(--card-w) + clamp(.45rem,1vw,.85rem));transform:perspective(620px) rotateY(-5deg)}
+.performer-card.card-l{--card-accent:var(--violet);right:0;transform:perspective(620px) rotateY(-10deg) translateY(8px)}
+.card-o1,.card-o2{--card-accent:var(--pink)}
+.card-signal{
+  position:absolute;
+  z-index:3;
+  left:50%;
+  bottom:4px;
+  width:5px;
+  aspect-ratio:1;
+  border-radius:50%;
+  background:var(--paper);
+  box-shadow:0 4px .9rem var(--card-accent);
+  transform:translateX(-50%);
+  opacity:.55;
+}
+.is-playing .performer-card{opacity:.76;filter:saturate(.92) contrast(1.12)}
+.performer-card.is-hit{opacity:1;filter:saturate(1.18) brightness(1.18);border-color:var(--card-accent);box-shadow:0 12px 2rem rgba(18,0,5,.86),0 7px 1.2rem color-mix(in srgb,var(--card-accent) 48%,transparent)}
+.performer-card.is-perfect{animation:cardPerfect .72s cubic-bezier(.16,1,.3,1)}
+.performer-card.is-perfect .card-signal{animation:cardSignal .72s cubic-bezier(.16,1,.3,1)}
+@keyframes cardPerfect{0%{clip-path:inset(45% 0);filter:brightness(2.4) saturate(1.3)}35%{clip-path:inset(0);filter:brightness(1.65) saturate(1.25)}100%{clip-path:inset(0);filter:brightness(1.08) saturate(1)}}
+@keyframes cardSignal{30%{transform:translateX(-50%) scale(3.2);opacity:1}100%{transform:translateX(-50%) scale(1);opacity:.55}}
 .vanishing-point{
   position:absolute;
   z-index:2;
@@ -285,6 +345,54 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 .is-playing .rhythm-highway{opacity:1}
 
 .target-field,.effect-layer{position:absolute;z-index:16;inset:0;overflow:hidden;pointer-events:none}
+.obstacle-layer{position:absolute;z-index:23;inset:0;overflow:hidden;pointer-events:none}
+.ryo-obstacle{
+  position:absolute;
+  background-image:url("assets/hero-desktop-square.jpg");
+  background-repeat:no-repeat;
+  border:1px solid rgba(255,134,189,.72);
+  box-shadow:0 14px 3rem rgba(18,0,5,.9),0 7px 1.4rem rgba(236,0,80,.45);
+  filter:saturate(1.1) contrast(1.12);
+  opacity:0;
+  will-change:transform,opacity;
+}
+.ryo-obstacle::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 48%,rgba(236,0,80,.4));pointer-events:none}
+.ryo-obstacle.obstacle-peek{
+  left:var(--obstacle-x);
+  top:20%;
+  width:clamp(150px,22vw,330px);
+  aspect-ratio:.82;
+  transform:translate(-50%,-18%) scale(.72);
+  clip-path:polygon(8% 0,100% 7%,92% 100%,0 88%);
+  background-size:245%;
+  background-position:9% 25%;
+  animation:ryoPeek 1.45s cubic-bezier(.16,1,.3,1) forwards;
+}
+.ryo-obstacle.obstacle-hand{
+  left:var(--obstacle-x);
+  top:49%;
+  width:clamp(110px,15vw,220px);
+  aspect-ratio:1;
+  transform:translate(-50%,-50%) scale(.35) rotate(-13deg);
+  border-radius:50%;
+  background-size:360%;
+  background-position:98% 65%;
+  animation:ryoHand 1.2s cubic-bezier(.16,1,.3,1) forwards;
+}
+.ryo-obstacle.obstacle-sweep{
+  left:-42%;
+  top:var(--obstacle-y);
+  width:clamp(260px,38vw,560px);
+  height:clamp(86px,16vh,150px);
+  transform:skewX(-9deg);
+  clip-path:polygon(5% 0,100% 8%,94% 100%,0 90%);
+  background-size:155%;
+  background-position:3% 31%;
+  animation:ryoSweep 1.55s cubic-bezier(.24,.78,.32,1) forwards;
+}
+@keyframes ryoPeek{0%{opacity:0;transform:translate(-50%,-18%) scale(.72)}18%,70%{opacity:.96;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,12%) scale(.96)}}
+@keyframes ryoHand{0%{opacity:0;transform:translate(-50%,-50%) scale(.35) rotate(-13deg)}24%,68%{opacity:.96;transform:translate(-50%,-50%) scale(1) rotate(7deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.18) rotate(13deg)}}
+@keyframes ryoSweep{0%{opacity:0;transform:translateX(0) skewX(-9deg)}14%{opacity:.98}78%{opacity:.96}100%{opacity:0;transform:translateX(185vw) skewX(-9deg)}}
 .flying-target{
   position:absolute;
   left:50%;
@@ -385,6 +493,62 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 .hit-callout.judgment-good,.hit-callout.judgment-hold{color:var(--pink)}
 .hit-callout.judgment-miss,.hit-callout.judgment-break,.hit-callout.judgment-early{color:var(--hot)}
 @keyframes hitCall{0%{opacity:0;transform:translate(-50%,-50%) scale(.55)}35%{opacity:1;transform:translate(-50%,-50%) scale(1.05)}100%{opacity:0;transform:translate(-50%,-54%) scale(1)}}
+.perfect-beam{
+  position:absolute;
+  z-index:20;
+  width:3px;
+  height:var(--beam-length);
+  left:var(--beam-x);
+  top:var(--beam-y);
+  transform:translate(-50%,-100%) rotate(var(--beam-angle)) scaleY(0);
+  transform-origin:50% 100%;
+  background:linear-gradient(180deg,var(--paper),var(--pink) 34%,var(--hot));
+  box-shadow:0 6px 1.4rem var(--paper),0 10px 2rem var(--hot);
+  animation:perfectRush .58s cubic-bezier(.16,1,.3,1) forwards;
+}
+.perfect-beam::before{content:"";position:absolute;left:50%;top:-5px;width:12px;aspect-ratio:1;border-radius:50%;background:var(--paper);transform:translateX(-50%);box-shadow:0 5px 1.3rem var(--hot)}
+@keyframes perfectRush{0%{opacity:0;transform:translate(-50%,-100%) rotate(var(--beam-angle)) scaleY(0)}28%{opacity:1}72%{opacity:1;transform:translate(-50%,-100%) rotate(var(--beam-angle)) scaleY(1)}100%{opacity:0;transform:translate(-50%,-100%) rotate(var(--beam-angle)) scaleY(1)}}
+
+.utsugi-assist{
+  position:absolute;
+  z-index:31;
+  top:clamp(12.2rem,24vh,15rem);
+  right:max(1rem,env(safe-area-inset-right));
+  display:grid;
+  grid-template-columns:auto auto auto;
+  align-items:center;
+  gap:.55rem;
+  min-height:52px;
+  padding:.32rem .48rem .32rem .34rem;
+  border:1px solid rgba(255,134,189,.48);
+  background:rgba(18,0,5,.86);
+  box-shadow:0 8px 1.6rem rgba(18,0,5,.7);
+  font-family:var(--mono);
+  text-align:left;
+  touch-action:manipulation;
+  transition:opacity .22s,border-color .22s,transform .18s,background .22s;
+}
+.utsugi-assist:not(:disabled):hover{border-color:var(--paper);background:var(--wine)}
+.utsugi-assist:not(:disabled):active{transform:scale(.96)}
+.utsugi-assist:disabled{cursor:default;opacity:.42}
+.utsugi-portrait{
+  display:block;
+  width:44px;
+  aspect-ratio:1;
+  border:1px solid var(--pink);
+  border-radius:50%;
+  background:url("assets/live/lane-z.png") center 18%/cover no-repeat;
+  box-shadow:inset 0 0 0 4px rgba(18,0,5,.35),0 5px 1rem rgba(236,0,80,.35);
+}
+.utsugi-copy{display:flex;flex-direction:column;gap:.12rem;white-space:nowrap}
+.utsugi-copy b{font-size:.58rem;letter-spacing:.06em}
+.utsugi-copy small{font-size:.44rem;color:var(--muted);letter-spacing:.08em}
+.assist-count{display:grid;place-items:center;min-width:25px;aspect-ratio:1;border:1px solid rgba(255,244,247,.38);font-size:.54rem;color:var(--pink)}
+.utsugi-assist.assist-active{opacity:1;border-color:var(--paper);background:var(--crimson);animation:assistLive .7s steps(2,end) infinite}
+.utsugi-assist.assist-active::after{content:"";position:absolute;right:28px;top:46%;width:180px;height:4px;transform:rotate(-20deg);transform-origin:right;background:linear-gradient(90deg,transparent,var(--paper));box-shadow:0 5px 1.4rem var(--pink);pointer-events:none}
+.utsugi-assist.assist-active .utsugi-portrait{filter:brightness(1.55);box-shadow:inset 0 0 0 4px rgba(18,0,5,.22),0 7px 2rem var(--paper)}
+.utsugi-assist.is-spent{opacity:.34;filter:grayscale(.8)}
+@keyframes assistLive{50%{border-color:var(--pink);box-shadow:0 8px 2.4rem rgba(236,0,80,.78)}}
 
 .lane-controls{
   position:absolute;
@@ -408,7 +572,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
   padding:.2rem .4rem;
   color:var(--paper);
   text-align:center;
-  touch-action:manipulation;
+  touch-action:none;
   user-select:none;
 }
 .lane-o1,.lane-o2{--lane-color:var(--pink)}
@@ -569,6 +733,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 
 @media (max-height:500px){
   .broadcast-head{padding-top:max(.45rem,env(safe-area-inset-top))}
+  .performer-deck{--card-w:clamp(44px,7vw,58px);top:2.15rem;width:min(72vw,660px)}
   .vanishing-point{top:8%;width:min(24vw,35vh)}
   .stage-die{top:calc(8% + min(8.3vw,12vh));width:min(4.4vw,6.2vh)}
   .rhythm-highway{top:16%;bottom:2.45rem;width:min(82vw,900px)}
@@ -577,6 +742,13 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
   .lane-button .letter{width:min(8.6vw,62px);font-size:clamp(1.8rem,4vw,2.6rem)}
   .lane-button .letter::before{inset:-6px}
   .flying-target{top:12%;width:clamp(48px,7.5vw,70px)}
+  .utsugi-assist{top:7.25rem;right:max(.75rem,env(safe-area-inset-right));grid-template-columns:auto auto;gap:.3rem;min-height:44px;padding:.2rem .3rem}
+  .utsugi-portrait{width:40px}
+  .utsugi-copy{display:none}
+  .assist-count{min-width:21px;font-size:.48rem}
+  .ryo-obstacle.obstacle-peek{top:17%;width:clamp(130px,21vw,190px)}
+  .ryo-obstacle.obstacle-hand{top:47%;width:clamp(90px,13vw,130px)}
+  .ryo-obstacle.obstacle-sweep{height:clamp(68px,15vh,92px)}
   .round-gate h1,.result-gate h1{font-size:clamp(3.4rem,11vw,5.2rem)}
   .round-gate p,.result-gate p{margin-bottom:.65rem;font-size:.8rem}
 }
@@ -603,7 +775,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .stage-art{transform:none}
-  .signal-rings,.scanlines{display:none}
+  .signal-rings,.scanlines,.ryo-obstacle,.perfect-beam{display:none}
 }
 
 @media (prefers-reduced-transparency:reduce){

@@ -18,11 +18,16 @@
   var hitCount = document.getElementById("hitCount");
   var comboCount = document.getElementById("comboCount");
   var targetField = document.getElementById("targetField");
+  var obstacleLayer = document.getElementById("obstacleLayer");
   var effectLayer = document.getElementById("effectLayer");
   var hitCallout = document.getElementById("hitCallout");
   var audioStatus = document.getElementById("audioStatus");
+  var utsugiAssist = document.getElementById("utsugiAssist");
+  var assistStatus = document.getElementById("assistStatus");
+  var assistCount = document.getElementById("assistCount");
   var laneButtons = Array.prototype.slice.call(document.querySelectorAll(".lane-button"));
   var rhythmTracks = Array.prototype.slice.call(document.querySelectorAll(".rhythm-track"));
+  var performerCards = Array.prototype.slice.call(document.querySelectorAll(".performer-card"));
 
   var audioFiles = {
     bubble: "assets/audio/grape-nectar/bubble-grain.wav",
@@ -58,12 +63,17 @@
   var misses = 0;
   var roundEndsAt = 0;
   var spawnTimer = 0;
+  var obstacleTimer = 0;
+  var assistTimer = 0;
   var timerFrame = 0;
   var effectTimers = {};
   var statusTimer = 0;
   var lastCropIndex = -1;
   var activeInputs = {};
   var laneOwners = [null, null, null, null];
+  var performerTimers = [0, 0, 0, 0];
+  var assistActive = false;
+  var assistUsed = false;
 
   var audioContext = null;
   var masterGain = null;
@@ -264,6 +274,42 @@
     window.setTimeout(function () { track.classList.remove("pulse"); }, 380);
   }
 
+  function launchPerfectBeam(lane) {
+    if (reduceMotion || !performerCards[lane]) return;
+    var padRect = laneButtons[lane].querySelector(".letter").getBoundingClientRect();
+    var cardRect = performerCards[lane].getBoundingClientRect();
+    var startX = padRect.left + padRect.width / 2;
+    var startY = padRect.top + padRect.height / 2;
+    var endX = cardRect.left + cardRect.width / 2;
+    var endY = cardRect.top + cardRect.height * 0.72;
+    var deltaX = endX - startX;
+    var deltaY = endY - startY;
+    var beam = document.createElement("i");
+    beam.className = "perfect-beam";
+    beam.style.setProperty("--beam-x", startX + "px");
+    beam.style.setProperty("--beam-y", startY + "px");
+    beam.style.setProperty("--beam-length", Math.hypot(deltaX, deltaY) + "px");
+    beam.style.setProperty("--beam-angle", Math.atan2(deltaX, -deltaY) * 180 / Math.PI + "deg");
+    effectLayer.appendChild(beam);
+    window.setTimeout(function () { beam.remove(); }, 700);
+  }
+
+  function pulsePerformer(lane, perfect) {
+    var card = performerCards[lane];
+    if (!card) return;
+    window.clearTimeout(performerTimers[lane]);
+    card.classList.remove("is-hit", "is-perfect");
+    card.getBoundingClientRect();
+    card.classList.add("is-hit");
+    if (perfect) {
+      card.classList.add("is-perfect");
+      launchPerfectBeam(lane);
+    }
+    performerTimers[lane] = window.setTimeout(function () {
+      card.classList.remove("is-hit", "is-perfect");
+    }, perfect ? 760 : 440);
+  }
+
   function freezeTarget(target, rect) {
     target.style.animation = "none";
     target.style.left = rect.left + "px";
@@ -290,6 +336,7 @@
     updateScore();
     showJudgment(label, tone);
     pulseTrack(lane);
+    pulsePerformer(lane, label.indexOf("PERFECT") !== -1);
     triggerEffect(target.dataset.effect, rect.left + rect.width / 2, rect.top + rect.height / 2);
     window.setTimeout(function () { target.remove(); }, reduceMotion ? 30 : 340);
   }
@@ -418,6 +465,73 @@
     laneOwners = [null, null, null, null];
   }
 
+  function autoJudgeReadyTargets() {
+    if (!assistActive || state !== "playing") return;
+    Array.prototype.slice.call(targetField.querySelectorAll(".flying-target:not(.resolved):not(.holding)")).forEach(function (target) {
+      var lane = Number(target.dataset.lane);
+      var padRect = laneButtons[lane].querySelector(".letter").getBoundingClientRect();
+      var targetRect = target.getBoundingClientRect();
+      var distance = Math.hypot(
+        targetRect.left + targetRect.width / 2 - (padRect.left + padRect.width / 2),
+        targetRect.top + targetRect.height / 2 - (padRect.top + padRect.height / 2)
+      );
+      if (distance <= padRect.width * 0.72) resolveHit(target, "UTSUGI PERFECT", "perfect");
+    });
+  }
+
+  function finishAssist() {
+    window.clearTimeout(assistTimer);
+    assistActive = false;
+    utsugiAssist.classList.remove("assist-active");
+    if (assistUsed) utsugiAssist.classList.add("is-spent");
+    assistStatus.textContent = assistUsed ? "ASSIST USED" : "5 SEC AUTO PERFECT";
+    assistCount.textContent = assistUsed ? "×0" : "×1";
+    utsugiAssist.disabled = state !== "playing" || assistUsed;
+  }
+
+  function startAssist() {
+    if (state !== "playing" || assistUsed) return;
+    assistUsed = true;
+    assistActive = true;
+    utsugiAssist.disabled = true;
+    utsugiAssist.classList.remove("is-spent");
+    utsugiAssist.classList.add("assist-active");
+    assistStatus.textContent = "AUTO PERFECT LIVE";
+    assistCount.textContent = "LIVE";
+    showAudioStatus("宇都木救场：5 秒自动 PERFECT");
+    playSound("full");
+    vibrate([18, 28, 18]);
+    autoJudgeReadyTargets();
+    assistTimer = window.setTimeout(finishAssist, 5000);
+  }
+
+  function spawnRyoObstacle() {
+    if (state !== "playing" || reduceMotion) return;
+    var variants = ["obstacle-peek", "obstacle-hand", "obstacle-sweep"];
+    var variant = variants[Math.floor(Math.random() * variants.length)];
+    var lane = Math.floor(Math.random() * 4);
+    var padRect = laneButtons[lane].querySelector(".letter").getBoundingClientRect();
+    var obstacle = document.createElement("i");
+    obstacle.className = "ryo-obstacle " + variant;
+    obstacle.style.setProperty("--obstacle-x", padRect.left + padRect.width / 2 + "px");
+    obstacle.style.setProperty("--obstacle-y", 22 + Math.random() * 31 + "%");
+    obstacleLayer.appendChild(obstacle);
+    window.setTimeout(function () { obstacle.remove(); }, 1750);
+  }
+
+  function scheduleObstacle() {
+    if (state !== "playing") return;
+    obstacleTimer = window.setTimeout(function () {
+      spawnRyoObstacle();
+      scheduleObstacle();
+    }, 4700 + Math.random() * 2500);
+  }
+
+  function clearObstacles() {
+    window.clearTimeout(obstacleTimer);
+    Array.prototype.slice.call(obstacleLayer.children).forEach(function (obstacle) { obstacle.remove(); });
+  }
+
   function pickCrop() {
     var cropIndex = Math.floor(Math.random() * partCrops.length);
     if (cropIndex === lastCropIndex) cropIndex = (cropIndex + 1 + Math.floor(Math.random() * (partCrops.length - 1))) % partCrops.length;
@@ -515,6 +629,8 @@
     state = "result";
     window.clearTimeout(spawnTimer);
     window.cancelAnimationFrame(timerFrame);
+    finishAssist();
+    clearObstacles();
     roundTimer.textContent = "00:00";
     releaseAllInputs(false);
     laneButtons.forEach(function (button) { button.disabled = true; });
@@ -532,6 +648,7 @@
 
   function updateTimer(now) {
     if (state !== "playing") return;
+    autoJudgeReadyTargets();
     var remaining = Math.max(0, roundEndsAt - now);
     var seconds = Math.ceil(remaining / 1000);
     roundTimer.textContent = "00:" + padNumber(seconds, 2);
@@ -550,6 +667,10 @@
     misses = 0;
     activeInputs = {};
     laneOwners = [null, null, null, null];
+    assistUsed = false;
+    assistActive = false;
+    window.clearTimeout(assistTimer);
+    clearObstacles();
     updateScore();
     roundNumber.textContent = padNumber(currentRound, 2);
     roundTimer.textContent = "00:30";
@@ -562,11 +683,20 @@
       button.disabled = false;
       button.classList.remove("pressed", "holding-pad");
     });
+    performerCards.forEach(function (card, lane) {
+      window.clearTimeout(performerTimers[lane]);
+      card.classList.remove("is-hit", "is-perfect");
+    });
+    utsugiAssist.disabled = false;
+    utsugiAssist.classList.remove("assist-active", "is-spent");
+    assistStatus.textContent = "5 SEC AUTO PERFECT";
+    assistCount.textContent = "×1";
     broadcast.classList.add("is-playing");
     roundEndsAt = performance.now() + 30000;
     spawnWave();
     window.setTimeout(spawnWave, 340);
     scheduleTarget();
+    scheduleObstacle();
     timerFrame = window.requestAnimationFrame(updateTimer);
   }
 
@@ -634,6 +764,7 @@
 
   joinButton.addEventListener("click", enterMobileLive);
   startButton.addEventListener("click", prepareRound);
+  utsugiAssist.addEventListener("click", startAssist);
   encoreButton.addEventListener("click", function () {
     currentRound += 1;
     startRound();
