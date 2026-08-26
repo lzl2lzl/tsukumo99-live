@@ -11,6 +11,7 @@
   <link rel="preload" as="image" href="assets/live/lane-o1.png" />
   <link rel="preload" as="image" href="assets/live/lane-o2.png" />
   <link rel="preload" as="image" href="assets/live/lane-l.png" />
+  <link rel="preload" as="image" href="assets/live/utsugi-helper.png" />
   <link rel="stylesheet" href="live-experience.css" />
 </head>
 <body>
@@ -51,18 +52,26 @@
       <div class="performer-deck" id="performerDeck" aria-label="四条轨道对应角色">
         <figure class="performer-card card-z" data-lane="0" aria-label="Z 轨道角色">
           <img src="assets/live/lane-z.png" alt="" />
+          <span class="charge-fill" aria-hidden="true"><i></i></span>
+          <output class="charge-value">0%</output>
           <i class="card-signal" aria-hidden="true"></i>
         </figure>
         <figure class="performer-card card-o1" data-lane="1" aria-label="第一个 O 轨道角色">
           <img src="assets/live/lane-o1.png" alt="" />
+          <span class="charge-fill" aria-hidden="true"><i></i></span>
+          <output class="charge-value">0%</output>
           <i class="card-signal" aria-hidden="true"></i>
         </figure>
         <figure class="performer-card card-o2" data-lane="2" aria-label="第二个 O 轨道角色">
           <img src="assets/live/lane-o2.png" alt="" />
+          <span class="charge-fill" aria-hidden="true"><i></i></span>
+          <output class="charge-value">0%</output>
           <i class="card-signal" aria-hidden="true"></i>
         </figure>
         <figure class="performer-card card-l" data-lane="3" aria-label="L 轨道角色">
           <img src="assets/live/lane-l.png" alt="" />
+          <span class="charge-fill" aria-hidden="true"><i></i></span>
+          <output class="charge-value">0%</output>
           <i class="card-signal" aria-hidden="true"></i>
         </figure>
       </div>
@@ -73,11 +82,20 @@
       <div class="hit-callout" id="hitCallout" aria-hidden="true">HIT</div>
       <div class="effect-layer" id="effectLayer" aria-hidden="true"></div>
 
-      <button type="button" class="utsugi-assist" id="utsugiAssist" aria-label="宇都木救场：启动五秒自动 PERFECT" disabled>
+      <button type="button" class="utsugi-assist" id="utsugiAssist" aria-label="宇都木无敌模式：点击开启，再次点击关闭" aria-pressed="false" disabled>
         <span class="utsugi-portrait" aria-hidden="true"></span>
-        <span class="utsugi-copy"><b>宇都木救场</b><small id="assistStatus">5 SEC AUTO PERFECT</small></span>
-        <span class="assist-count" id="assistCount" aria-hidden="true">×1</span>
+        <span class="utsugi-copy"><b>宇都木应援</b><small id="assistStatus">AUTO PERFECT OFF</small></span>
+        <span class="assist-count" id="assistCount" aria-hidden="true">OFF</span>
       </button>
+
+      <div class="utsugi-autoplay" id="utsugiAutoplay" aria-hidden="true">
+        <img src="assets/live/utsugi-helper.png" alt="" />
+        <i></i>
+      </div>
+
+      <div class="ryo-taunt" id="ryoTaunt" aria-hidden="true">
+        <span></span><p>哈哈，没打中～</p>
+      </div>
 
       <div class="lane-controls" aria-label="ZOOL 舞台效果按钮">
         <button type="button" class="lane-button lane-z" data-lane="0" data-effect="core" aria-label="Z 轨道判定键">
@@ -115,7 +133,7 @@
     <section class="round-gate" id="roundGate" role="dialog" aria-modal="true" aria-labelledby="roundTitle" hidden>
       <span>LIVE INTERACTION</span>
       <h1 id="roundTitle">ZOOL<br />ROUND</h1>
-      <p>跟随舞台脉冲，在目标抵达圆键时按下；长条目标持续按住。支持双押，每回合 30 秒。宇都木可救场一次。</p>
+      <p>跟随舞台脉冲，在目标抵达圆键时按下；长条目标持续按住。支持双押，每回合 30 秒。点击宇都木可开启或关闭无敌代打。</p>
       <button type="button" id="startButton">START ROUND</button>
       <small id="loadStatus">点击后开启声音</small>
     </section>
@@ -127,6 +145,25 @@
       <div class="result-actions">
         <button type="button" id="encoreButton">NEXT ROUND</button>
         <a href="index.html">LEAVE LIVE</a>
+      </div>
+    </section>
+
+    <section class="achievement-gate" id="achievementGate" role="dialog" aria-modal="true" aria-labelledby="achievementTitle" hidden>
+      <div class="achievement-rays" aria-hidden="true"></div>
+      <span class="achievement-live">ACHIEVEMENT UNLOCKED</span>
+      <h1 id="achievementTitle">月云的兵</h1>
+      <p>四位成员的应援能量均已达到 99%。留下你的名字，领取本场 LIVE 的非官方粉丝纪念证书。</p>
+      <div class="achievement-charge" aria-label="四轨能量全部达到百分之九十九">
+        <i style="--portrait:url('assets/live/lane-z.png')"><b>99%</b></i>
+        <i style="--portrait:url('assets/live/lane-o1.png')"><b>99%</b></i>
+        <i style="--portrait:url('assets/live/lane-o2.png')"><b>99%</b></i>
+        <i style="--portrait:url('assets/live/lane-l.png')"><b>99%</b></i>
+      </div>
+      <label class="certificate-name" for="certificateName"><span>持证人姓名</span><input id="certificateName" maxlength="30" autocomplete="name" placeholder="输入你的名字" /></label>
+      <small class="certificate-error" id="certificateError" role="alert"></small>
+      <div class="achievement-actions">
+        <button type="button" id="downloadCertificate">下载证书 PNG</button>
+        <button type="button" id="closeAchievement">返回结算</button>
       </div>
     </section>
 

@@ -12,6 +12,11 @@
   var resultScore = document.getElementById("resultScore");
   var resultMaxCombo = document.getElementById("resultMaxCombo");
   var encoreButton = document.getElementById("encoreButton");
+  var achievementGate = document.getElementById("achievementGate");
+  var certificateName = document.getElementById("certificateName");
+  var certificateError = document.getElementById("certificateError");
+  var downloadCertificate = document.getElementById("downloadCertificate");
+  var closeAchievement = document.getElementById("closeAchievement");
   var soundButton = document.getElementById("soundButton");
   var roundNumber = document.getElementById("roundNumber");
   var roundTimer = document.getElementById("roundTimer");
@@ -26,6 +31,8 @@
   var utsugiAssist = document.getElementById("utsugiAssist");
   var assistStatus = document.getElementById("assistStatus");
   var assistCount = document.getElementById("assistCount");
+  var utsugiAutoplay = document.getElementById("utsugiAutoplay");
+  var ryoTaunt = document.getElementById("ryoTaunt");
   var laneButtons = Array.prototype.slice.call(document.querySelectorAll(".lane-button"));
   var performerCards = Array.prototype.slice.call(document.querySelectorAll(".performer-card"));
 
@@ -35,6 +42,8 @@
   var PERFECT_WINDOW = 78;
   var GOOD_WINDOW = 175;
   var laneLetters = ["Z", "O", "O", "L"];
+  var CHARGE_KEY = "tsukumo99-live-charge-v1";
+  var ACHIEVEMENT_KEY = "tsukumo99-live-achievement-v1";
   var laneEffects = ["core", "bubble", "bubble", "violet"];
   var laneColors = [
     { solid: "#ec0050", soft: "rgba(236,0,80,.25)", pale: "rgba(255,134,189,.7)" },
@@ -86,7 +95,9 @@
   var roundEndsAt = 0;
   var frameRequest = 0;
   var obstacleTimer = 0;
-  var assistTimer = 0;
+  var helperTapTimer = 0;
+  var tauntTimer = 0;
+  var achievementEndTimer = 0;
   var statusTimer = 0;
   var effectTimers = {};
   var performerTimers = [0, 0, 0, 0];
@@ -97,7 +108,9 @@
   var noteSequence = 0;
   var lastCropIndex = -1;
   var assistActive = false;
-  var assistUsed = false;
+  var chargeValues = loadChargeValues();
+  var achievementEarned = readStoredValue(ACHIEVEMENT_KEY) === "1";
+  var achievementPending = false;
 
   var geometry = {
     width: 1,
@@ -129,6 +142,58 @@
 
   function padNumber(value, length) {
     return String(value).padStart(length, "0");
+  }
+
+  function readStoredValue(key) {
+    try { return window.localStorage.getItem(key); } catch (error) { return null; }
+  }
+
+  function loadChargeValues() {
+    try {
+      var stored = JSON.parse(window.localStorage.getItem(CHARGE_KEY));
+      if (!Array.isArray(stored) || stored.length !== 4) return [0, 0, 0, 0];
+      return stored.map(function (value) { return clamp(Number(value) || 0, 0, 99); });
+    } catch (error) {
+      return [0, 0, 0, 0];
+    }
+  }
+
+  function saveChargeValues() {
+    try { window.localStorage.setItem(CHARGE_KEY, JSON.stringify(chargeValues)); } catch (error) {}
+  }
+
+  function renderChargeValues() {
+    performerCards.forEach(function (card, lane) {
+      var value = chargeValues[lane];
+      var output = card.querySelector(".charge-value");
+      card.style.setProperty("--charge", value);
+      card.style.setProperty("--charge-empty", 100 - value);
+      card.classList.toggle("is-full", value >= 99);
+      card.setAttribute("aria-label", laneLetters[lane] + " 轨道角色，应援能量 " + value + "%");
+      if (output) output.textContent = value + "%";
+    });
+  }
+
+  function unlockAchievement() {
+    if (achievementEarned || achievementPending) return;
+    achievementEarned = true;
+    achievementPending = true;
+    try { window.localStorage.setItem(ACHIEVEMENT_KEY, "1"); } catch (error) {}
+    showAudioStatus("成就解锁：月云的兵");
+    playSound("full");
+    vibrate([24, 34, 24, 34, 60]);
+    window.clearTimeout(achievementEndTimer);
+    achievementEndTimer = window.setTimeout(function () {
+      if (state === "playing") endRound();
+    }, 720);
+  }
+
+  function chargePerformer(lane) {
+    if (chargeValues[lane] >= 99) return;
+    chargeValues[lane] = Math.min(99, chargeValues[lane] + 1);
+    saveChargeValues();
+    renderChargeValues();
+    if (chargeValues.every(function (value) { return value >= 99; })) unlockAchievement();
   }
 
   function showAudioStatus(message) {
@@ -734,6 +799,7 @@
     showJudgment(label, tone);
     pulseLane(note.lane, label.indexOf("PERFECT") !== -1 ? 620 : 360);
     pulsePerformer(note.lane, label.indexOf("PERFECT") !== -1);
+    chargePerformer(note.lane);
     var padRect = laneButtons[note.lane].querySelector(".letter").getBoundingClientRect();
     triggerEffect(note.effect, padRect.left + padRect.width / 2, padRect.top + padRect.height / 2);
   }
@@ -747,6 +813,7 @@
     misses += 1;
     updateScore();
     showJudgment(label || "MISS", tone || "miss");
+    showRyoTaunt();
     pulseLane(note.lane, 240);
     vibrate([14, 22, 14]);
   }
@@ -858,35 +925,61 @@
     if (!assistActive || state !== "playing") return;
     chartNotes.forEach(function (note) {
       if (note.state !== "waiting" || now < note.hitAt - PERFECT_WINDOW) return;
+      moveUtsugiToLane(note.lane);
+      fireButton(laneButtons[note.lane]);
       if (note.kind === "hold") beginHold(note, null, "PERFECT", true);
       else resolveNote(note, "UTSUGI PERFECT", "perfect", now);
     });
   }
 
-  function finishAssist() {
-    window.clearTimeout(assistTimer);
-    assistActive = false;
-    utsugiAssist.classList.remove("assist-active");
-    if (assistUsed) utsugiAssist.classList.add("is-spent");
-    assistStatus.textContent = assistUsed ? "ASSIST USED" : "5 SEC AUTO PERFECT";
-    assistCount.textContent = assistUsed ? "×0" : "×1";
-    utsugiAssist.disabled = state !== "playing" || assistUsed;
+  function moveUtsugiToLane(lane, immediate) {
+    if (!utsugiAutoplay || !laneButtons[lane]) return;
+    var pad = laneButtons[lane].querySelector(".letter").getBoundingClientRect();
+    if (immediate) utsugiAutoplay.style.transition = "none";
+    utsugiAutoplay.style.setProperty("--helper-x", pad.left + pad.width / 2 + "px");
+    utsugiAutoplay.style.setProperty("--helper-y", pad.top + pad.height * .22 + "px");
+    if (immediate) {
+      utsugiAutoplay.getBoundingClientRect();
+      utsugiAutoplay.style.transition = "";
+    }
+    window.clearTimeout(helperTapTimer);
+    utsugiAutoplay.classList.remove("is-tapping");
+    utsugiAutoplay.getBoundingClientRect();
+    utsugiAutoplay.classList.add("is-tapping");
+    helperTapTimer = window.setTimeout(function () { utsugiAutoplay.classList.remove("is-tapping"); }, 380);
   }
 
-  function startAssist() {
-    if (state !== "playing" || assistUsed) return;
-    assistUsed = true;
-    assistActive = true;
-    utsugiAssist.disabled = true;
-    utsugiAssist.classList.remove("is-spent");
-    utsugiAssist.classList.add("assist-active");
-    assistStatus.textContent = "AUTO PERFECT LIVE";
-    assistCount.textContent = "LIVE";
-    showAudioStatus("宇都木救场：5 秒自动 PERFECT");
-    playSound("full");
-    vibrate([18, 28, 18]);
-    autoJudgeReadyNotes(performance.now());
-    assistTimer = window.setTimeout(finishAssist, 5000);
+  function setAssist(active) {
+    assistActive = !!active && state === "playing";
+    utsugiAssist.disabled = state !== "playing";
+    utsugiAssist.classList.toggle("assist-active", assistActive);
+    utsugiAssist.setAttribute("aria-pressed", String(assistActive));
+    assistStatus.textContent = assistActive ? "AUTO PERFECT ON" : "AUTO PERFECT OFF";
+    assistCount.textContent = assistActive ? "ON" : "OFF";
+    utsugiAutoplay.classList.toggle("is-active", assistActive);
+    if (assistActive) moveUtsugiToLane(1, true);
+    else utsugiAutoplay.classList.remove("is-tapping");
+  }
+
+  function toggleAssist() {
+    if (state !== "playing") return;
+    setAssist(!assistActive);
+    showAudioStatus(assistActive ? "宇都木已加入：无敌代打 ON" : "宇都木已退场：无敌代打 OFF");
+    if (assistActive) {
+      playSound("full");
+      vibrate([18, 28, 18]);
+      autoJudgeReadyNotes(performance.now());
+    }
+  }
+
+  function showRyoTaunt() {
+    if (!ryoTaunt) return;
+    window.clearTimeout(tauntTimer);
+    ryoTaunt.classList.remove("show", "is-right");
+    if (misses % 2 === 0) ryoTaunt.classList.add("is-right");
+    ryoTaunt.getBoundingClientRect();
+    ryoTaunt.classList.add("show");
+    tauntTimer = window.setTimeout(function () { ryoTaunt.classList.remove("show"); }, 1080);
   }
 
   function spawnRyoObstacle() {
@@ -934,7 +1027,8 @@
     if (state !== "playing") return;
     state = "result";
     window.cancelAnimationFrame(frameRequest);
-    finishAssist();
+    window.clearTimeout(achievementEndTimer);
+    setAssist(false);
     clearObstacles();
     roundTimer.textContent = "00:00";
     releaseAllInputs(false);
@@ -945,7 +1039,11 @@
     resultMaxCombo.textContent = padNumber(maxCombo, 3);
     renderCanvas(performance.now());
     window.setTimeout(function () {
-      if (!isMobile || !window.matchMedia("(orientation: portrait)").matches) resultGate.hidden = false;
+      if (!isMobile || !window.matchMedia("(orientation: portrait)").matches) {
+        achievementGate.hidden = !achievementPending;
+        resultGate.hidden = achievementPending;
+        if (achievementPending) window.setTimeout(function () { certificateName.focus(); }, 180);
+      }
     }, 320);
   }
 
@@ -958,9 +1056,8 @@
     activeInputs = {};
     laneOwners = [null, null, null, null];
     lanePulseEnds = [0, 0, 0, 0];
-    assistUsed = false;
     assistActive = false;
-    window.clearTimeout(assistTimer);
+    window.clearTimeout(achievementEndTimer);
     clearObstacles();
     resizeCanvas();
     updateScore();
@@ -968,6 +1065,7 @@
     roundTimer.textContent = "00:30";
     roundGate.hidden = true;
     resultGate.hidden = true;
+    achievementGate.hidden = true;
     startButton.disabled = false;
     startButton.textContent = "START ROUND";
     loadStatus.textContent = "点击后开启声音";
@@ -979,14 +1077,11 @@
       window.clearTimeout(performerTimers[lane]);
       card.classList.remove("is-hit", "is-perfect");
     });
-    utsugiAssist.disabled = false;
-    utsugiAssist.classList.remove("assist-active", "is-spent");
-    assistStatus.textContent = "5 SEC AUTO PERFECT";
-    assistCount.textContent = "×1";
     broadcast.classList.add("is-playing");
     roundStartedAt = performance.now();
     roundEndsAt = roundStartedAt + ROUND_MS;
     buildChart(roundStartedAt);
+    setAssist(false);
     scheduleObstacle();
     window.cancelAnimationFrame(frameRequest);
     frameRequest = window.requestAnimationFrame(gameFrame);
@@ -1001,6 +1096,131 @@
     loadAudio().then(startRound);
   }
 
+  function loadCertificateImages() {
+    return Promise.all(performerCards.map(function (card) {
+      var image = card.querySelector("img");
+      if (image.complete && image.naturalWidth) return image;
+      return new Promise(function (resolve) {
+        image.addEventListener("load", function () { resolve(image); }, { once: true });
+        image.addEventListener("error", function () { resolve(null); }, { once: true });
+      });
+    }));
+  }
+
+  function renderCertificate(name) {
+    return loadCertificateImages().then(function (images) {
+      var certificate = document.createElement("canvas");
+      certificate.width = 1600;
+      certificate.height = 1100;
+      var drawing = certificate.getContext("2d");
+      var background = drawing.createRadialGradient(800, 455, 80, 800, 500, 890);
+      background.addColorStop(0, "#8d002c");
+      background.addColorStop(.48, "#3a0014");
+      background.addColorStop(1, "#120005");
+      drawing.fillStyle = background;
+      drawing.fillRect(0, 0, 1600, 1100);
+
+      drawing.strokeStyle = "#ec0050";
+      drawing.lineWidth = 8;
+      drawing.strokeRect(42, 42, 1516, 1016);
+      drawing.strokeStyle = "rgba(255,244,247,.58)";
+      drawing.lineWidth = 2;
+      drawing.strokeRect(66, 66, 1468, 968);
+
+      drawing.textAlign = "center";
+      drawing.fillStyle = "#ff86bd";
+      drawing.font = "700 28px 'Space Mono', monospace";
+      drawing.fillText("TSUKUMO99 LIVE · ACHIEVEMENT CERTIFICATE", 800, 150);
+      drawing.fillStyle = "#fff4f7";
+      drawing.font = "700 132px Oswald, sans-serif";
+      drawing.fillText("月云的兵", 800, 305);
+      drawing.fillStyle = "#e4afbf";
+      drawing.font = "32px sans-serif";
+      drawing.fillText("授予", 800, 384);
+      drawing.fillStyle = "#fff4f7";
+      var nameSize = 64;
+      drawing.font = "700 " + nameSize + "px sans-serif";
+      while (drawing.measureText(name).width > 1120 && nameSize > 38) {
+        nameSize -= 2;
+        drawing.font = "700 " + nameSize + "px sans-serif";
+      }
+      drawing.fillText(name, 800, 470);
+      drawing.fillStyle = "#e4afbf";
+      drawing.font = "30px sans-serif";
+      drawing.fillText("四轨应援能量均达到 99%，正式成为月云的兵。", 800, 535);
+
+      var cardWidth = 178;
+      var cardHeight = 242;
+      var gap = 28;
+      var startX = (1600 - (cardWidth * 4 + gap * 3)) / 2;
+      images.forEach(function (image, lane) {
+        var x = startX + lane * (cardWidth + gap);
+        var y = 606;
+        drawing.save();
+        drawing.beginPath();
+        drawing.rect(x, y, cardWidth, cardHeight);
+        drawing.clip();
+        if (image) {
+          var scale = Math.max(cardWidth / image.naturalWidth, cardHeight / image.naturalHeight);
+          var width = image.naturalWidth * scale;
+          var height = image.naturalHeight * scale;
+          drawing.drawImage(image, x + (cardWidth - width) / 2, y + (cardHeight - height) / 2, width, height);
+        } else {
+          drawing.fillStyle = "#3a0014";
+          drawing.fillRect(x, y, cardWidth, cardHeight);
+        }
+        var fill = drawing.createLinearGradient(0, y + cardHeight, 0, y);
+        fill.addColorStop(0, lane === 3 ? "rgba(199,88,255,.9)" : "rgba(236,0,80,.9)");
+        fill.addColorStop(.7, "rgba(255,134,189,.22)");
+        fill.addColorStop(1, "rgba(255,244,247,.08)");
+        drawing.fillStyle = fill;
+        drawing.fillRect(x, y + 2, cardWidth, cardHeight - 2);
+        drawing.restore();
+        drawing.strokeStyle = "#fff4f7";
+        drawing.lineWidth = 3;
+        drawing.strokeRect(x, y, cardWidth, cardHeight);
+        drawing.fillStyle = "#120005";
+        drawing.fillRect(x + 44, y + 194, 90, 34);
+        drawing.fillStyle = "#fff4f7";
+        drawing.font = "700 22px 'Space Mono', monospace";
+        drawing.fillText("99%", x + cardWidth / 2, y + 220);
+      });
+
+      drawing.fillStyle = "#e4afbf";
+      drawing.font = "22px 'Space Mono', monospace";
+      drawing.fillText("UNOFFICIAL FAN-MADE COMMEMORATIVE CERTIFICATE · " + new Intl.DateTimeFormat("zh-CN").format(new Date()), 800, 965);
+      return certificate;
+    });
+  }
+
+  function saveCertificate() {
+    var name = certificateName.value.trim();
+    if (!name) {
+      certificateError.textContent = "请先填写持证人姓名。";
+      certificateName.focus();
+      return;
+    }
+    certificateError.textContent = "";
+    downloadCertificate.disabled = true;
+    downloadCertificate.textContent = "正在生成…";
+    renderCertificate(name).then(function (certificate) {
+      certificate.toBlob(function (blob) {
+        if (!blob) return;
+        var link = document.createElement("a");
+        var safeName = name.replace(/[\\/:*?\"<>|]/g, "-");
+        link.href = URL.createObjectURL(blob);
+        link.download = "月云的兵-" + safeName + ".png";
+        link.click();
+        window.setTimeout(function () { URL.revokeObjectURL(link.href); }, 1500);
+      }, "image/png");
+    }).catch(function () {
+      certificateError.textContent = "证书生成失败，请稍后再试。";
+    }).finally(function () {
+      downloadCertificate.disabled = false;
+      downloadCertificate.textContent = "下载证书 PNG";
+    });
+  }
+
   function isPortrait() {
     return window.matchMedia("(orientation: portrait)").matches;
   }
@@ -1011,11 +1231,17 @@
     rotateGate.hidden = !portrait;
     if (portrait) {
       if (state === "idle" || state === "loading") roundGate.hidden = true;
-      if (state === "result") resultGate.hidden = true;
+      if (state === "result") {
+        resultGate.hidden = true;
+        achievementGate.hidden = true;
+      }
       return;
     }
     if (state === "idle") roundGate.hidden = false;
-    if (state === "result") resultGate.hidden = false;
+    if (state === "result") {
+      achievementGate.hidden = !achievementPending;
+      resultGate.hidden = achievementPending;
+    }
   }
 
   function enterMobileLive() {
@@ -1048,10 +1274,17 @@
   document.addEventListener("pointercancel", function (event) { handleLaneUp("pointer-" + event.pointerId); });
   joinButton.addEventListener("click", enterMobileLive);
   startButton.addEventListener("click", prepareRound);
-  utsugiAssist.addEventListener("click", startAssist);
+  utsugiAssist.addEventListener("click", toggleAssist);
   encoreButton.addEventListener("click", function () {
     currentRound += 1;
     startRound();
+  });
+  downloadCertificate.addEventListener("click", saveCertificate);
+  certificateName.addEventListener("input", function () { certificateError.textContent = ""; });
+  closeAchievement.addEventListener("click", function () {
+    achievementGate.hidden = true;
+    achievementPending = false;
+    if (state === "result") resultGate.hidden = false;
   });
   soundButton.addEventListener("click", function () {
     setSound(!soundOn);
@@ -1093,6 +1326,7 @@
   });
 
   setSound(true);
+  renderChargeValues();
   resizeCanvas();
   if (isMobile) mobileInvite.hidden = false;
   else roundGate.hidden = false;
