@@ -78,16 +78,15 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 @keyframes rvUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 .rvrow{animation:rvUp .5s cubic-bezier(.2,.7,.3,1) both;}
 .tour-page-title{margin:0;font-family:var(--display);font-size:clamp(2rem,5vw,2.7rem);font-weight:700;line-height:1;letter-spacing:-.02em;text-transform:uppercase;}
-.continent-nav{display:flex;gap:clamp(1rem,3vw,2rem);margin-top:clamp(1.8rem,4vw,2.7rem);padding-bottom:.8rem;overflow-x:auto;border-bottom:1px solid rgba(255,134,189,.16);scrollbar-width:none;}
+.continent-nav{position:sticky;top:4.2rem;z-index:4;display:flex;gap:clamp(1rem,3vw,2rem);width:max-content;max-width:100%;margin-top:clamp(1.8rem,4vw,2.7rem);padding:.7rem .7rem .7rem 0;overflow-x:auto;background:var(--ink);scrollbar-width:none;}
 .continent-nav::-webkit-scrollbar{display:none;}
-.continent-nav a{position:relative;flex:none;padding:.2rem 0;color:var(--muted);font-size:.74rem;font-weight:600;line-height:1.2;white-space:nowrap;transition:color .2s ease;}
-.continent-nav a::after{content:"";position:absolute;right:0;bottom:-.86rem;left:0;height:2px;background:var(--pink);transform:scaleX(0);transform-origin:left;transition:transform .25s cubic-bezier(.16,1,.3,1);}
-.continent-nav a:hover,.continent-nav a:focus-visible{color:var(--paper);}
-.continent-nav a:hover::after,.continent-nav a:focus-visible::after{transform:scaleX(1);}
+.continent-nav a{position:relative;display:inline-flex;align-items:center;gap:.48rem;flex:none;padding:.25rem 0;color:var(--muted);font-size:.74rem;font-weight:600;line-height:1.2;white-space:nowrap;transition:color .25s cubic-bezier(.16,1,.3,1);}
+.continent-nav a::before{content:"";width:.38rem;height:.38rem;border:1px solid currentColor;transform:rotate(45deg);transition:background-color .25s cubic-bezier(.16,1,.3,1),border-color .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1);}
+.continent-nav a:hover,.continent-nav a:focus-visible,.continent-nav a.is-active{color:var(--paper);}
+.continent-nav a.is-active::before{border-color:var(--hot);background:var(--hot);box-shadow:3px 3px 12px rgba(236,0,80,.38);}
 .continent-nav a:focus-visible,.tour-row:focus-visible{outline:2px solid var(--paper);outline-offset:4px;}
 .tour-continent{padding-top:clamp(2.5rem,6vw,4rem);scroll-margin-top:5rem;}
-.tour-continent h2{display:flex;align-items:center;gap:1rem;margin:0 0 .9rem;color:var(--pink);font-family:var(--display);font-size:1rem;font-weight:700;line-height:1;letter-spacing:.08em;text-transform:uppercase;}
-.tour-continent h2::after{content:"";flex:1;height:1px;background:rgba(255,134,189,.16);}
+.tour-continent h2{margin:0 0 1.1rem;color:var(--pink);font-family:var(--display);font-size:1rem;font-weight:700;line-height:1;letter-spacing:.08em;text-transform:uppercase;}
 .tour-table-head,.tour-row{display:grid;grid-template-columns:92px minmax(240px,1fr) 240px 16px;gap:clamp(1rem,2.5vw,2rem);align-items:center;}
 .tour-table-head{padding:0 .35rem .65rem;color:var(--muted);font-size:.58rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
 .tour-table-head>span:nth-child(3){display:grid;grid-template-columns:1fr auto;gap:1rem;}
@@ -190,7 +189,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 
 
 <footer class="foot">
-  <p class="disc">非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。所有场次、地址、座位、票券均为虚构，购票流程为纯前端模拟，不收集任何姓名以外的信息，更不涉及任何真实支付。仅供娱乐。</p>
+  <p class="disc">非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。场馆使用现实名称作为巡演情境参考，演出安排、票价、座位与票券均为虚构；购票流程为纯前端模拟，姓名仅在当前浏览器内用于生成票面，不会上传，也不涉及真实支付。仅供娱乐。</p>
   <div class="frow">
     <div class="cred">
       <div><span>Contact</span>xhs@并不知道什么叫做可爱</div>
@@ -215,7 +214,7 @@ cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRe
 cheer.addEventListener("pointermove",function(e){if(!drag)return;if(Math.abs(e.movementX)+Math.abs(e.movementY)>1)drag.moved=true;var w=cheer.offsetWidth,h=cheer.offsetHeight;var nx=Math.max(4,Math.min(innerWidth-w-4,e.clientX-drag.dx)),ny=Math.max(4,Math.min(innerHeight-h-4,e.clientY-drag.dy));cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";});
 cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
 </script>
-<script src="booking.js"></script>
+<script src="booking.js?v=20260830b"></script>
 <script src="page-transition.js"></script>
 </body>
 </html>

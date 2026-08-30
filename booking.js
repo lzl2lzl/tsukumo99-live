@@ -14,49 +14,48 @@
   /* Project schedule rules: doors may be 13:00–14:00 or 17:00–19:00; every show starts exactly 60 minutes later. */
   var TOUR_TIME_RULES={startAfterDoorsMinutes:60,doorsWindows:[[13*60,14*60],[17*60,19*60]]};
   var STOPS = [
-    {code:'SH',continent:'asia',doors:'17:30',status:'few',date:'2026.07.18',country:{cn:'中国',en:'CHINA',jp:'中国'},city:{cn:'上海',en:'SHANGHAI',jp:'上海'},venue:{cn:'上海 · 滨江文化中心',en:'SHANGHAI RIVERSIDE HALL',jp:'上海 リバーサイドホール'}},
-    {code:'GZ',continent:'asia',doors:'17:00',status:'plenty',date:'2026.07.26',country:{cn:'中国',en:'CHINA',jp:'中国'},city:{cn:'广州',en:'GUANGZHOU',jp:'広州'},venue:{cn:'广州 · 珠江大剧场',en:'PEARL RIVER THEATRE',jp:'広州 珠江劇場'}},
-    {code:'BJ',continent:'asia',doors:'17:30',status:'few',date:'2026.08.02',country:{cn:'中国',en:'CHINA',jp:'中国'},city:{cn:'北京',en:'BEIJING',jp:'北京'},venue:{cn:'北京 · 京城中央馆',en:'CAPITAL CENTRAL ARENA',jp:'北京 セントラルアリーナ'}},
-    {code:'SE',continent:'asia',doors:'18:00',status:'plenty',date:'2026.08.08',country:{cn:'韩国',en:'SOUTH KOREA',jp:'韓国'},city:{cn:'首尔',en:'SEOUL',jp:'ソウル'},venue:{cn:'首尔 · 汉江巨蛋',en:'HAN RIVER DOME',jp:'ソウル ハンガンドーム'}},
-    {code:'TK',continent:'asia',doors:'17:00',status:'few',date:'2026.08.15',country:{cn:'日本',en:'JAPAN',jp:'日本'},city:{cn:'东京',en:'TOKYO',jp:'東京'},venue:{cn:'东京 · 临海竞技场',en:'BAYFRONT ARENA TOKYO',jp:'東京 ベイフロントアリーナ'}},
-    {code:'OS',continent:'asia',doors:'18:00',status:'plenty',date:'2026.08.19',country:{cn:'日本',en:'JAPAN',jp:'日本'},city:{cn:'大阪',en:'OSAKA',jp:'大阪'},venue:{cn:'大阪 · 中之岛音乐堂',en:'NAKANOSHIMA HALL',jp:'大阪 中之島ホール'}},
-    {code:'FK',continent:'asia',doors:'13:00',status:'few',date:'2026.08.23',country:{cn:'日本',en:'JAPAN',jp:'日本'},city:{cn:'福冈',en:'FUKUOKA',jp:'福岡'},venue:{cn:'福冈 · 博多海湾馆',en:'HAKATA BAY HALL',jp:'福岡 博多ベイホール'}},
-    {code:'TP',continent:'asia',doors:'14:00',status:'plenty',date:'2026.08.30',country:{cn:'中国台湾',en:'TAIWAN',jp:'台湾'},city:{cn:'台北',en:'TAIPEI',jp:'台北'},venue:{cn:'台北 · 河岸展演馆',en:'TAIPEI RIVERFRONT HALL',jp:'台北 リバーフロントホール'}},
-    {code:'HK',continent:'asia',doors:'19:00',status:'few',date:'2026.09.05',country:{cn:'中国香港',en:'HONG KONG',jp:'香港'},city:{cn:'香港',en:'HONG KONG',jp:'香港'},venue:{cn:'香港 · 维港音乐厅',en:'VICTORIA HARBOUR HALL',jp:'香港 ビクトリアハーバーホール'}},
-    {code:'BK',continent:'asia',doors:'18:00',status:'plenty',date:'2026.09.12',country:{cn:'泰国',en:'THAILAND',jp:'タイ'},city:{cn:'曼谷',en:'BANGKOK',jp:'バンコク'},venue:{cn:'曼谷 · 暹罗竞技馆',en:'SIAM ARENA',jp:'バンコク サイアムアリーナ'}},
-    {code:'MN',continent:'asia',doors:'18:00',status:'plenty',date:'2026.09.19',country:{cn:'菲律宾',en:'PHILIPPINES',jp:'フィリピン'},city:{cn:'马尼拉',en:'MANILA',jp:'マニラ'},venue:{cn:'马尼拉 · 海湾舞台馆',en:'MANILA BAY STAGE',jp:'マニラ ベイステージ'}},
-    {code:'JK',continent:'asia',doors:'19:00',status:'few',date:'2026.09.26',country:{cn:'印度尼西亚',en:'INDONESIA',jp:'インドネシア'},city:{cn:'雅加达',en:'JAKARTA',jp:'ジャカルタ'},venue:{cn:'雅加达 · 群岛会堂',en:'ARCHIPELAGO HALL',jp:'ジャカルタ アーキペラゴホール'}},
-    {code:'SG',continent:'asia',doors:'18:00',status:'few',date:'2026.10.03',country:{cn:'新加坡',en:'SINGAPORE',jp:'シンガポール'},city:{cn:'新加坡',en:'SINGAPORE',jp:'シンガポール'},venue:{cn:'新加坡 · 滨海湾馆',en:'MARINA BAY HALL',jp:'シンガポール マリーナベイ'}},
-    {code:'DB',continent:'asia',doors:'19:00',status:'plenty',date:'2026.10.10',country:{cn:'阿联酋',en:'UNITED ARAB EMIRATES',jp:'アラブ首長国連邦'},city:{cn:'迪拜',en:'DUBAI',jp:'ドバイ'},venue:{cn:'迪拜 · 海湾竞技场',en:'GULF COAST ARENA',jp:'ドバイ ガルフアリーナ'}},
+    {code:'SH',continent:'asia',doors:'17:30',status:'few',date:'2026.07.18',country:{cn:'中国',en:'CHINA',jp:'中国'},city:{cn:'上海',en:'SHANGHAI',jp:'上海'},venue:{cn:'上海 · 梅赛德斯-奔驰文化中心',en:'SHANGHAI · MERCEDES-BENZ ARENA',jp:'上海 · メルセデス・ベンツアリーナ'}},
+    {code:'GZ',continent:'asia',doors:'17:00',status:'plenty',date:'2026.07.26',country:{cn:'中国',en:'CHINA',jp:'中国'},city:{cn:'广州',en:'GUANGZHOU',jp:'広州'},venue:{cn:'广州 · 宝能广州国际体育演艺中心',en:'GUANGZHOU · BAONENG GUANGZHOU INTERNATIONAL SPORTS AND PERFORMING ARTS CENTER',jp:'広州 · 宝能広州国際体育演芸センター'}},
+    {code:'BJ',continent:'asia',doors:'17:30',status:'few',date:'2026.08.02',country:{cn:'中国',en:'CHINA',jp:'中国'},city:{cn:'北京',en:'BEIJING',jp:'北京'},venue:{cn:'北京 · 凯迪拉克中心',en:'BEIJING · CADILLAC ARENA',jp:'北京 · キャデラック・アリーナ'}},
+    {code:'SE',continent:'asia',doors:'18:00',status:'plenty',date:'2026.08.08',country:{cn:'韩国',en:'SOUTH KOREA',jp:'韓国'},city:{cn:'首尔',en:'SEOUL',jp:'ソウル'},venue:{cn:'首尔 · KSPO DOME',en:'SEOUL · KSPO DOME',jp:'ソウル · KSPO DOME'}},
+    {code:'TK',continent:'asia',doors:'17:00',status:'few',date:'2026.08.15',country:{cn:'日本',en:'JAPAN',jp:'日本'},city:{cn:'东京',en:'TOKYO',jp:'東京'},venue:{cn:'东京 · 东京巨蛋',en:'TOKYO · TOKYO DOME',jp:'東京 · 東京ドーム'}},
+    {code:'OS',continent:'asia',doors:'18:00',status:'plenty',date:'2026.08.19',country:{cn:'日本',en:'JAPAN',jp:'日本'},city:{cn:'大阪',en:'OSAKA',jp:'大阪'},venue:{cn:'大阪 · 大阪京瓷巨蛋',en:'OSAKA · KYOCERA DOME OSAKA',jp:'大阪 · 京セラドーム大阪'}},
+    {code:'FK',continent:'asia',doors:'13:00',status:'few',date:'2026.08.23',country:{cn:'日本',en:'JAPAN',jp:'日本'},city:{cn:'福冈',en:'FUKUOKA',jp:'福岡'},venue:{cn:'福冈 · Mizuho PayPay Dome Fukuoka',en:'FUKUOKA · MIZUHO PAYPAY DOME FUKUOKA',jp:'福岡 · みずほPayPayドーム福岡'}},
+    {code:'HK',continent:'asia',doors:'19:00',status:'few',date:'2026.09.05',country:{cn:'中国香港',en:'HONG KONG',jp:'香港'},city:{cn:'香港',en:'HONG KONG',jp:'香港'},venue:{cn:'香港 · 亚洲国际博览馆 Arena',en:'HONG KONG · ASIAWORLD-ARENA',jp:'香港 · AsiaWorld-Arena'}},
+    {code:'BK',continent:'asia',doors:'18:00',status:'plenty',date:'2026.09.12',country:{cn:'泰国',en:'THAILAND',jp:'タイ'},city:{cn:'曼谷',en:'BANGKOK',jp:'バンコク'},venue:{cn:'曼谷 · IMPACT Arena',en:'BANGKOK · IMPACT ARENA',jp:'バンコク · IMPACT Arena'}},
+    {code:'MN',continent:'asia',doors:'18:00',status:'plenty',date:'2026.09.19',country:{cn:'菲律宾',en:'PHILIPPINES',jp:'フィリピン'},city:{cn:'马尼拉',en:'MANILA',jp:'マニラ'},venue:{cn:'马尼拉 · SM Mall of Asia Arena',en:'MANILA · SM MALL OF ASIA ARENA',jp:'マニラ · SM Mall of Asia Arena'}},
+    {code:'JK',continent:'asia',doors:'19:00',status:'few',date:'2026.09.26',country:{cn:'印度尼西亚',en:'INDONESIA',jp:'インドネシア'},city:{cn:'雅加达',en:'JAKARTA',jp:'ジャカルタ'},venue:{cn:'雅加达 · Indonesia Arena',en:'JAKARTA · INDONESIA ARENA',jp:'ジャカルタ · Indonesia Arena'}},
+    {code:'SG',continent:'asia',doors:'18:00',status:'few',date:'2026.10.03',country:{cn:'新加坡',en:'SINGAPORE',jp:'シンガポール'},city:{cn:'新加坡',en:'SINGAPORE',jp:'シンガポール'},venue:{cn:'新加坡 · Singapore Indoor Stadium',en:'SINGAPORE · SINGAPORE INDOOR STADIUM',jp:'シンガポール · Singapore Indoor Stadium'}},
+    {code:'DB',continent:'asia',doors:'19:00',status:'plenty',date:'2026.10.10',country:{cn:'阿联酋',en:'UNITED ARAB EMIRATES',jp:'アラブ首長国連邦'},city:{cn:'迪拜',en:'DUBAI',jp:'ドバイ'},venue:{cn:'迪拜 · Coca-Cola Arena',en:'DUBAI · COCA-COLA ARENA',jp:'ドバイ · Coca-Cola Arena'}},
 
-    {code:'LD',continent:'europe',doors:'18:00',status:'few',date:'2026.10.18',country:{cn:'英国',en:'UNITED KINGDOM',jp:'イギリス'},city:{cn:'伦敦',en:'LONDON',jp:'ロンドン'},venue:{cn:'伦敦 · 泰晤士竞技场',en:'THAMES ARENA',jp:'ロンドン テムズアリーナ'}},
-    {code:'PA',continent:'europe',doors:'19:00',status:'few',date:'2026.10.24',country:{cn:'法国',en:'FRANCE',jp:'フランス'},city:{cn:'巴黎',en:'PARIS',jp:'パリ'},venue:{cn:'巴黎 · 塞纳穹顶',en:'LE DÔME SEINE',jp:'パリ セーヌドーム'}},
-    {code:'BE',continent:'europe',doors:'18:00',status:'plenty',date:'2026.10.31',country:{cn:'德国',en:'GERMANY',jp:'ドイツ'},city:{cn:'柏林',en:'BERLIN',jp:'ベルリン'},venue:{cn:'柏林 · 施普雷会堂',en:'SPREE HALLE',jp:'ベルリン シュプレーホール'}},
-    {code:'AM',continent:'europe',doors:'19:00',status:'plenty',date:'2026.11.07',country:{cn:'荷兰',en:'NETHERLANDS',jp:'オランダ'},city:{cn:'阿姆斯特丹',en:'AMSTERDAM',jp:'アムステルダム'},venue:{cn:'阿姆斯特丹 · 运河舞台馆',en:'CANAL STAGE HALL',jp:'アムステルダム カナルステージ'}},
-    {code:'MD',continent:'europe',doors:'18:00',status:'few',date:'2026.11.14',country:{cn:'西班牙',en:'SPAIN',jp:'スペイン'},city:{cn:'马德里',en:'MADRID',jp:'マドリード'},venue:{cn:'马德里 · 太阳门礼堂',en:'PALACIO SOL',jp:'マドリード パラシオソル'}},
-    {code:'ML',continent:'europe',doors:'19:00',status:'plenty',date:'2026.11.21',country:{cn:'意大利',en:'ITALY',jp:'イタリア'},city:{cn:'米兰',en:'MILAN',jp:'ミラノ'},venue:{cn:'米兰 · 中央竞技馆',en:'ARENA CENTRALE MILANO',jp:'ミラノ アレーナチェントラーレ'}},
-    {code:'WA',continent:'europe',doors:'18:00',status:'plenty',date:'2026.11.28',country:{cn:'波兰',en:'POLAND',jp:'ポーランド'},city:{cn:'华沙',en:'WARSAW',jp:'ワルシャワ'},venue:{cn:'华沙 · 维斯瓦会堂',en:'VISTULA HALL',jp:'ワルシャワ ヴィスワホール'}},
+    {code:'LD',continent:'europe',doors:'18:00',status:'few',date:'2026.10.18',country:{cn:'英国',en:'UNITED KINGDOM',jp:'イギリス'},city:{cn:'伦敦',en:'LONDON',jp:'ロンドン'},venue:{cn:'伦敦 · The O2',en:'LONDON · THE O2',jp:'ロンドン · The O2'}},
+    {code:'PA',continent:'europe',doors:'19:00',status:'few',date:'2026.10.24',country:{cn:'法国',en:'FRANCE',jp:'フランス'},city:{cn:'巴黎',en:'PARIS',jp:'パリ'},venue:{cn:'巴黎 · Accor Arena',en:'PARIS · ACCOR ARENA',jp:'パリ · Accor Arena'}},
+    {code:'BE',continent:'europe',doors:'18:00',status:'plenty',date:'2026.10.31',country:{cn:'德国',en:'GERMANY',jp:'ドイツ'},city:{cn:'柏林',en:'BERLIN',jp:'ベルリン'},venue:{cn:'柏林 · Uber Arena',en:'BERLIN · UBER ARENA',jp:'ベルリン · Uber Arena'}},
+    {code:'AM',continent:'europe',doors:'19:00',status:'plenty',date:'2026.11.07',country:{cn:'荷兰',en:'NETHERLANDS',jp:'オランダ'},city:{cn:'阿姆斯特丹',en:'AMSTERDAM',jp:'アムステルダム'},venue:{cn:'阿姆斯特丹 · Ziggo Dome',en:'AMSTERDAM · ZIGGO DOME',jp:'アムステルダム · Ziggo Dome'}},
+    {code:'MD',continent:'europe',doors:'18:00',status:'few',date:'2026.11.14',country:{cn:'西班牙',en:'SPAIN',jp:'スペイン'},city:{cn:'马德里',en:'MADRID',jp:'マドリード'},venue:{cn:'马德里 · Movistar Arena',en:'MADRID · MOVISTAR ARENA',jp:'マドリード · Movistar Arena'}},
+    {code:'ML',continent:'europe',doors:'19:00',status:'plenty',date:'2026.11.21',country:{cn:'意大利',en:'ITALY',jp:'イタリア'},city:{cn:'米兰',en:'MILAN',jp:'ミラノ'},venue:{cn:'米兰 · Unipol Forum',en:'MILAN · UNIPOL FORUM',jp:'ミラノ · Unipol Forum'}},
+    {code:'WA',continent:'europe',doors:'18:00',status:'plenty',date:'2026.11.28',country:{cn:'波兰',en:'POLAND',jp:'ポーランド'},city:{cn:'华沙',en:'WARSAW',jp:'ワルシャワ'},venue:{cn:'华沙 · COS Torwar',en:'WARSAW · COS TORWAR',jp:'ワルシャワ · COS Torwar'}},
 
-    {code:'VA',continent:'north-america',doors:'18:00',status:'few',date:'2026.12.05',country:{cn:'加拿大',en:'CANADA',jp:'カナダ'},city:{cn:'温哥华',en:'VANCOUVER',jp:'バンクーバー'},venue:{cn:'温哥华 · 海湾展演馆',en:'WATERFRONT PAVILION',jp:'バンクーバー ウォーターフロント'}},
-    {code:'TR',continent:'north-america',doors:'18:00',status:'plenty',date:'2026.12.12',country:{cn:'加拿大',en:'CANADA',jp:'カナダ'},city:{cn:'多伦多',en:'TORONTO',jp:'トロント'},venue:{cn:'多伦多 · 湖滨中心',en:'LAKESHORE CENTRE',jp:'トロント レイクショア'}},
-    {code:'NY',continent:'north-america',doors:'19:00',status:'plenty',date:'2026.12.19',country:{cn:'美国',en:'UNITED STATES',jp:'アメリカ'},city:{cn:'纽约',en:'NEW YORK',jp:'ニューヨーク'},venue:{cn:'纽约 · 曼哈顿广场馆',en:'MANHATTAN GARDEN',jp:'ニューヨーク マンハッタンガーデン'}},
-    {code:'CH',continent:'north-america',doors:'18:00',status:'plenty',date:'2027.01.09',country:{cn:'美国',en:'UNITED STATES',jp:'アメリカ'},city:{cn:'芝加哥',en:'CHICAGO',jp:'シカゴ'},venue:{cn:'芝加哥 · 湖岸音乐厅',en:'LAKEFRONT HALL',jp:'シカゴ レイクフロントホール'}},
-    {code:'LA',continent:'north-america',doors:'19:00',status:'few',date:'2027.01.16',country:{cn:'美国',en:'UNITED STATES',jp:'アメリカ'},city:{cn:'洛杉矶',en:'LOS ANGELES',jp:'ロサンゼルス'},venue:{cn:'洛杉矶 · 西岸竞技馆',en:'WEST COAST ARENA',jp:'ロサンゼルス ウェストコーストアリーナ'}},
-    {code:'MX',continent:'north-america',doors:'19:00',status:'few',date:'2027.01.23',country:{cn:'墨西哥',en:'MEXICO',jp:'メキシコ'},city:{cn:'墨西哥城',en:'MEXICO CITY',jp:'メキシコシティ'},venue:{cn:'墨西哥城 · 索卡洛穹顶',en:'DOMO ZÓCALO',jp:'メキシコシティ ドモ'}},
+    {code:'VA',continent:'north-america',doors:'18:00',status:'few',date:'2026.12.05',country:{cn:'加拿大',en:'CANADA',jp:'カナダ'},city:{cn:'温哥华',en:'VANCOUVER',jp:'バンクーバー'},venue:{cn:'温哥华 · Rogers Arena',en:'VANCOUVER · ROGERS ARENA',jp:'バンクーバー · Rogers Arena'}},
+    {code:'TR',continent:'north-america',doors:'18:00',status:'plenty',date:'2026.12.12',country:{cn:'加拿大',en:'CANADA',jp:'カナダ'},city:{cn:'多伦多',en:'TORONTO',jp:'トロント'},venue:{cn:'多伦多 · Scotiabank Arena',en:'TORONTO · SCOTIABANK ARENA',jp:'トロント · Scotiabank Arena'}},
+    {code:'NY',continent:'north-america',doors:'19:00',status:'plenty',date:'2026.12.19',country:{cn:'美国',en:'UNITED STATES',jp:'アメリカ'},city:{cn:'纽约',en:'NEW YORK',jp:'ニューヨーク'},venue:{cn:'纽约 · Madison Square Garden',en:'NEW YORK · MADISON SQUARE GARDEN',jp:'ニューヨーク · Madison Square Garden'}},
+    {code:'CH',continent:'north-america',doors:'18:00',status:'plenty',date:'2027.01.09',country:{cn:'美国',en:'UNITED STATES',jp:'アメリカ'},city:{cn:'芝加哥',en:'CHICAGO',jp:'シカゴ'},venue:{cn:'芝加哥 · United Center',en:'CHICAGO · UNITED CENTER',jp:'シカゴ · United Center'}},
+    {code:'LA',continent:'north-america',doors:'19:00',status:'few',date:'2027.01.16',country:{cn:'美国',en:'UNITED STATES',jp:'アメリカ'},city:{cn:'洛杉矶',en:'LOS ANGELES',jp:'ロサンゼルス'},venue:{cn:'洛杉矶 · Kia Forum',en:'LOS ANGELES · KIA FORUM',jp:'ロサンゼルス · Kia Forum'}},
+    {code:'MX',continent:'north-america',doors:'19:00',status:'few',date:'2027.01.23',country:{cn:'墨西哥',en:'MEXICO',jp:'メキシコ'},city:{cn:'墨西哥城',en:'MEXICO CITY',jp:'メキシコシティ'},venue:{cn:'墨西哥城 · Palacio de los Deportes',en:'MEXICO CITY · PALACIO DE LOS DEPORTES',jp:'メキシコシティ · Palacio de los Deportes'}},
 
-    {code:'SP',continent:'south-america',doors:'14:00',status:'plenty',date:'2027.01.30',country:{cn:'巴西',en:'BRAZIL',jp:'ブラジル'},city:{cn:'圣保罗',en:'SÃO PAULO',jp:'サンパウロ'},venue:{cn:'圣保罗 · 保利斯塔馆',en:'ARENA PAULISTA',jp:'サンパウロ アレーナ'}},
-    {code:'BA',continent:'south-america',doors:'19:00',status:'plenty',date:'2027.02.06',country:{cn:'阿根廷',en:'ARGENTINA',jp:'アルゼンチン'},city:{cn:'布宜诺斯艾利斯',en:'BUENOS AIRES',jp:'ブエノスアイレス'},venue:{cn:'布宜诺斯艾利斯 · 南方舞台馆',en:'SOUTHERN STAGE HALL',jp:'ブエノスアイレス サザンステージ'}},
-    {code:'SA',continent:'south-america',doors:'18:00',status:'few',date:'2027.02.13',country:{cn:'智利',en:'CHILE',jp:'チリ'},city:{cn:'圣地亚哥',en:'SANTIAGO',jp:'サンティアゴ'},venue:{cn:'圣地亚哥 · 安第斯会堂',en:'ANDES HALL',jp:'サンティアゴ アンデスホール'}},
-    {code:'LI',continent:'south-america',doors:'18:00',status:'plenty',date:'2027.02.20',country:{cn:'秘鲁',en:'PERU',jp:'ペルー'},city:{cn:'利马',en:'LIMA',jp:'リマ'},venue:{cn:'利马 · 太平洋展演馆',en:'PACIFIC PAVILION',jp:'リマ パシフィックパビリオン'}},
+    {code:'SP',continent:'south-america',doors:'14:00',status:'plenty',date:'2027.01.30',country:{cn:'巴西',en:'BRAZIL',jp:'ブラジル'},city:{cn:'圣保罗',en:'SÃO PAULO',jp:'サンパウロ'},venue:{cn:'圣保罗 · Allianz Parque',en:'SÃO PAULO · ALLIANZ PARQUE',jp:'サンパウロ · Allianz Parque'}},
+    {code:'BA',continent:'south-america',doors:'19:00',status:'plenty',date:'2027.02.06',country:{cn:'阿根廷',en:'ARGENTINA',jp:'アルゼンチン'},city:{cn:'布宜诺斯艾利斯',en:'BUENOS AIRES',jp:'ブエノスアイレス'},venue:{cn:'布宜诺斯艾利斯 · Movistar Arena',en:'BUENOS AIRES · MOVISTAR ARENA',jp:'ブエノスアイレス · Movistar Arena'}},
+    {code:'SA',continent:'south-america',doors:'18:00',status:'few',date:'2027.02.13',country:{cn:'智利',en:'CHILE',jp:'チリ'},city:{cn:'圣地亚哥',en:'SANTIAGO',jp:'サンティアゴ'},venue:{cn:'圣地亚哥 · Movistar Arena',en:'SANTIAGO · MOVISTAR ARENA',jp:'サンティアゴ · Movistar Arena'}},
+    {code:'LI',continent:'south-america',doors:'18:00',status:'plenty',date:'2027.02.20',country:{cn:'秘鲁',en:'PERU',jp:'ペルー'},city:{cn:'利马',en:'LIMA',jp:'リマ'},venue:{cn:'利马 · Arena 1',en:'LIMA · ARENA 1',jp:'リマ · Arena 1'}},
 
-    {code:'SY',continent:'oceania',doors:'13:30',status:'plenty',date:'2027.02.27',country:{cn:'澳大利亚',en:'AUSTRALIA',jp:'オーストラリア'},city:{cn:'悉尼',en:'SYDNEY',jp:'シドニー'},venue:{cn:'悉尼 · 海港穹顶',en:'HARBOUR DOME SYDNEY',jp:'シドニー ハーバードーム'}},
-    {code:'ME',continent:'oceania',doors:'19:00',status:'few',date:'2027.03.06',country:{cn:'澳大利亚',en:'AUSTRALIA',jp:'オーストラリア'},city:{cn:'墨尔本',en:'MELBOURNE',jp:'メルボルン'},venue:{cn:'墨尔本 · 亚拉舞台馆',en:'YARRA STAGE HALL',jp:'メルボルン ヤラステージ'}},
-    {code:'AK',continent:'oceania',doors:'18:00',status:'plenty',date:'2027.03.13',country:{cn:'新西兰',en:'NEW ZEALAND',jp:'ニュージーランド'},city:{cn:'奥克兰',en:'AUCKLAND',jp:'オークランド'},venue:{cn:'奥克兰 · 海湾音乐厅',en:'AUCKLAND BAY HALL',jp:'オークランド ベイホール'}},
+    {code:'SY',continent:'oceania',doors:'13:30',status:'plenty',date:'2027.02.27',country:{cn:'澳大利亚',en:'AUSTRALIA',jp:'オーストラリア'},city:{cn:'悉尼',en:'SYDNEY',jp:'シドニー'},venue:{cn:'悉尼 · Afterpay Arena',en:'SYDNEY · AFTERPAY ARENA',jp:'シドニー · Afterpay Arena'}},
+    {code:'ME',continent:'oceania',doors:'19:00',status:'few',date:'2027.03.06',country:{cn:'澳大利亚',en:'AUSTRALIA',jp:'オーストラリア'},city:{cn:'墨尔本',en:'MELBOURNE',jp:'メルボルン'},venue:{cn:'墨尔本 · Rod Laver Arena',en:'MELBOURNE · ROD LAVER ARENA',jp:'メルボルン · Rod Laver Arena'}},
+    {code:'AK',continent:'oceania',doors:'18:00',status:'plenty',date:'2027.03.13',country:{cn:'新西兰',en:'NEW ZEALAND',jp:'ニュージーランド'},city:{cn:'奥克兰',en:'AUCKLAND',jp:'オークランド'},venue:{cn:'奥克兰 · Spark Arena',en:'AUCKLAND · SPARK ARENA',jp:'オークランド · Spark Arena'}},
 
-    {code:'CAI',continent:'africa',doors:'19:00',status:'plenty',date:'2027.03.20',country:{cn:'埃及',en:'EGYPT',jp:'エジプト'},city:{cn:'开罗',en:'CAIRO',jp:'カイロ'},venue:{cn:'开罗 · 尼罗河会堂',en:'NILE HALL',jp:'カイロ ナイルホール'}},
-    {code:'CB',continent:'africa',doors:'19:00',status:'few',date:'2027.03.27',country:{cn:'摩洛哥',en:'MOROCCO',jp:'モロッコ'},city:{cn:'卡萨布兰卡',en:'CASABLANCA',jp:'カサブランカ'},venue:{cn:'卡萨布兰卡 · 大西洋舞台馆',en:'ATLANTIC STAGE HALL',jp:'カサブランカ アトランティックステージ'}},
-    {code:'JO',continent:'africa',doors:'18:00',status:'plenty',date:'2027.04.03',country:{cn:'南非',en:'SOUTH AFRICA',jp:'南アフリカ'},city:{cn:'约翰内斯堡',en:'JOHANNESBURG',jp:'ヨハネスブルグ'},venue:{cn:'约翰内斯堡 · 高原竞技馆',en:'HIGHVELD ARENA',jp:'ヨハネスブルグ ハイベルトアリーナ'}},
-    {code:'CT',continent:'africa',doors:'13:00',status:'few',date:'2027.04.10',country:{cn:'南非',en:'SOUTH AFRICA',jp:'南アフリカ'},city:{cn:'开普敦',en:'CAPE TOWN',jp:'ケープタウン'},venue:{cn:'开普敦 · 桌湾展演馆',en:'TABLE BAY PAVILION',jp:'ケープタウン テーブルベイ'}}
+    {code:'CAI',continent:'africa',doors:'19:00',status:'plenty',date:'2027.03.20',country:{cn:'埃及',en:'EGYPT',jp:'エジプト'},city:{cn:'开罗',en:'CAIRO',jp:'カイロ'},venue:{cn:'开罗 · Cairo Stadium Indoor Halls Complex',en:'CAIRO · CAIRO STADIUM INDOOR HALLS COMPLEX',jp:'カイロ · Cairo Stadium Indoor Halls Complex'}},
+    {code:'CB',continent:'africa',doors:'19:00',status:'few',date:'2027.03.27',country:{cn:'摩洛哥',en:'MOROCCO',jp:'モロッコ'},city:{cn:'卡萨布兰卡',en:'CASABLANCA',jp:'カサブランカ'},venue:{cn:'卡萨布兰卡 · Complexe Sportif Mohammed V',en:'CASABLANCA · COMPLEXE SPORTIF MOHAMMED V',jp:'カサブランカ · Complexe Sportif Mohammed V'}},
+    {code:'JO',continent:'africa',doors:'18:00',status:'plenty',date:'2027.04.03',country:{cn:'南非',en:'SOUTH AFRICA',jp:'南アフリカ'},city:{cn:'约翰内斯堡',en:'JOHANNESBURG',jp:'ヨハネスブルグ'},venue:{cn:'约翰内斯堡 · FNB Stadium',en:'JOHANNESBURG · FNB STADIUM',jp:'ヨハネスブルグ · FNB Stadium'}},
+    {code:'CT',continent:'africa',doors:'13:00',status:'few',date:'2027.04.10',country:{cn:'南非',en:'SOUTH AFRICA',jp:'南アフリカ'},city:{cn:'开普敦',en:'CAPE TOWN',jp:'ケープタウン'},venue:{cn:'开普敦 · DHL Stadium',en:'CAPE TOWN · DHL STADIUM',jp:'ケープタウン · DHL Stadium'}}
   ];
   var ZONES = [
     { id:'s-goods',tier:'S + GOODS',rank:'S',code:'SG',price:14000,die:'⚅',accent:'var(--hot)',goods:true,name:{cn:'限定周边附 S 席',en:'S RESERVED + LIMITED GOODS',jp:'限定グッズ付S席'},
@@ -70,9 +69,9 @@
       seat:{cn:'A 席指定席 · 付款确认后随机配席',en:'A RESERVED · RANDOM SEAT AFTER CONFIRMATION',jp:'A指定席 · 決済確認後ランダム配席'},
       notice:{cn:'A 席为部分演出可能较难观看的座位，请确认后购买。',en:'Some parts of the performance may be difficult to see from A seats. Please purchase with this in mind.',jp:'A席は一部演出が見づらいお席となります。ご了承の上お買い求めください。'} }];
   var T = {
-    cn:{getTickets:'选择场次',lblOpen:'开场 / 开演',lblPrice:'票价',lblStatus:'余票',lblCountry:'国家 / 地区',lblPlace:'国家 / 地区 · 城市',continentNav:'按大洲跳转',from:'起',chooseZone:'选择票档',back:'返回',nameStep:'确认票档与随机配席',nameLabel:'持票人姓名',namePlaceholder:'输入将印在票面上的名字',issueBtn:'模拟付款并随机配席',ticketReady:'随机配席完成',download:'下载 PNG 票券',bookAnother:'再选一场',lblCity:'城市',lblVenue:'场馆',lblDate:'日期',lblTier:'票档',lblSeat:'随机座位',lblName:'持票人',statusFew:'仅剩少量',statusPlenty:'余票充足',downloadHint:'无法下载？请尝试使用手机浏览器打开本站。',tax:'含税',goods:'限定周边',rulesTitle:'购票与配席规则',rulesLead:'票档由你选择，不参与随机；只有座位号会在模拟付款后随机产生。',rules:['全席为指定席，无法自行选择座位号。','3 岁以上须购票（3 岁以下不可入场）。','仅发行电子票。','演出当日将随机对购票人（申请人）进行身份确认。'],rulesFoot:'本页面为非官方同人模拟，不会产生真实付款。',assignTitle:'付款后随机配席',assignBody:'确认后将锁定所选票档，并立即在该票档对应区域内随机生成座位号；结果不可指定或更换。'},
-    en:{getTickets:'CHOOSE A SHOW',lblOpen:'DOORS / START',lblPrice:'FROM',lblStatus:'STATUS',lblCountry:'COUNTRY / REGION',lblPlace:'COUNTRY / REGION · CITY',continentNav:'JUMP BY CONTINENT',from:'FROM',chooseZone:'CHOOSE YOUR TIER',back:'BACK',nameStep:'CONFIRM TIER & RANDOM SEAT',nameLabel:'ATTENDEE NAME',namePlaceholder:'Name to print on the ticket',issueBtn:'SIMULATE PAYMENT & ASSIGN SEAT',ticketReady:'YOUR SEAT IS ASSIGNED',download:'DOWNLOAD PNG',bookAnother:'BOOK ANOTHER',lblCity:'CITY',lblVenue:'VENUE',lblDate:'DATE',lblTier:'TIER',lblSeat:'RANDOM SEAT',lblName:'ATTENDEE',statusFew:'FEW LEFT',statusPlenty:'AVAILABLE',downloadHint:"Download not working? Open this site in your phone's browser.",tax:'TAX INCLUDED',goods:'LIMITED GOODS',rulesTitle:'TICKET & SEAT RULES',rulesLead:'You choose the ticket tier—it is not random. Only the seat number is assigned at random after simulated payment.',rules:['All seats are reserved. Seat numbers cannot be selected.','A paid ticket is required from age 3; children under 3 may not enter.','Electronic tickets only.','Ticket holder identity checks may be conducted at random on the event day.'],rulesFoot:'This is an unofficial fan-made simulation. No real payment is made.',assignTitle:'RANDOM SEAT AFTER PAYMENT',assignBody:'Confirmation locks the selected tier and immediately assigns a random seat within that tier. The result cannot be selected or changed.'},
-    jp:{getTickets:'公演を選ぶ',lblOpen:'開場 / 開演',lblPrice:'料金',lblStatus:'残席',lblCountry:'国・地域',lblPlace:'国・地域 · 都市',continentNav:'地域から選ぶ',from:'より',chooseZone:'券種を選択',back:'戻る',nameStep:'券種確認・ランダム配席',nameLabel:'氏名',namePlaceholder:'チケットに印字する名前',issueBtn:'決済を再現してランダム配席',ticketReady:'ランダム配席完了',download:'PNGを保存',bookAnother:'別の公演',lblCity:'都市',lblVenue:'会場',lblDate:'日付',lblTier:'券種',lblSeat:'ランダム座席',lblName:'氏名',statusFew:'残りわずか',statusPlenty:'販売中',downloadHint:'ダウンロードできない場合はスマホの標準ブラウザで開き直してください。',tax:'税込',goods:'限定グッズ',rulesTitle:'チケット・配席ルール',rulesLead:'券種はご自身で選択し、抽選対象にはなりません。座席番号のみ決済確認後にランダムで決定します。',rules:['全席指定となり、座席番号はお選びいただけません。','3歳以上有料（3歳未満入場不可）。','お申込みは電子チケットのみとなります。','当日会場にてご購入者様（お申込みされた方）の本人確認を、無作為（ランダム）に実施させていただきます。'],rulesFoot:'本ページは非公式ファンメイドのシミュレーションです。実際の決済は発生しません。',assignTitle:'決済後ランダム配席',assignBody:'確定すると選択した券種が固定され、その券種の対象エリア内で座席番号がランダムに発行されます。座席の指定・変更はできません。'}};
+    cn:{getTickets:'选择场次',lblOpen:'开场 / 开演',lblPrice:'票价',lblStatus:'余票',lblCountry:'国家 / 地区',lblPlace:'国家 / 地区',continentNav:'按大洲跳转',from:'起',chooseZone:'选择票档',back:'返回',nameStep:'确认票档与随机配席',nameLabel:'持票人姓名',namePlaceholder:'输入将印在票面上的名字',issueBtn:'模拟付款并随机配席',ticketReady:'随机配席完成',download:'下载 PNG 票券',bookAnother:'再选一场',lblCity:'城市',lblVenue:'场馆',lblDate:'日期',lblTier:'票档',lblSeat:'随机座位',lblName:'持票人',statusFew:'仅剩少量',statusPlenty:'余票充足',downloadHint:'无法下载？请尝试使用手机浏览器打开本站。',tax:'含税',goods:'限定周边',rulesTitle:'购票与配席规则',rulesLead:'票档由你选择，不参与随机；只有座位号会在模拟付款后随机产生。',rules:['全席为指定席，无法自行选择座位号。','3 岁以上须购票（3 岁以下不可入场）。','仅发行电子票。','演出当日将随机对购票人（申请人）进行身份确认。'],rulesFoot:'本页面为非官方同人模拟，不会产生真实付款。',assignTitle:'付款后随机配席',assignBody:'确认后将锁定所选票档，并立即在该票档对应区域内随机生成座位号；结果不可指定或更换。'},
+    en:{getTickets:'CHOOSE A SHOW',lblOpen:'DOORS / START',lblPrice:'FROM',lblStatus:'STATUS',lblCountry:'COUNTRY / REGION',lblPlace:'COUNTRY / REGION',continentNav:'JUMP BY CONTINENT',from:'FROM',chooseZone:'CHOOSE YOUR TIER',back:'BACK',nameStep:'CONFIRM TIER & RANDOM SEAT',nameLabel:'ATTENDEE NAME',namePlaceholder:'Name to print on the ticket',issueBtn:'SIMULATE PAYMENT & ASSIGN SEAT',ticketReady:'YOUR SEAT IS ASSIGNED',download:'DOWNLOAD PNG',bookAnother:'BOOK ANOTHER',lblCity:'CITY',lblVenue:'VENUE',lblDate:'DATE',lblTier:'TIER',lblSeat:'RANDOM SEAT',lblName:'ATTENDEE',statusFew:'FEW LEFT',statusPlenty:'AVAILABLE',downloadHint:"Download not working? Open this site in your phone's browser.",tax:'TAX INCLUDED',goods:'LIMITED GOODS',rulesTitle:'TICKET & SEAT RULES',rulesLead:'You choose the ticket tier—it is not random. Only the seat number is assigned at random after simulated payment.',rules:['All seats are reserved. Seat numbers cannot be selected.','A paid ticket is required from age 3; children under 3 may not enter.','Electronic tickets only.','Ticket holder identity checks may be conducted at random on the event day.'],rulesFoot:'This is an unofficial fan-made simulation. No real payment is made.',assignTitle:'RANDOM SEAT AFTER PAYMENT',assignBody:'Confirmation locks the selected tier and immediately assigns a random seat within that tier. The result cannot be selected or changed.'},
+    jp:{getTickets:'公演を選ぶ',lblOpen:'開場 / 開演',lblPrice:'料金',lblStatus:'残席',lblCountry:'国・地域',lblPlace:'国・地域',continentNav:'地域から選ぶ',from:'より',chooseZone:'券種を選択',back:'戻る',nameStep:'券種確認・ランダム配席',nameLabel:'氏名',namePlaceholder:'チケットに印字する名前',issueBtn:'決済を再現してランダム配席',ticketReady:'ランダム配席完了',download:'PNGを保存',bookAnother:'別の公演',lblCity:'都市',lblVenue:'会場',lblDate:'日付',lblTier:'券種',lblSeat:'ランダム座席',lblName:'氏名',statusFew:'残りわずか',statusPlenty:'販売中',downloadHint:'ダウンロードできない場合はスマホの標準ブラウザで開き直してください。',tax:'税込',goods:'限定グッズ',rulesTitle:'チケット・配席ルール',rulesLead:'券種はご自身で選択し、抽選対象にはなりません。座席番号のみ決済確認後にランダムで決定します。',rules:['全席指定となり、座席番号はお選びいただけません。','3歳以上有料（3歳未満入場不可）。','お申込みは電子チケットのみとなります。','当日会場にてご購入者様（お申込みされた方）の本人確認を、無作為（ランダム）に実施させていただきます。'],rulesFoot:'本ページは非公式ファンメイドのシミュレーションです。実際の決済は発生しません。',assignTitle:'決済後ランダム配席',assignBody:'確定すると選択した券種が固定され、その券種の対象エリア内で座席番号がランダムに発行されます。座席の指定・変更はできません。'}};
 
   var DICE=['\u2680','\u2681','\u2682','\u2683'];
   var STEPKEYS=['stop','zone','name','ticket'];
@@ -81,6 +80,7 @@
   var minPrice=Math.min.apply(null,ZONES.map(function(z){return z.price;}));
 
   var state={ lang:(window.DiZLang||'cn'), step:'stop', stopIndex:null, zoneId:null, name:'', ticket:null };
+  var continentScrollHandler=null;
 
   var hero=new Image(); hero.src='assets/hero-desktop-square.jpg';
 
@@ -204,7 +204,7 @@
 
   function renderStop(t){
     var lang=state.lang;
-    var nav=CONTINENTS.map(function(continent){return '<a href="#continent-'+continent.id+'">'+esc(continent.name[lang])+'</a>';}).join('');
+    var nav=CONTINENTS.map(function(continent,index){return '<a href="#continent-'+continent.id+'"'+(index===0?' class="is-active" aria-current="location"':'')+'>'+esc(continent.name[lang])+'</a>';}).join('');
     var sections=CONTINENTS.map(function(continent){
       var rows='',groupIndex=0;
       for(var i=0;i<STOPS.length;i++){
@@ -341,6 +341,41 @@
       else if(act==='book') el.onclick=bookAnother;
       else if(act==='name'){ el.oninput=function(){ state.name=el.value; updateIssue(); }; el.onkeydown=function(e){ if(e.key==='Enter') issue(); }; }
     })(els[i]); }
+    if(continentScrollHandler){ window.removeEventListener('scroll',continentScrollHandler); continentScrollHandler=null; }
+    var continentNav=flow.querySelector('.continent-nav');
+    var continentLinks=flow.querySelectorAll('.continent-nav a');
+    var continentSections=flow.querySelectorAll('.tour-continent');
+    if(!continentLinks.length) return;
+    function setActiveContinent(id){
+      var activeLink=null,changed=false;
+      for(var j=0;j<continentLinks.length;j++){
+        var active=continentLinks[j].getAttribute('href')==='#'+id;
+        if(active!==continentLinks[j].classList.contains('is-active')) changed=true;
+        continentLinks[j].classList.toggle('is-active',active);
+        if(active){ continentLinks[j].setAttribute('aria-current','location'); activeLink=continentLinks[j]; }
+        else continentLinks[j].removeAttribute('aria-current');
+      }
+      if(changed && activeLink && continentNav.scrollWidth>continentNav.clientWidth){
+        continentNav.scrollTo({left:activeLink.offsetLeft-(continentNav.clientWidth-activeLink.offsetWidth)/2,behavior:'smooth'});
+      }
+    }
+    for(var k=0;k<continentLinks.length;k++) continentLinks[k].onclick=function(){ setActiveContinent(this.getAttribute('href').slice(1)); };
+    function updateActiveFromPosition(){
+      var current=continentSections[0],cutoff=window.innerHeight*.3;
+      for(var n=0;n<continentSections.length;n++){
+        if(continentSections[n].getBoundingClientRect().top<=cutoff) current=continentSections[n];
+        else break;
+      }
+      setActiveContinent(current.id);
+    }
+    var scrollTick=false;
+    continentScrollHandler=function(){
+      if(scrollTick) return;
+      scrollTick=true;
+      window.requestAnimationFrame(function(){ scrollTick=false; updateActiveFromPosition(); });
+    };
+    window.addEventListener('scroll',continentScrollHandler,{passive:true});
+    updateActiveFromPosition();
   }
 
   window.DiZTicketLang=function(l){ state.lang=l; render(); };
