@@ -12,7 +12,7 @@
   <link rel="preload" as="image" href="assets/live/lane-o2.png" />
   <link rel="preload" as="image" href="assets/live/lane-l.png" />
   <link rel="preload" as="image" href="assets/live/utsugi-helper.png" />
-  <link rel="stylesheet" href="live-experience-20260830j.css?v=20260830k" />
+  <link rel="stylesheet" href="live-experience-20260830j.css?v=20260830m" />
 </head>
 <body>
   <main class="broadcast" id="broadcast">
@@ -170,15 +170,34 @@
       </div>
     </section>
 
-    <section class="be-gate" id="beGate" role="dialog" aria-modal="true" aria-labelledby="beTitle" hidden>
-      <div class="be-rain" aria-hidden="true"></div>
-      <div class="be-clouds" aria-hidden="true"><i></i><i></i><i></i></div>
-      <button type="button" class="be-reveal" id="beReveal">拨开乌云</button>
+    <section class="be-gate" id="beGate" role="dialog" aria-modal="true" aria-labelledby="beStormTitle" hidden>
+      <div class="be-stage-ghost" aria-hidden="true"></div>
+      <canvas class="be-weather" id="beWeatherCanvas" aria-hidden="true"></canvas>
+      <div class="be-lightning" aria-hidden="true"></div>
+
+      <header class="be-broadcast-head">
+        <span>ROUND 9.9</span>
+        <span class="be-signal" id="beSignal"><i aria-hidden="true"></i>SIGNAL LOST</span>
+      </header>
+
+      <div class="be-storm-intro" id="beStormIntro">
+        <h1 id="beStormTitle">直播信号中断</h1>
+        <p>舞台上空天气异常</p>
+        <button type="button" class="be-reveal" id="beReveal">
+          <i aria-hidden="true"></i><span>拨开乌云</span><i aria-hidden="true"></i>
+        </button>
+      </div>
+
       <div class="be-story" id="beStory" hidden>
+        <div class="be-story-meta" aria-hidden="true">
+          <span>BAD ENDING</span>
+          <output id="beProgress">1 / 3</output>
+        </div>
         <article class="be-page is-active" data-be-page="0">
-          <h1 id="beTitle">怎么回事？？<br />你没能阻止月云了毁灭偶像……</h1>
+          <h1>怎么回事？？<br />你没能阻止月云了毁灭偶像……</h1>
         </article>
         <article class="be-page" data-be-page="1" aria-hidden="true">
+          <div class="be-falling-badges" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
           <strong class="be-status">进入【BE结局—偶像毁灭后的世界】</strong>
           <p>此时此刻，如果你抬头往天上看，你会看见天上掉月云了吧唧，偶像全都被砸晕了……</p>
         </article>
@@ -208,6 +227,6 @@
     <div class="screen-flash" aria-hidden="true"></div>
     <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
   </main>
-  <script src="live-experience-20260830j.js?v=20260830k"></script>
+  <script src="live-experience-20260830j.js?v=20260830m"></script>
 </body>
 </html>

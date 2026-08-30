@@ -16,8 +16,13 @@
   var resultScore = document.getElementById("resultScore");
   var encoreButton = document.getElementById("encoreButton");
   var beGate = document.getElementById("beGate");
+  var beWeatherCanvas = document.getElementById("beWeatherCanvas");
+  var beWeatherContext = beWeatherCanvas.getContext("2d", { alpha: true });
+  var beStormIntro = document.getElementById("beStormIntro");
   var beReveal = document.getElementById("beReveal");
   var beStory = document.getElementById("beStory");
+  var beSignal = document.getElementById("beSignal");
+  var beProgress = document.getElementById("beProgress");
   var beBack = document.getElementById("beBack");
   var beNext = document.getElementById("beNext");
   var beExit = document.getElementById("beExit");
@@ -125,6 +130,20 @@
   var assistActive = false;
   var bePage = 0;
   var beEndingPending = false;
+  var beWeatherFrame = 0;
+  var beWeatherRunning = false;
+  var beWeatherLastTime = 0;
+  var beWeatherWidth = 1;
+  var beWeatherHeight = 1;
+  var beWeatherDpr = 1;
+  var beCloudTexture = null;
+  var beCloudTextureFar = null;
+  var beCloudOpening = 0;
+  var beCloudOpeningTarget = 0;
+  var beCloudShift = 0;
+  var beRainDrops = [];
+  var beRainSplashes = [];
+  var beNextLightningAt = 0;
   var currentRoundProfile = getRoundProfile(1);
   var openingNoteCounts = countOpeningNotes();
   var chargeGainByLane = openingNoteCounts.map(function (count) { return count ? 99 / count : 99; });
@@ -167,6 +186,238 @@
 
   function roundTo25(value) {
     return Math.max(250, Math.round(value / 25) * 25);
+  }
+
+  function seededRandom(seed) {
+    return function () {
+      seed |= 0;
+      seed = seed + 0x6D2B79F5 | 0;
+      var value = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      value = value + Math.imul(value ^ value >>> 7, 61 | value) ^ value;
+      return ((value ^ value >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  function buildNoiseLayer(columns, rows, random) {
+    var values = new Float32Array(columns * rows);
+    for (var index = 0; index < values.length; index += 1) values[index] = random();
+    return { columns: columns, rows: rows, values: values };
+  }
+
+  function sampleNoiseLayer(layer, u, v) {
+    var x = clamp(u, 0, 1) * (layer.columns - 1);
+    var y = clamp(v, 0, 1) * (layer.rows - 1);
+    var x0 = Math.floor(x);
+    var y0 = Math.floor(y);
+    var x1 = Math.min(layer.columns - 1, x0 + 1);
+    var y1 = Math.min(layer.rows - 1, y0 + 1);
+    var tx = x - x0;
+    var ty = y - y0;
+    tx = tx * tx * (3 - 2 * tx);
+    ty = ty * ty * (3 - 2 * ty);
+    var top = lerp(layer.values[y0 * layer.columns + x0], layer.values[y0 * layer.columns + x1], tx);
+    var bottom = lerp(layer.values[y1 * layer.columns + x0], layer.values[y1 * layer.columns + x1], tx);
+    return lerp(top, bottom, ty);
+  }
+
+  function createCloudTexture(seed, depth) {
+    var texture = document.createElement("canvas");
+    var textureWidth = Math.max(240, Math.min(560, Math.round(beWeatherWidth / 2.5)));
+    var textureHeight = Math.max(130, Math.min(340, Math.round(beWeatherHeight / 2.2)));
+    texture.width = textureWidth;
+    texture.height = textureHeight;
+    var textureContext = texture.getContext("2d");
+    var image = textureContext.createImageData(textureWidth, textureHeight);
+    var random = seededRandom(seed);
+    var broad = buildNoiseLayer(7, 5, random);
+    var body = buildNoiseLayer(17, 10, random);
+    var detail = buildNoiseLayer(39, 22, random);
+    var tint = depth ? { r: 20, g: 22, b: 35 } : { r: 25, g: 25, b: 38 };
+
+    for (var y = 0; y < textureHeight; y += 1) {
+      for (var x = 0; x < textureWidth; x += 1) {
+        var u = x / Math.max(1, textureWidth - 1);
+        var v = y / Math.max(1, textureHeight - 1);
+        var noise = sampleNoiseLayer(broad, u, v) * .52
+          + sampleNoiseLayer(body, u, v) * .31
+          + sampleNoiseLayer(detail, u, v) * .17;
+        var dome = Math.pow(Math.sin(clamp(v, 0, 1) * Math.PI), .42);
+        var ceiling = 1 - Math.max(0, v - .6) * .58;
+        var density = clamp((noise + dome * .3 + ceiling * .09 - .48) * 2.25, 0, 1);
+        var shade = clamp(noise * .88 + dome * .2, 0, 1);
+        var pixel = (y * textureWidth + x) * 4;
+        image.data[pixel] = tint.r + shade * 31;
+        image.data[pixel + 1] = tint.g + shade * 34;
+        image.data[pixel + 2] = tint.b + shade * 45;
+        image.data[pixel + 3] = density * (depth ? 205 : 238);
+      }
+    }
+    textureContext.putImageData(image, 0, 0);
+    return texture;
+  }
+
+  function resetBeRain() {
+    var random = seededRandom(Math.round(beWeatherWidth * 13 + beWeatherHeight * 7));
+    var count = Math.max(78, Math.min(250, Math.round(beWeatherWidth * beWeatherHeight / 4200)));
+    beRainDrops = [];
+    beRainSplashes = [];
+    for (var index = 0; index < count; index += 1) {
+      var depth = .28 + random() * .72;
+      beRainDrops.push({
+        x: random() * (beWeatherWidth + 220),
+        y: random() * beWeatherHeight,
+        depth: depth,
+        length: 8 + depth * 34,
+        speed: 8 + depth * 17,
+        alpha: .1 + depth * .48
+      });
+    }
+  }
+
+  function resizeBeWeather() {
+    var rect = broadcast.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    beWeatherWidth = rect.width;
+    beWeatherHeight = rect.height;
+    beWeatherDpr = Math.min(1.75, window.devicePixelRatio || 1);
+    beWeatherCanvas.width = Math.max(1, Math.round(beWeatherWidth * beWeatherDpr));
+    beWeatherCanvas.height = Math.max(1, Math.round(beWeatherHeight * beWeatherDpr));
+    beWeatherCanvas.style.width = beWeatherWidth + "px";
+    beWeatherCanvas.style.height = beWeatherHeight + "px";
+    beWeatherContext.setTransform(beWeatherDpr, 0, 0, beWeatherDpr, 0, 0);
+    beCloudTextureFar = createCloudTexture(9919, true);
+    beCloudTexture = createCloudTexture(20999, false);
+    resetBeRain();
+  }
+
+  function drawSplitCloudLayer(texture, opening, drift, alpha, overscan) {
+    if (!texture) return;
+    var width = beWeatherWidth + overscan * 2;
+    var height = beWeatherHeight + overscan * 2;
+    var split = beWeatherWidth / 2;
+    var travel = opening * beWeatherWidth * .46;
+    beWeatherContext.save();
+    beWeatherContext.globalAlpha = alpha;
+    beWeatherContext.beginPath();
+    beWeatherContext.rect(0, 0, split, beWeatherHeight);
+    beWeatherContext.clip();
+    beWeatherContext.drawImage(texture, -overscan + drift - travel, -overscan, width, height);
+    beWeatherContext.restore();
+
+    beWeatherContext.save();
+    beWeatherContext.globalAlpha = alpha;
+    beWeatherContext.beginPath();
+    beWeatherContext.rect(split, 0, split, beWeatherHeight);
+    beWeatherContext.clip();
+    beWeatherContext.drawImage(texture, -overscan + drift + travel, -overscan, width, height);
+    beWeatherContext.restore();
+  }
+
+  function drawBeClouds() {
+    var context = beWeatherContext;
+    var opening = beCloudOpening;
+    context.fillStyle = "rgba(3,5,10," + (.56 * (1 - opening * .8)) + ")";
+    context.fillRect(0, 0, beWeatherWidth, beWeatherHeight);
+    drawSplitCloudLayer(beCloudTextureFar, opening * .72, Math.sin(beCloudShift * .45) * 18, .82, 28);
+    drawSplitCloudLayer(beCloudTexture, opening, Math.cos(beCloudShift * .62) * 12, .96, 16);
+
+    if (opening > .02) {
+      context.save();
+      context.globalCompositeOperation = "destination-out";
+      context.translate(beWeatherWidth / 2, beWeatherHeight * .5);
+      context.scale(1.65, 1);
+      var radius = Math.max(beWeatherWidth, beWeatherHeight) * (.03 + opening * .55);
+      var clearing = context.createRadialGradient(0, 0, radius * .08, 0, 0, radius);
+      clearing.addColorStop(0, "rgba(0,0,0,1)");
+      clearing.addColorStop(.68, "rgba(0,0,0,.94)");
+      clearing.addColorStop(1, "rgba(0,0,0,0)");
+      context.fillStyle = clearing;
+      context.fillRect(-beWeatherWidth, -beWeatherHeight, beWeatherWidth * 2, beWeatherHeight * 2);
+      context.restore();
+    }
+  }
+
+  function drawBeRain(delta) {
+    var context = beWeatherContext;
+    var intensity = bePage === bePages.length - 1 && beGate.classList.contains("is-cleared") ? .18 : 1;
+    context.lineCap = "round";
+    for (var index = 0; index < beRainDrops.length; index += 1) {
+      var drop = beRainDrops[index];
+      var travel = delta / 16.67;
+      drop.x -= drop.speed * .32 * travel;
+      drop.y += drop.speed * travel;
+      if (drop.y > beWeatherHeight + drop.length || drop.x < -drop.length) {
+        if (drop.depth > .72 && Math.random() < .32) {
+          beRainSplashes.push({ x: clamp(drop.x, 0, beWeatherWidth), life: 1, depth: drop.depth });
+        }
+        drop.x = Math.random() * (beWeatherWidth + 180) + 80;
+        drop.y = -drop.length - Math.random() * beWeatherHeight * .35;
+      }
+      if (index / beRainDrops.length > intensity) continue;
+      context.beginPath();
+      context.moveTo(drop.x, drop.y);
+      context.lineTo(drop.x + drop.length * .22, drop.y - drop.length);
+      context.strokeStyle = "rgba(205,222,239," + (drop.alpha * intensity) + ")";
+      context.lineWidth = .45 + drop.depth * 1.35;
+      context.stroke();
+    }
+
+    for (var splashIndex = beRainSplashes.length - 1; splashIndex >= 0; splashIndex -= 1) {
+      var splash = beRainSplashes[splashIndex];
+      splash.life -= delta / 280;
+      if (splash.life <= 0) {
+        beRainSplashes.splice(splashIndex, 1);
+        continue;
+      }
+      var spread = (1 - splash.life) * 15 * splash.depth;
+      context.beginPath();
+      context.moveTo(splash.x, beWeatherHeight - 2);
+      context.quadraticCurveTo(splash.x - spread * .55, beWeatherHeight - 4 - spread * .4, splash.x - spread, beWeatherHeight - 2);
+      context.moveTo(splash.x, beWeatherHeight - 2);
+      context.quadraticCurveTo(splash.x + spread * .55, beWeatherHeight - 4 - spread * .4, splash.x + spread, beWeatherHeight - 2);
+      context.strokeStyle = "rgba(218,232,247," + (splash.life * .4) + ")";
+      context.lineWidth = 1;
+      context.stroke();
+    }
+  }
+
+  function triggerBeLightning(now) {
+    if (bePage === bePages.length - 1 && beGate.classList.contains("is-cleared")) return;
+    beGate.classList.remove("is-lightning");
+    void beGate.offsetWidth;
+    beGate.classList.add("is-lightning");
+    window.setTimeout(function () { beGate.classList.remove("is-lightning"); }, 360);
+    beNextLightningAt = now + 3600 + Math.random() * 4300;
+  }
+
+  function renderBeWeather(now) {
+    if (!beWeatherRunning || beGate.hidden) {
+      beWeatherRunning = false;
+      return;
+    }
+    var delta = Math.min(40, Math.max(8, now - (beWeatherLastTime || now - 16)));
+    beWeatherLastTime = now;
+    beCloudOpening += (beCloudOpeningTarget - beCloudOpening) * Math.min(1, delta * .0048);
+    beCloudShift += delta * .00055;
+    beWeatherContext.setTransform(beWeatherDpr, 0, 0, beWeatherDpr, 0, 0);
+    beWeatherContext.clearRect(0, 0, beWeatherWidth, beWeatherHeight);
+    drawBeClouds();
+    if (!reduceMotion) drawBeRain(delta);
+    if (reduceMotion) {
+      beWeatherRunning = false;
+      return;
+    }
+    if (!reduceMotion && now >= beNextLightningAt) triggerBeLightning(now);
+    beWeatherFrame = window.requestAnimationFrame(renderBeWeather);
+  }
+
+  function startBeWeather() {
+    resizeBeWeather();
+    beWeatherRunning = true;
+    beWeatherLastTime = 0;
+    beNextLightningAt = performance.now() + 850;
+    window.cancelAnimationFrame(beWeatherFrame);
+    beWeatherFrame = window.requestAnimationFrame(renderBeWeather);
   }
 
   function getRoundProfile(round) {
@@ -1227,6 +1478,10 @@
       page.classList.toggle("is-active", active);
       page.setAttribute("aria-hidden", String(!active));
     });
+    beProgress.textContent = bePage + 1 + " / " + bePages.length;
+    beGate.classList.toggle("is-bad-world", bePage === 1);
+    beGate.classList.toggle("is-fakeout", bePage === 2);
+    beSignal.lastChild.nodeValue = bePage === 1 ? "BAD END" : bePage === 2 ? "SIGNAL RESTORED" : "SIGNAL LOST";
     beBack.hidden = bePage === 0;
     beNext.hidden = bePage === bePages.length - 1;
     beExit.hidden = bePage !== bePages.length - 1;
@@ -1234,21 +1489,33 @@
 
   function resetBeEnding() {
     bePage = 0;
-    beGate.classList.remove("is-cleared");
+    beCloudOpening = 0;
+    beCloudOpeningTarget = 0;
+    beGate.classList.remove("is-cleared", "is-bad-world", "is-fakeout", "is-lightning");
+    beStormIntro.hidden = false;
+    beStormIntro.removeAttribute("aria-hidden");
     beReveal.hidden = false;
     beStory.hidden = true;
     renderBeEnding();
+    startBeWeather();
     window.setTimeout(function () { beReveal.focus(); }, 120);
   }
 
   function revealBeEnding() {
     beGate.classList.add("is-cleared");
+    beCloudOpeningTarget = 1;
+    if (reduceMotion) {
+      beCloudOpening = 1;
+      startBeWeather();
+    }
     beReveal.hidden = true;
     window.setTimeout(function () {
+      beStormIntro.hidden = true;
+      beStormIntro.setAttribute("aria-hidden", "true");
       beStory.hidden = false;
       renderBeEnding();
       beNext.focus();
-    }, reduceMotion ? 0 : 620);
+    }, reduceMotion ? 0 : 900);
   }
 
   function isPortrait() {
@@ -1416,11 +1683,13 @@
   window.addEventListener("blur", function () { releaseAllInputs(true); });
   window.addEventListener("resize", function () {
     resizeCanvas();
+    if (!beGate.hidden) resizeBeWeather();
     syncOrientation();
   });
   window.addEventListener("orientationchange", function () {
     window.setTimeout(function () {
       resizeCanvas();
+      if (!beGate.hidden) resizeBeWeather();
       syncOrientation();
     }, 120);
   });
@@ -1435,6 +1704,7 @@
     window.visualViewport.addEventListener("resize", function () {
       syncViewportHeight();
       resizeCanvas();
+      if (!beGate.hidden) resizeBeWeather();
     });
   }
   document.addEventListener("visibilitychange", function () {
