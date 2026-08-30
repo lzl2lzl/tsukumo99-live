@@ -892,28 +892,9 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 .achievement-live{position:relative;padding:.3rem .55rem;background:var(--hot);font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.17em}
 .achievement-gate h1{position:relative;margin:.35rem 0 .25rem;font-family:var(--display);font-size:clamp(3.8rem,10vw,6rem);line-height:.86;letter-spacing:-.03em;text-shadow:0 10px 2.8rem rgba(236,0,80,.55)}
 .achievement-gate>p{position:relative;max-width:35rem;margin:.45rem 0 1.15rem;color:var(--muted);font-size:.88rem;line-height:1.65;text-wrap:balance}
-.achievement-actions{position:relative;display:grid;grid-template-columns:repeat(3,minmax(9rem,1fr));width:min(100%,43rem);border:1px solid rgba(255,134,189,.42)}
+.achievement-actions{position:relative;display:grid;grid-template-columns:minmax(12rem,1fr);width:min(100%,22rem);border:1px solid rgba(255,134,189,.42)}
 .achievement-actions button,.achievement-actions a{display:grid;place-items:center;min-height:48px;padding:.7rem 1rem;background:rgba(18,0,5,.86);color:var(--paper);font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-decoration:none}
-.achievement-actions button{background:rgba(18,0,5,.86);color:var(--paper);font-weight:700}
-.achievement-actions button:first-child{background:var(--paper);color:var(--ink)}
-.achievement-actions button:disabled{background:var(--hot);color:var(--paper);cursor:default}
-.achievement-actions button:not(:disabled):hover,.achievement-actions a:hover{background:var(--crimson);color:var(--paper)}
-.achievement-actions button+button,.achievement-actions a{border-left:1px solid rgba(255,134,189,.42)}
-.achievement-cart-status{position:relative;min-height:1.1rem;margin-top:.5rem;color:var(--pink);font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;opacity:0;transform:translateY(-.2rem);transition:opacity .24s ease,transform .24s ease}
-.achievement-cart-status.show{opacity:1;transform:none}
-.achievement-certificate-dialog{position:absolute;z-index:132;inset:0;display:grid;place-items:center;padding:max(1rem,env(safe-area-inset-top)) max(1rem,env(safe-area-inset-right)) max(1rem,env(safe-area-inset-bottom)) max(1rem,env(safe-area-inset-left));background:rgba(18,0,5,.94)}
-.achievement-certificate-panel{width:min(30rem,92vw);padding:1.35rem;border-top:1px solid var(--pink);border-bottom:1px solid rgba(255,134,189,.38);background:var(--ink);box-shadow:.8rem 1rem 2.8rem rgba(0,0,0,.62)}
-.achievement-certificate-panel>span{color:var(--pink);font:700 .55rem var(--mono);letter-spacing:.17em}
-.achievement-certificate-panel h2{margin:.4rem 0 .25rem;font-family:var(--display);font-size:clamp(1.8rem,5vw,2.6rem);line-height:1}
-.achievement-certificate-panel>p{margin:0 0 .9rem;color:var(--muted);font-size:.74rem;line-height:1.6}
-.achievement-certificate-panel label{display:block;margin-bottom:.3rem;color:var(--pink);font:700 .56rem var(--mono);letter-spacing:.12em}
-.achievement-certificate-panel input{width:100%;min-height:48px;padding:.7rem .8rem;border:1px solid rgba(255,134,189,.35);background:rgba(58,0,20,.46);color:var(--paper);font:500 16px var(--body);outline:none}
-.achievement-certificate-panel input:focus{border-color:var(--paper)}
-.achievement-certificate-panel output{display:block;min-height:1.3rem;margin:.75rem 0;color:var(--paper);font-size:.78rem;line-height:1.5}
-.achievement-certificate-panel>div{display:grid;grid-template-columns:1fr 1.35fr;gap:.55rem}
-.achievement-certificate-panel button{min-height:46px;padding:.65rem .8rem;border:1px solid rgba(255,134,189,.38);background:transparent;color:var(--paper);font:700 .62rem var(--mono);letter-spacing:.07em}
-.achievement-certificate-panel button:last-child{border-color:var(--paper);background:var(--paper);color:var(--ink)}
-.achievement-certificate-panel button:disabled{opacity:.38;cursor:not-allowed}
+.achievement-actions a:hover{background:var(--crimson);color:var(--paper)}
 @keyframes achievementSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 
 .violet-sweep{z-index:54;opacity:0;background:linear-gradient(112deg,transparent 16%,rgba(199,88,255,.48) 45%,rgba(255,134,189,.38) 53%,transparent 78%);transform:translateX(-100%)}
@@ -996,9 +977,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
   .achievement-live{font-size:.48rem}
   .achievement-gate h1{margin:.2rem 0 .1rem;font-size:clamp(2.7rem,8vw,4.2rem)}
   .achievement-gate>p{max-width:30rem;margin:.25rem 0 .7rem;font-size:.7rem;line-height:1.45}
-  .achievement-actions{grid-template-columns:repeat(3,minmax(7.2rem,1fr));width:min(100%,37rem)}
+  .achievement-actions{grid-template-columns:minmax(10rem,1fr);width:min(100%,20rem)}
   .achievement-actions button,.achievement-actions a{min-height:42px;padding:.48rem .65rem;font-size:.54rem}
-  .achievement-cart-status{min-height:.8rem;margin-top:.25rem;font-size:.54rem}
   .be-story{width:min(760px,94vw);min-height:calc(100dvh - 1rem);padding:.7rem 1rem}
   .be-page{gap:.55rem}
   .be-page h1{max-width:18ch;font-size:clamp(2rem,7vw,3.5rem)}

@@ -23,22 +23,14 @@
   var beExit = document.getElementById("beExit");
   var bePages = Array.prototype.slice.call(document.querySelectorAll("[data-be-page]"));
   var achievementGate = document.getElementById("achievementGate");
-  if (achievementGate && !document.getElementById("addAchievementCart")) {
+  if (achievementGate && !document.getElementById("achievementExit")) {
     achievementGate.innerHTML = '<div class="achievement-rays" aria-hidden="true"></div>'
       + '<span class="achievement-live">ACHIEVEMENT UNLOCKED</span>'
       + '<h1 id="achievementTitle">月云的兵</h1>'
-      + '<p>恭喜你已获得成就“月云的兵”！现在可以署名下载 PNG 证书，或将限定证书加入购物车。</p>'
-      + '<div class="achievement-actions"><button type="button" id="downloadAchievement">下载成就证书</button><button type="button" id="addAchievementCart">加入购物车</button><a href="index.html">退出游戏</a></div>'
-      + '<small class="achievement-cart-status" id="achievementCartStatus" role="status" aria-live="polite"></small>';
+      + '<p>谢谢你为TSUKUMO99应援！恭喜你已获得成就“月云的兵”！</p>'
+      + '<div class="achievement-actions"><a href="index.html" id="achievementExit">退出游戏</a></div>';
   }
-  var addAchievementCart = document.getElementById("addAchievementCart");
-  var downloadAchievement = document.getElementById("downloadAchievement");
-  var achievementCartStatus = document.getElementById("achievementCartStatus");
-  var achievementCertificateDialog = document.getElementById("achievementCertificateDialog");
-  var achievementName = document.getElementById("achievementName");
-  var achievementCertificatePreview = document.getElementById("achievementCertificatePreview");
-  var achievementCertificateCancel = document.getElementById("achievementCertificateCancel");
-  var achievementCertificateSave = document.getElementById("achievementCertificateSave");
+  var achievementExit = document.getElementById("achievementExit");
   var soundButton = document.getElementById("soundButton");
   var fullscreenButton = document.getElementById("fullscreenButton");
   var rotateFullscreenButton = document.getElementById("rotateFullscreenButton");
@@ -70,8 +62,7 @@
   var laneMembers = ["TORAO", "HARUKA", "TOMA", "MINAMI"];
   var CHARGE_KEY = "tsukumo99-live-charge-v1";
   var ACHIEVEMENT_KEY = "tsukumo99-live-achievement-v1";
-  var CART_KEY = "dizCart";
-  var ACHIEVEMENT_PRODUCT_ID = "live-achievement-cert";
+  var ACHIEVEMENT_SEEN_KEY = "tsukumo99-live-achievement-seen-v1";
   var trackColor = { solid: "#ec0050", soft: "rgba(236,0,80,.2)", pale: "rgba(255,134,189,.78)" };
   var laneColors = [trackColor, trackColor, trackColor, trackColor];
   var cropRects = [
@@ -139,7 +130,7 @@
   var chargeGainByLane = openingNoteCounts.map(function (count) { return count ? 99 / count : 99; });
   var chargeValues = loadChargeValues();
   var achievementEarned = readStoredValue(ACHIEVEMENT_KEY) === "1";
-  var achievementPending = achievementEarned && !achievementInCart();
+  var achievementPending = achievementEarned && readStoredValue(ACHIEVEMENT_SEEN_KEY) !== "1";
 
   var geometry = {
     width: 1,
@@ -278,7 +269,10 @@
     if (achievementEarned || achievementPending) return;
     achievementEarned = true;
     achievementPending = true;
-    try { window.localStorage.setItem(ACHIEVEMENT_KEY, "1"); } catch (error) {}
+    try {
+      window.localStorage.setItem(ACHIEVEMENT_KEY, "1");
+      window.localStorage.removeItem(ACHIEVEMENT_SEEN_KEY);
+    } catch (error) {}
     showAudioStatus("成就解锁：月云的兵");
     playSound("full");
     vibrate([24, 34, 24, 34, 60]);
@@ -1162,7 +1156,7 @@
     achievementGate.hidden = beEndingPending || !achievementPending;
     resultGate.hidden = beEndingPending || achievementPending;
     if (beEndingPending) resetBeEnding();
-    else if (achievementPending) window.setTimeout(function () { addAchievementCart.focus(); }, 180);
+    else if (achievementPending) window.setTimeout(function () { achievementExit.focus(); }, 180);
   }
 
   function startRound() {
@@ -1255,106 +1249,6 @@
       renderBeEnding();
       beNext.focus();
     }, reduceMotion ? 0 : 620);
-  }
-
-  function achievementInCart() {
-    try {
-      var cart = JSON.parse(window.localStorage.getItem(CART_KEY) || "[]");
-      return Array.isArray(cart) && cart.some(function (item) { return item && item.id === ACHIEVEMENT_PRODUCT_ID; });
-    } catch (error) {
-      return false;
-    }
-  }
-
-  function showAchievementCartStatus(message, isError) {
-    achievementCartStatus.textContent = message;
-    achievementCartStatus.classList.toggle("is-error", !!isError);
-    achievementCartStatus.classList.add("show");
-  }
-
-  function syncAchievementCartState() {
-    var added = achievementInCart();
-    addAchievementCart.disabled = added;
-    addAchievementCart.textContent = added ? "已加入购物车" : "加入购物车";
-    if (added) showAchievementCartStatus("已加入购物车", false);
-  }
-
-  function addAchievementToCart() {
-    try {
-      var cart = JSON.parse(window.localStorage.getItem(CART_KEY) || "[]");
-      if (!Array.isArray(cart)) cart = [];
-      var item = cart.find(function (entry) { return entry && entry.id === ACHIEVEMENT_PRODUCT_ID; });
-      if (item) item.qty = 2;
-      else cart.push({ id: ACHIEVEMENT_PRODUCT_ID, qty: 2 });
-      window.localStorage.setItem(CART_KEY, JSON.stringify(cart));
-      syncAchievementCartState();
-    } catch (error) {
-      showAchievementCartStatus("加入失败，请确认浏览器允许保存网站数据后重试。", true);
-    }
-  }
-
-  function openAchievementCertificate() {
-    if (!achievementCertificateDialog) return;
-    achievementCertificateDialog.hidden = false;
-    achievementName.value = "";
-    syncAchievementCertificateName();
-    window.setTimeout(function () { achievementName.focus(); }, 80);
-  }
-
-  function closeAchievementCertificate() {
-    if (!achievementCertificateDialog) return;
-    achievementCertificateDialog.hidden = true;
-    if (downloadAchievement) downloadAchievement.focus();
-  }
-
-  function syncAchievementCertificateName() {
-    if (!achievementName) return;
-    var name = achievementName.value.trim();
-    achievementCertificatePreview.textContent = "恭喜 " + (name || "XXX") + " 获得称号 月云的兵";
-    achievementCertificateSave.disabled = !name;
-  }
-
-  function certificateRoundRect(g, x, y, w, h, radius) {
-    g.beginPath();g.moveTo(x + radius, y);g.arcTo(x + w, y, x + w, y + h, radius);g.arcTo(x + w, y + h, x, y + h, radius);g.arcTo(x, y + h, x, y, radius);g.arcTo(x, y, x + w, y, radius);g.closePath();
-  }
-
-  function fitCertificateText(g, text, maxWidth, startSize) {
-    var size = startSize;
-    do {
-      g.font = "700 " + size + "px 'Noto Sans SC','Noto Sans JP',sans-serif";
-      if (g.measureText(text).width <= maxWidth || size <= 32) break;
-      size -= 2;
-    } while (size > 32);
-    return text;
-  }
-
-  function saveAchievementCertificate() {
-    var name = achievementName.value.trim();
-    if (!name) { achievementName.focus(); return; }
-    var W = 1800, H = 1100, canvasOut = document.createElement("canvas"), g = canvasOut.getContext("2d");
-    canvasOut.width = W;canvasOut.height = H;
-    var bg = g.createLinearGradient(0, 0, W, H);bg.addColorStop(0, "#4c001a");bg.addColorStop(.52, "#170006");bg.addColorStop(1, "#3a0014");g.fillStyle = bg;g.fillRect(0, 0, W, H);
-    if (heroImage.complete && heroImage.naturalWidth) {
-      g.save();g.globalAlpha = .22;g.drawImage(heroImage, 920, 0, 880, 1100);var fade = g.createLinearGradient(760, 0, 1550, 0);fade.addColorStop(0, "#170006");fade.addColorStop(1, "rgba(23,0,6,0)");g.fillStyle = fade;g.fillRect(700, 0, 900, H);g.restore();
-    }
-    g.strokeStyle = "#ff86bd";g.lineWidth = 6;certificateRoundRect(g, 38, 38, W - 76, H - 76, 30);g.stroke();
-    g.fillStyle = "rgba(236,0,80,.14)";g.beginPath();g.arc(1380, 560, 470, 0, Math.PI * 2);g.fill();
-    g.fillStyle = "#ff86bd";g.font = "700 28px 'Space Mono',monospace";g.fillText("TSUKUMO99 · LIVE ACHIEVEMENT", 110, 145);
-    g.fillStyle = "#fff4f7";g.font = "700 74px 'Oswald','Noto Sans SC',sans-serif";g.fillText("ACHIEVEMENT CERTIFICATE", 108, 270);
-    g.strokeStyle = "rgba(255,134,189,.34)";g.lineWidth = 2;g.beginPath();g.moveTo(110, 325);g.lineTo(1150, 325);g.stroke();
-    g.fillStyle = "#e4afbf";g.font = "500 38px 'Noto Sans SC','Noto Sans JP',sans-serif";g.fillText("恭喜", 112, 440);
-    g.fillStyle = "#fff4f7";g.fillText(fitCertificateText(g, name, 920, 88), 110, 555);
-    g.fillStyle = "#e4afbf";g.font = "500 38px 'Noto Sans SC','Noto Sans JP',sans-serif";g.fillText("获得称号", 112, 655);
-    g.fillStyle = "#ec0050";g.font = "700 138px 'Noto Sans SC','Noto Sans JP',sans-serif";g.fillText("月云的兵", 104, 830);
-    g.fillStyle = "#ff86bd";g.font = "700 20px 'Space Mono',monospace";g.fillText("99% · 99% · 99% · 99%", 112, 918);
-    g.fillStyle = "#e4afbf";g.font = "400 24px 'Noto Sans SC','Noto Sans JP',sans-serif";g.fillText(new Intl.DateTimeFormat("zh-CN").format(new Date()), 112, 970);
-    g.fillStyle = "#ec0050";g.font = "700 18px 'Space Mono',monospace";g.fillText("UNOFFICIAL / FAN-MADE", 112, 1020);
-    var filename = "月云的兵-" + name.replace(/[\\/:*?\"<>|]/g, "-").slice(0, 32) + ".png";
-    function trigger(url) { var a = document.createElement("a");a.href = url;a.download = filename;document.body.appendChild(a);a.click();a.remove(); }
-    if (canvasOut.toBlob) canvasOut.toBlob(function (blob) { if (!blob) return;var url = URL.createObjectURL(blob);trigger(url);window.setTimeout(function () { URL.revokeObjectURL(url); }, 1500); }, "image/png");
-    else trigger(canvasOut.toDataURL("image/png"));
-    showAchievementCartStatus("成就证书已生成", false);
-    closeAchievementCertificate();
   }
 
   function isPortrait() {
@@ -1494,13 +1388,10 @@
     bePage = Math.min(bePages.length - 1, bePage + 1);
     renderBeEnding();
   });
-  addAchievementCart.addEventListener("click", addAchievementToCart);
-  downloadAchievement.addEventListener("click", openAchievementCertificate);
-  achievementName.addEventListener("input", syncAchievementCertificateName);
-  achievementCertificateCancel.addEventListener("click", closeAchievementCertificate);
-  achievementCertificateSave.addEventListener("click", saveAchievementCertificate);
-  achievementCertificateDialog.addEventListener("pointerdown", function (event) { if (event.target === achievementCertificateDialog) closeAchievementCertificate(); });
-  document.addEventListener("keydown", function (event) { if (event.key === "Escape" && achievementCertificateDialog && !achievementCertificateDialog.hidden) { event.preventDefault();closeAchievementCertificate(); } });
+  achievementExit.addEventListener("click", function () {
+    achievementPending = false;
+    try { window.localStorage.setItem(ACHIEVEMENT_SEEN_KEY, "1"); } catch (error) {}
+  });
   soundButton.addEventListener("click", function () {
     setSound(!soundOn);
     showAudioStatus(soundOn ? "声音已开启" : "声音已关闭");
@@ -1555,7 +1446,6 @@
 
   setSound(true);
   renderChargeValues();
-  syncAchievementCartState();
   renderGuide();
   syncViewportHeight();
   syncFullscreenButtons();

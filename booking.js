@@ -65,9 +65,9 @@
     { id:'a',tier:'A',rank:'A',code:'A',price:9000,die:'⚁',accent:'var(--violet, #c758ff)',goods:false,name:{cn:'A 席',en:'A Seat',jp:'A席'},
       notice:{cn:'A 席可能较难看清部分演出内容，请确认后购买。',en:'Views of some parts of the performance may be restricted from A seats. Please review before purchasing.',jp:'A席は一部演出が見づらいお席となります。ご了承の上お買い求めください。'} }];
   var T = {
-    cn:{getTickets:'选择场次',chooseZone:'选择坐席',lblOpen:'开场 / 开演',lblPrice:'票价',lblStatus:'余票',lblCountry:'国家 / 地区',lblPlace:'国家 / 地区',continentNav:'按大洲跳转',from:'起',back:'返回',nameLabel:'持票人姓名',namePlaceholder:'输入将印在票面上的名字',issueBtn:'立即支付',ticketReady:'购票完成',download:'下载电子票',bookAnother:'再选一场',lblCity:'城市',lblVenue:'场馆',lblDate:'日期',lblTier:'票档',lblSeat:'随机座位',lblName:'持票人',statusFew:'仅剩少量',statusPlenty:'余票充足',downloadHint:'请使用手机系统浏览器（如 Safari、Chrome）打开本站；微信、QQ 等应用内浏览器可能无法下载电子票。',tax:'含税',goods:'含限定周边',rulesTitle:'购票规则',rulesLead:'',rules:['全席为指定席，无法自行选择座位号','3 岁以上须购票（3 岁以下不可入场）','仅发行电子票','演出当日将随机对购票人（申请人）进行身份确认'],assignTitle:'付款后随机配席',assignBody:'本页面为非官方同人模拟，与现实场馆无关，不会产生真实付款。',paymentTitle:'付款信息',cardLabel:'卡号',expiryLabel:'有效期',cvvLabel:'CVV',cardPlaceholder:'仅供娱乐，请勿填写真实信息',paymentPrivacy:'仅在当前页面模拟，不会保存或上传任何付款信息。',paymentConfirmTitle:'确认以当前购票人付款？',paymentConfirmBody:'请使用手机系统浏览器（如 Safari、Chrome）打开本站，即可下载电子票文件；微信、QQ 等应用内浏览器可能无法下载。',paymentCancel:'返回',paymentConfirm:'确认',processingTitle:'模拟付款处理中',processingHint:'预计需要 5 秒，请不要关闭页面。',processingSteps:['正在连接模拟票务系统…','正在确认付款信息…','正在随机分配座位…','正在生成电子票…']},
-    en:{getTickets:'CHOOSE A SHOW',chooseZone:'SELECT SEATS',lblOpen:'DOORS / START',lblPrice:'FROM',lblStatus:'STATUS',lblCountry:'COUNTRY / REGION',lblPlace:'COUNTRY / REGION',continentNav:'JUMP BY CONTINENT',from:'FROM',back:'BACK',nameLabel:'ATTENDEE NAME',namePlaceholder:'Name to print on the ticket',issueBtn:'PAY NOW',ticketReady:'PURCHASE COMPLETE',download:'DOWNLOAD E-TICKET',bookAnother:'BOOK ANOTHER',lblCity:'CITY',lblVenue:'VENUE',lblDate:'DATE',lblTier:'TIER',lblSeat:'RANDOM SEAT',lblName:'ATTENDEE',statusFew:'FEW LEFT',statusPlenty:'AVAILABLE',downloadHint:"Open this site in your phone's system browser, such as Safari or Chrome. In-app browsers in WeChat or QQ may not support e-ticket downloads.",tax:'TAX INCLUDED',goods:'EXCLUSIVE MERCH',rulesTitle:'TICKET RULES',rulesLead:'',rules:['All seats are reserved; seat numbers cannot be selected','A paid ticket is required from age 3; children under 3 may not enter','Electronic tickets only','Ticket holder identity checks may be conducted at random on the event day'],assignTitle:'RANDOM SEAT AFTER PAYMENT',assignBody:'This is an unofficial fan-made simulation, unaffiliated with any real venue. No real payment is made.',paymentTitle:'PAYMENT DETAILS',cardLabel:'CARD NUMBER',expiryLabel:'EXPIRY',cvvLabel:'CVV',cardPlaceholder:'For entertainment only. Do not enter real information.',paymentPrivacy:'Simulated on this page only. Payment details are never saved or uploaded.',paymentConfirmTitle:'PAY AS THE CURRENT ATTENDEE?',paymentConfirmBody:"Open this site in your phone's system browser, such as Safari or Chrome, to download the e-ticket. In-app browsers in WeChat or QQ may not support downloads.",paymentCancel:'BACK',paymentConfirm:'CONFIRM',processingTitle:'SIMULATING PAYMENT',processingHint:'This takes about 5 seconds. Please keep this page open.',processingSteps:['Connecting to the simulated ticket system…','Confirming payment details…','Assigning a random seat…','Generating your e-ticket…']},
-    jp:{getTickets:'公演を選ぶ',chooseZone:'座席を選択',lblOpen:'開場 / 開演',lblPrice:'料金',lblStatus:'残席',lblCountry:'国・地域',lblPlace:'国・地域',continentNav:'地域から選ぶ',from:'より',back:'戻る',nameLabel:'氏名',namePlaceholder:'チケットに印字する名前',issueBtn:'今すぐ支払う',ticketReady:'購入完了',download:'電子チケットを保存',bookAnother:'別の公演',lblCity:'都市',lblVenue:'会場',lblDate:'日付',lblTier:'券種',lblSeat:'ランダム座席',lblName:'氏名',statusFew:'残りわずか',statusPlenty:'販売中',downloadHint:'電子チケットをダウンロードするには、SafariやChromeなどスマートフォンの標準ブラウザで本サイトを開いてください。WeChatやQQなどのアプリ内ブラウザではダウンロードできない場合があります。',tax:'税込',goods:'限定グッズ',rulesTitle:'チケットルール',rulesLead:'',rules:['全席指定となり、座席番号はお選びいただけません','3歳以上有料（3歳未満入場不可）','電子チケットのみ発行します','当日会場にて購入者の本人確認をランダムに実施する場合があります'],assignTitle:'決済後ランダム配席',assignBody:'本ページは非公式ファンメイドのシミュレーションであり、実在の会場とは関係なく、実際の決済は発生しません。',paymentTitle:'お支払い情報',cardLabel:'カード番号',expiryLabel:'有効期限',cvvLabel:'CVV',cardPlaceholder:'娯楽用です。実際の情報は入力しないでください',paymentPrivacy:'このページ上のシミュレーションのみで、支払い情報の保存・送信は行いません。',paymentConfirmTitle:'現在の購入者名義で決済しますか？',paymentConfirmBody:'電子チケットをダウンロードするには、SafariやChromeなどスマートフォンの標準ブラウザで本サイトを開いてください。WeChatやQQなどのアプリ内ブラウザではダウンロードできない場合があります。',paymentCancel:'戻る',paymentConfirm:'確認',processingTitle:'決済処理をシミュレーション中',processingHint:'約5秒かかります。このページを閉じずにお待ちください。',processingSteps:['模擬チケットシステムに接続中…','お支払い情報を確認中…','座席をランダムに割り当て中…','電子チケットを発行中…']}};
+    cn:{getTickets:'选择场次',chooseZone:'选择坐席',lblOpen:'开场 / 开演',lblPrice:'票价',lblStatus:'余票',lblCountry:'国家 / 地区',lblPlace:'国家 / 地区',continentNav:'按大洲跳转',from:'起',back:'返回',nameLabel:'持票人姓名',namePlaceholder:'输入将印在票面上的名字',issueBtn:'立即支付',ticketReady:'购票完成',download:'下载电子票',bookAnother:'再选一场',lblCity:'城市',lblVenue:'场馆',lblDate:'日期',lblTier:'票档',lblSeat:'随机座位',lblName:'持票人',statusFew:'仅剩少量',statusPlenty:'余票充足',downloadHint:'请使用手机系统浏览器（如 Safari、Chrome）打开本站；微信、QQ 等应用内浏览器可能无法下载电子票。',tax:'含税',goods:'含限定周边',rulesTitle:'购票规则',rulesLead:'',rules:['全席为指定席，无法自行选择座位号','3 岁以上须购票（3 岁以下不可入场）','仅发行电子票','演出当日将随机对购票人（申请人）进行身份确认'],assignTitle:'付款后随机配席',assignBody:'本页面为非官方同人模拟，与现实场馆无关，不会产生真实付款。',paymentTitle:'付款信息',cardLabel:'卡号',expiryLabel:'有效期',cvvLabel:'CVV',cardPlaceholder:'仅供娱乐，请勿填写真实信息',paymentPrivacy:'仅在当前页面模拟，不会保存或上传任何付款信息。',paymentConfirmTitle:'确认以当前购票人付款？',paymentConfirmBody:'请使用手机系统浏览器（如 Safari、Chrome）打开本站，即可下载电子票文件；微信、QQ 等应用内浏览器可能无法下载。',paymentCancel:'返回',paymentConfirm:'确认',loading:'加载中……'},
+    en:{getTickets:'CHOOSE A SHOW',chooseZone:'SELECT SEATS',lblOpen:'DOORS / START',lblPrice:'FROM',lblStatus:'STATUS',lblCountry:'COUNTRY / REGION',lblPlace:'COUNTRY / REGION',continentNav:'JUMP BY CONTINENT',from:'FROM',back:'BACK',nameLabel:'ATTENDEE NAME',namePlaceholder:'Name to print on the ticket',issueBtn:'PAY NOW',ticketReady:'PURCHASE COMPLETE',download:'DOWNLOAD E-TICKET',bookAnother:'BOOK ANOTHER',lblCity:'CITY',lblVenue:'VENUE',lblDate:'DATE',lblTier:'TIER',lblSeat:'RANDOM SEAT',lblName:'ATTENDEE',statusFew:'FEW LEFT',statusPlenty:'AVAILABLE',downloadHint:"Open this site in your phone's system browser, such as Safari or Chrome. In-app browsers in WeChat or QQ may not support e-ticket downloads.",tax:'TAX INCLUDED',goods:'EXCLUSIVE MERCH',rulesTitle:'TICKET RULES',rulesLead:'',rules:['All seats are reserved; seat numbers cannot be selected','A paid ticket is required from age 3; children under 3 may not enter','Electronic tickets only','Ticket holder identity checks may be conducted at random on the event day'],assignTitle:'RANDOM SEAT AFTER PAYMENT',assignBody:'This is an unofficial fan-made simulation, unaffiliated with any real venue. No real payment is made.',paymentTitle:'PAYMENT DETAILS',cardLabel:'CARD NUMBER',expiryLabel:'EXPIRY',cvvLabel:'CVV',cardPlaceholder:'For entertainment only. Do not enter real information.',paymentPrivacy:'Simulated on this page only. Payment details are never saved or uploaded.',paymentConfirmTitle:'PAY AS THE CURRENT ATTENDEE?',paymentConfirmBody:"Open this site in your phone's system browser, such as Safari or Chrome, to download the e-ticket. In-app browsers in WeChat or QQ may not support downloads.",paymentCancel:'BACK',paymentConfirm:'CONFIRM',loading:'LOADING…'},
+    jp:{getTickets:'公演を選ぶ',chooseZone:'座席を選択',lblOpen:'開場 / 開演',lblPrice:'料金',lblStatus:'残席',lblCountry:'国・地域',lblPlace:'国・地域',continentNav:'地域から選ぶ',from:'より',back:'戻る',nameLabel:'氏名',namePlaceholder:'チケットに印字する名前',issueBtn:'今すぐ支払う',ticketReady:'購入完了',download:'電子チケットを保存',bookAnother:'別の公演',lblCity:'都市',lblVenue:'会場',lblDate:'日付',lblTier:'券種',lblSeat:'ランダム座席',lblName:'氏名',statusFew:'残りわずか',statusPlenty:'販売中',downloadHint:'電子チケットをダウンロードするには、SafariやChromeなどスマートフォンの標準ブラウザで本サイトを開いてください。WeChatやQQなどのアプリ内ブラウザではダウンロードできない場合があります。',tax:'税込',goods:'限定グッズ',rulesTitle:'チケットルール',rulesLead:'',rules:['全席指定となり、座席番号はお選びいただけません','3歳以上有料（3歳未満入場不可）','電子チケットのみ発行します','当日会場にて購入者の本人確認をランダムに実施する場合があります'],assignTitle:'決済後ランダム配席',assignBody:'本ページは非公式ファンメイドのシミュレーションであり、実在の会場とは関係なく、実際の決済は発生しません。',paymentTitle:'お支払い情報',cardLabel:'カード番号',expiryLabel:'有効期限',cvvLabel:'CVV',cardPlaceholder:'娯楽用です。実際の情報は入力しないでください',paymentPrivacy:'このページ上のシミュレーションのみで、支払い情報の保存・送信は行いません。',paymentConfirmTitle:'現在の購入者名義で決済しますか？',paymentConfirmBody:'電子チケットをダウンロードするには、SafariやChromeなどスマートフォンの標準ブラウザで本サイトを開いてください。WeChatやQQなどのアプリ内ブラウザではダウンロードできない場合があります。',paymentCancel:'戻る',paymentConfirm:'確認',loading:'読み込み中…'}};
 
   var DICE=['\u2680','\u2681','\u2682','\u2683'];
   var STEPKEYS=['stop','zone','name','ticket'];
@@ -75,8 +75,8 @@
   var DOW=['SUN','MON','TUE','WED','THU','FRI','SAT'];
   var minPrice=Math.min.apply(null,ZONES.map(function(z){return z.price;}));
 
-  var state={ lang:(window.DiZLang||'cn'), step:'stop', stopIndex:null, zoneId:null, name:'', payment:{card:'',expiry:'',cvv:''}, ticket:null, confirmOpen:false, paymentLoading:false, paymentStatusIndex:0 };
-  var paymentTimeout=0, paymentStatusTimer=0;
+  var state={ lang:(window.DiZLang||'cn'), step:'stop', stopIndex:null, zoneId:null, name:'', payment:{card:'',expiry:'',cvv:''}, ticket:null, confirmOpen:false, paymentLoading:false };
+  var paymentTimeout=0;
   var continentScrollHandler=null;
 
   var hero=new Image(); hero.crossOrigin='anonymous'; hero.src='assets/hero-desktop-square.jpg';
@@ -179,7 +179,7 @@
   function backToZone(){ state.step='zone'; state.confirmOpen=false; render(); }
   function openPaymentConfirm(){
     if(!state.zoneId || !state.name.trim()) return;
-    state.confirmOpen=true; state.paymentLoading=false; state.paymentStatusIndex=0; render();
+    state.confirmOpen=true; state.paymentLoading=false; render();
   }
   function closePaymentConfirm(){
     if(state.paymentLoading) return;
@@ -187,14 +187,11 @@
     var btn=flow.querySelector('[data-act="issue"]'); if(btn) btn.focus();
   }
   function clearPaymentProgress(){
-    window.clearTimeout(paymentTimeout);window.clearInterval(paymentStatusTimer);paymentTimeout=0;paymentStatusTimer=0;
+    window.clearTimeout(paymentTimeout);paymentTimeout=0;
   }
   function beginPayment(){
     if(state.paymentLoading || !state.zoneId || !state.name.trim()) return;
-    state.paymentLoading=true;state.paymentStatusIndex=0;render();
-    paymentStatusTimer=window.setInterval(function(){
-      state.paymentStatusIndex=Math.min(state.paymentStatusIndex+1,T[state.lang].processingSteps.length-1);render();
-    },1200);
+    state.paymentLoading=true;render();
     paymentTimeout=window.setTimeout(issue,5000);
   }
   function issue(){
@@ -292,10 +289,10 @@
     var iBg=can?'var(--hot)':'rgba(236,0,80,.2)', iFg=can?'var(--paper)':'rgba(255,244,247,.5)', iCur=can?'pointer':'not-allowed', iSh=can?'0 8px 22px rgba(236,0,80,.4)':'none';
     var paymentDialog='';
     if(state.confirmOpen){
-      paymentDialog='<div class="payment-confirm-backdrop"><section class="payment-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="paymentConfirmTitle" aria-describedby="paymentConfirmBody">'
-        +'<span class="payment-confirm-die" aria-hidden="true">⚄</span><h2 id="paymentConfirmTitle">'+esc(state.paymentLoading?t.processingTitle:t.paymentConfirmTitle)+'</h2>'
-        +(state.paymentLoading?'<div class="payment-processing" role="status" aria-live="polite"><i aria-hidden="true"></i><strong>'+esc(t.processingSteps[state.paymentStatusIndex])+'</strong><p id="paymentConfirmBody">'+esc(t.processingHint)+'</p></div>'
-          :'<strong class="payment-confirm-name">'+esc(state.name.trim())+'</strong><p id="paymentConfirmBody">'+esc(t.paymentConfirmBody)+'</p><div class="payment-confirm-actions"><button data-act="cancel-payment">'+esc(t.paymentCancel)+'</button><button data-act="confirm-payment">'+esc(t.paymentConfirm)+'</button></div>')
+      paymentDialog='<div class="payment-confirm-backdrop"><section class="payment-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="paymentConfirmTitle">'
+        +'<span class="payment-confirm-die" aria-hidden="true">⚄</span>'
+        +(state.paymentLoading?'<div class="payment-processing" role="status" aria-live="polite"><i aria-hidden="true"></i><h2 id="paymentConfirmTitle">'+esc(t.loading)+'</h2></div>'
+          :'<h2 id="paymentConfirmTitle">'+esc(t.paymentConfirmTitle)+'</h2><strong class="payment-confirm-name">'+esc(state.name.trim())+'</strong><p>'+esc(t.paymentConfirmBody)+'</p><div class="payment-confirm-actions"><button data-act="cancel-payment">'+esc(t.paymentCancel)+'</button><button data-act="confirm-payment">'+esc(t.paymentConfirm)+'</button></div>')
         +'</section></div>';
     }
     return '<div class="tk-step" style="max-width:520px;">'

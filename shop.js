@@ -20,18 +20,8 @@
     format:{cn:"限定盤 · CD + 纪念卡 + 挂牌",jp:"限定盤 · CD + カード + ラミネート",en:"Limited edition · CD + card + laminate"},
     tracks:["NEW SENSATION","BREAK THE LIMITATION","FIRE","WHAT YOU WANT","IMPERIAL CHAIN","NEVER LOSE MY RULE","ZONE OF OVERLAP","LOOK AT","POISONOUS GANGSTER"]
   };
-  var ACHIEVEMENT_PRODUCT={
-    id:"live-achievement-cert",
-    cover:"assets/goods-tsukumo-soldier.svg",
-    price:0,
-    cat:{cn:"证书",jp:"証明書",en:"CERTIFICATE"},
-    title:"月云的兵",
-    listing:false,
-    lockedQty:2
-  };
   var PRODUCTS={};
   PRODUCTS[PRODUCT.id]=PRODUCT;
-  PRODUCTS[ACHIEVEMENT_PRODUCT.id]=ACHIEVEMENT_PRODUCT;
   function prod(id){return PRODUCTS[id];}
 
   var T={
@@ -44,7 +34,7 @@
         card:"卡号",exp:"有效期",cvv:"CVV",total:"合计",freeShip:"包邮",payNow:"立即支付",paying:"支付中…",
         okTitle:"支付成功",orderNo:"订单号",receiver:"收货人",amount:"实付",reward:"已解锁特典",invoice:"下载发票",invoiceTitle:"发票",invoiceDate:"开具日期",invoiceItems:"商品",invoiceQty:"数量",invoiceTotal:"合计",invoiceNotice:"非官方同人模拟，不会产生真实付款。",
         backShop2:"返回商店",needName:"请填写虚构的收货人姓名",
-        namePH:"仅供娱乐，请勿填写真实信息",phonePH:"仅供娱乐，请勿填写真实信息",addrPH:"仅供娱乐，请勿填写真实信息",cardPH:"0000 0000 0000 0000"},
+        namePH:"输入将印在收据上的名字",phonePH:"仅供娱乐，请勿填写真实信息",addrPH:"仅供娱乐，请勿填写真实信息",cardPH:"0000 0000 0000 0000"},
     jp:{kicker:"GOODS · 数量限定",shopTitle:"グッズ",limited:"限定 / LIMITED",addCart:"カートに入れる",buyNow:"今すぐ購入",
         tracklist:"収録曲",format:"仕様",ships:"世界配送",
         cart:"カート",cartEmpty:"カートは空です",continueShop:"買い物を続ける",qty:"数量",remove:"削除",
@@ -54,7 +44,7 @@
         card:"カード番号",exp:"有効期限",cvv:"CVV",total:"合計",freeShip:"送料無料",payNow:"支払う",paying:"処理中…",
         okTitle:"支払い完了",orderNo:"注文番号",receiver:"お届け先",amount:"支払額",reward:"アンロック特典",invoice:"請求書をダウンロード",invoiceTitle:"請求書",invoiceDate:"発行日",invoiceItems:"商品",invoiceQty:"数量",invoiceTotal:"合計",invoiceNotice:"非公式ファンメイドのシミュレーションです。実際の決済は発生しません。",
         backShop2:"ショップへ戻る",needName:"架空のお名前を入力してください",
-        namePH:"娯楽用です。実際の個人情報は入力しないでください",phonePH:"娯楽用です。実際の個人情報は入力しないでください",addrPH:"娯楽用です。実際の個人情報は入力しないでください",cardPH:"0000 0000 0000 0000"},
+        namePH:"領収書に印字する名前",phonePH:"娯楽用です。実際の個人情報は入力しないでください",addrPH:"娯楽用です。実際の個人情報は入力しないでください",cardPH:"0000 0000 0000 0000"},
     en:{kicker:"GOODS · LIMITED DROP",shopTitle:"GOODS",limited:"LIMITED",addCart:"ADD TO CART",buyNow:"BUY NOW",
         tracklist:"TRACKLIST",format:"FORMAT",ships:"WORLDWIDE SHIPPING",
         cart:"CART",cartEmpty:"Your cart is empty",continueShop:"Continue shopping",qty:"QTY",remove:"Remove",
@@ -64,7 +54,7 @@
         card:"Card number",exp:"Expiry",cvv:"CVV",total:"Total",freeShip:"Free",payNow:"Pay now",paying:"Processing…",
         okTitle:"Payment complete",orderNo:"Order",receiver:"Recipient",amount:"Paid",reward:"UNLOCKED REWARD",invoice:"Download invoice",invoiceTitle:"INVOICE",invoiceDate:"ISSUED",invoiceItems:"ITEM",invoiceQty:"QTY",invoiceTotal:"TOTAL",invoiceNotice:"Unofficial fan-made simulation. No real payment was made.",
         backShop2:"Back to shop",needName:"Please enter a fictional recipient name",
-        namePH:"For entertainment only. Do not enter real personal information.",phonePH:"For entertainment only. Do not enter real personal information.",addrPH:"For entertainment only. Do not enter real personal information.",cardPH:"0000 0000 0000 0000"}
+        namePH:"Name to print on the receipt",phonePH:"For entertainment only. Do not enter real personal information.",addrPH:"For entertainment only. Do not enter real personal information.",cardPH:"0000 0000 0000 0000"}
   };
 
   /* ---------------- state ---------------- */
