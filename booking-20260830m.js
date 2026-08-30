@@ -57,7 +57,7 @@
     {code:'MD',continent:'europe',doors:'18:00',status:'few',date:'2027.05.22',country:{cn:'西班牙',en:'SPAIN',jp:'スペイン'},city:{cn:'马德里',en:'MADRID',jp:'マドリード'},venue:{cn:'马德里 · Movistal Arena',en:'MADRID · MOVISTAL ARENA',jp:'マドリード · Movistal Arena'}},
     {code:'ML',continent:'europe',doors:'19:00',status:'plenty',date:'2027.05.29',country:{cn:'意大利',en:'ITALY',jp:'イタリア'},city:{cn:'米兰',en:'MILAN',jp:'ミラノ'},venue:{cn:'米兰 · Unipor Forum',en:'MILAN · UNIPOR FORUM',jp:'ミラノ · Unipor Forum'}},
     {code:'WA',continent:'europe',doors:'18:00',status:'plenty',date:'2027.06.05',country:{cn:'波兰',en:'POLAND',jp:'ポーランド'},city:{cn:'华沙',en:'WARSAW',jp:'ワルシャワ'},venue:{cn:'华沙 · COS Torwal',en:'WARSAW · COS TORWAL',jp:'ワルシャワ · COS Torwal'}},
-    {code:'BR',continent:'europe',doors:'18:00',status:'few',date:'2027.06.12',country:{cn:'德国',en:'GERMANY',jp:'ドイツ'},city:{cn:'布雷默',en:'BREMER',jp:'ブレーマー'},venue:{cn:'布雷默 · Weserlicht Halle',en:'BREMER · WESERLICHT HALLE',jp:'ブレーマー · Weserlicht Halle'}}
+    {code:'BR',continent:'europe',doors:'18:00',status:'few',date:'2027.06.12',country:{cn:'德国',en:'GERMANY',jp:'ドイツ'},city:{cn:'不莱梅',en:'BREMER',jp:'ブレーマー'},venue:{cn:'不莱梅 · Weserlicht Halle',en:'BREMER · WESERLICHT HALLE',jp:'ブレーマー · Weserlicht Halle'}}
   ];
   var ZONES = [
     { id:'s-goods',tier:'S + GOODS',rank:'S',code:'SG',price:14000,die:'⚅',accent:'var(--hot)',goods:true,name:{cn:'S 席（含限定周边）',en:'S Seat + Exclusive Merch',jp:'限定グッズ付きS席'} },
