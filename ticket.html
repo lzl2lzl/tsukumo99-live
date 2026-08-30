@@ -142,6 +142,15 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .random-assign::before{content:"⚄";position:absolute;left:.85rem;top:50%;font-size:2rem;color:var(--pink);transform:translateY(-50%);}
 .random-assign b{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;color:var(--paper);}
 .random-assign p{margin:.3rem 0 0;font-size:.7rem;line-height:1.55;color:var(--muted);}
+.ticket-payment-form{margin-top:1.15rem;padding-top:1rem;border-top:1px solid rgba(255,134,189,.2);}
+.ticket-payment-form h2{margin:0 0 .8rem;font-family:var(--display);font-size:1.2rem;letter-spacing:-.02em;}
+.ticket-payment-form label{display:block;min-width:0;}
+.ticket-payment-form label span{display:block;margin-bottom:.35rem;color:var(--pink);font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.12em;}
+.ticket-payment-form input{width:100%;min-height:48px;padding:.72rem .8rem;border:1px solid rgba(255,134,189,.3);border-radius:10px;background:rgba(23,0,6,.55);color:var(--paper);font:500 16px var(--body);outline:none;}
+.ticket-payment-form input:focus{border-color:var(--hot);box-shadow:0 .45rem 1.3rem rgba(18,0,5,.32);}
+.ticket-payment-form input::placeholder{color:rgba(228,175,191,.62);}
+.ticket-payment-pair{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem;}
+.ticket-payment-form>p{margin:.7rem 0 0;color:var(--muted);font-size:.68rem;line-height:1.55;}
 .payment-confirm-open{overflow:hidden;}
 .payment-confirm-backdrop{position:fixed;z-index:1200;inset:0;display:grid;place-items:center;padding:1rem;background:rgba(18,0,5,.88);animation:paymentFade .22s cubic-bezier(.16,1,.3,1) both;}
 .payment-confirm-dialog{width:min(100%,28rem);padding:1.3rem;border:1px solid rgba(255,134,189,.4);border-radius:14px;background:var(--ink);box-shadow:.8rem 1rem 2.8rem rgba(0,0,0,.58);animation:paymentRise .32s cubic-bezier(.16,1,.3,1) both;}
@@ -153,8 +162,13 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .payment-confirm-actions button{min-height:2.9rem;border:1px solid rgba(255,244,247,.24);border-radius:10px;background:transparent;color:var(--paper);font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.08em;cursor:pointer;}
 .payment-confirm-actions button:last-child{border-color:var(--hot);background:var(--hot);box-shadow:.35rem .55rem 1.45rem rgba(236,0,80,.32);}
 .payment-confirm-actions button:focus-visible{outline:2px solid var(--paper);outline-offset:3px;}
+.payment-processing{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:.8rem;margin-top:1rem;padding:.9rem;background:var(--wine);}
+.payment-processing i{grid-row:1/3;width:2rem;aspect-ratio:1;border:3px solid rgba(255,134,189,.25);border-top-color:var(--paper);border-radius:50%;animation:paymentSpin .9s linear infinite;}
+.payment-processing strong{color:var(--paper);font-family:var(--mono);font-size:.7rem;line-height:1.45;}
+.payment-processing p{margin:0!important;font-size:.66rem!important;}
 @keyframes paymentFade{from{opacity:.55;}to{opacity:1;}}
 @keyframes paymentRise{from{transform:translateY(1rem) scale(.98);opacity:.5;}to{transform:none;opacity:1;}}
+@keyframes paymentSpin{to{transform:rotate(360deg);}}
 @media (max-width:760px){.tour-table-head{display:none;}.tour-continent{padding-top:2.8rem;}.tour-row{grid-template-columns:62px minmax(0,1fr) 14px;gap:.85rem;padding:1.1rem .15rem;}.tour-date{align-self:start;}.tour-place{grid-column:2;}.tour-facts{grid-column:2;grid-row:2;}.tour-time small,.tour-price small{display:block;}.tour-row .rchev{grid-column:3;grid-row:1/3;align-self:center;}.continent-nav{gap:1.35rem;}}
 @media (max-width:560px){.ticket-rules ol{grid-template-columns:1fr;}.ticket-rules li{font-size:.72rem;}.tier-option{min-height:154px;padding:.86rem;}.confirm-ticket-main{gap:.6rem;}.confirm-ticket-price{font-size:1.45rem;}.tour-place strong{font-size:1.08rem;}.tour-facts{gap:.7rem;}.tour-time strong,.tour-price strong{font-size:.68rem;}}
 @media (max-width:350px){.tier-grid{grid-template-columns:1fr;}.tier-option{min-height:160px;}}
@@ -235,7 +249,7 @@ cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRe
 cheer.addEventListener("pointermove",function(e){if(!drag)return;if(Math.abs(e.movementX)+Math.abs(e.movementY)>1)drag.moved=true;var w=cheer.offsetWidth,h=cheer.offsetHeight;var nx=Math.max(4,Math.min(innerWidth-w-4,e.clientX-drag.dx)),ny=Math.max(4,Math.min(innerHeight-h-4,e.clientY-drag.dy));cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";});
 cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
 </script>
-<script src="booking.js?v=20260830j"></script>
+<script src="booking.js?v=20260830k"></script>
 <script src="page-transition.js"></script>
 </body>
 </html>

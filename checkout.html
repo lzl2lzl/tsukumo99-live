@@ -94,7 +94,8 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .co-form input:focus{border-color:var(--hot);}
 .co-two{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
 .co-mock{font-family:var(--mono);font-size:.56rem;line-height:1.7;color:var(--muted);opacity:.7;margin:.4rem 0 1rem;}
-.btn-primary{display:inline-block;font-family:var(--mono);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.6rem;border-radius:999px;background:var(--hot);color:var(--paper);box-shadow:0 10px 28px rgba(236,0,80,.4);}
+.btn-primary{display:inline-block;border:0;font-family:var(--mono);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 1.6rem;border-radius:999px;background:var(--hot);color:var(--paper);box-shadow:0 10px 28px rgba(236,0,80,.4);cursor:pointer;}
+.btn-primary.secondary{background:transparent;border:1px solid rgba(255,134,189,.35);box-shadow:none;}
 .btn-pay{width:100%;font-family:var(--mono);font-weight:700;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;padding:1.05rem;border-radius:.6rem;background:var(--hot);color:var(--paper);box-shadow:0 12px 30px rgba(236,0,80,.45);}
 .btn-pay:disabled{opacity:.7;}
 .co-err{min-height:1rem;margin:.5rem 0 0;font-family:var(--mono);font-size:.62rem;color:var(--hot);text-align:center;}
@@ -108,6 +109,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .ok-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.72rem;color:var(--muted);}
 .ok-row b{color:var(--paper);}
 .ok-thanks{font-family:var(--mono);font-size:.62rem;color:var(--muted);margin:1.2rem 0;}
+.ok-actions{display:grid;grid-template-columns:1.3fr 1fr;gap:.65rem;margin-top:1rem;}
 
 .foot{padding:clamp(2.4rem,6vh,4rem) clamp(1.2rem,5vw,3.4rem) clamp(3rem,8vh,5rem);border-top:1px solid rgba(255,134,189,.16);display:flex;flex-direction:column;gap:1.6rem;background:var(--ink);position:relative;z-index:2;}
 .foot .disc{font-family:var(--mono);font-size:.58rem;line-height:1.95;color:var(--muted);max-width:52rem;margin:0;}
@@ -116,7 +118,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .foot .cred span{color:var(--pink);font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;margin-right:.7rem;}
 .foot .mk{font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;color:var(--muted);opacity:.6;text-transform:uppercase;text-align:right;}
 
-@media (max-width:760px){.lang{display:none;}.co-grid{grid-template-columns:1fr;}}
+@media (max-width:760px){.lang{display:none;}.co-grid{grid-template-columns:1fr;}.ok-actions{grid-template-columns:1fr;}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important;}}
 </style>
 <link rel="stylesheet" href="site-chrome.css" />
@@ -190,7 +192,7 @@ cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRe
 cheer.addEventListener("pointermove",function(e){if(!drag)return;if(Math.abs(e.movementX)+Math.abs(e.movementY)>1)drag.moved=true;var w=cheer.offsetWidth,h=cheer.offsetHeight;var nx=Math.max(4,Math.min(innerWidth-w-4,e.clientX-drag.dx)),ny=Math.max(4,Math.min(innerHeight-h-4,e.clientY-drag.dy));cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";});
 cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
 </script>
-<script src="shop.js?v=20260830e"></script>
+<script src="shop.js?v=20260830f"></script>
 <script src="page-transition.js"></script>
 </body>
 </html>

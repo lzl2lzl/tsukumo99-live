@@ -42,7 +42,7 @@
         coTitle:"结算",backShop:"← 返回商店",order:"订单",ship:"收货信息",name:"收货人姓名",
         phone:"手机号（选填）",address:"收货地址（选填）",pay:"支付方式",
         card:"卡号",exp:"有效期",cvv:"CVV",total:"合计",freeShip:"包邮",payNow:"立即支付",paying:"支付中…",
-        okTitle:"支付成功",orderNo:"订单号",receiver:"收货人",amount:"实付",reward:"已解锁特典",
+        okTitle:"支付成功",orderNo:"订单号",receiver:"收货人",amount:"实付",reward:"已解锁特典",invoice:"下载发票",invoiceTitle:"发票",invoiceDate:"开具日期",invoiceItems:"商品",invoiceQty:"数量",invoiceTotal:"合计",invoiceNotice:"非官方同人模拟，不会产生真实付款。",
         backShop2:"返回商店",needName:"请填写虚构的收货人姓名",
         namePH:"仅供娱乐，请勿填写真实信息",phonePH:"仅供娱乐，请勿填写真实信息",addrPH:"仅供娱乐，请勿填写真实信息",cardPH:"0000 0000 0000 0000"},
     jp:{kicker:"GOODS · 数量限定",shopTitle:"グッズ",limited:"限定 / LIMITED",addCart:"カートに入れる",buyNow:"今すぐ購入",
@@ -52,7 +52,7 @@
         coTitle:"お会計",backShop:"← ショップに戻る",order:"注文",ship:"お届け先",name:"お名前",
         phone:"電話番号（任意）",address:"住所（任意）",pay:"お支払い方法",
         card:"カード番号",exp:"有効期限",cvv:"CVV",total:"合計",freeShip:"送料無料",payNow:"支払う",paying:"処理中…",
-        okTitle:"支払い完了",orderNo:"注文番号",receiver:"お届け先",amount:"支払額",reward:"アンロック特典",
+        okTitle:"支払い完了",orderNo:"注文番号",receiver:"お届け先",amount:"支払額",reward:"アンロック特典",invoice:"請求書をダウンロード",invoiceTitle:"請求書",invoiceDate:"発行日",invoiceItems:"商品",invoiceQty:"数量",invoiceTotal:"合計",invoiceNotice:"非公式ファンメイドのシミュレーションです。実際の決済は発生しません。",
         backShop2:"ショップへ戻る",needName:"架空のお名前を入力してください",
         namePH:"娯楽用です。実際の個人情報は入力しないでください",phonePH:"娯楽用です。実際の個人情報は入力しないでください",addrPH:"娯楽用です。実際の個人情報は入力しないでください",cardPH:"0000 0000 0000 0000"},
     en:{kicker:"GOODS · LIMITED DROP",shopTitle:"GOODS",limited:"LIMITED",addCart:"ADD TO CART",buyNow:"BUY NOW",
@@ -62,7 +62,7 @@
         coTitle:"CHECKOUT",backShop:"← Back to shop",order:"Order",ship:"Shipping",name:"Recipient name",
         phone:"Phone (optional)",address:"Address (optional)",pay:"Payment",
         card:"Card number",exp:"Expiry",cvv:"CVV",total:"Total",freeShip:"Free",payNow:"Pay now",paying:"Processing…",
-        okTitle:"Payment complete",orderNo:"Order",receiver:"Recipient",amount:"Paid",reward:"UNLOCKED REWARD",
+        okTitle:"Payment complete",orderNo:"Order",receiver:"Recipient",amount:"Paid",reward:"UNLOCKED REWARD",invoice:"Download invoice",invoiceTitle:"INVOICE",invoiceDate:"ISSUED",invoiceItems:"ITEM",invoiceQty:"QTY",invoiceTotal:"TOTAL",invoiceNotice:"Unofficial fan-made simulation. No real payment was made.",
         backShop2:"Back to shop",needName:"Please enter a fictional recipient name",
         namePH:"For entertainment only. Do not enter real personal information.",phonePH:"For entertainment only. Do not enter real personal information.",addrPH:"For entertainment only. Do not enter real personal information.",cardPH:"0000 0000 0000 0000"}
   };
@@ -215,7 +215,7 @@
           +'<div class="co-sec-h">'+t.pay+'</div>'
           +field("card",t.card,form.card,t.cardPH)
           +'<div class="co-two">'+field("exp",t.exp,form.exp,"MM/YY")+field("cvv",t.cvv,form.cvv,"000")+'</div>'
-          +'<button class="btn-pay" data-act="pay">'+t.payNow+' · '+money(subtotal())+'</button>'
+          +'<button class="btn-pay" data-act="pay">'+t.payNow+'</button>'
           +'<p class="co-err" id="coErr"></p>'
         +'</section>'
       +'</div>';
@@ -233,8 +233,41 @@
         +'<div class="ok-row"><span>'+t.receiver+'</span><b>'+esc(order.name)+'</b></div>'
         +'<div class="ok-row"><span>'+t.amount+'</span><b>'+money(order.amount)+'</b></div>'
       +'</div>'
-      +'<a class="btn-primary" href="shop.html">'+t.backShop2+'</a>'
+      +'<div class="ok-actions"><button class="btn-primary" data-act="invoice">↓ '+t.invoice+'</button><a class="btn-primary secondary" href="shop.html">'+t.backShop2+'</a></div>'
       +'</div>';
+  }
+
+  function canvasRoundRect(g,x,y,w,h,r){
+    g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();
+  }
+  function fitInvoiceText(g,value,maxWidth,size,weight){
+    var text=String(value),fontSize=size;
+    do{g.font=(weight||700)+" "+fontSize+"px 'Oswald','Noto Sans SC','Noto Sans JP',sans-serif";if(g.measureText(text).width<=maxWidth||fontSize<=22)break;fontSize-=2;}while(fontSize>22);
+    return text;
+  }
+  function downloadCanvas(canvas,filename){
+    function clickUrl(url){var a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();}
+    if(canvas.toBlob){canvas.toBlob(function(blob){if(!blob)return;var url=URL.createObjectURL(blob);clickUrl(url);setTimeout(function(){URL.revokeObjectURL(url);},1500);},"image/png");}
+    else clickUrl(canvas.toDataURL("image/png"));
+  }
+  function drawInvoice(){
+    if(!order)return;
+    var t=T[LANG],W=1600,H=1050,c=document.createElement("canvas"),g=c.getContext("2d"),items=order.items||[];
+    c.width=W;c.height=H;
+    var bg=g.createLinearGradient(0,0,W,H);bg.addColorStop(0,"#3a0014");bg.addColorStop(.58,"#170006");bg.addColorStop(1,"#4c001a");g.fillStyle=bg;g.fillRect(0,0,W,H);
+    g.fillStyle="rgba(236,0,80,.16)";g.beginPath();g.arc(1380,80,420,0,Math.PI*2);g.fill();
+    g.strokeStyle="#ff86bd";g.lineWidth=5;canvasRoundRect(g,32,32,W-64,H-64,28);g.stroke();
+    g.fillStyle="#fff4f7";g.font="700 34px 'Space Mono',monospace";g.fillText("TSUKUMO99 · DiŹ WORLD TOUR",90,112);
+    g.fillStyle="#ec0050";g.font="italic 700 132px 'Oswald',sans-serif";g.fillText(t.invoiceTitle,88,260);
+    g.textAlign="right";g.fillStyle="#e4afbf";g.font="700 23px 'Space Mono',monospace";g.fillText(t.orderNo+"  "+order.no,1510,128);g.fillText(t.invoiceDate+"  "+new Intl.DateTimeFormat(LANG==='jp'?'ja-JP':LANG==='en'?'en-GB':'zh-CN').format(new Date()),1510,172);g.textAlign="left";
+    g.strokeStyle="rgba(255,134,189,.34)";g.lineWidth=2;g.beginPath();g.moveTo(90,315);g.lineTo(1510,315);g.stroke();
+    g.fillStyle="#ff86bd";g.font="700 22px 'Space Mono',monospace";g.fillText(t.receiver,92,374);g.fillStyle="#fff4f7";g.font="700 42px 'Oswald','Noto Sans SC','Noto Sans JP',sans-serif";g.fillText(fitInvoiceText(g,order.name,650,42),92,425);
+    g.fillStyle="#ff86bd";g.font="700 20px 'Space Mono',monospace";g.fillText(t.invoiceItems,92,515);g.textAlign="center";g.fillText(t.invoiceQty,1240,515);g.textAlign="right";g.fillText(t.invoiceTotal,1505,515);g.textAlign="left";
+    var y=580;
+    items.slice(0,5).forEach(function(item){var p=prod(item.id);if(!p)return;g.fillStyle="#fff4f7";g.fillText(fitInvoiceText(g,p.title,850,36),92,y);g.fillStyle="#e4afbf";g.font="400 20px 'Space Mono',monospace";g.fillText(p.cat[LANG],92,y+35);g.textAlign="center";g.fillStyle="#fff4f7";g.font="700 30px 'Space Mono',monospace";g.fillText(String(item.qty),1240,y+12);g.textAlign="right";g.fillText(money(p.price*item.qty),1505,y+12);g.textAlign="left";g.strokeStyle="rgba(255,134,189,.16)";g.beginPath();g.moveTo(92,y+66);g.lineTo(1505,y+66);g.stroke();y+=116;});
+    g.textAlign="right";g.fillStyle="#ff86bd";g.font="700 22px 'Space Mono',monospace";g.fillText(t.invoiceTotal,1265,880);g.fillStyle="#fff4f7";g.font="700 64px 'Oswald',sans-serif";g.fillText(money(order.amount),1505,890);g.textAlign="left";
+    g.fillStyle="#ec0050";g.font="700 18px 'Space Mono',monospace";g.fillText("UNOFFICIAL / FAN-MADE",92,958);g.textAlign="right";g.fillStyle="#e4afbf";g.font="400 18px 'Noto Sans SC','Noto Sans JP',sans-serif";g.fillText(t.invoiceNotice,1505,958);g.textAlign="left";
+    downloadCanvas(c,order.no+"-invoice.png");
   }
   function pay(){
     var t=T[LANG];
@@ -242,9 +275,10 @@
     var btn=document.querySelector('[data-act="pay"]');
     if(btn){btn.disabled=true;btn.textContent=t.paying;}
     var amount=subtotal();
+    var orderItems=getCart().map(function(item){return{id:item.id,qty:item.qty};});
     var rnd=Math.floor(Math.random()*1e6).toString().padStart(6,"0");
     setTimeout(function(){
-      order={no:"DIZ-"+new Date().getFullYear()+"-"+rnd, name:form.name.trim(), amount:amount};
+      order={no:"DIZ-"+new Date().getFullYear()+"-"+rnd, name:form.name.trim(), amount:amount,items:orderItems};
       saveCart([]);            // clear cart
       renderCheckout(); updateBadge();
       try{window.scrollTo({top:0,behavior:"smooth"});}catch(_){}
@@ -273,6 +307,7 @@
       else if(act==="crm"){setQty(id,0);renderCart();}
       else if(act==="cartclose"){closeCart();}
       else if(act==="pay"){e.preventDefault();pay();}
+      else if(act==="invoice"){e.preventDefault();drawInvoice();}
       return;
     }
     if(e.target.closest && e.target.closest("#cartBtn")){

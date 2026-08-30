@@ -12,7 +12,7 @@
   <link rel="preload" as="image" href="assets/live/lane-o2.png" />
   <link rel="preload" as="image" href="assets/live/lane-l.png" />
   <link rel="preload" as="image" href="assets/live/utsugi-helper.png" />
-  <link rel="stylesheet" href="live-experience-20260830h.css" />
+  <link rel="stylesheet" href="live-experience-20260830h.css?v=20260830i" />
 </head>
 <body>
   <main class="broadcast" id="broadcast">
@@ -199,12 +199,28 @@
       <div class="achievement-rays" aria-hidden="true"></div>
       <span class="achievement-live">ACHIEVEMENT UNLOCKED</span>
       <h1 id="achievementTitle">月云的兵</h1>
-      <p>恭喜你已获得成就“月云的兵”及限定证书！请前往商店，在购物车填写地址发货。</p>
+      <p>恭喜你已获得成就“月云的兵”！现在可以署名下载 PNG 证书，或将限定证书加入购物车。</p>
       <div class="achievement-actions">
+        <button type="button" id="downloadAchievement">下载成就证书</button>
         <button type="button" id="addAchievementCart">加入购物车</button>
         <a href="index.html">退出游戏</a>
       </div>
       <small class="achievement-cart-status" id="achievementCartStatus" role="status" aria-live="polite"></small>
+    </section>
+
+    <section class="achievement-certificate-dialog" id="achievementCertificateDialog" role="dialog" aria-modal="true" aria-labelledby="achievementCertificateTitle" hidden>
+      <div class="achievement-certificate-panel">
+        <span>PNG CERTIFICATE</span>
+        <h2 id="achievementCertificateTitle">为证书署名</h2>
+        <p>输入将印在证书上的名字。仅供娱乐，请勿填写真实信息。</p>
+        <label for="achievementName">姓名</label>
+        <input id="achievementName" maxlength="32" placeholder="输入名字" autocomplete="off" />
+        <output id="achievementCertificatePreview">恭喜 XXX 获得称号 月云的兵</output>
+        <div>
+          <button type="button" id="achievementCertificateCancel">返回</button>
+          <button type="button" id="achievementCertificateSave" disabled>下载 PNG</button>
+        </div>
+      </div>
     </section>
 
     <div class="violet-sweep" aria-hidden="true"></div>
@@ -212,6 +228,6 @@
     <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
   </main>
   <script src="live-achievement-cart.js?v=20260830a"></script>
-  <script src="live-experience-20260830h.js"></script>
+  <script src="live-experience-20260830h.js?v=20260830i"></script>
 </body>
 </html>
