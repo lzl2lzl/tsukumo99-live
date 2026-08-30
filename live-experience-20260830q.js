@@ -36,12 +36,10 @@
     achievementGate.innerHTML = '<div class="achievement-rays" aria-hidden="true"></div>'
       + '<span class="achievement-live">ACHIEVEMENT UNLOCKED</span>'
       + '<h1 id="achievementTitle">月云的兵</h1>'
-      + '<p>恭喜你已获得成就“月云的兵”及限定证书！请前往商店，在购物车填写地址发货。</p>'
-      + '<div class="achievement-actions"><button type="button" id="achievementCart">加入购物车</button>'
-      + '<button type="button" id="achievementRestart">重新开始</button>'
+      + '<p>恭喜你已获得成就“月云的兵”！</p>'
+      + '<div class="achievement-actions"><button type="button" id="achievementRestart">重新开始</button>'
       + '<a href="index.html" id="achievementExit">退出游戏</a></div>';
   }
-  var achievementCart = document.getElementById("achievementCart");
   var achievementRestart = document.getElementById("achievementRestart");
   var achievementExit = document.getElementById("achievementExit");
   var soundButton = document.getElementById("soundButton");
@@ -86,7 +84,6 @@
   var CHARGE_KEY = "tsukumo99-live-charge-v1";
   var ACHIEVEMENT_KEY = "tsukumo99-live-achievement-v1";
   var LEGACY_ACHIEVEMENT_SEEN_KEY = "tsukumo99-live-achievement-seen-v1";
-  var ACHIEVEMENT_REWARD_ID = "tsukumo-soldier-certificate";
   var trackColor = { solid: "#ec0050", soft: "rgba(236,0,80,.2)", pale: "rgba(255,134,189,.78)" };
   var laneColors = [trackColor, trackColor, trackColor, trackColor];
   var cropRects = [
@@ -533,41 +530,6 @@
 
   function saveChargeValues() {
     try { window.localStorage.setItem(CHARGE_KEY, JSON.stringify(chargeValues)); } catch (error) {}
-  }
-
-  function achievementRewardInCart() {
-    try {
-      var cart = JSON.parse(window.localStorage.getItem("dizCart") || "[]");
-      return Array.isArray(cart) && cart.some(function (item) {
-        return item && item.id === ACHIEVEMENT_REWARD_ID;
-      });
-    } catch (error) {
-      return false;
-    }
-  }
-
-  function renderAchievementCartState() {
-    if (!achievementCart) return;
-    var added = achievementRewardInCart();
-    achievementCart.textContent = added ? "已加入购物车" : "加入购物车";
-    achievementCart.classList.toggle("is-added", added);
-    achievementCart.setAttribute("aria-pressed", added ? "true" : "false");
-  }
-
-  function addAchievementRewardToCart() {
-    if (!achievementCart || achievementRewardInCart()) {
-      renderAchievementCartState();
-      return;
-    }
-    try {
-      var cart = JSON.parse(window.localStorage.getItem("dizCart") || "[]");
-      if (!Array.isArray(cart)) cart = [];
-      cart.push({ id: ACHIEVEMENT_REWARD_ID, qty: 2 });
-      window.localStorage.setItem("dizCart", JSON.stringify(cart));
-    } catch (error) {}
-    renderAchievementCartState();
-    showAudioStatus("限定证书已加入购物车");
-    vibrate(18);
   }
 
   function renderChargeValues() {
@@ -1526,7 +1488,6 @@
     resultGate.hidden = beEndingPending || achievementPending;
     if (beEndingPending) resetBeEnding();
     else if (achievementPending) {
-      renderAchievementCartState();
       achievementRestart.disabled = false;
       window.setTimeout(function () { achievementRestart.focus(); }, 180);
     }
@@ -1859,7 +1820,6 @@
     event.preventDefault();
     advanceBeEnding();
   });
-  if (achievementCart) achievementCart.addEventListener("click", addAchievementRewardToCart);
   achievementRestart.addEventListener("click", restartAchievementRun);
   soundButton.addEventListener("click", function () {
     setSound(!soundOn);

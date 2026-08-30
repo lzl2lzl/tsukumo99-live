@@ -90,6 +90,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .shop-more{margin:clamp(2rem,5vw,3.2rem) 0 0;color:var(--muted);font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;line-height:1.7;}
 .qtybox{display:inline-flex;align-items:center;border:1px solid rgba(255,134,189,.3);border-radius:999px;overflow:hidden;}
 .qtybox button{width:38px;height:40px;font-size:1.1rem;color:var(--paper);}
+.qtybox button:disabled{cursor:not-allowed;opacity:.3;}
 .qtybox span{min-width:34px;text-align:center;font-family:var(--mono);font-weight:700;font-size:.9rem;}
 .qtybox.sm button{width:30px;height:32px;font-size:1rem;}
 .qtybox.sm span{min-width:26px;font-size:.8rem;}
@@ -205,7 +206,7 @@ cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRe
 cheer.addEventListener("pointermove",function(e){if(!drag)return;if(Math.abs(e.movementX)+Math.abs(e.movementY)>1)drag.moved=true;var w=cheer.offsetWidth,h=cheer.offsetHeight;var nx=Math.max(4,Math.min(innerWidth-w-4,e.clientX-drag.dx)),ny=Math.max(4,Math.min(innerHeight-h-4,e.clientY-drag.dy));cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";});
 cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
 </script>
-<script src="shop-20260830i.js?v=20260830-reward-b"></script>
+<script src="shop-20260830i.js?v=20260830-qty99-a"></script>
 <script src="page-transition.js?v=20260830d"></script>
 </body>
 </html>

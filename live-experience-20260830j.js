@@ -151,9 +151,10 @@
   var currentRoundProfile = getRoundProfile(1);
   var openingNoteCounts = countOpeningNotes();
   var chargeGainByLane = openingNoteCounts.map(function (count) { return count ? 99 / count : 99; });
-  var chargeValues = loadChargeValues();
-  var achievementEarned = readStoredValue(ACHIEVEMENT_KEY) === "1";
-  var achievementPending = achievementEarned && readStoredValue(ACHIEVEMENT_SEEN_KEY) !== "1";
+  clearLegacyLiveProgress();
+  var chargeValues = [0, 0, 0, 0];
+  var achievementEarned = false;
+  var achievementPending = false;
 
   var geometry = {
     width: 1,
@@ -493,19 +494,19 @@
     try { return window.localStorage.getItem(key); } catch (error) { return null; }
   }
 
-  function loadChargeValues() {
+  function clearLegacyLiveProgress() {
     try {
-      var stored = JSON.parse(window.localStorage.getItem(CHARGE_KEY));
-      if (!Array.isArray(stored) || stored.length !== 4) return [0, 0, 0, 0];
-      return stored.map(function (value) { return clamp(Number(value) || 0, 0, 99); });
-    } catch (error) {
-      return [0, 0, 0, 0];
-    }
+      window.localStorage.removeItem(CHARGE_KEY);
+      window.localStorage.removeItem(ACHIEVEMENT_KEY);
+      window.localStorage.removeItem(ACHIEVEMENT_SEEN_KEY);
+    } catch (error) {}
   }
 
-  function saveChargeValues() {
-    try { window.localStorage.setItem(CHARGE_KEY, JSON.stringify(chargeValues)); } catch (error) {}
+  function loadChargeValues() {
+    return [0, 0, 0, 0];
   }
+
+  function saveChargeValues() {}
 
   function renderChargeValues() {
     performerCards.forEach(function (card, lane) {
@@ -524,10 +525,6 @@
     if (achievementEarned || achievementPending) return;
     achievementEarned = true;
     achievementPending = true;
-    try {
-      window.localStorage.setItem(ACHIEVEMENT_KEY, "1");
-      window.localStorage.removeItem(ACHIEVEMENT_SEEN_KEY);
-    } catch (error) {}
     showAudioStatus("成就解锁：月云的兵");
     playSound("full");
     vibrate([24, 34, 24, 34, 60]);
@@ -1773,7 +1770,6 @@
   });
   achievementExit.addEventListener("click", function () {
     achievementPending = false;
-    try { window.localStorage.setItem(ACHIEVEMENT_SEEN_KEY, "1"); } catch (error) {}
   });
   achievementRestart.addEventListener("click", restartAchievementRun);
   soundButton.addEventListener("click", function () {

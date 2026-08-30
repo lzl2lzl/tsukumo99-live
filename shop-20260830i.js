@@ -1,10 +1,11 @@
 /* TSUKUMO99 · DiŹ — Shop + cart + mock checkout (offline, vanilla).
-   Products and unlocked LIVE rewards persist in localStorage; checkout is a
-   pure front-end simulation — no real payment, no data leaves the browser. */
+   Cart contents persist in localStorage; checkout is a pure front-end
+   simulation — no real payment, no data leaves the browser. */
 (function(){
   "use strict";
   var byId=function(id){return document.getElementById(id);};
   var money=function(n){return "◈"+n;};   // ◈ fictional currency
+  var MAX_CART_QTY=99;
 
   /* ---------------- data ---------------- */
   var PRODUCT={
@@ -22,15 +23,6 @@
   };
   var PRODUCTS={};
   PRODUCTS[PRODUCT.id]=PRODUCT;
-  PRODUCTS["tsukumo-soldier-certificate"]={
-    id:"tsukumo-soldier-certificate",
-    cover:"assets/tsukumo-soldier-certificate.svg",
-    price:0,
-    lockedQty:2,
-    listing:false,
-    cat:{cn:"证书",jp:"証明書",en:"CERTIFICATE"},
-    title:"月云的兵"
-  };
   function prod(id){return PRODUCTS[id];}
 
   var T={
@@ -74,22 +66,34 @@
   var order=null;                               // set after mock payment
 
   /* ---------------- cart (localStorage) ---------------- */
+  function clampQty(q){return Math.min(MAX_CART_QTY,Math.max(1,Math.floor(Number(q)||1)));}
   function getCart(){
     try{
       var parsed=JSON.parse(localStorage.getItem("dizCart")||"[]");
       if(!Array.isArray(parsed))return [];
-      return parsed.filter(function(item){return item&&prod(item.id);}).map(function(item){
-        var p=prod(item.id),qty=Math.max(1,Math.floor(Number(item.qty)||1));
-        return {id:item.id,qty:p.lockedQty||qty};
-      });
+      return parsed.reduce(function(cart,item){
+        if(!item||!prod(item.id))return cart;
+        var existing=null;
+        cart.forEach(function(entry){if(entry.id===item.id)existing=entry;});
+        if(existing)existing.qty=clampQty(existing.qty+clampQty(item.qty));
+        else cart.push({id:item.id,qty:clampQty(item.qty)});
+        return cart;
+      },[]);
     }catch(e){return [];}
   }
   function saveCart(c){try{localStorage.setItem("dizCart",JSON.stringify(c));}catch(e){} updateBadge();}
   function cartCount(){return getCart().reduce(function(s,i){return s+i.qty;},0);}
   function subtotal(){return getCart().reduce(function(s,i){var p=prod(i.id);return s+i.qty*p.price;},0);}
-  function addToCart(id,n){var c=getCart(),it=null;c.forEach(function(x){if(x.id===id)it=x;});
-    if(it)it.qty+=n;else c.push({id:id,qty:n});saveCart(c);}
-  function setQty(id,q){var c=getCart(),p=prod(id);c=c.map(function(x){return x.id===id?{id:id,qty:q>0&&p&&p.lockedQty?p.lockedQty:q}:x;}).filter(function(x){return x.qty>0;});saveCart(c);}
+  function addToCart(id,n){if(!prod(id))return;var c=getCart(),it=null;c.forEach(function(x){if(x.id===id)it=x;});
+    if(it)it.qty=clampQty(it.qty+n);else c.push({id:id,qty:clampQty(n)});saveCart(c);}
+  function setQty(id,q){var c=getCart();c=c.map(function(x){return x.id===id?{id:id,qty:q>0?clampQty(q):0}:x;}).filter(function(x){return x.qty>0;});saveCart(c);}
+
+  function syncProductQtyControls(){
+    var value=byId("pQtyVal"),decrease=document.querySelector('[data-act="pdec"]'),increase=document.querySelector('[data-act="pinc"]');
+    if(value)value.textContent=pQty;
+    if(decrease)decrease.disabled=pQty<=1;
+    if(increase)increase.disabled=pQty>=MAX_CART_QTY;
+  }
 
   function updateBadge(){var b=byId("cartCount");if(!b)return;var n=cartCount();b.textContent=n;b.style.display=n>0?"grid":"none";}
 
@@ -132,9 +136,9 @@
         +'<div class="album-format"><span>'+t.format+'</span>'+esc(p.format[LANG])+'</div>'
         +'<div class="buy-row">'
           +'<div class="qtybox" aria-label="'+t.qty+'">'
-            +'<button data-act="pdec" aria-label="-">−</button>'
+            +'<button data-act="pdec" aria-label="-"'+(pQty<=1?' disabled':'')+'>−</button>'
             +'<span id="pQtyVal">'+pQty+'</span>'
-            +'<button data-act="pinc" aria-label="+">+</button>'
+            +'<button data-act="pinc" aria-label="+"'+(pQty>=MAX_CART_QTY?' disabled':'')+'>+</button>'
           +'</div>'
           +'<button class="btn-primary" data-act="add">'+t.addCart+'</button>'
           +'<button class="btn-ghost" data-act="buy">'+t.buyNow+'</button>'
@@ -151,16 +155,16 @@
     if(!c.length){
       items='<div class="cart-empty">'+t.cartEmpty+'</div>';
     } else {
-      items='<div class="cart-items">'+c.map(function(i){var p=prod(i.id),locked=!!p.lockedQty;
+      items='<div class="cart-items">'+c.map(function(i){var p=prod(i.id);
         return '<div class="cart-item">'
           +'<img class="ci-cover" src="'+p.cover+'" alt="" />'
           +'<div class="ci-mid"><div class="ci-title">'+p.title+'</div>'
-            +(locked?'<div class="ci-reward-meta">'+esc(p.cat[LANG])+' ×'+i.qty+'</div>':'<div class="ci-price">'+money(p.price)+'</div>')
-            +(locked?'':'<div class="qtybox sm">'
+            +'<div class="ci-price">'+money(p.price)+'</div>'
+            +'<div class="qtybox sm">'
               +'<button data-act="cdec" data-id="'+p.id+'" aria-label="-">−</button>'
               +'<span>'+i.qty+'</span>'
-              +'<button data-act="cinc" data-id="'+p.id+'" aria-label="+">+</button>'
-            +'</div>')
+              +'<button data-act="cinc" data-id="'+p.id+'" aria-label="+"'+(i.qty>=MAX_CART_QTY?' disabled':'')+'>+</button>'
+            +'</div>'
           +'</div>'
           +'<button class="ci-remove" data-act="crm" data-id="'+p.id+'" aria-label="'+t.remove+'">✕</button>'
           +'</div>';}).join("")+'</div>';
@@ -298,9 +302,9 @@
     var el=e.target.closest?e.target.closest("[data-act]"):null;
     if(el){
       var act=el.getAttribute("data-act"), id=el.getAttribute("data-id");
-      if(act==="pinc"){pQty++;var v=byId("pQtyVal");if(v)v.textContent=pQty;}
-      else if(act==="pdec"){if(pQty>1)pQty--;var v2=byId("pQtyVal");if(v2)v2.textContent=pQty;}
-      else if(act==="add"){addToCart(curProdId,pQty);pQty=1;var v3=byId("pQtyVal");if(v3)v3.textContent=1;renderCart();openCart();}
+      if(act==="pinc"){pQty=Math.min(MAX_CART_QTY,pQty+1);syncProductQtyControls();}
+      else if(act==="pdec"){pQty=Math.max(1,pQty-1);syncProductQtyControls();}
+      else if(act==="add"){addToCart(curProdId,pQty);pQty=1;syncProductQtyControls();renderCart();openCart();}
       else if(act==="buy"){addToCart(curProdId,pQty);location.href=route("checkout.html");}
       else if(act==="cinc"){var c=getCart(),q=0;c.forEach(function(x){if(x.id===id)q=x.qty;});setQty(id,q+1);renderCart();}
       else if(act==="cdec"){var c2=getCart(),q2=0;c2.forEach(function(x){if(x.id===id)q2=x.qty;});setQty(id,q2-1);renderCart();}

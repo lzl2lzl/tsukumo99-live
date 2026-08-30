@@ -34,9 +34,28 @@
   };
 
   var NEWS = [
-    {date:"2026.08.02",cat:"tour",title:{cn:"北京站 · 今夜开演，现场应援指南公开",en:"Beijing · tonight — live cheer guide is up",jp:"北京公演 · 本日開演、応援ガイド公開"}},
-    {date:"2026.07.26",cat:"tour",title:{cn:"广州站 · 余票紧张，建议尽早投骰选座",en:"Guangzhou · few seats left — roll early",jp:"広州公演 · 残席わずか、早めの抽選を"}},
-    {date:"2026.07.18",cat:"tour",title:{cn:"上海站 · 巡演首夜，DiŹ 正式启程",en:"Shanghai · opening night — DiŹ begins",jp:"上海公演 · 初日、DiŹ 開幕"}},
+    {id:"news-guide",date:"2026.08.31",cat:"guide",title:{cn:"NEWS 页面导览",en:"How to use NEWS",jp:"NEWSページのご案内"},body:{
+      cn:[
+        "“声明”包含本站的非官方性质、隐私与数据安全、共创与署名等说明。",
+        "“巡演”记录 TSUKUMO99 的故事，后续将持续更新。",
+        "“站点”提供网站使用指南和常见问题说明。如果你在使用网页时遇到未被解答的问题，请联系作者"
+      ],
+      en:[
+        "NOTICE covers the site's unofficial status, privacy and data safety, collaboration, and credits.",
+        "TOUR follows the story of TSUKUMO99 and will continue to be updated.",
+        "SITE contains website guides and answers to common questions. If you encounter an issue that is not covered here, please contact the creator."
+      ],
+      jp:[
+        "「声明」には、非公式サイトであること、プライバシーとデータ保護、共同制作、クレジットに関する説明を掲載しています。",
+        "「ツアー」ではTSUKUMO99の物語を紹介し、今後も更新していきます。",
+        "「サイト」には、利用ガイドとよくある質問を掲載しています。解決しない問題がある場合は、制作者までご連絡ください。"
+      ]
+    }},
+    {date:"2026.08.31",cat:"tour",title:{cn:"东京 · 出道演唱会公告",en:"Tokyo · Debut concert announcement",jp:"東京 · デビューライブのお知らせ"},body:{
+      cn:["如你所见我没有ddl完！！哈哈！以后再补充"],
+      en:["As you can see, I did not finish this before the deadline!! Haha! More details later."],
+      jp:["ご覧のとおり、締切までに完成しませんでした！！はは！続きは後日追加します。"]
+    }},
     {id:"guide-ticket-download",date:"2026.07.15",cat:"site",title:{cn:"电子票券下载与浏览器兼容",en:"E-ticket downloads and browser compatibility",jp:"電子チケットの保存とブラウザ互換性"},body:{
       cn:[
         "电子票券会在当前浏览器完成模拟付款与随机配席后生成。请点击“下载电子票”，并使用 Safari、Chrome 等手机系统浏览器打开本站；微信、QQ 等应用内浏览器可能会拦截下载。",
@@ -178,17 +197,15 @@
       ]
     }},
     {date:"2026.07.01",cat:"ticket",title:{cn:"电子票 PNG 支持离线保存",en:"Ticket PNG export now works offline",jp:"チケットPNGがオフライン保存に対応"}},
-    {date:"2026.06.20",cat:"tour",title:{cn:"上海站 · 追加场决定",en:"Shanghai · additional show added",jp:"上海公演 · 追加公演決定"}},
     {date:"2026.06.10",cat:"shop",title:{cn:"云购物上线：挑选、署名、保存",en:"Cloud Shop is now live",jp:"クラウドショップ公開"}},
     {date:"2026.06.03",cat:"ticket",title:{cn:"投骰抽座功能上线",en:"Roll-the-dice seat draw is live",jp:"サイコロ抽選購入を実装"}},
-    {date:"2026.06.01",cat:"tour",title:{cn:"DiŹ WORLD TOUR 2026 日程解禁",en:"DiŹ WORLD TOUR 2026 dates revealed",jp:"DiŹ WORLD TOUR 2026 全日程解禁"}}
   ];
   var NEWS_COPY={
-    cn:{body:"占位正文——这里之后放这条公告的详细内容。目前用于展示展开后的排版与留白。",cats:{all:"全部",tour:"巡演",ticket:"购票",shop:"周边",site:"站点",notice:"声明"}},
-    en:{body:"Placeholder body — the full announcement text will go here later.",cats:{all:"ALL",tour:"TOUR",ticket:"TICKET",shop:"SHOP",site:"SITE",notice:"NOTICE"}},
-    jp:{body:"仮本文——詳細情報は後日ここに掲載されます。",cats:{all:"すべて",tour:"ツアー",ticket:"チケット",shop:"グッズ",site:"サイト",notice:"告知"}}
+    cn:{body:"占位正文——这里之后放这条公告的详细内容。目前用于展示展开后的排版与留白。",cats:{all:"导览",tour:"巡演",ticket:"购票",shop:"周边",site:"站点",notice:"声明"}},
+    en:{body:"Placeholder body — the full announcement text will go here later.",cats:{all:"GUIDE",tour:"TOUR",ticket:"TICKET",shop:"SHOP",site:"SITE",notice:"NOTICE"}},
+    jp:{body:"仮本文——詳細情報は後日ここに掲載されます。",cats:{all:"ガイド",tour:"ツアー",ticket:"チケット",shop:"グッズ",site:"サイト",notice:"声明"}}
   };
-  var state = { shopOpen:false, product:0, name:"", made:null, rolling:false, newsCat:"all", newsOpen:null };
+  var state = { shopOpen:false, product:0, name:"", made:null, rolling:false, newsCat:"all", newsOpen:"news-guide" };
 
   function esc(s) { return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
   function pipGrid(face, color) {
@@ -239,7 +256,7 @@
   function renderNews(lang) {
     var c=NEWS_COPY[lang],keys=["all","notice","tour","site"];
     var filters=keys.map(function(k){return '<button type="button" data-dc-act="newsCat" data-cat="'+k+'" class="'+(state.newsCat===k?"is-active":"")+'">'+esc(c.cats[k])+'</button>';}).join("");
-    var items=NEWS.filter(function(n){return n.cat!=="ticket"&&n.cat!=="shop";}).filter(function(n){return state.newsCat==="all"||n.cat===state.newsCat;}).map(function(n,i){
+    var items=NEWS.filter(function(n){return n.cat!=="ticket"&&n.cat!=="shop";}).filter(function(n){return state.newsCat==="all"?n.cat==="guide":n.cat===state.newsCat;}).map(function(n,i){
       var key=n.id||n.date,open=state.newsOpen===key;
       var paragraphs=(n.body&&n.body[lang]?n.body[lang]:[c.body]).map(function(p){return '<p>'+esc(p)+'</p>';}).join("");
       return '<article class="dc-news-row" style="--delay:'+(Math.min(i,8)*.05)+'s"><button type="button" data-dc-act="newsToggle" data-key="'+key+'" aria-expanded="'+open+'"><time>'+n.date+'</time><strong>'+esc(n.title[lang])+'</strong><i class="'+(open?"is-open":"")+'" aria-hidden="true">⌄</i></button><div class="dc-news-body '+(open?"is-open":"")+'"><div class="dc-news-copy">'+paragraphs+'</div></div></article>';
@@ -279,7 +296,7 @@
       if(act==="closeShop"){state.shopOpen=false;state.made=null;document.body.style.overflow="";rerender();}
       if(act==="makeProduct"&&state.name.trim()){state.made=drawProduct(PRODUCTS[state.product],state.name.trim(),lang);rerender();}
       if(act==="downloadProduct"&&state.made){state.made.toBlob(function(b){var u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="TSUKUMO99-"+PRODUCTS[state.product].name.replace(/[^A-Za-z0-9]+/g,"-")+".png";a.click();setTimeout(function(){URL.revokeObjectURL(u);},1000);},"image/png");}
-      if(act==="newsCat"){state.newsCat=el.dataset.cat;state.newsOpen=null;rerender();}
+      if(act==="newsCat"){state.newsCat=el.dataset.cat;state.newsOpen=state.newsCat==="all"?"news-guide":null;rerender();}
       if(act==="newsToggle"){state.newsOpen=state.newsOpen===el.dataset.key?null:el.dataset.key;rerender();}
     });});
     var input=document.getElementById("cloudName");if(input){input.focus();input.addEventListener("input",function(){state.name=input.value;var btn=document.querySelector(".cloud-make");if(btn)btn.disabled=!state.name.trim();});}
