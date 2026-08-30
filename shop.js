@@ -32,7 +32,7 @@
         coTitle:"结算",backShop:"← 返回商店",order:"订单",ship:"收货信息",name:"收货人姓名",
         phone:"手机号（选填）",address:"收货地址（选填）",pay:"支付方式",
         card:"卡号",exp:"有效期",cvv:"CVV",total:"合计",freeShip:"包邮",payNow:"立即支付",paying:"支付中…",
-        okTitle:"支付成功",orderNo:"订单号",receiver:"收货人",amount:"实付",reward:"已解锁特典",invoice:"下载发票",invoiceTitle:"发票",invoiceDate:"开具日期",invoiceItems:"商品",invoiceQty:"数量",invoiceTotal:"合计",invoiceNotice:"非官方同人模拟，不会产生真实付款。",
+        okTitle:"支付成功",orderNo:"订单号",receiver:"收货人",amount:"实付",reward:"已解锁特典",invoice:"下载发票",invoiceTitle:"INVOICE",invoiceDate:"开具日期",invoiceItems:"商品",invoiceQty:"数量",invoiceTotal:"合计",
         backShop2:"返回商店",needName:"请填写虚构的收货人姓名",
         namePH:"输入将印在收据上的名字",phonePH:"仅供娱乐，请勿填写真实信息",addrPH:"仅供娱乐，请勿填写真实信息",cardPH:"0000 0000 0000 0000"},
     jp:{kicker:"GOODS · 数量限定",shopTitle:"グッズ",limited:"限定 / LIMITED",addCart:"カートに入れる",buyNow:"今すぐ購入",
@@ -42,7 +42,7 @@
         coTitle:"お会計",backShop:"← ショップに戻る",order:"注文",ship:"お届け先",name:"お名前",
         phone:"電話番号（任意）",address:"住所（任意）",pay:"お支払い方法",
         card:"カード番号",exp:"有効期限",cvv:"CVV",total:"合計",freeShip:"送料無料",payNow:"支払う",paying:"処理中…",
-        okTitle:"支払い完了",orderNo:"注文番号",receiver:"お届け先",amount:"支払額",reward:"アンロック特典",invoice:"請求書をダウンロード",invoiceTitle:"請求書",invoiceDate:"発行日",invoiceItems:"商品",invoiceQty:"数量",invoiceTotal:"合計",invoiceNotice:"非公式ファンメイドのシミュレーションです。実際の決済は発生しません。",
+        okTitle:"支払い完了",orderNo:"注文番号",receiver:"お届け先",amount:"支払額",reward:"アンロック特典",invoice:"請求書をダウンロード",invoiceTitle:"INVOICE",invoiceDate:"発行日",invoiceItems:"商品",invoiceQty:"数量",invoiceTotal:"合計",
         backShop2:"ショップへ戻る",needName:"架空のお名前を入力してください",
         namePH:"領収書に印字する名前",phonePH:"娯楽用です。実際の個人情報は入力しないでください",addrPH:"娯楽用です。実際の個人情報は入力しないでください",cardPH:"0000 0000 0000 0000"},
     en:{kicker:"GOODS · LIMITED DROP",shopTitle:"GOODS",limited:"LIMITED",addCart:"ADD TO CART",buyNow:"BUY NOW",
@@ -52,7 +52,7 @@
         coTitle:"CHECKOUT",backShop:"← Back to shop",order:"Order",ship:"Shipping",name:"Recipient name",
         phone:"Phone (optional)",address:"Address (optional)",pay:"Payment",
         card:"Card number",exp:"Expiry",cvv:"CVV",total:"Total",freeShip:"Free",payNow:"Pay now",paying:"Processing…",
-        okTitle:"Payment complete",orderNo:"Order",receiver:"Recipient",amount:"Paid",reward:"UNLOCKED REWARD",invoice:"Download invoice",invoiceTitle:"INVOICE",invoiceDate:"ISSUED",invoiceItems:"ITEM",invoiceQty:"QTY",invoiceTotal:"TOTAL",invoiceNotice:"Unofficial fan-made simulation. No real payment was made.",
+        okTitle:"Payment complete",orderNo:"Order",receiver:"Recipient",amount:"Paid",reward:"UNLOCKED REWARD",invoice:"Download invoice",invoiceTitle:"INVOICE",invoiceDate:"ISSUED",invoiceItems:"ITEM",invoiceQty:"QTY",invoiceTotal:"TOTAL",
         backShop2:"Back to shop",needName:"Please enter a fictional recipient name",
         namePH:"Name to print on the receipt",phonePH:"For entertainment only. Do not enter real personal information.",addrPH:"For entertainment only. Do not enter real personal information.",cardPH:"0000 0000 0000 0000"}
   };
@@ -256,7 +256,7 @@
     var y=580;
     items.slice(0,5).forEach(function(item){var p=prod(item.id);if(!p)return;g.fillStyle="#fff4f7";g.fillText(fitInvoiceText(g,p.title,850,36),92,y);g.fillStyle="#e4afbf";g.font="400 20px 'Space Mono',monospace";g.fillText(p.cat[LANG],92,y+35);g.textAlign="center";g.fillStyle="#fff4f7";g.font="700 30px 'Space Mono',monospace";g.fillText(String(item.qty),1240,y+12);g.textAlign="right";g.fillText(money(p.price*item.qty),1505,y+12);g.textAlign="left";g.strokeStyle="rgba(255,134,189,.16)";g.beginPath();g.moveTo(92,y+66);g.lineTo(1505,y+66);g.stroke();y+=116;});
     g.textAlign="right";g.fillStyle="#ff86bd";g.font="700 22px 'Space Mono',monospace";g.fillText(t.invoiceTotal,1265,880);g.fillStyle="#fff4f7";g.font="700 64px 'Oswald',sans-serif";g.fillText(money(order.amount),1505,890);g.textAlign="left";
-    g.fillStyle="#ec0050";g.font="700 18px 'Space Mono',monospace";g.fillText("UNOFFICIAL / FAN-MADE",92,958);g.textAlign="right";g.fillStyle="#e4afbf";g.font="400 18px 'Noto Sans SC','Noto Sans JP',sans-serif";g.fillText(t.invoiceNotice,1505,958);g.textAlign="left";
+    g.fillStyle="#ec0050";g.font="700 18px 'Space Mono',monospace";g.fillText("UNOFFICIAL / FAN-MADE",92,958);
     downloadCanvas(c,order.no+"-invoice.png");
   }
   function pay(){
