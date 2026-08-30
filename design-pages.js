@@ -47,9 +47,9 @@
     {date:"2026.06.01",cat:"tour",title:{cn:"DiŹ WORLD TOUR 2026 日程解禁",en:"DiŹ WORLD TOUR 2026 dates revealed",jp:"DiŹ WORLD TOUR 2026 全日程解禁"}}
   ];
   var NEWS_COPY={
-    cn:{body:"占位正文——这里之后放这条公告的详细内容。目前用于展示展开后的排版与留白。",note:"公告内容为虚构占位，待企划文案正式补充。",cats:{all:"全部",tour:"巡演",ticket:"购票",shop:"周边",site:"站点",notice:"声明"}},
-    en:{body:"Placeholder body — the full announcement text will go here later.",note:"Fictional placeholder announcements; final copy is still to come.",cats:{all:"ALL",tour:"TOUR",ticket:"TICKET",shop:"SHOP",site:"SITE",notice:"NOTICE"}},
-    jp:{body:"仮本文——詳細情報は後日ここに掲載されます。",note:"架空の仮お知らせです。正式な文章は後日追加予定です。",cats:{all:"すべて",tour:"ツアー",ticket:"チケット",shop:"グッズ",site:"サイト",notice:"告知"}}
+    cn:{body:"占位正文——这里之后放这条公告的详细内容。目前用于展示展开后的排版与留白。",cats:{all:"全部",tour:"巡演",ticket:"购票",shop:"周边",site:"站点",notice:"声明"}},
+    en:{body:"Placeholder body — the full announcement text will go here later.",cats:{all:"ALL",tour:"TOUR",ticket:"TICKET",shop:"SHOP",site:"SITE",notice:"NOTICE"}},
+    jp:{body:"仮本文——詳細情報は後日ここに掲載されます。",cats:{all:"すべて",tour:"ツアー",ticket:"チケット",shop:"グッズ",site:"サイト",notice:"告知"}}
   };
   var state = { shopOpen:false, product:0, name:"", made:null, rolling:false, newsCat:"all", newsOpen:null };
 
@@ -106,7 +106,7 @@
       var open=state.newsOpen===n.date;
       return '<article class="dc-news-row" style="--delay:'+(Math.min(i,8)*.05)+'s"><button type="button" data-dc-act="newsToggle" data-key="'+n.date+'" aria-expanded="'+open+'"><time>'+n.date+'</time><strong>'+esc(n.title[lang])+'</strong><i class="'+(open?"is-open":"")+'" aria-hidden="true">⌄</i></button><div class="dc-news-body '+(open?"is-open":"")+'"><p>'+esc(c.body)+'</p></div></article>';
     }).join("");
-    return '<main class="dc-news"><header><h1>NEWS</h1></header><nav class="dc-news-filters" aria-label="News categories">'+filters+'</nav><section class="dc-news-list">'+items+'</section><p class="dc-news-note">'+esc(c.note)+'</p></main>';
+    return '<main class="dc-news"><header><h1>NEWS</h1></header><nav class="dc-news-filters" aria-label="News categories">'+filters+'</nav><section class="dc-news-list">'+items+'</section></main>';
   }
   function rollProfile(lang) {
     if(state.rolling) return;
