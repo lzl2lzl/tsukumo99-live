@@ -37,7 +37,104 @@
     {date:"2026.08.02",cat:"tour",title:{cn:"北京站 · 今夜开演，现场应援指南公开",en:"Beijing · tonight — live cheer guide is up",jp:"北京公演 · 本日開演、応援ガイド公開"}},
     {date:"2026.07.26",cat:"tour",title:{cn:"广州站 · 余票紧张，建议尽早投骰选座",en:"Guangzhou · few seats left — roll early",jp:"広州公演 · 残席わずか、早めの抽選を"}},
     {date:"2026.07.18",cat:"tour",title:{cn:"上海站 · 巡演首夜，DiŹ 正式启程",en:"Shanghai · opening night — DiŹ begins",jp:"上海公演 · 初日、DiŹ 開幕"}},
-    {date:"2026.07.15",cat:"site",title:{cn:"加载页与骰子交互更新",en:"Loader and dice interaction updated",jp:"ローディングとサイコロ演出を更新"}},
+    {id:"guide-ticket-download",date:"2026.07.15",cat:"site",title:{cn:"电子票券下载与浏览器兼容",en:"E-ticket downloads and browser compatibility",jp:"電子チケットの保存とブラウザ互換性"},body:{
+      cn:[
+        "电子票券会在当前浏览器完成模拟付款与随机配席后生成。请点击“下载电子票”，并使用 Safari、Chrome 等手机系统浏览器打开本站；微信、QQ 等应用内浏览器可能会拦截下载。",
+        "如果仍无反应，请确认浏览器允许下载文件，刷新页面后重新完成一次模拟购票。本站不会保存订单，重新操作也不会产生真实扣款。"
+      ],
+      en:[
+        "Your e-ticket is generated in the current browser after the simulated payment and random seat assignment. Tap “Download e-ticket” and open the site in Safari, Chrome or another system browser; in-app browsers such as WeChat or QQ may block downloads.",
+        "If nothing happens, allow file downloads in your browser, refresh the page and complete the simulated purchase again. Orders are not stored and no real charge is made."
+      ],
+      jp:[
+        "電子チケットは、現在のブラウザで模擬決済とランダム配席が完了した後に生成されます。「電子チケットを保存」をタップし、SafariやChromeなど端末の標準ブラウザで本サイトを開いてください。WeChatやQQなどのアプリ内ブラウザでは、ダウンロードがブロックされる場合があります。",
+        "反応がない場合は、ブラウザのファイルダウンロードを許可し、ページを更新して模擬購入をやり直してください。注文情報は保存されず、実際の請求も発生しません。"
+      ]
+    }},
+    {id:"guide-live",date:"2026.07.14",cat:"site",title:{cn:"LIVE 互动使用指南",en:"LIVE interaction guide",jp:"LIVEインタラクションガイド"},body:{
+      cn:[
+        "手机端请先将设备横屏，建议使用页面内的全屏按钮，并开启声音或佩戴耳机。点击“开始游戏”后，在目标进入底部判定区域时按下对应的 Z／O／O／L 按钮；遇到长条目标时需要持续按住。",
+        "每回合 30 秒，难度会逐步提高。需要时可开启“宇都木代打”协助判定，也可以随时通过退出按钮离开游戏。"
+      ],
+      en:[
+        "On mobile, rotate your device to landscape, use the in-page full-screen button, and turn on sound or wear headphones. After tapping “Start game”, press the matching Z / O / O / L button as a target reaches the judgment line; hold the button for long notes.",
+        "Each round lasts 30 seconds and gradually becomes harder. Turn on Utsugi Assist if you want help with the judgments, or use Exit at any time to leave the game."
+      ],
+      jp:[
+        "スマートフォンでは端末を横向きにし、ページ内の全画面ボタンを使用してください。音声をオンにするか、イヤホンの使用をおすすめします。「ゲーム開始」をタップしたら、ターゲットが下部の判定エリアに到達するタイミングで対応する Z／O／O／L ボタンを押し、ロングノーツは押し続けてください。",
+        "1ラウンドは30秒で、少しずつ難しくなります。必要に応じて「宇都木オート」をオンにすると判定を手伝ってくれます。終了ボタンからいつでもゲームを離れられます。"
+      ]
+    }},
+    {id:"guide-about",date:"2026.07.13",cat:"site",title:{cn:"关于本站",en:"About this site",jp:"本サイトについて"},body:{
+      cn:[
+        "本站是非商业性质的同人共创企划，与原作官方及现实中的艺人、乐队、场馆、票务平台均无关联。",
+        "作品权利、使用范围与创作者署名等详细信息，请查看“声明”分类。"
+      ],
+      en:[
+        "This is a non-commercial, collaborative fan project and is not affiliated with the original rights holders or any real performers, bands, venues or ticketing platforms.",
+        "See the Notice category for details about rights, permitted use and creator credits."
+      ],
+      jp:[
+        "本サイトは非営利の共同ファン企画であり、原作公式および実在する出演者、バンド、会場、チケット販売事業者とは関係ありません。",
+        "権利、利用範囲、制作者クレジットの詳細は「告知」カテゴリーをご確認ください。"
+      ]
+    }},
+    {id:"guide-simulated-flow",date:"2026.07.12",cat:"site",title:{cn:"模拟购票与商品流程",en:"Simulated ticketing and goods flows",jp:"チケット・グッズの模擬フロー"},body:{
+      cn:[
+        "购票、随机配席、购物车、付款信息与支付动画均为前端模拟，不会发生真实交易、出票、发货或线下兑换。",
+        "请把它当作演唱会主题的互动体验，并且不要填写真实银行卡号、地址等个人信息。"
+      ],
+      en:[
+        "Ticketing, random seat assignment, the cart, payment details and payment animations are front-end simulations. There is no real transaction, ticket issuance, shipment or on-site redemption.",
+        "Treat them as part of the concert-themed experience, and do not enter real card numbers, addresses or other personal information."
+      ],
+      jp:[
+        "チケット購入、ランダム配席、カート、決済情報、支払い演出はすべてフロントエンド上のシミュレーションです。実際の取引、発券、発送、会場での引き換えは行われません。",
+        "コンサートをテーマにした体験としてお楽しみいただき、実際のカード番号や住所などの個人情報は入力しないでください。"
+      ]
+    }},
+    {id:"guide-data",date:"2026.07.11",cat:"site",title:{cn:"数据与隐私",en:"Data and privacy",jp:"データとプライバシー"},body:{
+      cn:[
+        "姓名等内容仅在当前浏览器中用于生成虚构票券或订单预览，本站不会主动将其上传至服务器。",
+        "刷新页面、关闭浏览器或清除网站数据后，内容可能消失。建议使用昵称或虚构信息，不要填写真实个人与支付信息。"
+      ],
+      en:[
+        "Names and other entries are used only in the current browser to create fictional ticket or order previews; the site does not intentionally upload them to a server.",
+        "They may disappear after a refresh, browser close or site-data reset. Use a nickname or fictional details, never real personal or payment information."
+      ],
+      jp:[
+        "氏名などの入力内容は、現在のブラウザで架空のチケットや注文プレビューを作成するためだけに使用され、サーバーへ意図的に送信されることはありません。",
+        "ページの再読み込み、ブラウザの終了、サイトデータの削除によって内容が消える場合があります。実名ではなくニックネームや架空の情報を使用し、個人情報・決済情報は入力しないでください。"
+      ]
+    }},
+    {id:"guide-local-progress",date:"2026.07.10",cat:"site",title:{cn:"本地数据与跨设备使用",en:"Local data and switching devices",jp:"ローカルデータと端末の変更"},body:{
+      cn:[
+        "部分购物车与解锁状态只保存在当前浏览器本地，不提供账号登录或跨设备同步。更换设备、浏览器、使用无痕模式或清除缓存后，记录可能消失。",
+        "需要保留的电子票券或发票，请在生成后及时下载。"
+      ],
+      en:[
+        "Some cart and unlock states are stored only in the current browser. There are no accounts or cross-device sync, so records may disappear after changing device or browser, using private mode, or clearing site data.",
+        "Download any e-ticket or invoice you want to keep as soon as it is generated."
+      ],
+      jp:[
+        "一部のカート情報や解除状況は現在のブラウザ内にのみ保存されます。アカウント機能や端末間同期はないため、端末・ブラウザの変更、プライベートモードの使用、サイトデータの削除によって記録が消える場合があります。",
+        "残しておきたい電子チケットやINVOICEは、生成後すぐに保存してください。"
+      ]
+    }},
+    {id:"guide-troubleshooting",date:"2026.07.09",cat:"site",title:{cn:"显示、音频与全屏故障排查",en:"Display, audio and full-screen troubleshooting",jp:"表示・音声・全画面のトラブルシューティング"},body:{
+      cn:[
+        "请先刷新页面，并使用最新版 Safari、Chrome 或 Edge 打开本站；微信、QQ 等应用内浏览器可能会限制全屏、下载或音频播放。",
+        "LIVE 的声音需要由用户点击后才能播放。请检查页面内的声音开关、设备媒体音量与静音模式；横屏显示异常时，可以再次点击页面内的全屏按钮。"
+      ],
+      en:[
+        "Refresh the page and use the latest Safari, Chrome or Edge. In-app browsers such as WeChat or QQ may restrict full-screen mode, downloads or audio playback.",
+        "LIVE audio must be started by a user action. Check the in-page sound control, media volume and silent mode; if landscape layout looks wrong, tap the in-page full-screen button again."
+      ],
+      jp:[
+        "まずページを再読み込みし、最新版のSafari、Chrome、Edgeで本サイトを開いてください。WeChatやQQなどのアプリ内ブラウザでは、全画面表示、ダウンロード、音声再生が制限される場合があります。",
+        "LIVEの音声は、ユーザーの操作後に再生できます。ページ内の音声スイッチ、端末のメディア音量、消音モードをご確認ください。横画面の表示がおかしい場合は、ページ内の全画面ボタンをもう一度押してください。"
+      ]
+    }},
     {id:"notice-rights",date:"2026.07.08",cat:"notice",title:{cn:"本站为非官方性质的同人企划",en:"This is an unofficial fan project",jp:"本サイトは非公式のファン企画です"},body:{
       cn:[
         "本站与原作官方、相关公司、艺人、乐队、场馆及票务平台均无关联。原作角色、名称及相关权利归各自权利人所有；本站原创插画、文字、网页设计与音效的权利归对应创作者所有。",
@@ -82,7 +179,6 @@
     }},
     {date:"2026.07.01",cat:"ticket",title:{cn:"电子票 PNG 支持离线保存",en:"Ticket PNG export now works offline",jp:"チケットPNGがオフライン保存に対応"}},
     {date:"2026.06.20",cat:"tour",title:{cn:"上海站 · 追加场决定",en:"Shanghai · additional show added",jp:"上海公演 · 追加公演決定"}},
-    {date:"2026.06.14",cat:"site",title:{cn:"主视觉公开",en:"Key visual revealed",jp:"キービジュアル公開"}},
     {date:"2026.06.10",cat:"shop",title:{cn:"云购物上线：挑选、署名、保存",en:"Cloud Shop is now live",jp:"クラウドショップ公開"}},
     {date:"2026.06.03",cat:"ticket",title:{cn:"投骰抽座功能上线",en:"Roll-the-dice seat draw is live",jp:"サイコロ抽選購入を実装"}},
     {date:"2026.06.01",cat:"tour",title:{cn:"DiŹ WORLD TOUR 2026 日程解禁",en:"DiŹ WORLD TOUR 2026 dates revealed",jp:"DiŹ WORLD TOUR 2026 全日程解禁"}}
