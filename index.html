@@ -217,6 +217,8 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
 @media (max-width:700px){
   .portal-preview,.profile-preview{grid-template-columns:1fr;min-height:0;}
   .portal-copy,.profile-copy{grid-column:1;grid-row:1;padding:1.35rem 1.2rem 1.6rem;min-height:13.5rem;}
+  #profile .sec-head{margin-bottom:.75rem;}
+  #profile .profile-copy{justify-content:flex-start;min-height:0;padding-top:1.05rem;}
   .live-visual{grid-column:1;grid-row:1;opacity:.6;}
   .live-visual::before{width:17rem}.live-visual::after{width:11rem}
   .roster{grid-column:1;grid-row:2;padding:.4rem 1.2rem 1.1rem;background:rgba(141,0,44,.12);}
@@ -266,8 +268,7 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
   .hero-title{font-size:clamp(4.4rem,30vw,8rem);}
   .hero-tourline{font-size:11px;margin-top:14px;}
   .hero-tagline{font-size:clamp(1rem,4.4vw,1.35rem);}
-  .hero-more{margin-top:clamp(1.5rem,4.5vh,2.2rem);padding:.92rem 1.7rem;border-radius:999px;background:var(--hot);color:var(--paper);box-shadow:0 12px 28px rgba(236,0,80,.5);font-size:.72rem;letter-spacing:.14em;gap:.55rem;}
-  .hero-more svg{width:12px;height:12px;}
+  .hero-more{display:none;}
   .hero-flow{opacity:calc(var(--hero-stage-opacity,1) * .45);}
   .hero-typefield{opacity:.045;}
   .lang{display:none;}
@@ -362,7 +363,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     </div>
     <div class="reveal">
       <div class="live-row"><span class="city">上海 · 梅赛德斯-奔弛文化中心</span><span class="date">2026.07.18</span></div>
-      <div class="live-row"><span class="city">广州 · 宝能广州国际体育演艺中芯</span><span class="date">2026.07.26</span></div>
+      <div class="live-row"><span class="city">广州 · 宝宁广州国际体育演艺中心</span><span class="date">2026.07.26</span></div>
       <div class="live-row"><span class="city">北京 · 凯迪拉刻中心</span><span class="date">2026.08.02</span></div>
     </div>
   </section>
@@ -389,7 +390,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     <a class="portal-preview profile-preview reveal" href="profile.html">
       <div class="portal-copy profile-copy">
         <h3 class="portal-title">TOUR MEMBERS</h3>
-        <p class="portal-desc">乐队成员档案现已开放。拨动中央旋钮切换查看。</p>
+        <p class="portal-desc">乐队成员档案现已开放，拨动中央旋钮切换查看。</p>
         <span class="portal-enter">查看成员档案 <span>→</span></span>
       </div>
       <div class="roster" aria-hidden="true">
