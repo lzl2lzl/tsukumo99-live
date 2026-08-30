@@ -26,20 +26,24 @@
     { code:'DB',status:'plenty',date:'2026.11.06',country:{cn:'阿联酋',en:'UAE',jp:'アラブ首長国連邦'},city:{cn:'迪拜',en:'DUBAI',jp:'ドバイ'},venue:{cn:'迪拜 · 海湾竞技场',en:'GULF COAST ARENA',jp:'ドバイ ガルフアリーナ'}},
     { code:'SG',status:'few',date:'2026.11.14',country:{cn:'新加坡',en:'SINGAPORE',jp:'シンガポール'},city:{cn:'新加坡',en:'SINGAPORE',jp:'シンガポール'},venue:{cn:'新加坡 · 滨海湾馆',en:'MARINA BAY HALL',jp:'シンガポール マリーナベイ'}}];
   var ZONES = [
-    { id:'vip',tier:'VIP',code:'V',price:999,die:'⚅',accent:'var(--hot)',name:{cn:'VIP 前区站席',en:'VIP FRONT STANDING',jp:'VIPフロントスタンディング'},
-      seat:{cn:'整理番号制 · 站席',en:'ENTRY-NUMBER · STANDING',jp:'整理番号制 · スタンディング'},
-      perks:{cn:['前区站席,最靠近舞台','优先通道提前入场','限定周边礼包 + 纪念挂牌'],en:['Front standing, closest to stage','Priority early entry','Limited merch + laminate pass'],jp:['最前スタンディング','優先入場','限定グッズ + ラミネート']} },
-    { id:'std',tier:'STANDARD',code:'S',price:499,die:'⚂',accent:'var(--pink)',name:{cn:'普通座席',en:'GENERAL SEATING',jp:'一般席'},
-      seat:{cn:'对号入座 · 系统配席',en:'RESERVED · AUTO-ASSIGNED',jp:'指定席 · 自動配席'},
-      perks:{cn:['系统自动配席(区/排/座)','标准入场通道','电子场刊'],en:['Auto-assigned seat','Standard entry lane','Digital programme'],jp:['自動配席','通常入場','デジタルパンフ']} }];
+    { id:'s-goods',tier:'S + GOODS',rank:'S',code:'SG',price:14000,die:'⚅',accent:'var(--hot)',goods:true,name:{cn:'限定周边附 S 席',en:'S RESERVED + LIMITED GOODS',jp:'限定グッズ付S席'},
+      seat:{cn:'S 席指定席 · 付款确认后随机配席',en:'S RESERVED · RANDOM SEAT AFTER CONFIRMATION',jp:'S指定席 · 決済確認後ランダム配席'} },
+    { id:'s',tier:'S',rank:'S',code:'S',price:10000,die:'⚄',accent:'var(--pink)',goods:false,name:{cn:'S 席',en:'S RESERVED',jp:'S席'},
+      seat:{cn:'S 席指定席 · 付款确认后随机配席',en:'S RESERVED · RANDOM SEAT AFTER CONFIRMATION',jp:'S指定席 · 決済確認後ランダム配席'} },
+    { id:'a-goods',tier:'A + GOODS',rank:'A',code:'AG',price:13000,die:'⚂',accent:'var(--hot)',goods:true,name:{cn:'限定周边附 A 席',en:'A RESERVED + LIMITED GOODS',jp:'限定グッズ付A席'},
+      seat:{cn:'A 席指定席 · 付款确认后随机配席',en:'A RESERVED · RANDOM SEAT AFTER CONFIRMATION',jp:'A指定席 · 決済確認後ランダム配席'},
+      notice:{cn:'A 席为部分演出可能较难观看的座位，请确认后购买。',en:'Some parts of the performance may be difficult to see from A seats. Please purchase with this in mind.',jp:'A席は一部演出が見づらいお席となります。ご了承の上お買い求めください。'} },
+    { id:'a',tier:'A',rank:'A',code:'A',price:9000,die:'⚁',accent:'var(--violet, #c758ff)',goods:false,name:{cn:'A 席',en:'A RESERVED',jp:'A席'},
+      seat:{cn:'A 席指定席 · 付款确认后随机配席',en:'A RESERVED · RANDOM SEAT AFTER CONFIRMATION',jp:'A指定席 · 決済確認後ランダム配席'},
+      notice:{cn:'A 席为部分演出可能较难观看的座位，请确认后购买。',en:'Some parts of the performance may be difficult to see from A seats. Please purchase with this in mind.',jp:'A席は一部演出が見づらいお席となります。ご了承の上お買い求めください。'} }];
   var T = {
-    cn:{getTickets:'选择场次',lblOpen:'开场 / 开演',lblPrice:'票档',lblStatus:'余票',from:'起',chooseZone:'选择座位档',back:'返回',nameStep:'这张票印给谁?',nameLabel:'持票人姓名',namePlaceholder:'输入将印在票面上的名字',issueBtn:'生成电子票',ticketReady:'电子票已生成',download:'下载 PNG 票券',bookAnother:'再选一场',lblCity:'城市',lblVenue:'场馆',lblDate:'日期',lblTier:'档位',lblSeat:'座位',lblName:'持票人',statusFew:'仅剩少量',statusPlenty:'余票充足',downloadHint:'无法下载?试试用手机浏览器打开本站。'},
-    en:{getTickets:'CHOOSE A SHOW',lblOpen:'DOORS / START',lblPrice:'FROM',lblStatus:'STATUS',from:'FROM',chooseZone:'CHOOSE YOUR ZONE',back:'BACK',nameStep:'WHOSE NAME GOES ON IT?',nameLabel:'ATTENDEE NAME',namePlaceholder:'Name to print on the ticket',issueBtn:'ISSUE TICKET',ticketReady:'YOUR TICKET IS READY',download:'DOWNLOAD PNG',bookAnother:'BOOK ANOTHER',lblCity:'CITY',lblVenue:'VENUE',lblDate:'DATE',lblTier:'TIER',lblSeat:'SEAT',lblName:'ATTENDEE',statusFew:'FEW LEFT',statusPlenty:'AVAILABLE',downloadHint:"Download not working? Open this site in your phone's browser."},
-    jp:{getTickets:'公演を選ぶ',lblOpen:'開場 / 開演',lblPrice:'料金',lblStatus:'残席',from:'より',chooseZone:'ゾーンを選択',back:'戻る',nameStep:'チケットの名義は?',nameLabel:'氏名',namePlaceholder:'チケットに印字する名前',issueBtn:'チケット発行',ticketReady:'チケットが発行されました',download:'PNGを保存',bookAnother:'別の公演',lblCity:'都市',lblVenue:'会場',lblDate:'日付',lblTier:'ランク',lblSeat:'座席',lblName:'氏名',statusFew:'残りわずか',statusPlenty:'販売中',downloadHint:'ダウンロードできない場合はスマホの標準ブラウザで開き直してください。'}};
+    cn:{getTickets:'选择场次',lblOpen:'开场 / 开演',lblPrice:'票价',lblStatus:'余票',from:'起',chooseZone:'选择票档',back:'返回',nameStep:'确认票档与随机配席',nameLabel:'持票人姓名',namePlaceholder:'输入将印在票面上的名字',issueBtn:'模拟付款并随机配席',ticketReady:'随机配席完成',download:'下载 PNG 票券',bookAnother:'再选一场',lblCity:'城市',lblVenue:'场馆',lblDate:'日期',lblTier:'票档',lblSeat:'随机座位',lblName:'持票人',statusFew:'仅剩少量',statusPlenty:'余票充足',downloadHint:'无法下载？请尝试使用手机浏览器打开本站。',tax:'含税',goods:'限定周边',rulesTitle:'购票与配席规则',rulesLead:'票档由你选择，不参与随机；只有座位号会在模拟付款后随机产生。',rules:['全席为指定席，无法自行选择座位号。','3 岁以上须购票（3 岁以下不可入场）。','仅发行电子票。','演出当日将随机对购票人（申请人）进行身份确认。'],rulesFoot:'本页面为非官方同人模拟，不会产生真实付款。',assignTitle:'付款后随机配席',assignBody:'确认后将锁定所选票档，并立即在该票档对应区域内随机生成座位号；结果不可指定或更换。'},
+    en:{getTickets:'CHOOSE A SHOW',lblOpen:'DOORS / START',lblPrice:'FROM',lblStatus:'STATUS',from:'FROM',chooseZone:'CHOOSE YOUR TIER',back:'BACK',nameStep:'CONFIRM TIER & RANDOM SEAT',nameLabel:'ATTENDEE NAME',namePlaceholder:'Name to print on the ticket',issueBtn:'SIMULATE PAYMENT & ASSIGN SEAT',ticketReady:'YOUR SEAT IS ASSIGNED',download:'DOWNLOAD PNG',bookAnother:'BOOK ANOTHER',lblCity:'CITY',lblVenue:'VENUE',lblDate:'DATE',lblTier:'TIER',lblSeat:'RANDOM SEAT',lblName:'ATTENDEE',statusFew:'FEW LEFT',statusPlenty:'AVAILABLE',downloadHint:"Download not working? Open this site in your phone's browser.",tax:'TAX INCLUDED',goods:'LIMITED GOODS',rulesTitle:'TICKET & SEAT RULES',rulesLead:'You choose the ticket tier—it is not random. Only the seat number is assigned at random after simulated payment.',rules:['All seats are reserved. Seat numbers cannot be selected.','A paid ticket is required from age 3; children under 3 may not enter.','Electronic tickets only.','Ticket holder identity checks may be conducted at random on the event day.'],rulesFoot:'This is an unofficial fan-made simulation. No real payment is made.',assignTitle:'RANDOM SEAT AFTER PAYMENT',assignBody:'Confirmation locks the selected tier and immediately assigns a random seat within that tier. The result cannot be selected or changed.'},
+    jp:{getTickets:'公演を選ぶ',lblOpen:'開場 / 開演',lblPrice:'料金',lblStatus:'残席',from:'より',chooseZone:'券種を選択',back:'戻る',nameStep:'券種確認・ランダム配席',nameLabel:'氏名',namePlaceholder:'チケットに印字する名前',issueBtn:'決済を再現してランダム配席',ticketReady:'ランダム配席完了',download:'PNGを保存',bookAnother:'別の公演',lblCity:'都市',lblVenue:'会場',lblDate:'日付',lblTier:'券種',lblSeat:'ランダム座席',lblName:'氏名',statusFew:'残りわずか',statusPlenty:'販売中',downloadHint:'ダウンロードできない場合はスマホの標準ブラウザで開き直してください。',tax:'税込',goods:'限定グッズ',rulesTitle:'チケット・配席ルール',rulesLead:'券種はご自身で選択し、抽選対象にはなりません。座席番号のみ決済確認後にランダムで決定します。',rules:['全席指定となり、座席番号はお選びいただけません。','3歳以上有料（3歳未満入場不可）。','お申込みは電子チケットのみとなります。','当日会場にてご購入者様（お申込みされた方）の本人確認を、無作為（ランダム）に実施させていただきます。'],rulesFoot:'本ページは非公式ファンメイドのシミュレーションです。実際の決済は発生しません。',assignTitle:'決済後ランダム配席',assignBody:'確定すると選択した券種が固定され、その券種の対象エリア内で座席番号がランダムに発行されます。座席の指定・変更はできません。'}};
 
   var DICE=['\u2680','\u2681','\u2682','\u2683'];
   var STEPKEYS=['stop','zone','name','ticket'];
-  var STEPLABELS={cn:['\u573a\u6b21','\u6863\u4f4d','\u7f72\u540d','\u51fa\u7968'],en:['SHOW','ZONE','NAME','TICKET'],jp:['\u516c\u6f14','\u30e9\u30f3\u30af','\u6c0f\u540d','\u767a\u5238']};
+  var STEPLABELS={cn:['场次','票档','确认','出票'],en:['SHOW','TIER','CONFIRM','TICKET'],jp:['公演','券種','確認','発券']};
   var DOW=['SUN','MON','TUE','WED','THU','FRI','SAT'];
   var OPENSETS=[['16:30','17:30'],['17:00','18:00'],['17:30','18:30'],['18:00','19:00'],['13:00','14:00']];
   var minPrice=Math.min.apply(null,ZONES.map(function(z){return z.price;}));
@@ -50,6 +54,23 @@
 
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function pad2(n){return n<10?'0'+n:''+n;}
+  function formatPrice(value){return '¥'+String(value).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+  function randomInt(min,max){
+    var span=max-min+1;
+    if(window.crypto&&window.crypto.getRandomValues){var n=new Uint32Array(1);window.crypto.getRandomValues(n);return min+(n[0]%span);}
+    return min+Math.floor(Math.random()*span);
+  }
+  function assignSeat(zone){
+    return zone.rank==='S'
+      ?{section:'S',row:randomInt(1,18),number:randomInt(1,48)}
+      :{section:'A',row:randomInt(19,38),number:randomInt(1,52)};
+  }
+  function formatSeat(seat,lang){
+    if(!seat||typeof seat==='string')return seat||'';
+    if(lang==='jp')return seat.section+'ブロック・'+seat.row+'列・'+seat.number+'番';
+    if(lang==='en')return seat.section+' BLOCK · ROW '+pad2(seat.row)+' · SEAT '+pad2(seat.number);
+    return seat.section+'区 · '+seat.row+'排 · '+seat.number+'号';
+  }
   function top(){try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){}}
 
   /* ---------- canvas PNG export (ported verbatim) ---------- */
@@ -80,7 +101,7 @@
     g.strokeStyle='rgba(255,134,189,.16)'; g.lineWidth=1; g.beginPath(); g.moveTo(L,iy+256); g.lineTo(STUB-52,iy+256); g.stroke();
     const c1=L,c2=L+470,gy0=iy+308,step=80;
     const Lcol=[['CITY',s.city.en,false],['VENUE',s.venue.en,false],['ZONE',z.name.en,false],['ATTENDEE',tkt.name,false]];
-    const Rcol=[['DATE',s.date,false],['DOORS · SHOW','18:30 · 19:30',false],['TIER',z.tier+'  ◈ '+z.price,true],['SEAT',tkt.seat,false]];
+    const Rcol=[['DATE',s.date,false],['DOORS · SHOW','18:30 · 19:30',false],['TIER',z.tier+'  '+formatPrice(z.price),true],['SEAT',formatSeat(tkt.seat,'en'),false]];
     const drawCol=(col,cx,vFont)=>{ let yy=gy0; col.forEach(r=>{ g.fillStyle='#c98aa0'; g.font="700 15px 'Space Mono',monospace"; g.fillText(r[0],cx,yy); g.fillStyle=r[2]?'#ec0050':'#fff4f7'; g.font=vFont; g.fillText(String(r[1]),cx,yy+38); yy+=step; }); };
     drawCol(Lcol,c1,"700 34px 'Oswald',sans-serif"); drawCol(Rcol,c2,"700 32px 'Oswald',sans-serif");
     g.fillStyle='#ec0050'; g.font="700 15px 'Space Mono',monospace"; g.fillText('UNOFFICIAL / FAN-MADE, NOT A REAL TICKET',c1,iy+ih-26);
@@ -109,9 +130,7 @@
     if(!state.zoneId || !state.name.trim()) return;
     var s=STOPS[state.stopIndex], z=ZONES.filter(function(x){return x.id===state.zoneId;})[0];
     var r=function(n){return Math.floor(Math.random()*Math.pow(10,n)).toString().padStart(n,'0');};
-    var seat;
-    if(z.id==='vip'){ seat=String.fromCharCode(65+Math.floor(Math.random()*3))+'-'+(100+Math.floor(Math.random()*400)); }
-    else { seat=(1+Math.floor(Math.random()*3))+'\u533a '+String.fromCharCode(65+Math.floor(Math.random()*10))+'-'+(1+Math.floor(Math.random()*40)); }
+    var seat=assignSeat(z);
     state.ticket={ stopIndex:state.stopIndex, zoneId:z.id, name:state.name.trim(), no:'ZL-DIZ-'+s.code+z.code+'-'+r(4), seat:seat };
     state.step='ticket'; render(); top();
   }
@@ -172,7 +191,7 @@
         +'<div style="margin-top:7px;font-family:var(--body);font-size:13px;color:var(--muted);">'+esc(vName)+'</div>'
         +'<div style="margin-top:11px;display:flex;flex-wrap:wrap;gap:18px 22px;">'
         +'<div><div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;">'+esc(t.lblOpen)+'</div><div style="margin-top:3px;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--paper);">'+open+' <span style="color:var(--muted);font-weight:400;">START '+start+'</span></div></div>'
-        +'<div><div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;">'+esc(t.lblPrice)+'</div><div style="margin-top:3px;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--paper);white-space:nowrap;">\u25c8'+minPrice+' \u301c</div></div>'
+        +'<div><div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;">'+esc(t.lblPrice)+'</div><div style="margin-top:3px;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--paper);white-space:nowrap;">'+formatPrice(minPrice)+' \u301c</div></div>'
         +'</div></div>'
         +'<span class="rchev" style="flex-shrink:0;align-self:center;font-family:var(--display);font-size:24px;color:var(--muted);">\u203a</span>'
         +'</button></div>';
@@ -186,43 +205,46 @@
 
   function renderZone(t){
     var lang=state.lang, s=STOPS[state.stopIndex];
-    var cur={city:s.city[lang],venue:s.venue[lang],date:s.date}, cards='';
+    var venue=s.venue[lang], dot=venue.indexOf(' · ');
+    var cur={city:s.city[lang],venue:dot>=0?venue.split(' · ')[1]:venue,date:s.date}, cards='';
     for(var i=0;i<ZONES.length;i++){
-      var z=ZONES[i], sel=(state.zoneId===z.id);
-      var border=sel?'var(--hot)':'rgba(255,134,189,.24)', bg=sel?'rgba(236,0,80,.14)':'rgba(255,244,247,.03)';
-      var perks=z.perks[lang].map(function(pk){return '<li style="display:flex;gap:7px;font-family:var(--body);font-size:12px;line-height:1.4;color:rgba(255,244,247,.78);"><span style="color:var(--hot);flex-shrink:0;">\u25c8</span>'+esc(pk)+'</li>';}).join('');
-      cards+='<button data-act="zone" data-id="'+z.id+'" class="tcard" style="position:relative;overflow:hidden;text-align:left;cursor:pointer;border-radius:14px;padding:18px;border:1.5px solid '+border+';background:'+bg+';display:flex;flex-direction:column;gap:11px;min-height:200px;">'
-        +'<span aria-hidden="true" style="position:absolute;right:-16px;bottom:-30px;font-size:130px;line-height:1;color:rgba(255,134,189,.06);pointer-events:none;">'+z.die+'</span>'
-        +'<div style="position:relative;display:flex;align-items:baseline;justify-content:space-between;gap:8px;">'
-        +'<span style="font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.16em;color:'+z.accent+';">'+z.tier+'</span>'
-        +'<span style="font-family:var(--display);font-weight:700;font-size:26px;color:var(--hot);">\u25c8'+z.price+'</span></div>'
-        +'<div style="position:relative;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:20px;line-height:1;color:var(--paper);">'+esc(z.name[lang])+'</div>'
-        +'<div style="position:relative;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:'+z.accent+';"><span style="width:6px;height:6px;border-radius:50%;background:'+z.accent+';"></span>'+esc(z.seat[lang])+'</div>'
-        +'<ul style="position:relative;margin:2px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px;">'+perks+'</ul></button>';
+      var z=ZONES[i];
+      cards+='<button data-act="zone" data-id="'+z.id+'" class="tier-option" data-die="'+z.die+'" style="--tier-accent:'+z.accent+';">'
+        +'<span class="tier-top"><span class="tier-code">TIER '+z.tier+'</span>'+(z.goods?'<span class="tier-merch">'+esc(t.goods)+'</span>':'')+'</span>'
+        +'<h3>'+esc(z.name[lang])+'</h3>'
+        +'<span class="tier-price">'+formatPrice(z.price)+' <small>'+esc(t.tax)+'</small></span>'
+        +'<span class="tier-seat">'+esc(z.seat[lang])+'</span>'
+        +(z.notice?'<p class="tier-warning">※ '+esc(z.notice[lang])+'</p>':'')
+        +'</button>';
     }
+    var rules=t.rules.map(function(rule){return '<li>'+esc(rule)+'</li>';}).join('');
     return '<div class="tk-step">'
       +'<button data-act="back-stop" style="font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:none;border:0;cursor:pointer;padding:0 0 10px;">\u2190 '+esc(t.back)+'</button>'
       +'<h1 style="margin:0 0 4px;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(22px,4.5vw,30px);line-height:1;">'+esc(t.chooseZone)+'</h1>'
       +'<p style="margin:0 0 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;color:var(--pink);">'+esc(cur.city)+' \u00b7 '+esc(cur.venue)+' \u00b7 '+cur.date+'</p>'
+      +'<section class="ticket-rules" aria-labelledby="ticketRulesTitle">'
+      +'<div class="ticket-rules-head"><span class="ticket-rules-die" aria-hidden="true">⚄</span><div><h2 id="ticketRulesTitle">'+esc(t.rulesTitle)+'</h2><p>'+esc(t.rulesLead)+'</p></div></div>'
+      +'<ol>'+rules+'</ol><p class="ticket-rules-foot">'+esc(t.rulesFoot)+'</p></section>'
       +'<div style="margin-bottom:16px;padding:14px;border:1px solid rgba(255,134,189,.14);border-radius:12px;background:radial-gradient(ellipse at 50% 140%,rgba(236,0,80,.28),transparent 60%),#180008;">'
       +'<div style="height:6px;border-radius:99px;background:linear-gradient(90deg,transparent,var(--hot),transparent);box-shadow:0 0 20px var(--hot);"></div>'
       +'<div style="text-align:center;margin-top:8px;font-family:var(--mono);font-size:10px;letter-spacing:.42em;color:var(--muted);">STAGE</div></div>'
-      +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px;">'+cards+'</div></div>';
+      +'<div class="tier-grid">'+cards+'</div></div>';
   }
 
   function renderName(t){
     var lang=state.lang, s=STOPS[state.stopIndex], z=ZONES.filter(function(x){return x.id===state.zoneId;})[0];
-    var cur={city:s.city[lang],venue:s.venue[lang],date:s.date};
+    var venue=s.venue[lang], dot=venue.indexOf(' · ');
+    var cur={city:s.city[lang],venue:dot>=0?venue.split(' · ')[1]:venue,date:s.date};
     var can=!!state.zoneId && state.name.trim().length>0;
     var iBg=can?'var(--hot)':'rgba(236,0,80,.2)', iFg=can?'var(--paper)':'rgba(255,244,247,.5)', iCur=can?'pointer':'not-allowed', iSh=can?'0 8px 22px rgba(236,0,80,.4)':'none';
-    return '<div class="tk-step" style="max-width:440px;">'
+    return '<div class="tk-step" style="max-width:520px;">'
       +'<button data-act="back-zone" style="font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:none;border:0;cursor:pointer;padding:0 0 10px;">\u2190 '+esc(t.back)+'</button>'
       +'<h1 style="margin:0 0 16px;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(22px,4.5vw,30px);line-height:1;">'+esc(t.nameStep)+'</h1>'
-      +'<div style="padding:14px 16px;border:1px solid rgba(255,134,189,.2);border-radius:12px;background:rgba(23,0,6,.4);font-family:var(--mono);font-size:12px;line-height:1.7;">'
-      +'<div style="color:var(--paper);">'+esc(cur.city)+' \u00b7 '+esc(cur.venue)+'</div>'
-      +'<div style="color:var(--muted);">'+cur.date+' \u00b7 '+z.tier+' \u2014 '+esc(z.name[lang])+' \u00b7 <span style="color:var(--hot);">\u25c8'+z.price+'</span></div></div>'
+      +'<div class="confirm-ticket"><div class="confirm-ticket-main"><div><div class="confirm-ticket-name">'+esc(z.name[lang])+'</div><div class="confirm-ticket-meta">'+esc(cur.city)+' · '+esc(cur.venue)+'<br>'+cur.date+' · '+z.tier+'</div></div><div class="confirm-ticket-price">'+formatPrice(z.price)+'</div></div>'
+      +'<div class="random-assign"><b>'+esc(t.assignTitle)+'</b><p>'+esc(t.assignBody)+'</p></div></div>'
       +'<label style="display:block;margin-top:18px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--pink);text-transform:uppercase;">'+esc(t.nameLabel)+'</label>'
       +'<input data-act="name" value="'+esc(state.name)+'" placeholder="'+esc(t.namePlaceholder)+'" style="margin-top:10px;width:100%;font-family:var(--display);font-weight:500;font-size:22px;letter-spacing:.02em;padding:13px 15px;border:1.5px solid rgba(255,134,189,.35);border-radius:10px;background:rgba(23,0,6,.55);color:var(--paper);outline:none;">'
+      +'<p style="margin:.7rem 0 0;font-family:var(--mono);font-size:.58rem;line-height:1.55;color:var(--muted);">'+esc(t.rulesFoot)+'</p>'
       +'<div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">'
       +'<button data-act="issue" style="flex:1;min-width:160px;font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:14px 18px;border:0;border-radius:9px;background:'+iBg+';color:'+iFg+';cursor:'+iCur+';box-shadow:'+iSh+';">'+esc(t.issueBtn)+'</button></div></div>';
   }
@@ -233,7 +255,7 @@
   }
   function renderTicket(t){
     var lang=state.lang, tkt=state.ticket, s=STOPS[tkt.stopIndex], z=ZONES.filter(function(x){return x.id===tkt.zoneId;})[0];
-    var tk={city:s.city[lang],venue:s.venue[lang],date:s.date,tier:z.tier,name:tkt.name,no:tkt.no,seat:tkt.seat,price:'\u25c8'+z.price};
+    var tk={city:s.city[lang],venue:s.venue[lang],date:s.date,tier:z.tier,name:tkt.name,no:tkt.no,seat:formatSeat(tkt.seat,lang),price:formatPrice(z.price)};
     var on=[true,false,true,false,true,false,true,false,true];
     var pips=on.map(function(v){return '<span style="border-radius:50%;background:'+(v?'var(--paper)':'transparent')+';"></span>';}).join('');
     var seedV=seedNo(tkt.no), bars='';
@@ -244,7 +266,7 @@
       +fieldCell(esc(t.lblVenue),esc(tk.venue))
       +fieldCell(esc(t.lblTier),tk.tier,'var(--hot)')
       +fieldCell(esc(t.lblSeat),esc(tk.seat))
-      +fieldCell('\u25c8',tk.price)
+      +fieldCell(esc(t.lblPrice),tk.price)
       +'<div style="grid-column:1/-1;"><div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--muted);">'+esc(t.lblName)+'</div><div style="font-family:var(--display);font-weight:700;font-size:22px;color:var(--paper);">'+esc(tk.name)+'</div></div>'
       +'</div>';
     return '<div class="tk-step">'
@@ -276,7 +298,7 @@
     else if(state.step==='zone') body=renderZone(t);
     else if(state.step==='name') body=renderName(t);
     else body=renderTicket(t);
-    flow.innerHTML='<div style="max-width:640px;margin:0 auto;">'+stepperHTML()+body+'</div>';
+    flow.innerHTML='<div style="max-width:760px;margin:0 auto;">'+stepperHTML()+body+'</div>';
     wire();
   }
 
