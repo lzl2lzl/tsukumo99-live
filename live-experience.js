@@ -125,7 +125,7 @@
   var assistActive = false;
   var chargeValues = loadChargeValues();
   var achievementEarned = readStoredValue(ACHIEVEMENT_KEY) === "1";
-  var achievementPending = false;
+  var achievementPending = achievementEarned && !achievementInCart();
 
   var geometry = {
     width: 1,
@@ -1266,7 +1266,10 @@
       }
       return;
     }
-    if (state === "idle") roundGate.hidden = false;
+    if (state === "idle") {
+      achievementGate.hidden = !achievementPending;
+      roundGate.hidden = achievementPending;
+    }
     if (state === "result") {
       achievementGate.hidden = !achievementPending;
       resultGate.hidden = achievementPending;
@@ -1376,5 +1379,8 @@
   syncFullscreenButtons();
   resizeCanvas();
   if (isMobile) mobileInvite.hidden = false;
-  else roundGate.hidden = false;
+  else {
+    achievementGate.hidden = !achievementPending;
+    roundGate.hidden = achievementPending;
+  }
 })();
