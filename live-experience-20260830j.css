@@ -1012,9 +1012,12 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 .achievement-live{position:relative;padding:.3rem .55rem;background:var(--hot);font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.17em}
 .achievement-gate h1{position:relative;margin:.35rem 0 .25rem;font-family:var(--display);font-size:clamp(3.8rem,10vw,6rem);line-height:.86;letter-spacing:-.03em;text-shadow:0 10px 2.8rem rgba(236,0,80,.55)}
 .achievement-gate>p{position:relative;max-width:35rem;margin:.45rem 0 1.15rem;color:var(--muted);font-size:.88rem;line-height:1.65;text-wrap:balance}
-.achievement-actions{position:relative;display:grid;grid-template-columns:minmax(12rem,1fr);width:min(100%,22rem);border:1px solid rgba(255,134,189,.42)}
+.achievement-actions{position:relative;display:grid;grid-template-columns:repeat(2,minmax(10rem,1fr));width:min(100%,30rem);border:1px solid rgba(255,134,189,.42)}
 .achievement-actions button,.achievement-actions a{display:grid;place-items:center;min-height:48px;padding:.7rem 1rem;background:rgba(18,0,5,.86);color:var(--paper);font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-decoration:none}
-.achievement-actions a:hover{background:var(--crimson);color:var(--paper)}
+.achievement-actions button{background:var(--hot);font-weight:700}
+.achievement-actions button:hover,.achievement-actions button:focus-visible{background:var(--paper);color:var(--ink)}
+.achievement-actions a:hover,.achievement-actions a:focus-visible{background:var(--crimson);color:var(--paper)}
+.achievement-actions button:disabled{cursor:wait;opacity:.62}
 @keyframes achievementSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 
 .violet-sweep{z-index:54;opacity:0;background:linear-gradient(112deg,transparent 16%,rgba(199,88,255,.48) 45%,rgba(255,134,189,.38) 53%,transparent 78%);transform:translateX(-100%)}
@@ -1097,8 +1100,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
   .achievement-live{font-size:.48rem}
   .achievement-gate h1{margin:.2rem 0 .1rem;font-size:clamp(2.7rem,8vw,4.2rem)}
   .achievement-gate>p{max-width:30rem;margin:.25rem 0 .7rem;font-size:.7rem;line-height:1.45}
-  .achievement-actions{grid-template-columns:minmax(10rem,1fr);width:min(100%,20rem)}
-  .achievement-actions button,.achievement-actions a{min-height:42px;padding:.48rem .65rem;font-size:.54rem}
+  .achievement-actions{grid-template-columns:repeat(2,minmax(8rem,1fr));width:min(100%,24rem)}
+  .achievement-actions button,.achievement-actions a{min-height:44px;padding:.48rem .65rem;font-size:.54rem}
   .be-broadcast-head{top:.4rem;padding-bottom:.35rem}
   .be-storm-intro{gap:.35rem;padding:2.9rem 1rem .75rem}
   .be-storm-intro h1{font-size:clamp(2.55rem,8vw,4rem)}

@@ -33,8 +33,10 @@
       + '<span class="achievement-live">ACHIEVEMENT UNLOCKED</span>'
       + '<h1 id="achievementTitle">月云的兵</h1>'
       + '<p>谢谢你为TSUKUMO99应援！恭喜你已获得成就“月云的兵”！</p>'
-      + '<div class="achievement-actions"><a href="index.html" id="achievementExit">退出游戏</a></div>';
+      + '<div class="achievement-actions"><button type="button" id="achievementRestart">重新开始</button>'
+      + '<a href="index.html" id="achievementExit">退出游戏</a></div>';
   }
+  var achievementRestart = document.getElementById("achievementRestart");
   var achievementExit = document.getElementById("achievementExit");
   var soundButton = document.getElementById("soundButton");
   var fullscreenButton = document.getElementById("fullscreenButton");
@@ -537,6 +539,55 @@
     renderChargeValues();
     if (chargeValues[lane] >= 99) celebrateFullCard(lane);
     if (chargeValues.every(function (value) { return value >= 99; })) unlockAchievement();
+  }
+
+  function restartAchievementRun() {
+    if (state === "loading" || state === "playing") return;
+    achievementRestart.disabled = true;
+    window.cancelAnimationFrame(frameRequest);
+    window.clearTimeout(obstacleTimer);
+    window.clearTimeout(helperTapTimer);
+    window.clearTimeout(tauntTimer);
+    Object.keys(effectTimers).forEach(function (className) {
+      window.clearTimeout(effectTimers[className]);
+      broadcast.classList.remove(className);
+    });
+    effectTimers = {};
+    performerTimers.forEach(function (timer) { window.clearTimeout(timer); });
+    performerTimers = [0, 0, 0, 0];
+    releaseAllInputs(false);
+    clearObstacles();
+    setAssist(false);
+    effectLayer.replaceChildren();
+    hitCallout.textContent = "";
+    hitCallout.className = "hit-callout";
+    chartNotes = [];
+    noteSequence = 0;
+    lastCropIndex = -1;
+    currentRound = 1;
+    hits = 0;
+    combo = 0;
+    maxCombo = 0;
+    misses = 0;
+    chargeValues = [0, 0, 0, 0];
+    achievementEarned = false;
+    achievementPending = false;
+    beEndingPending = false;
+    bePage = 0;
+    try {
+      window.localStorage.removeItem(CHARGE_KEY);
+      window.localStorage.removeItem(ACHIEVEMENT_KEY);
+      window.localStorage.removeItem(ACHIEVEMENT_SEEN_KEY);
+    } catch (error) {}
+    renderChargeValues();
+    updateScore();
+    roundNumber.textContent = ROUND_LABELS[0];
+    roundTimer.textContent = "00:30";
+    resultGate.hidden = true;
+    beGate.hidden = true;
+    achievementGate.hidden = true;
+    showAudioStatus("应援值已清零 · ROUND 1");
+    startRound();
   }
 
   function showAudioStatus(message) {
@@ -1407,7 +1458,10 @@
     achievementGate.hidden = beEndingPending || !achievementPending;
     resultGate.hidden = beEndingPending || achievementPending;
     if (beEndingPending) resetBeEnding();
-    else if (achievementPending) window.setTimeout(function () { achievementExit.focus(); }, 180);
+    else if (achievementPending) {
+      achievementRestart.disabled = false;
+      window.setTimeout(function () { achievementRestart.focus(); }, 180);
+    }
   }
 
   function startRound() {
@@ -1659,6 +1713,7 @@
     achievementPending = false;
     try { window.localStorage.setItem(ACHIEVEMENT_SEEN_KEY, "1"); } catch (error) {}
   });
+  achievementRestart.addEventListener("click", restartAchievementRun);
   soundButton.addEventListener("click", function () {
     setSound(!soundOn);
     showAudioStatus(soundOn ? "声音已开启" : "声音已关闭");
