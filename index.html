@@ -213,6 +213,7 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
 .roster span{min-height:4.25rem;display:flex;flex-direction:column;justify-content:flex-end;padding:.8rem;border-top:1px solid rgba(255,134,189,.22);font-family:var(--mono);font-size:.48rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;}
 .roster span:nth-child(odd){border-right:1px solid rgba(255,134,189,.16);}
 .roster b{margin-bottom:.22rem;font-family:var(--display);font-size:clamp(1rem,2vw,1.35rem);font-weight:700;letter-spacing:.02em;color:var(--paper);}
+.roster i{font-style:normal;}
 @keyframes signalPulse{0%{box-shadow:0 0 0 0 rgba(236,0,80,.42)}70%,100%{box-shadow:0 0 0 .5rem rgba(236,0,80,0)}}
 @media (max-width:700px){
   .portal-preview,.profile-preview{grid-template-columns:1fr;min-height:0;}
@@ -299,7 +300,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <button data-lang="jp">JP</button>
       <button data-lang="en">EN</button>
     </div>
-    <a class="live-now" href="live-experience.html" aria-label="进入正在进行的 LIVE">
+    <a class="live-now" href="live-experience.html" aria-label="进入正在进行的 LIVE" data-home-aria="liveNow">
       <span>LIVE</span><i aria-hidden="true"></i>
     </a>
     <button class="burger" id="burger" aria-label="菜单"><span></span><span></span><span></span></button>
@@ -329,7 +330,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     <h1 class="hero-title hero-anim hero-d2" id="heroTitle">DiŹ</h1>
     <div class="hero-tourline hero-anim hero-d3">WORLD TOUR 2026</div>
     <p class="hero-tagline hero-anim hero-d3">“Once and for all, dice away.”</p>
-    <a class="hero-more hero-anim hero-d3" href="#news" aria-label="了解更多">了解更多<svg viewBox="0 0 16 16" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v11M3.5 8.5 8 13l4.5-4.5"/></svg></a>
+    <a class="hero-more hero-anim hero-d3" href="#news" aria-label="了解更多" data-home="heroMore" data-home-aria="heroMore">了解更多<svg viewBox="0 0 16 16" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v11M3.5 8.5 8 13l4.5-4.5"/></svg></a>
   </section>
 </section>
 
@@ -337,38 +338,38 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <main>
   <section class="sec" id="news">
     <div class="sec-head reveal">
-      <div><p class="sec-ey">NEWS</p><h2 class="sec-title">情报</h2></div>
-      <a class="more" href="news.html">View all <span>→</span></a>
+      <div><p class="sec-ey">NEWS</p><h2 class="sec-title" data-home="newsTitle">情报</h2></div>
+      <a class="more" href="news.html" data-home="viewAll">查看全部 <span>→</span></a>
     </div>
     <div class="reveal">
-      <a class="news-row" href="news.html"><time>2026.08.02</time><p>北京站 · 今夜开演，现场应援指南公开</p></a>
-      <a class="news-row" href="news.html"><time>2026.07.26</time><p>广州站 · 余票紧张，建议尽早投骰选座</p></a>
-      <a class="news-row" href="news.html"><time>2026.07.18</time><p>上海站 · 巡演首夜，DiŹ 正式启程</p></a>
+      <a class="news-row" href="news.html"><time>2026.08.02</time><p data-home="news0">北京站 · 今夜开演，现场应援指南公开</p></a>
+      <a class="news-row" href="news.html"><time>2026.07.26</time><p data-home="news1">广州站 · 余票紧张，建议尽早投骰选座</p></a>
+      <a class="news-row" href="news.html"><time>2026.07.18</time><p data-home="news2">上海站 · 巡演首夜，DiŹ 正式启程</p></a>
     </div>
   </section>
 
   <section class="sec" id="tickets">
     <div class="sec-head reveal">
-      <div><p class="sec-ey">TICKETS</p><h2 class="sec-title">巡演场次</h2></div>
-      <a class="more" href="ticket.html">View all <span>→</span></a>
+      <div><p class="sec-ey">TICKETS</p><h2 class="sec-title" data-home="ticketTitle">巡演场次</h2></div>
+      <a class="more" href="ticket.html" data-home="viewAll">查看全部 <span>→</span></a>
     </div>
     <div class="reveal">
-      <div class="live-row"><span class="city">上海 · 梅赛德斯-奔弛文化中心</span><span class="date">2026.07.18</span></div>
-      <div class="live-row"><span class="city">广州 · 宝宁广州国际体育演艺中心</span><span class="date">2026.07.26</span></div>
-      <div class="live-row"><span class="city">北京 · 凯迪拉刻中心</span><span class="date">2026.08.02</span></div>
+      <div class="live-row"><span class="city" data-home="venue0">上海 · 梅赛德斯-奔弛文化中心</span><span class="date">2026.07.18</span></div>
+      <div class="live-row"><span class="city" data-home="venue1">广州 · 宝宁广州国际体育演艺中心</span><span class="date">2026.07.26</span></div>
+      <div class="live-row"><span class="city" data-home="venue2">北京 · 凯迪拉刻中心</span><span class="date">2026.08.02</span></div>
     </div>
   </section>
 
   <section class="sec" id="live">
     <div class="sec-head reveal">
-      <div><p class="sec-ey">LIVE</p><h2 class="sec-title">直播公演</h2></div>
+      <div><p class="sec-ey">LIVE</p><h2 class="sec-title" data-home="liveTitle">直播公演</h2></div>
     </div>
     <a class="portal-preview reveal" href="live-experience.html">
       <div class="portal-copy">
         <span class="portal-label"><i aria-hidden="true"></i>ON AIR · LIVE FEED</span>
         <h3 class="portal-title">DiŹ WORLD TOUR 2026</h3>
-        <p class="portal-desc">直播信号现已接入。横屏进入公演，参与实时应援。</p>
-        <span class="portal-enter">进入直播 <span>→</span></span>
+        <p class="portal-desc" data-home="liveDesc">直播信号现已接入。横屏进入公演，参与实时应援。</p>
+        <span class="portal-enter" data-home="liveEnter">进入直播 <span>→</span></span>
       </div>
       <div class="live-visual" aria-hidden="true"><span class="live-word">LIVE</span><i class="live-cross"></i></div>
     </a>
@@ -376,47 +377,47 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
   <section class="sec" id="profile">
     <div class="sec-head reveal">
-      <div><p class="sec-ey">PROFILE</p><h2 class="sec-title">巡演阵容</h2></div>
+      <div><p class="sec-ey">PROFILE</p><h2 class="sec-title" data-home="profileTitle">巡演阵容</h2></div>
     </div>
     <a class="portal-preview profile-preview reveal" href="profile.html">
       <div class="portal-copy profile-copy">
         <h3 class="portal-title">TOUR MEMBERS</h3>
-        <p class="portal-desc">乐队成员档案现已开放，拨动中央旋钮切换查看。</p>
-        <span class="portal-enter">查看成员档案 <span>→</span></span>
+        <p class="portal-desc" data-home="profileDesc">乐队成员档案现已开放，拨动中央旋钮切换查看。</p>
+        <span class="portal-enter" data-home="profileEnter">查看成员档案 <span>→</span></span>
       </div>
       <div class="roster" aria-hidden="true">
-        <span><b>Ryo</b>Vocal</span><span><b>Toma</b>Guitar</span>
-        <span><b>Haruka</b>Drums</span><span><b>Minami</b>Keyboard</span>
-        <span><b>Torao</b>Bass</span><span><b>Shiro</b>Manager</span>
+        <span><b>Ryo</b><i data-home="role0">主唱</i></span><span><b>Toma</b><i data-home="role1">吉他</i></span>
+        <span><b>Haruka</b><i data-home="role2">鼓</i></span><span><b>Minami</b><i data-home="role3">键盘</i></span>
+        <span><b>Torao</b><i data-home="role4">贝斯</i></span><span><b>Shiro</b><i data-home="role5">经纪人</i></span>
       </div>
     </a>
   </section>
 
   <section class="sec" id="shop">
     <div class="sec-head reveal">
-      <div><p class="sec-ey">GOODS</p><h2 class="sec-title">周边</h2></div>
-      <a class="more" href="shop.html">View all <span>→</span></a>
+      <div><p class="sec-ey">GOODS</p><h2 class="sec-title" data-home="goodsTitle">周边</h2></div>
+      <a class="more" href="shop.html" data-home="viewAll">查看全部 <span>→</span></a>
     </div>
         <a class="shop-feature reveal" href="product.html?id=diz-album-01">
-      <div class="sf-cover"><img src="assets/hero-desktop-square.jpg" alt="ONCE AND FOR ALL" loading="lazy" /><span class="sf-badge">限定 / LIMITED</span></div>
+      <div class="sf-cover"><img src="assets/hero-desktop-square.jpg" alt="ONCE AND FOR ALL" loading="lazy" /><span class="sf-badge" data-home="goodsBadge">限定 / LIMITED</span></div>
       <div class="sf-info">
-        <p class="sf-cat">专辑 · CD · 限定发售</p>
+        <p class="sf-cat" data-home="goodsCat">专辑 · CD</p>
         <h3 class="sf-title">ONCE AND FOR ALL</h3>
-        <p class="sf-sub">DiŹ 首张世界巡演纪念专辑</p>
+        <p class="sf-sub" data-home="goodsSub">DiŹ 首张世界巡演纪念专辑</p>
         <div class="sf-price">◈128</div>
-        <span class="sf-cta">查看详情 <span>→</span></span>
+        <span class="sf-cta" data-home="goodsEnter">查看详情 <span>→</span></span>
       </div>
     </a>
   </section>
 
   <footer class="foot reveal">
-    <p class="disc">非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关，仅供娱乐。所有场次、地址、座位、票券、商品与支付均为虚构模拟。不收集用户信息，不涉及真实支付。</p>
+    <p class="disc" data-home="disclaimer">非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关，仅供娱乐。所有场次、地址、座位、票券、商品与支付均为虚构模拟。不收集用户信息，不涉及真实支付。</p>
     <div class="frow">
       <div class="cred">
       <div><span>Contact</span>xhs@并不知道什么叫做可爱</div>
-      <div><span>网页设计</span>github@lzl2lzl</div>
-      <div><span>主视觉</span>兰澜</div>
-      <div><span>互动音效</span>夏一页</div>
+      <div><span data-home="creditWeb">网页设计</span>github@lzl2lzl</div>
+      <div><span data-home="creditVisual">主视觉</span>兰澜</div>
+      <div><span data-home="creditSound">互动音效</span>夏一页</div>
     </div>
       <div class="mk">UNOFFICIAL FANMADE</div>
     </div>
@@ -460,13 +461,63 @@ var b=document.body;
 document.getElementById("burger").onclick=function(){b.classList.toggle("menu-open");};
 document.getElementById("close").onclick=function(){b.classList.remove("menu-open");};
 
-// language selector
-document.querySelectorAll("button[data-lang]").forEach(function(btn){
-  btn.onclick=function(){
-    var L=btn.dataset.lang;
-    document.querySelectorAll("button[data-lang]").forEach(function(x){x.classList.toggle("on",x.dataset.lang===L);});
-  };
-});
+// TOP language selector. Copy reuses the wording already used on NEWS, TICKET,
+// PROFILE and GOODS so the same destination is described the same way.
+var HOME_COPY={
+  cn:{
+    heroMore:"了解更多",viewAll:"查看全部",newsTitle:"情报",ticketTitle:"巡演场次",liveTitle:"直播公演",profileTitle:"巡演阵容",goodsTitle:"周边",
+    news:["北京站 · 今夜开演，现场应援指南公开","广州站 · 余票紧张，建议尽早投骰选座","上海站 · 巡演首夜，DiŹ 正式启程"],
+    venues:["上海 · 梅赛德斯-奔弛文化中心","广州 · 宝宁广州国际体育演艺中心","北京 · 凯迪拉刻中心"],
+    liveDesc:"直播信号现已接入。横屏进入公演，参与实时应援。",liveEnter:"进入直播",
+    profileDesc:"乐队成员档案现已开放，拨动中央旋钮切换查看。",profileEnter:"查看成员档案",roles:["主唱","吉他","鼓","键盘","贝斯","经纪人"],
+    goodsBadge:"限定 / LIMITED",goodsCat:"专辑 · CD",goodsSub:"DiŹ 首张世界巡演纪念专辑",goodsEnter:"查看详情",
+    disclaimer:"非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关，仅供娱乐。所有场次、地址、座位、票券、商品与支付均为虚构模拟。不收集用户信息，不涉及真实支付。",
+    creditWeb:"网页设计",creditVisual:"主视觉",creditSound:"互动音效",aria:{heroMore:"了解更多",liveNow:"进入正在进行的 LIVE"}
+  },
+  jp:{
+    heroMore:"詳しく見る",viewAll:"一覧を見る",newsTitle:"お知らせ",ticketTitle:"公演日程",liveTitle:"",profileTitle:"ツアーラインナップ",goodsTitle:"",
+    news:["北京公演 · 本日開演、応援ガイド公開","広州公演 · 残席わずか、早めの抽選を","上海公演 · 初日、DiŹ 開幕"],
+    venues:["上海 · メルセデス・ベンヅアリーナ","広州 · 宝寧広州国際体育演芸センター","北京 · キャデラッグ・アリーナ"],
+    liveDesc:"ライブ配信に接続しました。横画面で公演に参加し、リアルタイムで応援しましょう。",liveEnter:"LIVEに入る",
+    profileDesc:"バンドメンバーのプロフィールを公開しました。中央のダイヤルを回して切り替えられます。",profileEnter:"メンバーを見る",roles:["ボーカル","ギター","ドラム","キーボード","ベース","マネージャー"],
+    goodsBadge:"限定",goodsCat:"アルバム · CD",goodsSub:"DiŹ 初のワールドツアー記念アルバム",goodsEnter:"詳細を見る",
+    disclaimer:"本サイトは非公式のファン企画であり、実在する出演者、バンド、会場、チケット販売事業者とは関係ありません。公演、住所、座席、チケット、商品、決済はすべて架空のシミュレーションです。個人情報の収集や実際の決済は行いません。",
+    creditWeb:"ウェブデザイン",creditVisual:"メインビジュアル",creditSound:"インタラクティブ音響",aria:{heroMore:"詳しく見る",liveNow:"配信中のLIVEに入る"}
+  },
+  en:{
+    heroMore:"DISCOVER",viewAll:"VIEW ALL",newsTitle:"",ticketTitle:"TOUR DATES",liveTitle:"",profileTitle:"TOUR LINEUP",goodsTitle:"",
+    news:["Beijing · tonight — live cheer guide is up","Guangzhou · few seats left — roll early","Shanghai · opening night — DiŹ begins"],
+    venues:["SHANGHAI · MERCEDES-BENS ARENA","GUANGZHOU · BAONANG GUANGZHOU INTERNATIONAL SPORTS AND PERFORMING ARTS CENTER","BEIJING · CADILLAX ARENA"],
+    liveDesc:"The live feed is now connected. Enter in landscape and join the real-time support.",liveEnter:"ENTER LIVE",
+    profileDesc:"The band member files are now open. Turn the center dial to browse.",profileEnter:"VIEW MEMBER FILES",roles:["VOCAL","GUITAR","DRUMS","KEYBOARD","BASS","MANAGER"],
+    goodsBadge:"LIMITED",goodsCat:"ALBUM · CD",goodsSub:"DiŹ First World Tour Album",goodsEnter:"VIEW DETAILS",
+    disclaimer:"This is an unofficial fan-made project for entertainment only and is not affiliated with any real performers, bands, venues or ticketing platforms. All shows, addresses, seats, tickets, goods and payment flows are fictional simulations. No personal information is collected and no real payment is made.",
+    creditWeb:"WEB DESIGN",creditVisual:"KEY VISUAL",creditSound:"INTERACTIVE SOUND",aria:{heroMore:"Discover more",liveNow:"Enter the LIVE now in progress"}
+  }
+};
+function setHomeText(key,value){
+  document.querySelectorAll('[data-home="'+key+'"]').forEach(function(el){el.textContent=value;el.hidden=!value;});
+}
+function setHomeLead(key,value){
+  document.querySelectorAll('[data-home="'+key+'"]').forEach(function(el){
+    var textNode=Array.prototype.find.call(el.childNodes,function(node){return node.nodeType===3;});
+    if(textNode)textNode.nodeValue=value+" ";else el.insertBefore(document.createTextNode(value+" "),el.firstChild);
+  });
+}
+function applyHomeLanguage(L){
+  var c=HOME_COPY[L]||HOME_COPY.cn;
+  document.documentElement.lang=L==="jp"?"ja":L==="en"?"en":"zh-CN";
+  window.DiZLang=L;
+  document.querySelectorAll("button[data-lang]").forEach(function(x){x.classList.toggle("on",x.dataset.lang===L);});
+  ["newsTitle","ticketTitle","liveTitle","profileTitle","goodsTitle","liveDesc","profileDesc","goodsBadge","goodsCat","goodsSub","disclaimer","creditWeb","creditVisual","creditSound"].forEach(function(key){setHomeText(key,c[key]);});
+  ["heroMore","viewAll","liveEnter","profileEnter","goodsEnter"].forEach(function(key){setHomeLead(key,c[key]);});
+  c.news.forEach(function(value,i){setHomeText("news"+i,value);});
+  c.venues.forEach(function(value,i){setHomeText("venue"+i,value);});
+  c.roles.forEach(function(value,i){setHomeText("role"+i,value);});
+  document.querySelectorAll("[data-home-aria]").forEach(function(el){var value=c.aria[el.dataset.homeAria];if(value)el.setAttribute("aria-label",value);});
+}
+document.querySelectorAll("button[data-lang]").forEach(function(btn){btn.onclick=function(){applyHomeLanguage(btn.dataset.lang);};});
+applyHomeLanguage("cn");
 
 // Claude Design hero motion, adapted to the existing site chrome and assets.
 (function(){
