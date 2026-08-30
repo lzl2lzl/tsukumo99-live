@@ -58,16 +58,16 @@
     {code:'CT',continent:'africa',doors:'13:00',status:'few',date:'2027.04.10',country:{cn:'南非',en:'SOUTH AFRICA',jp:'南アフリカ'},city:{cn:'开普敦',en:'CAPE TOWN',jp:'ケープタウン'},venue:{cn:'开普敦 · DHL Stadiun',en:'CAPE TOWN · DHL STADIUN',jp:'ケープタウン · DHL Stadiun'}}
   ];
   var ZONES = [
-    { id:'s-goods',tier:'S + GOODS',rank:'S',code:'SG',price:14000,die:'⚅',accent:'var(--hot)',goods:true,name:{cn:'限定周边附 S 席',en:'S RESERVED + LIMITED GOODS',jp:'限定グッズ付S席'} },
-    { id:'s',tier:'S',rank:'S',code:'S',price:10000,die:'⚄',accent:'var(--pink)',goods:false,name:{cn:'S 席',en:'S RESERVED',jp:'S席'} },
-    { id:'a-goods',tier:'A + GOODS',rank:'A',code:'AG',price:13000,die:'⚂',accent:'var(--hot)',goods:true,name:{cn:'限定周边附 A 席',en:'A RESERVED + LIMITED GOODS',jp:'限定グッズ付A席'},
-      notice:{cn:'A 席为部分演出可能较难观看的座位，请确认后购买。',en:'Some parts of the performance may be difficult to see from A seats. Please purchase with this in mind.',jp:'A席は一部演出が見づらいお席となります。ご了承の上お買い求めください。'} },
-    { id:'a',tier:'A',rank:'A',code:'A',price:9000,die:'⚁',accent:'var(--violet, #c758ff)',goods:false,name:{cn:'A 席',en:'A RESERVED',jp:'A席'},
-      notice:{cn:'A 席为部分演出可能较难观看的座位，请确认后购买。',en:'Some parts of the performance may be difficult to see from A seats. Please purchase with this in mind.',jp:'A席は一部演出が見づらいお席となります。ご了承の上お買い求めください。'} }];
+    { id:'s-goods',tier:'S + GOODS',rank:'S',code:'SG',price:14000,die:'⚅',accent:'var(--hot)',goods:true,name:{cn:'S 席（含限定周边）',en:'S Seat + Exclusive Merch',jp:'限定グッズ付きS席'} },
+    { id:'s',tier:'S',rank:'S',code:'S',price:10000,die:'⚄',accent:'var(--pink)',goods:false,name:{cn:'S 席',en:'S Seat',jp:'S席'} },
+    { id:'a-goods',tier:'A + GOODS',rank:'A',code:'AG',price:13000,die:'⚂',accent:'var(--hot)',goods:true,name:{cn:'A 席（含限定周边）',en:'A Seat + Exclusive Merch',jp:'限定グッズ付きA席'},
+      notice:{cn:'A 席可能较难看清部分演出内容，请确认后购买。',en:'Views of some parts of the performance may be restricted from A seats. Please review before purchasing.',jp:'A席は一部演出が見づらいお席となります。ご了承の上お買い求めください。'} },
+    { id:'a',tier:'A',rank:'A',code:'A',price:9000,die:'⚁',accent:'var(--violet, #c758ff)',goods:false,name:{cn:'A 席',en:'A Seat',jp:'A席'},
+      notice:{cn:'A 席可能较难看清部分演出内容，请确认后购买。',en:'Views of some parts of the performance may be restricted from A seats. Please review before purchasing.',jp:'A席は一部演出が見づらいお席となります。ご了承の上お買い求めください。'} }];
   var T = {
-    cn:{getTickets:'选择场次',lblOpen:'开场 / 开演',lblPrice:'票价',lblStatus:'余票',lblCountry:'国家 / 地区',lblPlace:'国家 / 地区',continentNav:'按大洲跳转',from:'起',back:'返回',nameLabel:'持票人姓名',namePlaceholder:'输入将印在票面上的名字',issueBtn:'确认',ticketReady:'购票完成',download:'下载电子票',bookAnother:'再选一场',lblCity:'城市',lblVenue:'场馆',lblDate:'日期',lblTier:'票档',lblSeat:'随机座位',lblName:'持票人',statusFew:'仅剩少量',statusPlenty:'余票充足',downloadHint:'无法下载？请尝试使用手机浏览器打开本站。',tax:'含税',goods:'限定周边',rulesTitle:'购票与配席规则',rulesLead:'本页面为非官方同人模拟，与现实场馆无关，不会产生真实付款。',rules:['全席为指定席，无法自行选择座位号','3 岁以上须购票（3 岁以下不可入场）','仅发行电子票','演出当日将随机对购票人（申请人）进行身份确认'],assignTitle:'付款后随机配席',assignBody:'确认后将锁定所选票档，并立即在该票档对应区域内随机生成座位号；本页面为非官方同人模拟，不会产生真实付款。',paymentConfirmTitle:'确认以当前购票人付款？',paymentConfirmBody:'确认后即可下载电子票文件',paymentCancel:'返回',paymentConfirm:'确认'},
-    en:{getTickets:'CHOOSE A SHOW',lblOpen:'DOORS / START',lblPrice:'FROM',lblStatus:'STATUS',lblCountry:'COUNTRY / REGION',lblPlace:'COUNTRY / REGION',continentNav:'JUMP BY CONTINENT',from:'FROM',back:'BACK',nameLabel:'ATTENDEE NAME',namePlaceholder:'Name to print on the ticket',issueBtn:'CONFIRM',ticketReady:'PURCHASE COMPLETE',download:'DOWNLOAD E-TICKET',bookAnother:'BOOK ANOTHER',lblCity:'CITY',lblVenue:'VENUE',lblDate:'DATE',lblTier:'TIER',lblSeat:'RANDOM SEAT',lblName:'ATTENDEE',statusFew:'FEW LEFT',statusPlenty:'AVAILABLE',downloadHint:"Download not working? Open this site in your phone's browser.",tax:'TAX INCLUDED',goods:'LIMITED GOODS',rulesTitle:'TICKET & SEAT RULES',rulesLead:'This is an unofficial fan-made simulation, unaffiliated with any real venue. No real payment is made.',rules:['All seats are reserved; seat numbers cannot be selected','A paid ticket is required from age 3; children under 3 may not enter','Electronic tickets only','Ticket holder identity checks may be conducted at random on the event day'],assignTitle:'RANDOM SEAT AFTER PAYMENT',assignBody:'Confirmation locks the selected tier and immediately assigns a random seat within that tier. This is an unofficial fan-made simulation; no real payment is made.',paymentConfirmTitle:'PAY AS THE CURRENT ATTENDEE?',paymentConfirmBody:'Confirm to make the e-ticket file available for download',paymentCancel:'BACK',paymentConfirm:'CONFIRM'},
-    jp:{getTickets:'公演を選ぶ',lblOpen:'開場 / 開演',lblPrice:'料金',lblStatus:'残席',lblCountry:'国・地域',lblPlace:'国・地域',continentNav:'地域から選ぶ',from:'より',back:'戻る',nameLabel:'氏名',namePlaceholder:'チケットに印字する名前',issueBtn:'確認',ticketReady:'購入完了',download:'電子チケットを保存',bookAnother:'別の公演',lblCity:'都市',lblVenue:'会場',lblDate:'日付',lblTier:'券種',lblSeat:'ランダム座席',lblName:'氏名',statusFew:'残りわずか',statusPlenty:'販売中',downloadHint:'ダウンロードできない場合はスマホの標準ブラウザで開き直してください。',tax:'税込',goods:'限定グッズ',rulesTitle:'チケット・配席ルール',rulesLead:'本ページは非公式ファンメイドのシミュレーションであり、実在の会場とは関係なく、実際の決済は発生しません。',rules:['全席指定となり、座席番号はお選びいただけません','3歳以上有料（3歳未満入場不可）','電子チケットのみ発行します','当日会場にて購入者の本人確認をランダムに実施する場合があります'],assignTitle:'決済後ランダム配席',assignBody:'確定すると選択した券種が固定され、その券種の対象エリア内で座席番号がランダムに発行されます。本ページは非公式ファンメイドのシミュレーションであり、実際の決済は発生しません。',paymentConfirmTitle:'現在の購入者名義で決済しますか？',paymentConfirmBody:'確認後、電子チケットファイルをダウンロードできます',paymentCancel:'戻る',paymentConfirm:'確認'}};
+    cn:{getTickets:'选择场次',chooseZone:'选择坐席',lblOpen:'开场 / 开演',lblPrice:'票价',lblStatus:'余票',lblCountry:'国家 / 地区',lblPlace:'国家 / 地区',continentNav:'按大洲跳转',from:'起',back:'返回',nameLabel:'持票人姓名',namePlaceholder:'输入将印在票面上的名字',issueBtn:'确认',ticketReady:'购票完成',download:'下载电子票',bookAnother:'再选一场',lblCity:'城市',lblVenue:'场馆',lblDate:'日期',lblTier:'票档',lblSeat:'随机座位',lblName:'持票人',statusFew:'仅剩少量',statusPlenty:'余票充足',downloadHint:'请使用手机系统浏览器（如 Safari、Chrome）打开本站；微信、QQ 等应用内浏览器可能无法下载电子票。',tax:'含税',goods:'含限定周边',rulesTitle:'购票与配席规则',rulesLead:'本页面为非官方同人模拟，与现实场馆无关，不会产生真实付款。',rules:['全席为指定席，无法自行选择座位号','3 岁以上须购票（3 岁以下不可入场）','仅发行电子票','演出当日将随机对购票人（申请人）进行身份确认'],assignTitle:'付款后随机配席',assignBody:'确认后将锁定所选票档，并立即在该票档对应区域内随机生成座位号；本页面为非官方同人模拟，不会产生真实付款。',paymentConfirmTitle:'确认以当前购票人付款？',paymentConfirmBody:'请使用手机系统浏览器（如 Safari、Chrome）打开本站，即可下载电子票文件；微信、QQ 等应用内浏览器可能无法下载。',paymentCancel:'返回',paymentConfirm:'确认'},
+    en:{getTickets:'CHOOSE A SHOW',chooseZone:'SELECT SEATS',lblOpen:'DOORS / START',lblPrice:'FROM',lblStatus:'STATUS',lblCountry:'COUNTRY / REGION',lblPlace:'COUNTRY / REGION',continentNav:'JUMP BY CONTINENT',from:'FROM',back:'BACK',nameLabel:'ATTENDEE NAME',namePlaceholder:'Name to print on the ticket',issueBtn:'CONFIRM',ticketReady:'PURCHASE COMPLETE',download:'DOWNLOAD E-TICKET',bookAnother:'BOOK ANOTHER',lblCity:'CITY',lblVenue:'VENUE',lblDate:'DATE',lblTier:'TIER',lblSeat:'RANDOM SEAT',lblName:'ATTENDEE',statusFew:'FEW LEFT',statusPlenty:'AVAILABLE',downloadHint:"Open this site in your phone's system browser, such as Safari or Chrome. In-app browsers in WeChat or QQ may not support e-ticket downloads.",tax:'TAX INCLUDED',goods:'EXCLUSIVE MERCH',rulesTitle:'TICKET & SEAT RULES',rulesLead:'This is an unofficial fan-made simulation, unaffiliated with any real venue. No real payment is made.',rules:['All seats are reserved; seat numbers cannot be selected','A paid ticket is required from age 3; children under 3 may not enter','Electronic tickets only','Ticket holder identity checks may be conducted at random on the event day'],assignTitle:'RANDOM SEAT AFTER PAYMENT',assignBody:'Confirmation locks the selected tier and immediately assigns a random seat within that tier. This is an unofficial fan-made simulation; no real payment is made.',paymentConfirmTitle:'PAY AS THE CURRENT ATTENDEE?',paymentConfirmBody:"Open this site in your phone's system browser, such as Safari or Chrome, to download the e-ticket. In-app browsers in WeChat or QQ may not support downloads.",paymentCancel:'BACK',paymentConfirm:'CONFIRM'},
+    jp:{getTickets:'公演を選ぶ',chooseZone:'座席を選択',lblOpen:'開場 / 開演',lblPrice:'料金',lblStatus:'残席',lblCountry:'国・地域',lblPlace:'国・地域',continentNav:'地域から選ぶ',from:'より',back:'戻る',nameLabel:'氏名',namePlaceholder:'チケットに印字する名前',issueBtn:'確認',ticketReady:'購入完了',download:'電子チケットを保存',bookAnother:'別の公演',lblCity:'都市',lblVenue:'会場',lblDate:'日付',lblTier:'券種',lblSeat:'ランダム座席',lblName:'氏名',statusFew:'残りわずか',statusPlenty:'販売中',downloadHint:'電子チケットをダウンロードするには、SafariやChromeなどスマートフォンの標準ブラウザで本サイトを開いてください。WeChatやQQなどのアプリ内ブラウザではダウンロードできない場合があります。',tax:'税込',goods:'限定グッズ',rulesTitle:'チケット・配席ルール',rulesLead:'本ページは非公式ファンメイドのシミュレーションであり、実在の会場とは関係なく、実際の決済は発生しません。',rules:['全席指定となり、座席番号はお選びいただけません','3歳以上有料（3歳未満入場不可）','電子チケットのみ発行します','当日会場にて購入者の本人確認をランダムに実施する場合があります'],assignTitle:'決済後ランダム配席',assignBody:'確定すると選択した券種が固定され、その券種の対象エリア内で座席番号がランダムに発行されます。本ページは非公式ファンメイドのシミュレーションであり、実際の決済は発生しません。',paymentConfirmTitle:'現在の購入者名義で決済しますか？',paymentConfirmBody:'電子チケットをダウンロードするには、SafariやChromeなどスマートフォンの標準ブラウザで本サイトを開いてください。WeChatやQQなどのアプリ内ブラウザではダウンロードできない場合があります。',paymentCancel:'戻る',paymentConfirm:'確認'}};
 
   var DICE=['\u2680','\u2681','\u2682','\u2683'];
   var STEPKEYS=['stop','zone','name','ticket'];
@@ -104,7 +104,7 @@
   function formatSeat(seat,lang){
     if(!seat||typeof seat==='string')return seat||'';
     if(lang==='jp')return seat.section+'ブロック・'+seat.row+'列・'+seat.number+'番';
-    if(lang==='en')return seat.section+' BLOCK · ROW '+pad2(seat.row)+' · SEAT '+pad2(seat.number);
+    if(lang==='en')return seat.section+' · ROW '+pad2(seat.row)+' · SEAT '+pad2(seat.number);
     return seat.section+'区 · '+seat.row+'排 · '+seat.number+'号';
   }
   function top(){try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){}}
@@ -113,6 +113,20 @@
   function seedNo(n){ let s=0; for(let i=0;i<n.length;i++) s+=n.charCodeAt(i); return s; }
   function diceDots(g,cx,cy,s,color){ const rr=s*0.085,off=[0.24,0.5,0.76],pts=[[0,0],[2,0],[1,1],[0,2],[2,2]]; g.fillStyle=color; pts.forEach(p=>{g.beginPath();g.arc(cx-s/2+off[p[0]]*s,cy-s/2+off[p[1]]*s,rr,0,7);g.fill();}); }
   function roundRect(g,x,y,w,h,r){ g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath(); }
+  function venueNameOnly(value){ const parts=String(value).split(' · '); return parts.length>1?parts.slice(1).join(' · '):String(value); }
+  function fitCanvasText(g,value,maxWidth,baseSize){
+    let size=baseSize; const text=String(value);
+    do{ g.font="700 "+size+"px 'Oswald',sans-serif"; if(g.measureText(text).width<=maxWidth||size<=15)break; size--; }while(size>15);
+    return text;
+  }
+  function wrapCanvasText(g,value,maxWidth,fontSize,maxLines){
+    g.font="700 "+fontSize+"px 'Oswald',sans-serif";
+    const words=String(value).split(/\s+/),lines=[]; let line='';
+    words.forEach(word=>{ const test=line?line+' '+word:word; if(line&&g.measureText(test).width>maxWidth){lines.push(line);line=word;}else line=test; });
+    if(line)lines.push(line);
+    if(lines.length>maxLines)return lines.slice(0,maxLines-1).concat(lines.slice(maxLines-1).join(' '));
+    return lines;
+  }
 
   function drawTicketCanvas(tkt){
     const s=STOPS[tkt.stopIndex], z=ZONES.find(x=>x.id===tkt.zoneId), lang=state.lang;
@@ -137,10 +151,10 @@
     g.save(); g.shadowColor='rgba(236,0,80,.5)'; g.shadowBlur=22; g.fillStyle='#ec0050'; g.font="italic 700 120px 'Oswald',sans-serif"; g.fillText('DiŹ',L,iy+206); g.restore();
     g.strokeStyle='rgba(255,134,189,.16)'; g.lineWidth=1; g.beginPath(); g.moveTo(L,iy+256); g.lineTo(STUB-52,iy+256); g.stroke();
     const c1=L,c2=L+470,gy0=iy+308,step=80;
-    const Lcol=[['CITY',s.city.en,false],['VENUE',s.venue.en,false],['ZONE',z.name.en,false],['ATTENDEE',tkt.name,false]];
+    const Lcol=[['CITY',s.city.en,false],['VENUE',venueNameOnly(s.venue.en),false],['ZONE',z.name.en,false],['ATTENDEE',tkt.name,false]];
     const Rcol=[['DATE',s.date,false],['DOORS · SHOW',times.doors+' · '+times.start,false],['TIER',z.tier+'  '+formatPrice(z.price),true],['SEAT',formatSeat(tkt.seat,'en'),false]];
-    const drawCol=(col,cx,vFont)=>{ let yy=gy0; col.forEach(r=>{ g.fillStyle='#c98aa0'; g.font="700 15px 'Space Mono',monospace"; g.fillText(r[0],cx,yy); g.fillStyle=r[2]?'#ec0050':'#fff4f7'; g.font=vFont; g.fillText(String(r[1]),cx,yy+38); yy+=step; }); };
-    drawCol(Lcol,c1,"700 34px 'Oswald',sans-serif"); drawCol(Rcol,c2,"700 32px 'Oswald',sans-serif");
+    const drawCol=(col,cx,maxWidth,baseSize)=>{ let yy=gy0; col.forEach(r=>{ g.fillStyle='#c98aa0'; g.font="700 15px 'Space Mono',monospace"; g.fillText(r[0],cx,yy); g.fillStyle=r[2]?'#ec0050':'#fff4f7'; if(r[0]==='VENUE'){wrapCanvasText(g,r[1],maxWidth,18,2).forEach((line,i)=>g.fillText(fitCanvasText(g,line,maxWidth,18),cx,yy+30+i*21));}else g.fillText(fitCanvasText(g,r[1],maxWidth,baseSize),cx,yy+38); yy+=step; }); };
+    drawCol(Lcol,c1,c2-c1-42,34); drawCol(Rcol,c2,STUB-c2-50,32);
     g.fillStyle='#ec0050'; g.font="700 15px 'Space Mono',monospace"; g.fillText('UNOFFICIAL / FAN-MADE, NOT A REAL TICKET',c1,iy+ih-26);
     g.strokeStyle='rgba(255,244,247,.5)'; g.lineWidth=2; g.setLineDash([14,12]); g.beginPath(); g.moveTo(STUB,iy+18); g.lineTo(STUB,iy+ih-18); g.stroke(); g.setLineDash([]);
     g.save(); g.globalCompositeOperation='destination-out'; g.beginPath(); g.arc(STUB,iy,22,0,7); g.fill(); g.beginPath(); g.arc(STUB,iy+ih,22,0,7); g.fill(); g.restore();
@@ -249,7 +263,8 @@
     var rules=t.rules.map(function(rule){return '<li>'+esc(rule)+'</li>';}).join('');
     return '<div class="tk-step">'
       +'<button data-act="back-stop" style="font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:none;border:0;cursor:pointer;padding:0 0 10px;">\u2190 '+esc(t.back)+'</button>'
-      +'<h1 style="margin:0 0 18px;font-family:var(--display);font-weight:700;font-size:clamp(18px,4vw,28px);line-height:1.25;letter-spacing:-.02em;">'+esc(cur.city)+' \u00b7 '+esc(cur.venue)+' \u00b7 '+cur.date+'</h1>'
+      +'<h1 class="tier-page-title">'+esc(t.chooseZone)+'</h1>'
+      +'<p class="tier-page-subtitle">'+esc(cur.city)+' \u00b7 '+esc(cur.venue)+' \u00b7 '+cur.date+'</p>'
       +'<section class="ticket-rules" aria-labelledby="ticketRulesTitle">'
       +'<div class="ticket-rules-head"><span class="ticket-rules-die" aria-hidden="true">⚄</span><div><h2 id="ticketRulesTitle">'+esc(t.rulesTitle)+'</h2><p>'+esc(t.rulesLead)+'</p></div></div>'
       +'<ol>'+rules+'</ol></section>'

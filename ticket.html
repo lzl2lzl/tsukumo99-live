@@ -117,6 +117,8 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .ticket-rules ol{display:grid;grid-template-columns:1fr 1fr;gap:.45rem 1rem;margin:0;padding:0;list-style:none;counter-reset:ticket-rule;}
 .ticket-rules li{counter-increment:ticket-rule;display:grid;grid-template-columns:2.1rem 1fr;gap:.2rem;font-size:.74rem;line-height:1.55;color:rgba(255,244,247,.84);}
 .ticket-rules li::before{content:"0" counter(ticket-rule);font-family:var(--mono);font-size:.6rem;color:var(--pink);padding-top:.12rem;}
+.tier-page-title{margin:0;font-family:var(--display);font-size:clamp(1.7rem,5vw,2.25rem);font-weight:700;line-height:1.05;letter-spacing:-.02em;}
+.tier-page-subtitle{margin:.55rem 0 1.25rem;font-size:clamp(.72rem,2vw,.86rem);font-weight:600;line-height:1.55;color:var(--pink);overflow-wrap:anywhere;}
 .tier-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;}
 .tier-option{--tier-accent:var(--pink);position:relative;isolation:isolate;min-height:160px;padding:1rem;overflow:hidden;border:1px solid rgba(255,134,189,.24);border-radius:14px;background:rgba(255,244,247,.028);color:var(--paper);text-align:left;box-shadow:0 .7rem 1.8rem rgba(18,0,5,.28);transition:transform .2s cubic-bezier(.16,1,.3,1),border-color .2s,background .2s,box-shadow .2s;}
 .tier-option::before{content:"";position:absolute;z-index:-1;inset:auto -28% -66% 28%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--tier-accent) 26%,transparent),transparent 66%);}
@@ -224,7 +226,7 @@ cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRe
 cheer.addEventListener("pointermove",function(e){if(!drag)return;if(Math.abs(e.movementX)+Math.abs(e.movementY)>1)drag.moved=true;var w=cheer.offsetWidth,h=cheer.offsetHeight;var nx=Math.max(4,Math.min(innerWidth-w-4,e.clientX-drag.dx)),ny=Math.max(4,Math.min(innerHeight-h-4,e.clientY-drag.dy));cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";});
 cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
 </script>
-<script src="booking.js?v=20260830d"></script>
+<script src="booking.js?v=20260830h"></script>
 <script src="page-transition.js"></script>
 </body>
 </html>
