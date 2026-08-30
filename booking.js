@@ -78,7 +78,7 @@
   var state={ lang:(window.DiZLang||'cn'), step:'stop', stopIndex:null, zoneId:null, name:'', ticket:null, confirmOpen:false };
   var continentScrollHandler=null;
 
-  var hero=new Image(); hero.src='assets/hero-desktop-square.jpg';
+  var hero=new Image(); hero.crossOrigin='anonymous'; hero.src='assets/hero-desktop-square.jpg';
 
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function pad2(n){return n<10?'0'+n:''+n;}
