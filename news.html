@@ -90,7 +90,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .foot .cred span{color:var(--pink);font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;margin-right:.7rem;}
 .foot .mk{font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;color:var(--muted);opacity:.6;text-transform:uppercase;text-align:right;}
 </style>
-<link rel="stylesheet" href="site-chrome.css?v=20260830c" />
+<link rel="stylesheet" href="site-chrome.css?v=20260830d" />
 <script src="site-language.js?v=20260830a"></script>
 </head>
 <body>
@@ -166,6 +166,6 @@ cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRe
 cheer.addEventListener("pointermove",function(e){if(!drag)return;if(Math.abs(e.movementX)+Math.abs(e.movementY)>1)drag.moved=true;var w=cheer.offsetWidth,h=cheer.offsetHeight;var nx=Math.max(4,Math.min(innerWidth-w-4,e.clientX-drag.dx)),ny=Math.max(4,Math.min(innerHeight-h-4,e.clientY-drag.dy));cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";});
 cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
 </script>
-<script src="page-transition.js?v=20260830d"></script>
+<script src="page-transition.js?v=20260830e"></script>
 </body>
 </html>

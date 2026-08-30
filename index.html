@@ -280,7 +280,7 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
 .menu-lang button.on::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--hot);}
 </style>
 <link rel="stylesheet" href="live-entry.css" />
-<link rel="stylesheet" href="site-chrome.css?v=20260830c" />
+<link rel="stylesheet" href="site-chrome.css?v=20260830d" />
 <script src="site-language.js?v=20260830a"></script>
 </head>
 <body>
@@ -600,6 +600,6 @@ cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=n
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12,rootMargin:"0px 0px -8% 0px"});
 document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
 </script>
-<script src="page-transition.js?v=20260830d"></script>
+<script src="page-transition.js?v=20260830e"></script>
 </body>
 </html>

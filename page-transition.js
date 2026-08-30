@@ -61,6 +61,12 @@
     var lastTap=0;
     var resetTimer=0;
 
+    // Keep one visual-only entry point for first-visit discovery. Manual taps
+    // still use window.wave below, which adds sound to this exact animation.
+    window.__tsukumoWaveCheerVisual=function(){
+      return originalWave.apply(this,arguments);
+    };
+
     function ensureSounds(){
       if(sounds)return sounds;
       sounds=sources.map(function(src,index){
@@ -115,17 +121,23 @@
     });
   })();
 
-  // Make the floating helper discoverable without downloading its animation
-  // frames or audio on every page view. The cue runs only once per browser.
+  // Make the floating helper discoverable with the same frame animation used
+  // by a real tap. Keep the cue silent so mobile autoplay rules never block it.
   (function initCheerDiscovery(){
     var cheer=document.getElementById("cheer");
-    if(!cheer||reduce)return;
+    if(!cheer||reduce||typeof window.__tsukumoWaveCheerVisual!=="function")return;
     var key="tsukumo99-cheer-discovery-v1";
     try{if(localStorage.getItem(key)==="1")return;localStorage.setItem(key,"1");}catch(error){}
     function reveal(){
       if(document.querySelector(".page-loader")){window.setTimeout(reveal,180);return;}
-      cheer.classList.add("is-discovering");
-      window.setTimeout(function(){cheer.classList.remove("is-discovering");},2550);
+      var step=0;
+      function waveAgain(){
+        if(step>=3||document.hidden)return;
+        window.__tsukumoWaveCheerVisual();
+        step+=1;
+        if(step<3)window.setTimeout(waveAgain,1180);
+      }
+      waveAgain();
     }
     if("requestIdleCallback" in window)requestIdleCallback(reveal,{timeout:900});
     else window.setTimeout(reveal,650);
