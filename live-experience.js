@@ -16,6 +16,14 @@
   var resultMaxCombo = document.getElementById("resultMaxCombo");
   var encoreButton = document.getElementById("encoreButton");
   var achievementGate = document.getElementById("achievementGate");
+  if (achievementGate && !document.getElementById("addAchievementCart")) {
+    achievementGate.innerHTML = '<div class="achievement-rays" aria-hidden="true"></div>'
+      + '<span class="achievement-live">ACHIEVEMENT UNLOCKED</span>'
+      + '<h1 id="achievementTitle">月云的兵</h1>'
+      + '<p>恭喜你已获得成就“月云的兵”及限定证书！请前往商店，在购物车填写地址发货。</p>'
+      + '<div class="achievement-actions"><button type="button" id="addAchievementCart">加入购物车</button><a href="index.html">退出游戏</a></div>'
+      + '<small class="achievement-cart-status" id="achievementCartStatus" role="status" aria-live="polite"></small>';
+  }
   var addAchievementCart = document.getElementById("addAchievementCart");
   var achievementCartStatus = document.getElementById("achievementCartStatus");
   var soundButton = document.getElementById("soundButton");
