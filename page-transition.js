@@ -28,6 +28,82 @@
     document.body.prepend(loader);
     window.setTimeout(function(){loader.classList.add("is-leaving");window.setTimeout(function(){loader.remove();},reduce?170:620);},reduce?80:1500);
   }
+
+  // Utsugi's floating cheer button is shared by every non-LIVE page. Each
+  // deliberate tap advances through the three supplied sound layers; a pause
+  // resets the sequence so the next interaction starts from the core again.
+  (function initCheerSounds(){
+    var cheer=document.getElementById("cheer");
+    var originalWave=window.wave;
+    if(!cheer||typeof originalWave!=="function")return;
+
+    var sources=[
+      "assets/audio/grape-nectar/main-core.wav",
+      "assets/audio/grape-nectar/bubble-grain.wav",
+      "assets/audio/grape-nectar/violet-pad.wav"
+    ];
+    var volumes=[.68,.8,.92];
+    var sounds=null;
+    var activeSound=null;
+    var soundStep=0;
+    var lastTap=0;
+    var resetTimer=0;
+
+    function ensureSounds(){
+      if(sounds)return sounds;
+      sounds=sources.map(function(src,index){
+        var audio=new Audio(src);
+        audio.preload="auto";
+        audio.volume=volumes[index];
+        return audio;
+      });
+      return sounds;
+    }
+
+    function playCheerSound(){
+      var now=Date.now();
+      if(now-lastTap>2400)soundStep=0;
+      lastTap=now;
+
+      var audio=ensureSounds()[soundStep];
+      if(activeSound&&activeSound!==audio){
+        activeSound.pause();
+        activeSound.currentTime=0;
+      }
+      audio.pause();
+      audio.currentTime=0;
+      activeSound=audio;
+      var promise=audio.play();
+      if(promise&&typeof promise.catch==="function")promise.catch(function(){});
+
+      cheer.dataset.soundLayer=String(soundStep+1);
+      soundStep=(soundStep+1)%sources.length;
+      window.clearTimeout(resetTimer);
+      resetTimer=window.setTimeout(function(){
+        soundStep=0;
+        cheer.removeAttribute("data-sound-layer");
+      },2400);
+    }
+
+    window.wave=function(){
+      playCheerSound();
+      return originalWave.apply(this,arguments);
+    };
+
+    // Native buttons emit a detail=0 click for keyboard and assistive-tech
+    // activation; pointer taps are already handled by the drag-aware code.
+    cheer.addEventListener("click",function(event){
+      if(event.detail===0)window.wave();
+    });
+    document.addEventListener("visibilitychange",function(){
+      if(!document.hidden||!activeSound)return;
+      activeSound.pause();
+      activeSound.currentTime=0;
+      activeSound=null;
+    });
+    window.addEventListener("load",ensureSounds,{once:true});
+  })();
+
   document.addEventListener("click",function(event){
     var link=event.target.closest("a[href]");
     if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
