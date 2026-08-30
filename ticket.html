@@ -181,6 +181,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .foot .mk{font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;color:var(--muted);opacity:.6;text-transform:uppercase;text-align:right;}
 </style>
 <link rel="stylesheet" href="site-chrome.css" />
+<script src="site-language.js?v=20260830a"></script>
 </head>
 <body>
 
@@ -241,7 +242,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 var b=document.body;
 document.getElementById("burger").onclick=function(){b.classList.toggle("menu-open");};
 document.getElementById("close").onclick=function(){b.classList.remove("menu-open");};
-document.querySelectorAll("button[data-lang]").forEach(function(btn){btn.onclick=function(){var L=btn.dataset.lang;document.querySelectorAll("button[data-lang]").forEach(function(x){x.classList.toggle("on",x.dataset.lang===L);});window.DiZLang=L;if(window.DiZTicketLang)window.DiZTicketLang(L);};});
+document.querySelectorAll("button[data-lang]").forEach(function(btn){btn.onclick=function(){var L=btn.dataset.lang;if(window.DiZLanguage)window.DiZLanguage.set(L);document.querySelectorAll("button[data-lang]").forEach(function(x){x.classList.toggle("on",x.dataset.lang===L);});window.DiZLang=L;if(window.DiZTicketLang)window.DiZTicketLang(L);};});
 var frames=[];for(var i=0;i<7;i++){frames.push("assets/cheer-frame-"+i+".webp");new Image().src=frames[i];}
 var cheer=document.getElementById("cheer"),cImg=document.getElementById("cheerImg"),playing=false,drag=null;
 function wave(){if(playing)return;playing=true;cheer.classList.add("waving");var n=0,loops=0;var t=setInterval(function(){cImg.src=frames[n];n++;if(n>=7){n=0;loops++;if(loops>=2){clearInterval(t);cImg.src="assets/cheer-still.webp";playing=false;cheer.classList.remove("waving");}}},80);}

@@ -130,6 +130,7 @@ body.cart-open #cartDrawer{transform:none;}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important;}}
 </style>
 <link rel="stylesheet" href="site-chrome.css" />
+<script src="site-language.js?v=20260830a"></script>
 </head>
 <body>
 
@@ -203,7 +204,7 @@ cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRe
 cheer.addEventListener("pointermove",function(e){if(!drag)return;if(Math.abs(e.movementX)+Math.abs(e.movementY)>1)drag.moved=true;var w=cheer.offsetWidth,h=cheer.offsetHeight;var nx=Math.max(4,Math.min(innerWidth-w-4,e.clientX-drag.dx)),ny=Math.max(4,Math.min(innerHeight-h-4,e.clientY-drag.dy));cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";});
 cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
 </script>
-<script src="shop-20260830i.js"></script>
+<script src="shop-20260830i.js?v=20260830-lang-a"></script>
 <script src="page-transition.js?v=20260830-cheer-audio"></script>
 </body>
 </html>

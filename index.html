@@ -280,6 +280,7 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
 </style>
 <link rel="stylesheet" href="live-entry.css" />
 <link rel="stylesheet" href="site-chrome.css" />
+<script src="site-language.js?v=20260830a"></script>
 </head>
 <body>
 <!--
@@ -516,8 +517,12 @@ function applyHomeLanguage(L){
   c.roles.forEach(function(value,i){setHomeText("role"+i,value);});
   document.querySelectorAll("[data-home-aria]").forEach(function(el){var value=c.aria[el.dataset.homeAria];if(value)el.setAttribute("aria-label",value);});
 }
-document.querySelectorAll("button[data-lang]").forEach(function(btn){btn.onclick=function(){applyHomeLanguage(btn.dataset.lang);};});
-applyHomeLanguage("cn");
+document.querySelectorAll("button[data-lang]").forEach(function(btn){btn.onclick=function(){
+  var lang=btn.dataset.lang;
+  if(window.DiZLanguage)window.DiZLanguage.set(lang);
+  applyHomeLanguage(lang);
+};});
+applyHomeLanguage(window.DiZLanguage?window.DiZLanguage.get():(window.DiZLang||"cn"));
 
 // Claude Design hero motion, adapted to the existing site chrome and assets.
 (function(){

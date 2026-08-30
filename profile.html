@@ -108,6 +108,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .toggle:active{cursor:grabbing;}
 </style>
 <link rel="stylesheet" href="site-chrome.css" />
+<script src="site-language.js?v=20260830a"></script>
 </head>
 <body>
 
@@ -196,7 +197,7 @@ var field=document.getElementById('field'),stage=document.getElementById('stage'
     knob=document.getElementById('knob'),knobPips=document.getElementById('knobPips'),knobName=document.getElementById('knobName'),
     lyric=document.getElementById('lyric'),hint=document.getElementById('hint'),profile=document.getElementById('profile'),
     flash=document.getElementById('flash'),ring=document.getElementById('ring'),toggle=document.getElementById('toggle');
-var phase='off',ki=null,currentLang='cn',currentMember=null;
+var phase='off',ki=null,currentLang=window.DiZLanguage?window.DiZLanguage.get():(window.DiZLang||'cn'),currentMember=null;
 
 function rnd(n){return Math.floor(Math.random()*n);}
 function buildField(){
@@ -299,7 +300,7 @@ toggle.addEventListener('pointercancel',function(){if(pd&&pd.drag){knob.style.tr
 
 buildField();setKnobPips(5);setField(false);ribbons('park');
 
-document.querySelectorAll("button[data-lang]").forEach(function(btn){btn.onclick=function(){currentLang=btn.dataset.lang;document.querySelectorAll("button[data-lang]").forEach(function(x){x.classList.toggle("on",x.dataset.lang===currentLang);});if(currentMember&&phase==='result')showProfile(currentMember);};});
+document.querySelectorAll("button[data-lang]").forEach(function(btn){btn.onclick=function(){currentLang=btn.dataset.lang;if(window.DiZLanguage)window.DiZLanguage.set(currentLang);document.querySelectorAll("button[data-lang]").forEach(function(x){x.classList.toggle("on",x.dataset.lang===currentLang);});if(currentMember&&phase==='result')showProfile(currentMember);};});
 
 var frames=[];for(var i=0;i<7;i++){frames.push("assets/cheer-frame-"+i+".webp");new Image().src=frames[i];}
 var cheer=document.getElementById("cheer"),cImg=document.getElementById("cheerImg"),playing=false,drag=null;
