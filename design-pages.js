@@ -38,7 +38,23 @@
     {date:"2026.07.26",cat:"tour",title:{cn:"广州站 · 余票紧张，建议尽早投骰选座",en:"Guangzhou · few seats left — roll early",jp:"広州公演 · 残席わずか、早めの抽選を"}},
     {date:"2026.07.18",cat:"tour",title:{cn:"上海站 · 巡演首夜，DiŹ 正式启程",en:"Shanghai · opening night — DiŹ begins",jp:"上海公演 · 初日、DiŹ 開幕"}},
     {date:"2026.07.15",cat:"site",title:{cn:"加载页与骰子交互更新",en:"Loader and dice interaction updated",jp:"ローディングとサイコロ演出を更新"}},
-    {date:"2026.07.08",cat:"notice",title:{cn:"关于本站为非官方同人企划的说明",en:"On this being an unofficial fan project",jp:"非公式ファン企画についてのお知らせ"}},
+    {date:"2026.07.08",cat:"notice",title:{cn:"关于非官方性质、隐私与共创的声明",en:"Statement on fan status, privacy and collaboration",jp:"非公式性・プライバシー・共同制作に関する声明"},body:{
+      cn:[
+        "非官方与著作权｜本站为非商业性质的同人共创企划，与原作官方、相关公司、艺人、乐队、场馆及票务平台均无关联。原作角色、名称及相关权利归各自权利人所有；本站原创插画、文字、网页设计与音效的权利及署名归对应创作者所有。未经许可，请勿转载、二次编辑或用于商业用途；如权利人认为相关内容需要调整或删除，请通过页面底部的联系方式告知。",
+        "隐私与数据｜本站不设置账号。页面中填写的姓名等内容仅在当前浏览器内用于生成虚构票券或周边预览，不会主动上传至服务器；所有购票、商品与支付流程均为前端模拟，不会发生真实交易。请勿填写真实姓名、地址、银行卡号等个人或支付信息。",
+        "共创与联系｜本站由多位创作者共同完成，贡献会在页面中明确署名。如希望参与共创、引用本站内容、申请授权，或补充、更正署名，请先通过底部联系方式联系；提交素材前请确认自己拥有相应权利，并说明可使用范围与署名方式。"
+      ],
+      en:[
+        "Unofficial status & rights | This is a non-commercial collaborative fan project. It is not affiliated with or endorsed by the original rights holders, related companies, performers, bands, venues or ticketing platforms. Characters, names and source material belong to their respective rights holders; original illustrations, writing, web design and sound used on this site remain owned by and credited to their respective creators. Please do not repost, modify or use them commercially without permission. Rights holders may contact us through the details in the footer to request changes or removal.",
+        "Privacy & data | No account is required. Names entered on the site are used only in the current browser to create fictional ticket or merchandise previews and are not intentionally uploaded to a server. All ticketing, shopping and payment flows are front-end simulations; no real transaction takes place. Do not enter a real name, address, card number or other personal or payment information.",
+        "Collaboration & contact | This project is made collaboratively and contributions are credited on the site. To contribute, quote site content, request permission, or correct a credit, please contact us first through the footer. Before submitting material, confirm that you hold the necessary rights and state the permitted scope of use and preferred credit."
+      ],
+      jp:[
+        "非公式性と権利について｜本サイトは非営利のファン共同制作企画であり、原作公式、関連企業、出演者、バンド、会場およびチケット販売事業者とは一切関係ありません。原作のキャラクター、名称その他の権利は各権利者に帰属し、本サイト独自のイラスト、文章、ウェブデザイン、音響素材の権利とクレジットは各制作者に帰属します。許可のない転載、改変、商用利用はご遠慮ください。権利者の方で修正または削除をご希望の場合は、ページ下部の連絡先よりお知らせください。",
+        "プライバシーとデータについて｜本サイトにアカウント機能はありません。入力された名前などは、架空のチケットやグッズのプレビューを現在のブラウザ内で生成するためだけに使用され、サーバーへ意図的に送信されることはありません。チケット、商品、決済の各フローはフロントエンド上のシミュレーションであり、実際の取引は発生しません。実名、住所、カード番号などの個人情報・決済情報は入力しないでください。",
+        "共同制作と連絡について｜本サイトは複数の制作者による共同制作で、各参加者のクレジットを明記しています。共同制作への参加、内容の引用、利用許諾、クレジットの追加・訂正をご希望の場合は、まずページ下部の連絡先よりご相談ください。素材を提供する際は、必要な権利を保有していることを確認し、利用範囲と希望する表記をお知らせください。"
+      ]
+    }},
     {date:"2026.07.01",cat:"ticket",title:{cn:"电子票 PNG 支持离线保存",en:"Ticket PNG export now works offline",jp:"チケットPNGがオフライン保存に対応"}},
     {date:"2026.06.20",cat:"tour",title:{cn:"上海站 · 追加场决定",en:"Shanghai · additional show added",jp:"上海公演 · 追加公演決定"}},
     {date:"2026.06.14",cat:"site",title:{cn:"主视觉公开",en:"Key visual revealed",jp:"キービジュアル公開"}},
@@ -51,7 +67,7 @@
     en:{body:"Placeholder body — the full announcement text will go here later.",cats:{all:"ALL",tour:"TOUR",ticket:"TICKET",shop:"SHOP",site:"SITE",notice:"NOTICE"}},
     jp:{body:"仮本文——詳細情報は後日ここに掲載されます。",cats:{all:"すべて",tour:"ツアー",ticket:"チケット",shop:"グッズ",site:"サイト",notice:"告知"}}
   };
-  var state = { shopOpen:false, product:0, name:"", made:null, rolling:false, newsCat:"all", newsOpen:null };
+  var state = { shopOpen:false, product:0, name:"", made:null, rolling:false, newsCat:"notice", newsOpen:"2026.07.08" };
 
   function esc(s) { return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
   function pipGrid(face, color) {
@@ -100,11 +116,12 @@
   }
 
   function renderNews(lang) {
-    var c=NEWS_COPY[lang],keys=["all","tour","site","notice"];
+    var c=NEWS_COPY[lang],keys=["notice","all","tour","site"];
     var filters=keys.map(function(k){return '<button type="button" data-dc-act="newsCat" data-cat="'+k+'" class="'+(state.newsCat===k?"is-active":"")+'">'+esc(c.cats[k])+'</button>';}).join("");
     var items=NEWS.filter(function(n){return n.cat!=="ticket"&&n.cat!=="shop";}).filter(function(n){return state.newsCat==="all"||n.cat===state.newsCat;}).map(function(n,i){
       var open=state.newsOpen===n.date;
-      return '<article class="dc-news-row" style="--delay:'+(Math.min(i,8)*.05)+'s"><button type="button" data-dc-act="newsToggle" data-key="'+n.date+'" aria-expanded="'+open+'"><time>'+n.date+'</time><strong>'+esc(n.title[lang])+'</strong><i class="'+(open?"is-open":"")+'" aria-hidden="true">⌄</i></button><div class="dc-news-body '+(open?"is-open":"")+'"><p>'+esc(c.body)+'</p></div></article>';
+      var paragraphs=(n.body&&n.body[lang]?n.body[lang]:[c.body]).map(function(p){return '<p>'+esc(p)+'</p>';}).join("");
+      return '<article class="dc-news-row" style="--delay:'+(Math.min(i,8)*.05)+'s"><button type="button" data-dc-act="newsToggle" data-key="'+n.date+'" aria-expanded="'+open+'"><time>'+n.date+'</time><strong>'+esc(n.title[lang])+'</strong><i class="'+(open?"is-open":"")+'" aria-hidden="true">⌄</i></button><div class="dc-news-body '+(open?"is-open":"")+'"><div class="dc-news-copy">'+paragraphs+'</div></div></article>';
     }).join("");
     return '<main class="dc-news"><header><h1>NEWS</h1></header><nav class="dc-news-filters" aria-label="News categories">'+filters+'</nav><section class="dc-news-list">'+items+'</section></main>';
   }

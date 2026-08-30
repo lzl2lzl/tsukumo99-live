@@ -217,20 +217,11 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
 @media (max-width:700px){
   .portal-preview,.profile-preview{grid-template-columns:1fr;min-height:0;}
   .portal-copy,.profile-copy{grid-column:1;grid-row:1;padding:1.35rem 1.2rem 1.6rem;min-height:13.5rem;}
-  #profile .sec-head{margin-bottom:.75rem;}
-  #profile .profile-copy{justify-content:flex-start;min-height:0;padding-top:1.05rem;}
   .live-visual{grid-column:1;grid-row:1;opacity:.6;}
   .live-visual::before{width:17rem}.live-visual::after{width:11rem}
   .roster{grid-column:1;grid-row:2;padding:.4rem 1.2rem 1.1rem;background:rgba(141,0,44,.12);}
   .roster span{min-height:3.5rem;padding:.65rem .55rem;}
 }
-.idx{list-style:none;margin:0;padding:0;}
-.idx a{display:flex;align-items:center;gap:1.2rem;padding:1.05rem 0;border-bottom:1px solid rgba(255,134,189,.1);text-decoration:none;color:var(--paper);
-  font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(1.6rem,5vw,2.6rem);transition:color .25s,padding-left .25s;}
-.idx a:hover{color:var(--pink);padding-left:.6rem;}
-.idx a .no{font-family:var(--mono);font-weight:400;font-size:.8rem;color:var(--muted);}
-.idx a .ar{margin-left:auto;transition:transform .25s,color .25s;}
-.idx a:hover .ar{transform:translateX(6px);color:var(--pink);}
 .foot{padding:clamp(2.4rem,6vh,4rem) clamp(1.2rem,5vw,3.4rem) clamp(3rem,8vh,5rem);border-top:1px solid rgba(255,134,189,.16);display:flex;flex-direction:column;gap:1.6rem;background:var(--ink);position:relative;z-index:2;}
 .foot .disc{font-family:var(--mono);font-size:.58rem;line-height:1.95;color:var(--muted);max-width:52rem;margin:0;}
 .foot .frow{display:flex;justify-content:space-between;align-items:flex-end;gap:1.2rem;flex-wrap:wrap;}
@@ -418,17 +409,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     </a>
   </section>
 
-  <section class="sec" id="index">
-    <div class="sec-head reveal"><div><h2 class="sec-title">Index</h2></div></div>
-    <ul class="idx reveal">
-      <li><a href="#">Top<span class="ar">→</span></a></li>
-      <li><a href="news.html">News<span class="ar">→</span></a></li>
-      <li><a href="ticket.html">Ticket<span class="ar">→</span></a></li>
-      <li><a href="profile.html">Profile<span class="ar">→</span></a></li>
-      <li><a href="shop.html">Goods<span class="ar">→</span></a></li>
-    </ul>
-  </section>
-
   <footer class="foot reveal">
     <p class="disc">非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关，仅供娱乐。所有场次、地址、座位、票券、商品与支付均为虚构模拟。不收集用户信息，不涉及真实支付。</p>
     <div class="frow">
@@ -451,7 +431,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     <li><a href="news.html">News</a></li>
     <li><a href="ticket.html">Ticket</a></li>
     <li><a href="profile.html">Profile</a></li>
-    <li><a href="shop.html">Shop</a></li>
+      <li><a href="shop.html">Goods</a></li>
   </ul>
   <div class="menu-lang" role="group" aria-label="语言 / Language">
     <button class="on" data-lang="cn">CN</button>
