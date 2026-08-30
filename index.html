@@ -253,6 +253,8 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
 .menu-lang button.on{color:var(--paper);opacity:1;}
 .menu-lang button.on::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--hot);}
 </style>
+<link rel="stylesheet" href="live-entry.css" />
+<link rel="stylesheet" href="site-chrome.css" />
 </head>
 <body>
 <!--
@@ -273,6 +275,9 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <button data-lang="jp">JP</button>
       <button data-lang="en">EN</button>
     </div>
+    <a class="live-now" href="live-experience.html" aria-label="进入正在进行的 LIVE">
+      <span>LIVE</span><i aria-hidden="true"></i>
+    </a>
     <button class="burger" id="burger" aria-label="菜单"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -308,13 +313,13 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <main>
   <section class="sec" id="news">
     <div class="sec-head reveal">
-      <div><p class="sec-ey">News</p><h2 class="sec-title">情报</h2></div>
+      <div><h2 class="sec-title">NEWS</h2></div>
       <a class="more" href="news.html">View all <span>→</span></a>
     </div>
     <div class="reveal">
-      <a class="news-row" href="#"><time>2026.08.01</time><p>DiŹ WORLD TOUR 2026 特设页公开</p></a>
-      <a class="news-row" href="#"><time>2026.07.20</time><p>广州・上海 追加公演决定</p></a>
-      <a class="news-row" href="#"><time>2026.07.05</time><p>会员限定 先行抽选 受付开始</p></a>
+      <a class="news-row" href="news.html"><time>2026.08.02</time><p>北京站 · 今夜开演，现场应援指南公开</p></a>
+      <a class="news-row" href="news.html"><time>2026.07.26</time><p>广州站 · 余票紧张，建议尽早投骰选座</p></a>
+      <a class="news-row" href="news.html"><time>2026.07.18</time><p>上海站 · 巡演首夜，DiŹ 正式启程</p></a>
     </div>
   </section>
 
@@ -324,15 +329,15 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <a class="more" href="ticket.html">View all <span>→</span></a>
     </div>
     <div class="reveal">
-      <div class="live-row"><span class="city">广州 · SIXFACE</span><span class="date">2026.09.12</span></div>
-      <div class="live-row"><span class="city">上海 · SIXFACE</span><span class="date">2026.09.19</span></div>
-      <div class="live-row"><span class="city">北京 · SIXFACE</span><span class="date">2026.09.26</span></div>
+      <div class="live-row"><span class="city">上海 · 梅赛德斯-奔弛文化中心</span><span class="date">2026.07.18</span></div>
+      <div class="live-row"><span class="city">广州 · 宝能广州国际体育演艺中芯</span><span class="date">2026.07.26</span></div>
+      <div class="live-row"><span class="city">北京 · 凯迪拉刻中心</span><span class="date">2026.08.02</span></div>
     </div>
   </section>
 
   <section class="sec" id="shop">
     <div class="sec-head reveal">
-      <div><p class="sec-ey">Shop</p><h2 class="sec-title">周边</h2></div>
+      <div><p class="sec-ey">GOODS</p><h2 class="sec-title">周边</h2></div>
       <a class="more" href="shop.html">View all <span>→</span></a>
     </div>
         <a class="shop-feature reveal" href="product.html?id=diz-album-01">
@@ -354,17 +359,18 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <li><a href="news.html">News<span class="ar">→</span></a></li>
       <li><a href="ticket.html">Ticket<span class="ar">→</span></a></li>
       <li><a href="profile.html">Profile<span class="ar">→</span></a></li>
-      <li><a href="shop.html">Shop<span class="ar">→</span></a></li>
+      <li><a href="shop.html">Goods<span class="ar">→</span></a></li>
     </ul>
   </section>
 
   <footer class="foot reveal">
-    <p class="disc">非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。所有场次、地址、座位、票券均为虚构，购票流程为纯前端模拟，不收集任何姓名以外的信息，更不涉及任何真实支付。仅供娱乐。</p>
+    <p class="disc">非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关，仅供娱乐。所有场次、地址、座位、票券、商品与支付均为虚构模拟。不收集用户信息，不涉及真实支付。</p>
     <div class="frow">
       <div class="cred">
       <div><span>Contact</span>xhs@并不知道什么叫做可爱</div>
       <div><span>网页设计</span>lzl2lzl</div>
       <div><span>主视觉</span>兰澜</div>
+      <div><span>LIVE 互动音效</span>夏一页</div>
     </div>
       <div class="mk">UNOFFICIAL FANMADE</div>
     </div>
@@ -374,12 +380,17 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <!-- MENU -->
 <nav id="menu">
   <button class="close" id="close" aria-label="关闭">✕</button>
+  <a class="menu-live-entry" href="live-experience.html" aria-label="进入正在进行的 LIVE">
+    <span class="menu-live-kicker"><i aria-hidden="true"></i>LIVE NOW</span>
+    <strong>直播正在进行</strong>
+    <span class="menu-live-cta">横屏进入 LIVE <b>→</b></span>
+  </a>
   <ul class="menu-list">
-    <li><a href="#">Top</a></li>
+    <li><a class="here" href="index.html">Top</a></li>
     <li><a href="news.html">News</a></li>
     <li><a href="ticket.html">Ticket</a></li>
     <li><a href="profile.html">Profile</a></li>
-    <li><a href="shop.html">Shop</a></li>
+    <li><a href="shop.html">Goods</a></li>
   </ul>
   <div class="menu-lang" role="group" aria-label="语言 / Language">
     <button class="on" data-lang="cn">CN</button>
@@ -387,15 +398,8 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     <button data-lang="en">EN</button>
   </div>
   <div class="menu-foot">
-    <div class="contact">
-      <b>Contact</b>
-      xhs@并不知道什么叫做可爱
-    </div>
-    <svg class="tsu-mark" viewBox="0 0 1000 190" fill="currentColor" role="img" aria-label="TSUKUMO99">
-      <rect x="30" y="30" width="940" height="130" rx="8" fill="none" stroke="currentColor" stroke-width="5"></rect>
-      <line x1="30" y1="95" x2="120" y2="95" stroke="currentColor" stroke-width="5" opacity=".4"></line>
-      <text x="500" y="128" text-anchor="middle" font-family="Oswald,sans-serif" font-weight="600" font-size="92" letter-spacing="14" fill="currentColor">TSUKUMO99</text>
-    </svg>
+    <div class="contact"><b>Contact</b>xhs@并不知道什么叫做可爱</div>
+    <div class="mk">UNOFFICIAL FANMADE</div>
   </div>
 </nav>
 

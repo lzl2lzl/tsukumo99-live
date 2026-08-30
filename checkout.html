@@ -119,6 +119,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 @media (max-width:760px){.lang{display:none;}.co-grid{grid-template-columns:1fr;}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important;}}
 </style>
+<link rel="stylesheet" href="site-chrome.css" />
 </head>
 <body>
 
@@ -136,12 +137,17 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 
 <nav id="menu">
   <button class="close" id="close" aria-label="关闭">✕</button>
+  <a class="menu-live-entry" href="live-experience.html" aria-label="进入正在进行的 LIVE">
+    <span class="menu-live-kicker"><i aria-hidden="true"></i>LIVE NOW</span>
+    <strong>直播正在进行</strong>
+    <span class="menu-live-cta">横屏进入 LIVE <b>→</b></span>
+  </a>
   <ul class="menu-list">
     <li><a href="index.html">Top</a></li>
     <li><a href="news.html">News</a></li>
     <li><a href="ticket.html">Ticket</a></li>
     <li><a href="profile.html">Profile</a></li>
-    <li><a class="here" href="shop.html">Shop</a></li>
+    <li><a class="here" href="shop.html">Goods</a></li>
   </ul>
   <div class="menu-lang" role="group" aria-label="语言 / Language">
     <button class="on" data-lang="cn">CN</button>
@@ -157,12 +163,13 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 <main id="checkoutApp" class="co-wrap"></main>
 
 <footer class="foot">
-  <p class="disc">非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关。所有场次、地址、座位、票券、商品与支付均为虚构，购物与结算流程为纯前端模拟，不收集任何姓名以外的信息，更不涉及任何真实支付。仅供娱乐。</p>
+  <p class="disc">非官方粉丝同人企划，与任何真实艺人、乐队、场馆或票务平台无关，仅供娱乐。所有场次、地址、座位、票券、商品与支付均为虚构模拟。不收集用户信息，不涉及真实支付。</p>
   <div class="frow">
     <div class="cred">
       <div><span>Contact</span>xhs@并不知道什么叫做可爱</div>
       <div><span>网页设计</span>lzl2lzl</div>
       <div><span>主视觉</span>兰澜</div>
+      <div><span>LIVE 互动音效</span>夏一页</div>
     </div>
     <div class="mk">UNOFFICIAL FANMADE</div>
   </div>

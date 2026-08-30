@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#120005" />
+  <title>LIVE NOW | TSUKUMO99</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%233a0014'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff86bd'/%3E%3Ccircle cx='20' cy='44' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23fff4f7'/%3E%3C/svg%3E" />
+  <link rel="preload" as="image" href="assets/hero-desktop-square.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/live/lane-z.png" />
+  <link rel="preload" as="image" href="assets/live/lane-o1.png" />
+  <link rel="preload" as="image" href="assets/live/lane-o2.png" />
+  <link rel="preload" as="image" href="assets/live/lane-l.png" />
+  <link rel="preload" as="image" href="assets/live/utsugi-helper.png" />
+  <link rel="stylesheet" href="live-experience.css" />
+</head>
+<body>
+  <main class="broadcast" id="broadcast">
+    <div class="stage-art" aria-hidden="true"></div>
+    <div class="stage-shade" aria-hidden="true"></div>
+    <div class="stage-floor" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="light-rig" aria-hidden="true">
+      <i class="rig-light rig-1"></i><i class="rig-light rig-2"></i><i class="rig-light rig-3"></i>
+      <i class="rig-light rig-4"></i><i class="rig-light rig-5"></i>
+    </div>
+
+    <div class="live-frame" aria-hidden="true">
+      <i class="edge edge-top"></i><i class="edge edge-right"></i><i class="edge edge-bottom"></i><i class="edge edge-left"></i>
+      <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+      <div class="on-air"><i></i> ON AIR</div>
+      <div class="broadcast-code">TSUKUMO99 LIVE FEED</div>
+    </div>
+
+    <header class="broadcast-head">
+      <a class="live-brand" href="index.html" aria-label="返回 TSUKUMO99 首页">
+        <b>TSUKUMO99</b><span>UNOFFICIAL FANWEB</span>
+      </a>
+      <div class="round-readout" aria-live="polite">
+        <span>ROUND <b id="roundNumber">01</b></span>
+        <strong id="roundTimer">00:30</strong>
+        <span>HIT <b id="hitCount">000</b></span>
+        <span>COMBO <b id="comboCount">000</b></span>
+      </div>
+      <div class="head-actions">
+        <button type="button" id="soundButton" aria-pressed="true">SOUND ON</button>
+        <a href="index.html">EXIT</a>
+      </div>
+    </header>
+
+    <section class="playfield" aria-label="ZOOL 四轨直播互动游戏">
+      <div class="performer-deck" id="performerDeck" aria-label="四条轨道对应角色">
+        <figure class="performer-card card-z" data-lane="0" aria-label="Z 轨道角色">
+          <img src="assets/live/lane-z.png" alt="" />
+          <span class="charge-fill" aria-hidden="true"><i></i></span>
+          <output class="charge-value">0%</output>
+          <i class="card-signal" aria-hidden="true"></i>
+        </figure>
+        <figure class="performer-card card-o1" data-lane="1" aria-label="第一个 O 轨道角色">
+          <img src="assets/live/lane-o1.png" alt="" />
+          <span class="charge-fill" aria-hidden="true"><i></i></span>
+          <output class="charge-value">0%</output>
+          <i class="card-signal" aria-hidden="true"></i>
+        </figure>
+        <figure class="performer-card card-o2" data-lane="2" aria-label="第二个 O 轨道角色">
+          <img src="assets/live/lane-o2.png" alt="" />
+          <span class="charge-fill" aria-hidden="true"><i></i></span>
+          <output class="charge-value">0%</output>
+          <i class="card-signal" aria-hidden="true"></i>
+        </figure>
+        <figure class="performer-card card-l" data-lane="3" aria-label="L 轨道角色">
+          <img src="assets/live/lane-l.png" alt="" />
+          <span class="charge-fill" aria-hidden="true"><i></i></span>
+          <output class="charge-value">0%</output>
+          <i class="card-signal" aria-hidden="true"></i>
+        </figure>
+      </div>
+      <canvas class="rhythm-canvas" id="rhythmCanvas" aria-hidden="true">当前浏览器不支持 Canvas 音游画面。</canvas>
+      <div class="vanishing-point" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="stage-die" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="obstacle-layer" id="obstacleLayer" aria-hidden="true"></div>
+      <div class="hit-callout" id="hitCallout" aria-hidden="true">HIT</div>
+      <div class="effect-layer" id="effectLayer" aria-hidden="true"></div>
+
+      <button type="button" class="utsugi-assist" id="utsugiAssist" aria-label="宇都木无敌模式：点击开启，再次点击关闭" aria-pressed="false" disabled>
+        <span class="utsugi-portrait" aria-hidden="true"></span>
+        <span class="utsugi-copy"><b>宇都木应援</b><small id="assistStatus">AUTO PERFECT OFF</small></span>
+        <span class="assist-count" id="assistCount" aria-hidden="true">OFF</span>
+      </button>
+
+      <div class="utsugi-autoplay" id="utsugiAutoplay" aria-hidden="true">
+        <img src="assets/live/utsugi-helper.png" alt="" />
+        <i></i>
+      </div>
+
+      <div class="ryo-taunt" id="ryoTaunt" aria-hidden="true">
+        <span></span><p>哈哈，没打中～</p>
+      </div>
+
+      <div class="lane-controls" aria-label="ZOOL 舞台效果按钮">
+        <button type="button" class="lane-button lane-z" data-lane="0" data-effect="core" aria-label="Z 轨道判定键">
+          <span class="letter">Z</span>
+        </button>
+        <button type="button" class="lane-button lane-o1" data-lane="1" data-effect="bubble" aria-label="第一个 O 轨道判定键">
+          <span class="letter">O</span>
+        </button>
+        <button type="button" class="lane-button lane-o2" data-lane="2" data-effect="bubble" aria-label="第二个 O 轨道判定键">
+          <span class="letter">O</span>
+        </button>
+        <button type="button" class="lane-button lane-l" data-lane="3" data-effect="violet" aria-label="L 轨道判定键">
+          <span class="letter">L</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="mobile-invite" id="mobileInvite" role="dialog" aria-modal="true" aria-labelledby="inviteTitle" hidden>
+      <div class="signal-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="invite-live"><i></i> LIVE NOW</div>
+      <h1 id="inviteTitle">直播正在进行</h1>
+      <p>需要横屏观看本场 LIVE 吗？</p>
+      <div class="sound-note"><b>开启声音</b><span>建议佩戴耳机</span></div>
+      <button type="button" id="joinButton">横屏进入 LIVE</button>
+      <a href="index.html">暂不观看</a>
+    </section>
+
+    <section class="rotate-gate" id="rotateGate" role="dialog" aria-modal="true" aria-label="请将设备横向放置" hidden>
+      <div class="phone-shape"><i></i></div>
+      <b>ROTATE FOR LIVE</b>
+      <p>请将设备横向放置</p>
+      <small>如果画面没有旋转，请关闭屏幕方向锁定</small>
+    </section>
+
+    <section class="round-gate" id="roundGate" role="dialog" aria-modal="true" aria-labelledby="roundTitle" hidden>
+      <span>LIVE INTERACTION</span>
+      <h1 id="roundTitle">ZOOL<br />ROUND</h1>
+      <p>跟随舞台脉冲，在目标抵达圆键时按下；长条目标持续按住。支持双押，每回合 30 秒。点击宇都木可开启或关闭无敌代打。</p>
+      <button type="button" id="startButton">START ROUND</button>
+      <small id="loadStatus">点击后开启声音</small>
+    </section>
+
+    <section class="result-gate" id="resultGate" role="dialog" aria-modal="true" aria-labelledby="resultTitle" hidden>
+      <span>ROUND COMPLETE</span>
+      <h1 id="resultTitle">HIT <b id="resultScore">000</b></h1>
+      <p>MAX COMBO <b id="resultMaxCombo">000</b>　直播仍在继续。</p>
+      <div class="result-actions">
+        <button type="button" id="encoreButton">NEXT ROUND</button>
+        <a href="index.html">LEAVE LIVE</a>
+      </div>
+    </section>
+
+    <section class="achievement-gate" id="achievementGate" role="dialog" aria-modal="true" aria-labelledby="achievementTitle" hidden>
+      <div class="achievement-rays" aria-hidden="true"></div>
+      <span class="achievement-live">ACHIEVEMENT UNLOCKED</span>
+      <h1 id="achievementTitle">月云的兵</h1>
+      <p>四位成员的应援能量均已达到 99%。留下你的名字，领取本场 LIVE 的非官方粉丝纪念证书。</p>
+      <div class="achievement-charge" aria-label="四轨能量全部达到百分之九十九">
+        <i style="--portrait:url('assets/live/lane-z.png')"><b>99%</b></i>
+        <i style="--portrait:url('assets/live/lane-o1.png')"><b>99%</b></i>
+        <i style="--portrait:url('assets/live/lane-o2.png')"><b>99%</b></i>
+        <i style="--portrait:url('assets/live/lane-l.png')"><b>99%</b></i>
+      </div>
+      <label class="certificate-name" for="certificateName"><span>持证人姓名</span><input id="certificateName" maxlength="30" autocomplete="name" placeholder="输入你的名字" /></label>
+      <small class="certificate-error" id="certificateError" role="alert"></small>
+      <div class="achievement-actions">
+        <button type="button" id="downloadCertificate">下载证书 PNG</button>
+        <button type="button" id="closeAchievement">返回结算</button>
+      </div>
+    </section>
+
+    <div class="cutin" id="cutin" aria-hidden="true">
+      <div></div><span>CORE SIGNAL</span>
+    </div>
+    <div class="violet-sweep" aria-hidden="true"></div>
+    <div class="screen-flash" aria-hidden="true"></div>
+    <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
+  </main>
+  <script src="live-experience.js"></script>
+</body>
+</html>

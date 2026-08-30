@@ -24,7 +24,7 @@
   function prod(id){return PRODUCTS[id];}
 
   var T={
-    cn:{kicker:"官方周边 · 限定发售",shopTitle:"商店",limited:"限定 / LIMITED",addCart:"加入购物车",buyNow:"立即购买",
+    cn:{kicker:"GOODS · 限定发售",shopTitle:"周边",limited:"限定 / LIMITED",addCart:"加入购物车",buyNow:"立即购买",
         tracklist:"曲目",format:"规格",ships:"全球配送 · 模拟",
         cart:"购物车",cartEmpty:"购物车是空的",continueShop:"继续购物",qty:"数量",remove:"移除",
         subtotal:"小计",checkout:"去结算",note:"商品、库存与配送均为虚构占位，仅用于演示下单流程。",
@@ -35,7 +35,7 @@
         okTitle:"支付成功",orderNo:"订单号",receiver:"收货人",amount:"实付",
         thanks:"感谢支持 · 这是一次模拟下单",backShop2:"返回商店",needName:"请填写收货人姓名",
         namePH:"将印在订单上的名字",phonePH:"仅本地演示，可留空",addrPH:"仅本地演示，可留空",cardPH:"0000 0000 0000 0000"},
-    jp:{kicker:"公式グッズ · 数量限定",shopTitle:"ショップ",limited:"限定 / LIMITED",addCart:"カートに入れる",buyNow:"今すぐ購入",
+    jp:{kicker:"GOODS · 数量限定",shopTitle:"グッズ",limited:"限定 / LIMITED",addCart:"カートに入れる",buyNow:"今すぐ購入",
         tracklist:"収録曲",format:"仕様",ships:"世界配送 · シミュレーション",
         cart:"カート",cartEmpty:"カートは空です",continueShop:"買い物を続ける",qty:"数量",remove:"削除",
         subtotal:"小計",checkout:"レジへ進む",note:"商品・在庫・配送はすべて架空のプレースホルダーで、購入フローのデモ用です。",
@@ -46,7 +46,7 @@
         okTitle:"支払い完了",orderNo:"注文番号",receiver:"お届け先",amount:"支払額",
         thanks:"ご支援ありがとうございます · これはシミュレーションです",backShop2:"ショップへ戻る",needName:"お名前を入力してください",
         namePH:"注文に印字される名前",phonePH:"ローカルデモのみ · 空欄可",addrPH:"ローカルデモのみ · 空欄可",cardPH:"0000 0000 0000 0000"},
-    en:{kicker:"OFFICIAL GOODS · LIMITED DROP",shopTitle:"SHOP",limited:"LIMITED",addCart:"ADD TO CART",buyNow:"BUY NOW",
+    en:{kicker:"GOODS · LIMITED DROP",shopTitle:"GOODS",limited:"LIMITED",addCart:"ADD TO CART",buyNow:"BUY NOW",
         tracklist:"TRACKLIST",format:"FORMAT",ships:"WORLDWIDE · SIMULATED",
         cart:"CART",cartEmpty:"Your cart is empty",continueShop:"Continue shopping",qty:"QTY",remove:"Remove",
         subtotal:"Subtotal",checkout:"Checkout",note:"Product, stock and shipping are fictional placeholders — a demo of the ordering flow only.",

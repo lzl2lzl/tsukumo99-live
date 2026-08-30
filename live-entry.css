@@ -1,0 +1,15 @@
+.live-now{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.48rem;min-width:72px;min-height:38px;padding:.45rem .7rem;border:1px solid rgba(255,244,247,.48);background:rgba(18,0,5,.58);color:var(--paper);font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.16em;text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+.live-now i{width:7px;height:7px;border-radius:50%;background:var(--hot);box-shadow:0 0 .7rem rgba(236,0,80,.72)}
+.live-now:hover{border-color:var(--pink);background:var(--crimson)}
+.live-now:active{transform:scale(.97)}
+.live-now:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
+
+@media (max-width:760px){
+  .live-now{min-width:66px;min-height:44px;padding:.45rem .62rem;font-size:.58rem}
+}
+
+@media (prefers-reduced-motion:no-preference){
+  .live-now i{animation:liveNowPulse 1.45s ease-in-out infinite}
+}
+
+@keyframes liveNowPulse{0%,100%{opacity:.55;transform:scale(.76)}50%{opacity:1;transform:scale(1.18)}}
