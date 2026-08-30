@@ -9,7 +9,7 @@
   /* ---------------- data ---------------- */
   var PRODUCT={
     id:"diz-album-01",
-    cover:"assets/hero-desktop-square.jpg",
+    cover:"assets/hero-desktop-square.webp",
     price:128,
     cat:{cn:"专辑 · CD",jp:"アルバム · CD",en:"ALBUM · CD"},
     title:"ONCE AND FOR ALL",

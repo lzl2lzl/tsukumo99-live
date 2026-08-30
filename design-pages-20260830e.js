@@ -54,15 +54,15 @@
     {id:"guide-live",date:"2026.07.14",cat:"site",title:{cn:"LIVE 互动使用指南",en:"LIVE interaction guide",jp:"LIVEインタラクションガイド"},body:{
       cn:[
         "手机端请先将设备横屏，建议使用页面内的全屏按钮，并开启声音或佩戴耳机。点击“开始游戏”后，在目标进入底部判定区域时按下对应的 Z／O／O／L 按钮；遇到长条目标时需要持续按住。",
-        "每回合 30 秒，难度会逐步提高。需要时可开启“宇都木代打”协助判定，也可以随时通过退出按钮离开游戏。"
+        "每回合 15 秒，共 6 回合，难度会逐步提高。如果第 6 回合结束后仍未通关，将触发隐藏剧情。需要时可开启“宇都木代打”协助判定，也可以随时通过退出按钮离开游戏。"
       ],
       en:[
         "On mobile, rotate your device to landscape, use the in-page full-screen button, and turn on sound or wear headphones. After tapping “Start game”, press the matching Z / O / O / L button as a target reaches the judgment line; hold the button for long notes.",
-        "Each round lasts 30 seconds and gradually becomes harder. Turn on Utsugi Assist if you want help with the judgments, or use Exit at any time to leave the game."
+        "Each round lasts 15 seconds, with six rounds in total, and the difficulty increases as you progress. If you have not cleared the game by the end of round 6, a hidden story will be triggered. Turn on Utsugi Assist if you want help with the judgments, or use Exit at any time to leave the game."
       ],
       jp:[
         "スマートフォンでは端末を横向きにし、ページ内の全画面ボタンを使用してください。音声をオンにするか、イヤホンの使用をおすすめします。「ゲーム開始」をタップしたら、ターゲットが下部の判定エリアに到達するタイミングで対応する Z／O／O／L ボタンを押し、ロングノーツは押し続けてください。",
-        "1ラウンドは30秒で、少しずつ難しくなります。必要に応じて「宇都木オート」をオンにすると判定を手伝ってくれます。終了ボタンからいつでもゲームを離れられます。"
+        "1ラウンド15秒、全6ラウンドで、進むほど難しくなります。第6ラウンド終了後もクリアしていない場合は、隠しストーリーが発生します。必要に応じて「宇都木オート」をオンにすると判定を手伝ってくれます。終了ボタンからいつでもゲームを離れられます。"
       ]
     }},
     {id:"guide-about",date:"2026.07.13",cat:"site",title:{cn:"关于本站",en:"About this site",jp:"本サイトについて"},body:{

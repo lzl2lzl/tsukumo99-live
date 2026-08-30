@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#120005" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%233a0014'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff86bd'/%3E%3Ccircle cx='20' cy='44' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23fff4f7'/%3E%3C/svg%3E">
 <title>DiŹ WORLD TOUR 2026 — TSUKUMO99 [proto]</title>
-<link rel="preload" as="image" href="assets/hero-desktop-square.jpg" type="image/jpeg" media="(min-width: 761px)" fetchpriority="high" />
+<link rel="preload" as="image" href="assets/hero-desktop-square.webp" type="image/webp" media="(min-width: 761px)" fetchpriority="high" />
 <link rel="preload" as="image" href="assets/hero-mobile.webp" type="image/webp" media="(max-width: 760px)" fetchpriority="high" />
 <link rel="stylesheet" href="page-transition.css" />
 <style>
@@ -280,7 +280,7 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
 .menu-lang button.on::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--hot);}
 </style>
 <link rel="stylesheet" href="live-entry.css" />
-<link rel="stylesheet" href="site-chrome.css?v=20260830b" />
+<link rel="stylesheet" href="site-chrome.css?v=20260830c" />
 <script src="site-language.js?v=20260830a"></script>
 </head>
 <body>
@@ -318,7 +318,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   </div>
   <div class="hero-layer hero-art-wrap" id="heroArt" aria-hidden="true">
     <picture>
-      <source media="(min-width: 761px)" srcset="assets/hero-desktop-square.jpg" />
+      <source media="(min-width: 761px)" type="image/webp" srcset="assets/hero-desktop-square.webp" />
       <source media="(max-width: 760px)" type="image/webp" srcset="assets/hero-mobile.webp" />
       <img class="hero-art" src="assets/hero-mobile.jpg" width="840" height="1120" decoding="async" fetchpriority="high" alt="" />
     </picture>
@@ -402,7 +402,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <a class="more" href="shop.html" data-home="viewAll">查看全部 <span>→</span></a>
     </div>
         <a class="shop-feature reveal" href="product.html?id=diz-album-01">
-      <div class="sf-cover"><img src="assets/hero-desktop-square.jpg" alt="ONCE AND FOR ALL" loading="lazy" /><span class="sf-badge" data-home="goodsBadge">限定 / LIMITED</span></div>
+        <div class="sf-cover"><img src="assets/hero-desktop-square.webp" alt="ONCE AND FOR ALL" loading="lazy" /><span class="sf-badge" data-home="goodsBadge">限定 / LIMITED</span></div>
       <div class="sf-info">
         <p class="sf-cat" data-home="goodsCat">专辑 · CD</p>
         <h3 class="sf-title">ONCE AND FOR ALL</h3>
@@ -584,7 +584,7 @@ applyHomeLanguage(window.DiZLanguage?window.DiZLanguage.get():(window.DiZLang||"
 })();
 
 // cheer widget — draggable + tap to wave (no label text)
-var frames=[];for(var i=0;i<7;i++){frames.push("assets/cheer-frame-"+i+".webp");new Image().src=frames[i];}
+var frames=[];for(var i=0;i<7;i++){frames.push("assets/cheer-frame-"+i+".webp");}
 var cheer=document.getElementById("cheer"),cImg=document.getElementById("cheerImg"),playing=false,drag=null;
 function wave(){if(playing)return;playing=true;cheer.classList.add("waving");var n=0,loops=0;var t=setInterval(function(){cImg.src=frames[n];n++;if(n>=7){n=0;loops++;if(loops>=2){clearInterval(t);cImg.src="assets/cheer-still.webp";playing=false;cheer.classList.remove("waving");}}},80);}
 cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRect();drag={dx:e.clientX-r.left,dy:e.clientY-r.top,moved:false};cheer.setPointerCapture(e.pointerId);});
@@ -602,6 +602,6 @@ cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=n
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12,rootMargin:"0px 0px -8% 0px"});
 document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
 </script>
-<script src="page-transition.js?v=20260830b"></script>
+<script src="page-transition.js?v=20260830d"></script>
 </body>
 </html>

@@ -49,7 +49,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 }
 .stage-art{
   z-index:-8;
-  background:url("assets/hero-desktop-square.jpg") center 18%/cover no-repeat;
+  background:url("assets/hero-desktop-square.webp") center 18%/cover no-repeat;
   filter:saturate(.78) contrast(1.08) brightness(.35);
   transform:scale(1.04);
   transition:filter .55s,transform .8s cubic-bezier(.16,1,.3,1);
@@ -435,7 +435,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 .ryo-obstacle{
   position:absolute;
   font-style:normal;
-  background-image:url("assets/hero-desktop-square.jpg");
+  background-image:url("assets/hero-desktop-square.webp");
   background-repeat:no-repeat;
   border:1px solid rgba(255,134,189,.72);
   box-shadow:0 14px 3rem rgba(18,0,5,.9),0 7px 1.4rem rgba(236,0,80,.45);
@@ -540,7 +540,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
   position:absolute;
   inset:7px;
   border-radius:50%;
-  background-image:url("assets/hero-desktop-square.jpg");
+  background-image:url("assets/hero-desktop-square.webp");
   background-repeat:no-repeat;
   background-size:var(--crop-size);
   background-position:var(--crop-x) var(--crop-y);
@@ -692,7 +692,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
   opacity:0;
   pointer-events:none;
 }
-.ryo-taunt span{width:clamp(68px,7vw,104px);aspect-ratio:1;border:2px solid var(--hot);border-radius:50%;background:url("assets/hero-desktop-square.jpg") 18% 21%/330% auto no-repeat;box-shadow:0 10px 1.5rem rgba(18,0,5,.72),0 0 1.1rem rgba(236,0,80,.55)}
+.ryo-taunt span{width:clamp(68px,7vw,104px);aspect-ratio:1;border:2px solid var(--hot);border-radius:50%;background:url("assets/hero-desktop-square.webp") 18% 21%/330% auto no-repeat;box-shadow:0 10px 1.5rem rgba(18,0,5,.72),0 0 1.1rem rgba(236,0,80,.55)}
 .ryo-taunt p{position:relative;margin:0;padding:.7rem .9rem;border:1px solid var(--pink);background:rgba(18,0,5,.94);font-size:clamp(1rem,2.2vw,1.65rem);font-weight:700;box-shadow:0 10px 1.5rem rgba(18,0,5,.68)}
 .ryo-taunt p::before{content:"";position:absolute;left:-7px;top:50%;width:12px;height:12px;border-left:1px solid var(--pink);border-bottom:1px solid var(--pink);background:var(--ink);transform:translateY(-50%) rotate(45deg)}
 .ryo-taunt.show{animation:tauntPop 1.2s cubic-bezier(.16,1,.3,1)}
@@ -782,7 +782,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
   overflow:hidden;
 }
 .mobile-invite{
-  background:radial-gradient(circle at 50% 45%,rgba(141,0,44,.82),rgba(18,0,5,.96) 64%),url("assets/hero-desktop-square.jpg") center/cover no-repeat;
+  background:radial-gradient(circle at 50% 45%,rgba(141,0,44,.82),rgba(18,0,5,.96) 64%),url("assets/hero-desktop-square.webp") center/cover no-repeat;
   background-blend-mode:multiply;
 }
 .signal-rings{position:absolute;left:50%;top:48%;width:min(76vw,76vh);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none}
@@ -851,7 +851,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 .rule-trouble{grid-template-columns:1fr 1fr;gap:1rem}
 .rule-character{display:grid;grid-template-columns:clamp(72px,10vw,108px) 1fr;align-items:center;gap:.85rem;min-width:0;padding:.8rem;border:1px solid rgba(255,134,189,.3);background:rgba(18,0,5,.55)}
 .rule-character>span,.rule-character>img{width:100%;aspect-ratio:1;object-fit:contain}
-.rule-ryo>span{border-radius:50%;background:url("assets/hero-desktop-square.jpg") 18% 21%/330% auto no-repeat;box-shadow:0 0 1.5rem rgba(236,0,80,.35)}
+.rule-ryo>span{border-radius:50%;background:url("assets/hero-desktop-square.webp") 18% 21%/330% auto no-repeat;box-shadow:0 0 1.5rem rgba(236,0,80,.35)}
 .rule-utsugi>img{filter:drop-shadow(0 9px 1.1rem rgba(236,0,80,.35))}
 .rule-utsugi .rule-utsugi-avatar{border:1px solid var(--pink);border-radius:50%;background:url("assets/live/utsugi-avatar.png") center/cover no-repeat;box-shadow:inset 0 0 0 5px rgba(18,0,5,.32),0 8px 1.6rem rgba(236,0,80,.34)}
 .rule-character h2{font-size:clamp(.86rem,1.6vw,1.08rem)}
@@ -880,7 +880,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 .be-stage-ghost,.be-weather,.be-lightning{position:absolute;inset:0;pointer-events:none}
 .be-stage-ghost{
   z-index:-3;
-  background:url("assets/hero-desktop-square.jpg") center 18%/cover no-repeat;
+  background:url("assets/hero.webp") center 18%/cover no-repeat;
   filter:grayscale(.9) saturate(.45) contrast(1.35) brightness(.2);
   transform:scale(1.06);
   transition:filter 1.1s cubic-bezier(.16,1,.3,1),transform 1.2s cubic-bezier(.16,1,.3,1),opacity .7s;
@@ -1027,7 +1027,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 .be-actions #beExit:hover{background:var(--be-accent);color:var(--paper)}
 .be-falling-badges{position:absolute;z-index:4;inset:0;display:none;overflow:hidden;pointer-events:none}
 .be-falling-badges.is-active{display:block}
-.be-falling-badges i{position:absolute;left:var(--badge-left);top:-24%;width:var(--badge-size);aspect-ratio:1;border:2px solid rgba(255,244,247,.72);border-radius:50%;background:url("assets/hero-desktop-square.jpg") 18% 21%/330% auto no-repeat;box-shadow:0 12px 1.6rem rgba(0,0,0,.7),0 0 0 5px rgba(236,0,80,.18);opacity:.82;will-change:transform;animation:beBadgeFall var(--badge-duration) linear var(--badge-delay) infinite}
+.be-falling-badges i{position:absolute;left:var(--badge-left);top:-24%;width:var(--badge-size);aspect-ratio:1;border:2px solid rgba(255,244,247,.72);border-radius:50%;background:url("assets/hero-desktop-square.webp") 18% 21%/330% auto no-repeat;box-shadow:0 12px 1.6rem rgba(0,0,0,.7),0 0 0 5px rgba(236,0,80,.18);opacity:.82;will-change:transform;animation:beBadgeFall var(--badge-duration) linear var(--badge-delay) infinite}
 .be-falling-badges i.crop-1{background-position:25% 28%}
 .be-falling-badges i.crop-2{background-position:31% 35%}
 .be-falling-badges i.crop-3{background-position:13% 15%}

@@ -121,7 +121,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 @media (max-width:760px){.lang{display:none;}.co-grid{grid-template-columns:1fr;}.ok-actions{grid-template-columns:1fr;}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important;}}
 </style>
-<link rel="stylesheet" href="site-chrome.css?v=20260830b" />
+<link rel="stylesheet" href="site-chrome.css?v=20260830c" />
 <script src="site-language.js?v=20260830a"></script>
 </head>
 <body>
@@ -186,7 +186,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 var b=document.body;
 document.getElementById("burger").onclick=function(){b.classList.toggle("menu-open");};
 document.getElementById("close").onclick=function(){b.classList.remove("menu-open");};
-var frames=[];for(var i=0;i<7;i++){frames.push("assets/cheer-frame-"+i+".webp");new Image().src=frames[i];}
+var frames=[];for(var i=0;i<7;i++){frames.push("assets/cheer-frame-"+i+".webp");}
 var cheer=document.getElementById("cheer"),cImg=document.getElementById("cheerImg"),playing=false,drag=null;
 function wave(){if(playing)return;playing=true;cheer.classList.add("waving");var n=0,loops=0;var t=setInterval(function(){cImg.src=frames[n];n++;if(n>=7){n=0;loops++;if(loops>=2){clearInterval(t);cImg.src="assets/cheer-still.webp";playing=false;cheer.classList.remove("waving");}}},80);}
 cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRect();drag={dx:e.clientX-r.left,dy:e.clientY-r.top,moved:false};cheer.setPointerCapture(e.pointerId);});
@@ -194,6 +194,6 @@ cheer.addEventListener("pointermove",function(e){if(!drag)return;if(Math.abs(e.m
 cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
 </script>
   <script src="shop-20260830i.js?v=20260830-reward-a"></script>
-<script src="page-transition.js?v=20260830b"></script>
+<script src="page-transition.js?v=20260830d"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#120005" />
   <title>LIVE NOW | TSUKUMO99</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%233a0014'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff86bd'/%3E%3Ccircle cx='20' cy='44' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23fff4f7'/%3E%3C/svg%3E" />
-  <link rel="preload" as="image" href="assets/hero-desktop-square.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/hero-desktop-square.webp" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/live/lane-z.png" />
   <link rel="preload" as="image" href="assets/live/lane-o1.png" />
   <link rel="preload" as="image" href="assets/live/lane-o2.png" />
@@ -24,7 +24,7 @@
     @keyframes liveBootPulse{0%,100%{opacity:.22;transform:scale(.72)}50%{opacity:1;transform:scale(1.15)}}
     @media(prefers-reduced-motion:reduce){.live-boot,.live-boot i{animation:none;transition:none}}
   </style>
-  <link rel="stylesheet" href="live-experience-20260830q.css?v=20260830d" />
+  <link rel="stylesheet" href="live-experience-20260830q.css?v=20260830f" />
   <link rel="stylesheet" href="live-ending-20260830s.css" />
   <script src="site-language.js?v=20260830a"></script>
 </head>
@@ -56,7 +56,7 @@
       </a>
       <div class="round-readout" aria-live="polite">
         <span>ROUND <b id="roundNumber">1</b></span>
-        <strong id="roundTimer">00:30</strong>
+              <strong id="roundTimer">00:15</strong>
         <span>HIT <b id="hitCount">000</b></span>
         <span>COMBO <b id="comboCount">000</b></span>
       </div>
@@ -157,8 +157,9 @@
           <article class="rule-page is-active" data-guide-page="0">
             <h2>假装打音游，为乐队应援！</h2>
             <div class="rule-lanes" aria-hidden="true"><i>Z</i><i>O</i><i>O</i><i>L</i></div>
-            <p>在目标抵达圆键时按下，每次命中都会为对应偶像储能。<b>全员达到 99% 时，将会触发特别成就~</b></p>
-            <p><b>每回合 30 秒，不要打超过 6 回合，会有可怕的事发生……</b></p>
+            <p>在目标抵达圆键时按下，每次命中都会为对应偶像储能。<b>全员达到 99% 即通关，会触发特别成就~</b></p>
+            <p>每回合 15 秒，总共 6 回合。</p>
+            <p><b>如果 6 回合后你还没有通关，会有可怕的事发生……</b></p>
           </article>
           <article class="rule-page rule-trouble" data-guide-page="1" aria-hidden="true">
             <div class="rule-character rule-ryo">
@@ -260,6 +261,6 @@
     <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
   </main>
   <script src="live-state-20260830s.js"></script>
-  <script src="live-experience-20260830q.js?v=20260830d"></script>
+  <script src="live-experience-20260830q.js?v=20260830g"></script>
 </body>
 </html>

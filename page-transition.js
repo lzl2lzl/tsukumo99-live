@@ -38,7 +38,7 @@
   }else{
     var loader=makeLoader();
     document.body.prepend(loader);
-    window.setTimeout(function(){loader.classList.add("is-leaving");window.setTimeout(function(){loader.remove();},reduce?170:620);},reduce?80:1500);
+    window.setTimeout(function(){loader.classList.add("is-leaving");window.setTimeout(function(){loader.remove();},reduce?170:420);},reduce?80:800);
   }
 
   // Utsugi's floating cheer button is shared by every non-LIVE page. Each
@@ -113,7 +113,22 @@
       activeSound.currentTime=0;
       activeSound=null;
     });
-    window.addEventListener("load",ensureSounds,{once:true});
+  })();
+
+  // Make the floating helper discoverable without downloading its animation
+  // frames or audio on every page view. The cue runs only once per browser.
+  (function initCheerDiscovery(){
+    var cheer=document.getElementById("cheer");
+    if(!cheer||reduce)return;
+    var key="tsukumo99-cheer-discovery-v1";
+    try{if(localStorage.getItem(key)==="1")return;localStorage.setItem(key,"1");}catch(error){}
+    function reveal(){
+      if(document.querySelector(".page-loader")){window.setTimeout(reveal,180);return;}
+      cheer.classList.add("is-discovering");
+      window.setTimeout(function(){cheer.classList.remove("is-discovering");},2550);
+    }
+    if("requestIdleCallback" in window)requestIdleCallback(reveal,{timeout:900});
+    else window.setTimeout(reveal,650);
   })();
 
   document.addEventListener("click",function(event){

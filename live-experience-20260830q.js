@@ -63,7 +63,7 @@
   var laneButtons = Array.prototype.slice.call(document.querySelectorAll(".lane-button"));
   var performerCards = Array.prototype.slice.call(document.querySelectorAll(".performer-card"));
 
-  var ROUND_MS = 30000;
+  var ROUND_MS = 15000;
   var BEAT_MS = 500;
   var TRAVEL_MS = 3200;
   var ROUND_LABELS = ["1", "2", "3", "4", "5", "6"];
@@ -76,7 +76,7 @@
     "直到世界末日SHIRO的人生还是充满麻烦"
   ];
   var MIN_ROUND_DIFFICULTY = .5;
-  var MAX_ROUND_DIFFICULTY = 2;
+  var MAX_ROUND_DIFFICULTY = 2.35;
   var ROUND_DIFFICULTY_RATIO = Math.pow(MAX_ROUND_DIFFICULTY / MIN_ROUND_DIFFICULTY, 1 / (ROUND_LABELS.length - 1));
   var coarsePointer = window.matchMedia("(pointer: coarse)").matches;
   var PERFECT_WINDOW = coarsePointer ? 105 : 86;
@@ -114,7 +114,7 @@
   var tapSoundSequence = ["core", "bubble", "violet"];
 
   var heroImage = new Image();
-  heroImage.src = "assets/hero-desktop-square.jpg";
+  heroImage.src = "assets/hero-desktop-square.webp";
   heroImage.addEventListener("load", function () { renderCanvas(performance.now()); });
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -136,11 +136,14 @@
   var frameRequest = 0;
   var obstacleTimer = 0;
   var helperTapTimer = 0;
+  var helperTapFrame = 0;
   var tauntTimer = 0;
   var statusTimer = 0;
   var chapterTimer = 0;
   var effectTimers = {};
+  var effectFrames = {};
   var performerTimers = [0, 0, 0, 0];
+  var performerFrames = [0, 0, 0, 0];
   var lanePulseEnds = [0, 0, 0, 0];
   var laneOwners = [null, null, null, null];
   var activeInputs = {};
@@ -197,6 +200,7 @@
   var loadingPromise = null;
   var soundOn = true;
   var tapSoundIndex = 0;
+  var lastCanvasFrameAt = 0;
 
   Object.keys(audioFiles).forEach(function (name) { fallbackAudio[name] = null; });
 
@@ -213,7 +217,7 @@
   }
 
   function roundTo25(value) {
-    return Math.max(250, Math.round(value / 25) * 25);
+    return Math.max(200, Math.round(value / 25) * 25);
   }
 
   function seededRandom(seed) {
@@ -307,7 +311,7 @@
     if (!rect.width || !rect.height) return;
     beWeatherWidth = rect.width;
     beWeatherHeight = rect.height;
-    beWeatherDpr = Math.min(1.75, window.devicePixelRatio || 1);
+    beWeatherDpr = Math.min(coarsePointer ? 1.2 : 1.5, window.devicePixelRatio || 1);
     beWeatherCanvas.width = Math.max(1, Math.round(beWeatherWidth * beWeatherDpr));
     beWeatherCanvas.height = Math.max(1, Math.round(beWeatherHeight * beWeatherDpr));
     beWeatherCanvas.style.width = beWeatherWidth + "px";
@@ -643,7 +647,7 @@
     renderChargeValues();
     updateScore();
     roundNumber.textContent = ROUND_LABELS[0];
-    roundTimer.textContent = "00:30";
+    roundTimer.textContent = "00:15";
     resultGate.hidden = true;
     beGate.hidden = true;
     achievementGate.hidden = true;
@@ -703,27 +707,9 @@
 
   function loadAudio() {
     if (loadingPromise) return loadingPromise;
-    var targetContext = createAudioContext();
-    if (!targetContext) {
-      loadingPromise = Promise.resolve(false);
-      return loadingPromise;
-    }
-    targetContext.resume().catch(function () {});
-    loadingPromise = Promise.all(Object.keys(audioFiles).map(function (name) {
-      return fetch(audioFiles[name]).then(function (response) {
-        if (!response.ok) throw new Error("Audio fetch failed");
-        return response.arrayBuffer();
-      }).then(function (data) {
-        return decodeAudio(targetContext, data);
-      }).then(function (buffer) {
-        audioBuffers[name] = buffer;
-      });
-    })).then(function () {
-      return true;
-    }).catch(function () {
-      showAudioStatus("音效载入失败，仍可继续体验视觉效果");
-      return false;
-    });
+    // Large WAV files must never block the round. playSound() already has a
+    // streaming fallback, so each layer is fetched only when it is first used.
+    loadingPromise = Promise.resolve(true);
     return loadingPromise;
   }
 
@@ -771,19 +757,24 @@
 
   function restartClass(className, duration) {
     window.clearTimeout(effectTimers[className]);
+    window.cancelAnimationFrame(effectFrames[className]);
     broadcast.classList.remove(className);
-    broadcast.getBoundingClientRect();
-    broadcast.classList.add(className);
-    effectTimers[className] = window.setTimeout(function () {
-      broadcast.classList.remove(className);
-    }, duration);
+    effectFrames[className] = window.requestAnimationFrame(function () {
+      broadcast.classList.add(className);
+      effectTimers[className] = window.setTimeout(function () {
+        broadcast.classList.remove(className);
+      }, duration);
+    });
   }
 
   function fireButton(button) {
+    window.clearTimeout(button._firingTimer);
+    window.cancelAnimationFrame(button._firingFrame);
     button.classList.remove("firing");
-    button.getBoundingClientRect();
-    button.classList.add("firing");
-    window.setTimeout(function () { button.classList.remove("firing"); }, 180);
+    button._firingFrame = window.requestAnimationFrame(function () {
+      button.classList.add("firing");
+      button._firingTimer = window.setTimeout(function () { button.classList.remove("firing"); }, 180);
+    });
   }
 
   function spawnBubbles(x, y, count, color, variant) {
@@ -823,8 +814,10 @@
   function showJudgment(label, tone) {
     hitCallout.textContent = label;
     hitCallout.className = "hit-callout judgment-" + tone;
-    hitCallout.getBoundingClientRect();
-    hitCallout.classList.add("show");
+    window.cancelAnimationFrame(hitCallout._judgmentFrame);
+    hitCallout._judgmentFrame = window.requestAnimationFrame(function () {
+      hitCallout.classList.add("show");
+    });
   }
 
   function updateScore() {
@@ -841,7 +834,7 @@
     if (!rect.width || !rect.height) return;
     geometry.width = rect.width;
     geometry.height = rect.height;
-    geometry.dpr = Math.min(2, window.devicePixelRatio || 1);
+    geometry.dpr = Math.min(coarsePointer ? 1.35 : 1.75, window.devicePixelRatio || 1);
     canvas.width = Math.round(rect.width * geometry.dpr);
     canvas.height = Math.round(rect.height * geometry.dpr);
     context.setTransform(geometry.dpr, 0, 0, geometry.dpr, 0, 0);
@@ -1222,16 +1215,18 @@
     var card = performerCards[lane];
     if (!card) return;
     window.clearTimeout(performerTimers[lane]);
+    window.cancelAnimationFrame(performerFrames[lane]);
     card.classList.remove("is-hit", "is-perfect");
-    card.getBoundingClientRect();
-    card.classList.add("is-hit");
-    if (perfect) {
-      card.classList.add("is-perfect");
-      launchPerfectBeam(lane);
-    }
-    performerTimers[lane] = window.setTimeout(function () {
-      card.classList.remove("is-hit", "is-perfect");
-    }, perfect ? 760 : 440);
+    performerFrames[lane] = window.requestAnimationFrame(function () {
+      card.classList.add("is-hit");
+      if (perfect) {
+        card.classList.add("is-perfect");
+        launchPerfectBeam(lane);
+      }
+      performerTimers[lane] = window.setTimeout(function () {
+        card.classList.remove("is-hit", "is-perfect");
+      }, perfect ? 760 : 440);
+    });
   }
 
   function pulseLane(lane, duration) {
@@ -1384,19 +1379,22 @@
 
   function moveUtsugiToLane(lane, immediate) {
     if (!utsugiAutoplay || !laneButtons[lane]) return;
-    var pad = laneButtons[lane].querySelector(".letter").getBoundingClientRect();
+    var pad = geometry.pads[lane];
+    if (!pad) return;
     if (immediate) utsugiAutoplay.style.transition = "none";
-    utsugiAutoplay.style.setProperty("--helper-x", pad.left + pad.width / 2 + "px");
-    utsugiAutoplay.style.setProperty("--helper-y", pad.top + pad.height * .22 + "px");
+    utsugiAutoplay.style.setProperty("--helper-x", pad.x + "px");
+    utsugiAutoplay.style.setProperty("--helper-y", pad.y - pad.radius * .56 + "px");
     if (immediate) {
       utsugiAutoplay.getBoundingClientRect();
       utsugiAutoplay.style.transition = "";
     }
     window.clearTimeout(helperTapTimer);
+    window.cancelAnimationFrame(helperTapFrame);
     utsugiAutoplay.classList.remove("is-tapping");
-    utsugiAutoplay.getBoundingClientRect();
-    utsugiAutoplay.classList.add("is-tapping");
-    helperTapTimer = window.setTimeout(function () { utsugiAutoplay.classList.remove("is-tapping"); }, 380);
+    helperTapFrame = window.requestAnimationFrame(function () {
+      utsugiAutoplay.classList.add("is-tapping");
+      helperTapTimer = window.setTimeout(function () { utsugiAutoplay.classList.remove("is-tapping"); }, 380);
+    });
   }
 
   function setAssist(active) {
@@ -1424,10 +1422,12 @@
   function showRyoTaunt() {
     if (!ryoTaunt) return;
     window.clearTimeout(tauntTimer);
+    window.cancelAnimationFrame(ryoTaunt._tauntFrame);
     ryoTaunt.classList.remove("show");
-    ryoTaunt.getBoundingClientRect();
-    ryoTaunt.classList.add("show");
-    tauntTimer = window.setTimeout(function () { ryoTaunt.classList.remove("show"); }, 1220);
+    ryoTaunt._tauntFrame = window.requestAnimationFrame(function () {
+      ryoTaunt.classList.add("show");
+      tauntTimer = window.setTimeout(function () { ryoTaunt.classList.remove("show"); }, 1220);
+    });
   }
 
   function spawnRyoObstacle() {
@@ -1481,7 +1481,12 @@
     if (state !== "playing") return;
     autoJudgeReadyNotes(now);
     processNotes(now);
-    renderCanvas(now);
+    // Keep judgments at native refresh rate, but avoid redrawing the whole
+    // stage 90/120 times per second on high-refresh mobile displays.
+    if (!lastCanvasFrameAt || now - lastCanvasFrameAt >= 14.5) {
+      renderCanvas(now);
+      lastCanvasFrameAt = now;
+    }
     var remaining = Math.max(0, roundEndsAt - now);
     roundTimer.textContent = "00:" + padNumber(Math.ceil(remaining / 1000), 2);
     if (remaining <= 0) {
@@ -1534,6 +1539,7 @@
     maxCombo = 0;
     misses = 0;
     tapSoundIndex = 0;
+    lastCanvasFrameAt = 0;
     activeInputs = {};
     laneOwners = [null, null, null, null];
     lanePulseEnds = [0, 0, 0, 0];
@@ -1543,7 +1549,7 @@
     updateScore();
     currentRoundProfile = getRoundProfile(currentRound);
     roundNumber.textContent = ROUND_LABELS[Math.min(currentRound - 1, ROUND_LABELS.length - 1)];
-    roundTimer.textContent = "00:30";
+    roundTimer.textContent = "00:15";
     roundGate.hidden = true;
     resultGate.hidden = true;
     beGate.hidden = true;
@@ -1574,7 +1580,7 @@
     state = "chapter";
     window.clearTimeout(chapterTimer);
     roundNumber.textContent = ROUND_LABELS[roundIndex];
-    roundTimer.textContent = "00:30";
+    roundTimer.textContent = "00:15";
     roundGate.hidden = true;
     resultGate.hidden = true;
     beGate.hidden = true;
