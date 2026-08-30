@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#120005" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%233a0014'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='20' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff86bd'/%3E%3Ccircle cx='20' cy='44' r='5' fill='%23fff4f7'/%3E%3Ccircle cx='44' cy='44' r='5' fill='%23fff4f7'/%3E%3C/svg%3E">
-<title>情报 News — TSUKUMO99 · DiŹ</title>
+<title>NEWS — TSUKUMO99 · DiŹ</title>
 <link rel="stylesheet" href="page-transition.css" />
 <link rel="stylesheet" href="design-pages.css" />
 <style>
@@ -66,36 +66,6 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .menu-foot .contact b{display:block;color:var(--pink);font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;margin-bottom:.35rem;}
 .menu-foot .mk{font-size:.5rem;letter-spacing:.2em;color:var(--muted);opacity:.6;text-transform:uppercase;text-align:right;}
 
-/* ---- page: news ---- */
-.wrap{max-width:960px;margin:0 auto;padding:clamp(5.4rem,13vw,8rem) clamp(1.2rem,5vw,2.6rem) clamp(3rem,8vh,5rem);}
-.phead .ey{font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.28em;color:var(--pink);text-transform:uppercase;margin:0;}
-.phead .ey b{color:var(--muted);margin-right:.6rem;font-weight:400;}
-.phead h1{margin:.4rem 0 0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2.2rem,7vw,4rem);line-height:.9;}
-.filters{display:flex;gap:.5rem;flex-wrap:wrap;margin:clamp(1.4rem,3vw,2rem) 0 0;}
-.chip{font-family:var(--mono);font-weight:700;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem .85rem;border:1px solid rgba(255,134,189,.33);border-radius:999px;color:var(--pink);transition:background .2s,color .2s,border-color .2s;}
-.chip[data-cat="all"]{color:var(--pink);}
-.chip.on{background:var(--pink);color:var(--wine);border-color:var(--pink);}
-.list{margin:clamp(1.4rem,3vw,2rem) 0 0;border-top:1px solid rgba(255,134,189,.16);}
-.row{border-bottom:1px solid rgba(255,134,189,.12);}
-.row.hide{display:none;}
-.row-head{display:flex;align-items:baseline;gap:clamp(.8rem,2.5vw,1.6rem);flex-wrap:wrap;padding:clamp(.95rem,2.4vw,1.35rem) .3rem;cursor:pointer;}
-.row-head time{flex:0 0 auto;font-family:var(--mono);font-weight:700;font-size:.72rem;letter-spacing:.06em;color:var(--muted);min-width:5.6rem;}
-.tag{flex:0 0 auto;white-space:nowrap;font-family:var(--mono);font-weight:700;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;padding:.18rem .55rem;border:1px solid;}
-.tag.巡演{color:var(--pink);border-color:rgba(255,134,189,.4);}
-.tag.购票{color:var(--hot);border-color:rgba(236,0,80,.5);}
-.tag.周边{color:var(--gold);border-color:rgba(224,207,171,.4);}
-.tag.站点{color:var(--green);border-color:rgba(166,201,174,.4);}
-.tag.声明{color:var(--blue);border-color:rgba(182,188,205,.4);}
-.row-head .t{flex:1 1 16rem;min-width:12rem;font-size:clamp(.86rem,1.5vw,1rem);line-height:1.5;text-wrap:pretty;}
-.row-head .cv{flex:0 0 auto;font-family:var(--mono);color:var(--pink);opacity:.7;transition:transform .4s cubic-bezier(.16,1,.3,1);}
-.row.open .row-head .cv{transform:rotate(180deg);}
-.row-body{overflow:hidden;max-height:0;opacity:0;transition:max-height .5s cubic-bezier(.16,1,.3,1),opacity .4s;}
-.row.open .row-body{max-height:16rem;opacity:1;}
-.row-body p{margin:0;padding:0 .3rem clamp(1rem,2.4vw,1.4rem) 6.6rem;font-size:.8rem;line-height:1.75;color:rgba(255,244,247,.5);max-width:56ch;text-wrap:pretty;}
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1);}
-.reveal.in{opacity:1;transform:none;}
-.note{margin-top:clamp(2rem,5vh,3.4rem);font-family:var(--mono);font-size:.56rem;letter-spacing:.06em;color:var(--muted);opacity:.6;}
-
 /* ---- shared chrome: cheer ---- */
 #cheer{position:fixed;z-index:70;right:clamp(.8rem,3vw,1.6rem);bottom:clamp(.8rem,3vw,1.6rem);width:clamp(92px,18vw,132px);touch-action:none;filter:drop-shadow(0 .6rem 1rem rgba(18,0,5,.5));}
 #cheer img{width:100%;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;}
@@ -119,9 +89,6 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .foot .cred{display:flex;flex-direction:column;gap:.5rem;font-family:var(--mono);font-size:.72rem;color:var(--paper);}
 .foot .cred span{color:var(--pink);font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;margin-right:.7rem;}
 .foot .mk{font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;color:var(--muted);opacity:.6;text-transform:uppercase;text-align:right;}
-.dc-build{margin:0 0 clamp(1.4rem,4vw,2.4rem);padding:.95rem 1.15rem;border:1px solid rgba(236,0,80,.4);border-left:3px solid var(--hot);border-radius:.5rem;background:rgba(236,0,80,.09);font-family:var(--mono);}
-.dc-build b{display:block;font-size:.72rem;font-weight:700;letter-spacing:.16em;color:var(--paper);text-transform:uppercase;}
-.dc-build span{display:block;margin-top:.4rem;font-size:.62rem;line-height:1.75;color:var(--muted);letter-spacing:.02em;}
 </style>
 </head>
 <body>

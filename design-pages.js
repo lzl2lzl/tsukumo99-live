@@ -46,11 +46,10 @@
     {date:"2026.06.03",cat:"ticket",title:{cn:"投骰抽座功能上线",en:"Roll-the-dice seat draw is live",jp:"サイコロ抽選購入を実装"}},
     {date:"2026.06.01",cat:"tour",title:{cn:"DiŹ WORLD TOUR 2026 日程解禁",en:"DiŹ WORLD TOUR 2026 dates revealed",jp:"DiŹ WORLD TOUR 2026 全日程解禁"}}
   ];
-  var CAT_COLORS={tour:"#ff86bd",ticket:"#ec0050",shop:"#e0cfab",site:"#a6c9ae",notice:"#b6bccd"};
   var NEWS_COPY={
-    cn:{title:"情报",body:"占位正文——这里之后放这条公告的详细内容。目前用于展示展开后的排版与留白。",note:"公告内容为虚构占位，待企划文案正式补充。",cats:{all:"全部",tour:"巡演",ticket:"购票",shop:"周边",site:"站点",notice:"声明"},build:{h:"网站施工中",d:"以下均为占位内容，全站文案尚未完成 · 8.31 前持续更新，敬请期待。"}},
-    en:{title:"INTEL",body:"Placeholder body — the full announcement text will go here later.",note:"Fictional placeholder announcements; final copy is still to come.",cats:{all:"ALL",tour:"TOUR",ticket:"TICKET",shop:"SHOP",site:"SITE",notice:"NOTICE"},build:{h:"UNDER CONSTRUCTION",d:"Everything below is placeholder — full copy is still in progress and will keep updating before Aug 31. Stay tuned."}},
-    jp:{title:"情報",body:"仮本文——詳細情報は後日ここに掲載されます。",note:"架空の仮お知らせです。正式な文章は後日追加予定です。",cats:{all:"すべて",tour:"ツアー",ticket:"チケット",shop:"グッズ",site:"サイト",notice:"告知"},build:{h:"サイト制作中",d:"以下はすべて仮の内容です。全文章は未完成で、8/31 までに随時更新予定。お楽しみに。"}}
+    cn:{body:"占位正文——这里之后放这条公告的详细内容。目前用于展示展开后的排版与留白。",note:"公告内容为虚构占位，待企划文案正式补充。",cats:{all:"全部",tour:"巡演",ticket:"购票",shop:"周边",site:"站点",notice:"声明"}},
+    en:{body:"Placeholder body — the full announcement text will go here later.",note:"Fictional placeholder announcements; final copy is still to come.",cats:{all:"ALL",tour:"TOUR",ticket:"TICKET",shop:"SHOP",site:"SITE",notice:"NOTICE"}},
+    jp:{body:"仮本文——詳細情報は後日ここに掲載されます。",note:"架空の仮お知らせです。正式な文章は後日追加予定です。",cats:{all:"すべて",tour:"ツアー",ticket:"チケット",shop:"グッズ",site:"サイト",notice:"告知"}}
   };
   var state = { shopOpen:false, product:0, name:"", made:null, rolling:false, newsCat:"all", newsOpen:null };
 
@@ -102,12 +101,12 @@
 
   function renderNews(lang) {
     var c=NEWS_COPY[lang],keys=["all","tour","site","notice"];
-    var filters=keys.map(function(k){var color=k==="all"?"#ff86bd":CAT_COLORS[k];return '<button type="button" data-dc-act="newsCat" data-cat="'+k+'" class="'+(state.newsCat===k?"is-active":"")+'" style="--cat:'+color+'">'+esc(c.cats[k])+'</button>';}).join("");
+    var filters=keys.map(function(k){return '<button type="button" data-dc-act="newsCat" data-cat="'+k+'" class="'+(state.newsCat===k?"is-active":"")+'">'+esc(c.cats[k])+'</button>';}).join("");
     var items=NEWS.filter(function(n){return n.cat!=="ticket"&&n.cat!=="shop";}).filter(function(n){return state.newsCat==="all"||n.cat===state.newsCat;}).map(function(n,i){
-      var open=state.newsOpen===n.date,color=CAT_COLORS[n.cat];
-      return '<article class="dc-news-row" style="--delay:'+(Math.min(i,8)*.05)+'s"><button type="button" data-dc-act="newsToggle" data-key="'+n.date+'"><time>'+n.date+'</time><span style="--cat:'+color+'">'+esc(c.cats[n.cat])+'</span><strong>'+esc(n.title[lang])+'</strong><i class="'+(open?"is-open":"")+'">⌄</i></button><div class="dc-news-body '+(open?"is-open":"")+'"><p>'+esc(c.body)+'</p></div></article>';
+      var open=state.newsOpen===n.date;
+      return '<article class="dc-news-row" style="--delay:'+(Math.min(i,8)*.05)+'s"><button type="button" data-dc-act="newsToggle" data-key="'+n.date+'" aria-expanded="'+open+'"><time>'+n.date+'</time><strong>'+esc(n.title[lang])+'</strong><i class="'+(open?"is-open":"")+'" aria-hidden="true">⌄</i></button><div class="dc-news-body '+(open?"is-open":"")+'"><p>'+esc(c.body)+'</p></div></article>';
     }).join("");
-    return '<main class="dc-news"><div class="dc-build"><b>'+esc(c.build.h)+'</b><span>'+esc(c.build.d)+'</span></div><header><p>TSUKUMO99 · UNOFFICIAL FANWEB</p><h1>'+esc(c.title)+'</h1></header><nav class="dc-news-filters">'+filters+'</nav><section class="dc-news-list">'+items+'</section><p class="dc-news-note">'+esc(c.note)+'</p></main>';
+    return '<main class="dc-news"><header><h1>NEWS</h1></header><nav class="dc-news-filters" aria-label="News categories">'+filters+'</nav><section class="dc-news-list">'+items+'</section><p class="dc-news-note">'+esc(c.note)+'</p></main>';
   }
   function rollProfile(lang) {
     if(state.rolling) return;
