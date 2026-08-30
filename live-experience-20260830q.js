@@ -11,6 +11,9 @@
   var guideProgress = document.getElementById("guideProgress");
   var guidePages = Array.prototype.slice.call(document.querySelectorAll("[data-guide-page]"));
   var guideDots = Array.prototype.slice.call(document.querySelectorAll(".rule-dots i"));
+  var roundChapter = document.getElementById("roundChapter");
+  var roundChapterNumber = document.getElementById("roundChapterNumber");
+  var roundChapterTitle = document.getElementById("roundChapterTitle");
   var resultGate = document.getElementById("resultGate");
   var resultRoundLabel = document.getElementById("resultRoundLabel");
   var resultScore = document.getElementById("resultScore");
@@ -33,10 +36,12 @@
     achievementGate.innerHTML = '<div class="achievement-rays" aria-hidden="true"></div>'
       + '<span class="achievement-live">ACHIEVEMENT UNLOCKED</span>'
       + '<h1 id="achievementTitle">月云的兵</h1>'
-      + '<p>谢谢你为TSUKUMO99应援！恭喜你已获得成就“月云的兵”！</p>'
-      + '<div class="achievement-actions"><button type="button" id="achievementRestart">重新开始</button>'
+      + '<p>恭喜你已获得成就“月云的兵”及限定证书！请前往商店，在购物车填写地址发货。</p>'
+      + '<div class="achievement-actions"><button type="button" id="achievementCart">加入购物车</button>'
+      + '<button type="button" id="achievementRestart">重新开始</button>'
       + '<a href="index.html" id="achievementExit">退出游戏</a></div>';
   }
+  var achievementCart = document.getElementById("achievementCart");
   var achievementRestart = document.getElementById("achievementRestart");
   var achievementExit = document.getElementById("achievementExit");
   var soundButton = document.getElementById("soundButton");
@@ -61,8 +66,18 @@
   var ROUND_MS = 30000;
   var BEAT_MS = 500;
   var TRAVEL_MS = 3200;
-  var ROUND_LABELS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "9.9"];
-  var ROUND_DIFFICULTY_RATIO = Math.pow(4, 1 / (ROUND_LABELS.length - 1));
+  var ROUND_LABELS = ["1", "2", "3", "4", "5", "6"];
+  var ROUND_TITLES = [
+    "RYO想要毁灭偶像",
+    "TOMA召集大家思考对策",
+    "MINAMI说这种事他习惯了",
+    "TORAO说要不带RYO去他家饭店",
+    "HARU邀请RYO成为ROCK STAR",
+    "直到世界末日SHIRO的人生还是充满麻烦"
+  ];
+  var MIN_ROUND_DIFFICULTY = .5;
+  var MAX_ROUND_DIFFICULTY = 2;
+  var ROUND_DIFFICULTY_RATIO = Math.pow(MAX_ROUND_DIFFICULTY / MIN_ROUND_DIFFICULTY, 1 / (ROUND_LABELS.length - 1));
   var coarsePointer = window.matchMedia("(pointer: coarse)").matches;
   var PERFECT_WINDOW = coarsePointer ? 105 : 86;
   var GOOD_WINDOW = coarsePointer ? 230 : 190;
@@ -71,6 +86,7 @@
   var CHARGE_KEY = "tsukumo99-live-charge-v1";
   var ACHIEVEMENT_KEY = "tsukumo99-live-achievement-v1";
   var LEGACY_ACHIEVEMENT_SEEN_KEY = "tsukumo99-live-achievement-seen-v1";
+  var ACHIEVEMENT_REWARD_ID = "tsukumo-soldier-certificate";
   var trackColor = { solid: "#ec0050", soft: "rgba(236,0,80,.2)", pale: "rgba(255,134,189,.78)" };
   var laneColors = [trackColor, trackColor, trackColor, trackColor];
   var cropRects = [
@@ -122,6 +138,7 @@
   var helperTapTimer = 0;
   var tauntTimer = 0;
   var statusTimer = 0;
+  var chapterTimer = 0;
   var effectTimers = {};
   var performerTimers = [0, 0, 0, 0];
   var lanePulseEnds = [0, 0, 0, 0];
@@ -433,7 +450,7 @@
 
   function getRoundProfile(round) {
     var index = clamp(Math.round(Number(round) || 1) - 1, 0, ROUND_LABELS.length - 1);
-    var difficulty = .5 * Math.pow(ROUND_DIFFICULTY_RATIO, index);
+    var difficulty = MIN_ROUND_DIFFICULTY * Math.pow(ROUND_DIFFICULTY_RATIO, index);
     var progress = index / (ROUND_LABELS.length - 1);
     return {
       index: index,
@@ -512,6 +529,41 @@
 
   function saveChargeValues() {
     try { window.localStorage.setItem(CHARGE_KEY, JSON.stringify(chargeValues)); } catch (error) {}
+  }
+
+  function achievementRewardInCart() {
+    try {
+      var cart = JSON.parse(window.localStorage.getItem("dizCart") || "[]");
+      return Array.isArray(cart) && cart.some(function (item) {
+        return item && item.id === ACHIEVEMENT_REWARD_ID;
+      });
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function renderAchievementCartState() {
+    if (!achievementCart) return;
+    var added = achievementRewardInCart();
+    achievementCart.textContent = added ? "已加入购物车" : "加入购物车";
+    achievementCart.classList.toggle("is-added", added);
+    achievementCart.setAttribute("aria-pressed", added ? "true" : "false");
+  }
+
+  function addAchievementRewardToCart() {
+    if (!achievementCart || achievementRewardInCart()) {
+      renderAchievementCartState();
+      return;
+    }
+    try {
+      var cart = JSON.parse(window.localStorage.getItem("dizCart") || "[]");
+      if (!Array.isArray(cart)) cart = [];
+      cart.push({ id: ACHIEVEMENT_REWARD_ID, qty: 2 });
+      window.localStorage.setItem("dizCart", JSON.stringify(cart));
+    } catch (error) {}
+    renderAchievementCartState();
+    showAudioStatus("限定证书已加入购物车");
+    vibrate(18);
   }
 
   function renderChargeValues() {
@@ -1450,7 +1502,8 @@
     laneButtons.forEach(function (button) { button.disabled = true; });
     broadcast.classList.remove("is-playing");
     playSound("full");
-    resultRoundLabel.textContent = "ROUND " + ROUND_LABELS[Math.min(currentRound - 1, ROUND_LABELS.length - 1)];
+    var roundIndex = Math.min(currentRound - 1, ROUND_LABELS.length - 1);
+    resultRoundLabel.textContent = "ROUND " + ROUND_LABELS[roundIndex] + "　" + ROUND_TITLES[roundIndex];
     resultScore.textContent = padNumber(hits, 3);
     beEndingPending = currentRound >= ROUND_LABELS.length && !chargeValues.every(function (value) { return value >= 99; });
     encoreButton.hidden = currentRound >= ROUND_LABELS.length;
@@ -1468,12 +1521,13 @@
     resultGate.hidden = beEndingPending || achievementPending;
     if (beEndingPending) resetBeEnding();
     else if (achievementPending) {
+      renderAchievementCartState();
       achievementRestart.disabled = false;
       window.setTimeout(function () { achievementRestart.focus(); }, 180);
     }
   }
 
-  function startRound() {
+  function beginRoundGameplay() {
     state = "playing";
     hits = 0;
     combo = 0;
@@ -1513,6 +1567,27 @@
     scheduleObstacle();
     window.cancelAnimationFrame(frameRequest);
     frameRequest = window.requestAnimationFrame(gameFrame);
+  }
+
+  function startRound() {
+    var roundIndex = Math.min(currentRound - 1, ROUND_LABELS.length - 1);
+    state = "chapter";
+    window.clearTimeout(chapterTimer);
+    roundNumber.textContent = ROUND_LABELS[roundIndex];
+    roundTimer.textContent = "00:30";
+    roundGate.hidden = true;
+    resultGate.hidden = true;
+    beGate.hidden = true;
+    achievementGate.hidden = true;
+    roundChapterNumber.textContent = "ROUND " + ROUND_LABELS[roundIndex];
+    roundChapterTitle.textContent = ROUND_TITLES[roundIndex];
+    roundChapter.hidden = false;
+    laneButtons.forEach(function (button) { button.disabled = true; });
+    playSound(currentRound === 1 ? "core" : "bubble");
+    chapterTimer = window.setTimeout(function () {
+      roundChapter.hidden = true;
+      beginRoundGameplay();
+    }, reduceMotion ? 550 : 1750);
   }
 
   function prepareRound() {
@@ -1778,6 +1853,7 @@
     event.preventDefault();
     advanceBeEnding();
   });
+  if (achievementCart) achievementCart.addEventListener("click", addAchievementRewardToCart);
   achievementRestart.addEventListener("click", restartAchievementRun);
   soundButton.addEventListener("click", function () {
     setSound(!soundOn);

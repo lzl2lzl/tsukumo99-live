@@ -104,7 +104,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .menu-lang button.on{color:var(--paper);opacity:1;}
 .menu-lang button.on::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--hot);}
 .hint{display:none;}
-.toggle{touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;}
+.toggle{touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;}
 .toggle:active{cursor:grabbing;}
 </style>
 <link rel="stylesheet" href="site-chrome.css?v=20260830b" />
@@ -263,7 +263,7 @@ function showProfile(m){
     '<div class="pbot"><div class="pchip" style="color:'+m.hair+';border-color:'+m.hair+'66;">'+roleText+'</div><p>'+m.bio.cn+'</p></div></div>';
   profile.style.display='block';
 }
-/* interaction: tap = roll / re-roll · drag knob left (from a result) = back to first screen */
+/* interaction: tap = roll / re-roll · drag right to roll · drag left from a result to reset */
 var KLEFT=9,KRIGHT=200-74-9;
 function resetToStart(){
   clearInterval(ki);phase='off';toggle.setAttribute('aria-checked','false');
@@ -281,7 +281,9 @@ toggle.addEventListener('pointerdown',function(e){
 });
 toggle.addEventListener('pointermove',function(e){
   if(!pd)return;var dx=e.clientX-pd.x;if(Math.abs(dx)>6)pd.moved=true;
-  if(phase==='result'&&dx<0){pd.drag=true;knob.style.transition='none';
+  if(phase==='off'&&dx>0){pd.drag=true;knob.style.transition='none';
+    knob.style.left=Math.max(KLEFT,Math.min(KRIGHT,KLEFT+dx))+'px';}
+  else if(phase==='result'&&dx<0){pd.drag=true;knob.style.transition='none';
     knob.style.left=Math.max(KLEFT,Math.min(KRIGHT,KRIGHT+dx))+'px';}
 });
 toggle.addEventListener('pointerup',function(e){
@@ -294,9 +296,14 @@ toggle.addEventListener('pointerup',function(e){
     }else if(!info.moved){startRoll();}   /* tap on a result = re-roll */
     return;
   }
-  if(!info.moved)startRoll();             /* tap on first screen = roll */
+  if(info.drag){
+    var dx=e.clientX-info.x,nl=Math.max(KLEFT,Math.min(KRIGHT,KLEFT+dx));
+    knob.style.transition='left .4s cubic-bezier(.7,0,.2,1),background .4s';
+    if(nl>(KLEFT+KRIGHT)/2){startRoll();}else{knob.style.left=KLEFT+'px';}
+  }else if(!info.moved)startRoll();        /* tap on first screen = roll */
 });
-toggle.addEventListener('pointercancel',function(){if(pd&&pd.drag){knob.style.transition='left .4s cubic-bezier(.7,0,.2,1)';knob.style.left=KRIGHT+'px';}pd=null;});
+toggle.addEventListener('pointercancel',function(){if(pd&&pd.drag){knob.style.transition='left .4s cubic-bezier(.7,0,.2,1)';knob.style.left=(phase==='result'?KRIGHT:KLEFT)+'px';}pd=null;});
+toggle.addEventListener('click',function(e){if(e.detail===0&&phase!=='rolling')startRoll();});
 
 buildField();setKnobPips(5);setField(false);ribbons('park');
 

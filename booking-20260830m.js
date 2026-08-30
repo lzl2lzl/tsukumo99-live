@@ -192,7 +192,7 @@
   function beginPayment(){
     if(state.paymentLoading || !state.zoneId || !state.name.trim()) return;
     state.paymentLoading=true;render();
-    paymentTimeout=window.setTimeout(issue,5000);
+    paymentTimeout=window.setTimeout(issue,3000);
   }
   function issue(){
     if(!state.zoneId || !state.name.trim()) return;

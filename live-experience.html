@@ -24,7 +24,7 @@
     @keyframes liveBootPulse{0%,100%{opacity:.22;transform:scale(.72)}50%{opacity:1;transform:scale(1.15)}}
     @media(prefers-reduced-motion:reduce){.live-boot,.live-boot i{animation:none;transition:none}}
   </style>
-  <link rel="stylesheet" href="live-experience-20260830q.css?v=20260830b" />
+  <link rel="stylesheet" href="live-experience-20260830q.css?v=20260830d" />
   <link rel="stylesheet" href="live-ending-20260830s.css" />
   <script src="site-language.js?v=20260830a"></script>
 </head>
@@ -155,10 +155,10 @@
         </header>
         <div class="rule-pages">
           <article class="rule-page is-active" data-guide-page="0">
-            <h2>假装打音游为乐队应援！</h2>
+            <h2>假装打音游，为乐队应援！</h2>
             <div class="rule-lanes" aria-hidden="true"><i>Z</i><i>O</i><i>O</i><i>L</i></div>
-            <p>在目标抵达圆键时按下，每次命中都会为对应偶像储能。全员达到 99% 时，将会触发特别成就~</p>
-            <p><b>每回合 30 秒，难度递增！</b>不要打超过 9.9 回合，会有可怕的事发生……</p>
+            <p>在目标抵达圆键时按下，每次命中都会为对应偶像储能。<b>全员达到 99% 时，将会触发特别成就~</b></p>
+            <p><b>每回合 30 秒，不要打超过 6 回合，会有可怕的事发生……</b></p>
           </article>
           <article class="rule-page rule-trouble" data-guide-page="1" aria-hidden="true">
             <div class="rule-character rule-ryo">
@@ -179,8 +179,15 @@
       </div>
     </section>
 
+    <section class="round-chapter" id="roundChapter" aria-live="assertive" hidden>
+      <div>
+        <span id="roundChapterNumber">ROUND 1</span>
+        <h1 id="roundChapterTitle">RYO想要毁灭偶像</h1>
+      </div>
+    </section>
+
     <section class="result-gate" id="resultGate" role="dialog" aria-modal="true" aria-labelledby="resultTitle" hidden>
-      <span id="resultRoundLabel">ROUND 1</span>
+      <span id="resultRoundLabel">ROUND 1　RYO想要毁灭偶像</span>
       <h1 id="resultTitle">HIT <b id="resultScore">000</b></h1>
       <div class="result-actions">
         <button type="button" id="encoreButton">下一关</button>
@@ -194,7 +201,7 @@
       <div class="be-lightning" aria-hidden="true"></div>
 
       <header class="be-broadcast-head">
-        <span>ROUND 9.9</span>
+        <span>ROUND 6</span>
         <span class="be-signal" id="beSignal"><i aria-hidden="true"></i>SIGNAL LOST</span>
       </header>
 
@@ -240,8 +247,9 @@
       <div class="achievement-rays" aria-hidden="true"></div>
       <span class="achievement-live">ACHIEVEMENT UNLOCKED</span>
       <h1 id="achievementTitle">月云的兵</h1>
-      <p>谢谢你为TSUKUMO99应援！恭喜你已获得成就“月云的兵”！</p>
+      <p>恭喜你已获得成就“月云的兵”及限定证书！请前往商店，在购物车填写地址发货。</p>
       <div class="achievement-actions">
+        <button type="button" id="achievementCart">加入购物车</button>
         <button type="button" id="achievementRestart">重新开始</button>
         <a href="index.html" id="achievementExit">退出游戏</a>
       </div>
@@ -252,6 +260,6 @@
     <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
   </main>
   <script src="live-state-20260830s.js"></script>
-  <script src="live-experience-20260830q.js?v=20260830b"></script>
+  <script src="live-experience-20260830q.js?v=20260830d"></script>
 </body>
 </html>

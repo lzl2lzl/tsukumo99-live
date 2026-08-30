@@ -188,7 +188,7 @@
     en:{body:"Placeholder body — the full announcement text will go here later.",cats:{all:"ALL",tour:"TOUR",ticket:"TICKET",shop:"SHOP",site:"SITE",notice:"NOTICE"}},
     jp:{body:"仮本文——詳細情報は後日ここに掲載されます。",cats:{all:"すべて",tour:"ツアー",ticket:"チケット",shop:"グッズ",site:"サイト",notice:"告知"}}
   };
-  var state = { shopOpen:false, product:0, name:"", made:null, rolling:false, newsCat:"notice", newsOpen:"notice-rights" };
+  var state = { shopOpen:false, product:0, name:"", made:null, rolling:false, newsCat:"all", newsOpen:null };
 
   function esc(s) { return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
   function pipGrid(face, color) {

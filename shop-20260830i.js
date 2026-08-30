@@ -22,10 +22,19 @@
   };
   var PRODUCTS={};
   PRODUCTS[PRODUCT.id]=PRODUCT;
+  PRODUCTS["tsukumo-soldier-certificate"]={
+    id:"tsukumo-soldier-certificate",
+    cover:"assets/tsukumo-soldier-certificate.svg",
+    price:0,
+    lockedQty:2,
+    listing:false,
+    cat:{cn:"证书",jp:"証明書",en:"CERTIFICATE"},
+    title:"月云的兵"
+  };
   function prod(id){return PRODUCTS[id];}
 
   var T={
-    cn:{kicker:"GOODS · 限定发售",shopTitle:"周边",limited:"限定 / LIMITED",addCart:"加入购物车",buyNow:"立即购买",
+    cn:{kicker:"GOODS · 限定发售",shopTitle:"周边",limited:"限定 / LIMITED",moreComing:"更多周边尽请期待~",addCart:"加入购物车",buyNow:"立即购买",
         tracklist:"曲目",format:"规格",ships:"全球配送",
         cart:"购物车",cartEmpty:"购物车是空的",continueShop:"继续购物",qty:"数量",remove:"移除",
         subtotal:"小计",checkout:"去结算",
@@ -35,7 +44,7 @@
         okTitle:"支付成功",orderNo:"订单号",receiver:"收货人",amount:"实付",reward:"已解锁特典",invoice:"下载发票",invoiceTitle:"INVOICE",invoiceDate:"开具日期",invoiceItems:"商品",invoiceQty:"数量",invoiceTotal:"合计",
         backShop2:"返回商店",needName:"请填写虚构的收货人姓名",
         namePH:"输入将印在收据上的名字",phonePH:"仅供娱乐，请勿填写真实信息",addrPH:"仅供娱乐，请勿填写真实信息",cardPH:"0000 0000 0000 0000"},
-    jp:{kicker:"数量限定",shopTitle:"GOODS",limited:"限定",addCart:"カートに入れる",buyNow:"今すぐ購入",
+    jp:{kicker:"数量限定",shopTitle:"GOODS",limited:"限定",moreComing:"今後のグッズもお楽しみに～",addCart:"カートに入れる",buyNow:"今すぐ購入",
         tracklist:"収録曲",format:"仕様",ships:"世界配送",
         cart:"カート",cartEmpty:"カートは空です",continueShop:"買い物を続ける",qty:"数量",remove:"削除",
         subtotal:"小計",checkout:"レジへ進む",
@@ -45,7 +54,7 @@
         okTitle:"支払い完了",orderNo:"注文番号",receiver:"お届け先",amount:"支払額",reward:"アンロック特典",invoice:"請求書をダウンロード",invoiceTitle:"INVOICE",invoiceDate:"発行日",invoiceItems:"商品",invoiceQty:"数量",invoiceTotal:"合計",
         backShop2:"ショップへ戻る",needName:"架空のお名前を入力してください",
         namePH:"領収書に印字する名前",phonePH:"娯楽用です。実際の個人情報は入力しないでください",addrPH:"娯楽用です。実際の個人情報は入力しないでください",cardPH:"0000 0000 0000 0000"},
-    en:{kicker:"LIMITED DROP",shopTitle:"GOODS",limited:"LIMITED",addCart:"ADD TO CART",buyNow:"BUY NOW",
+    en:{kicker:"LIMITED DROP",shopTitle:"GOODS",limited:"LIMITED",moreComing:"MORE GOODS COMING SOON.",addCart:"ADD TO CART",buyNow:"BUY NOW",
         tracklist:"TRACKLIST",format:"FORMAT",ships:"WORLDWIDE SHIPPING",
         cart:"CART",cartEmpty:"Your cart is empty",continueShop:"Continue shopping",qty:"QTY",remove:"Remove",
         subtotal:"Subtotal",checkout:"Checkout",
@@ -96,7 +105,7 @@
         +'<div class="pc-price">'+money(p.price)+'</div></a>';}).join("");
     app.innerHTML=
       '<div class="shop-head"><p class="shop-ey"><b>DiŹ</b>'+t.kicker+'</p><h1 class="shop-h1">'+t.shopTitle+'</h1></div>'
-      +'<div class="prod-grid">'+cards+'</div>';
+      +'<div class="prod-grid">'+cards+'</div><p class="shop-more">'+esc(t.moreComing)+'</p>';
   }
 
   /* ---------------- detail page ---------------- */

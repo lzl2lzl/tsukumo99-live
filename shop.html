@@ -87,6 +87,7 @@ body.menu-open .menu-list li:nth-child(5) a{transition-delay:.40s}
 .pc-title{font-family:var(--display);font-weight:700;font-style:italic;text-transform:uppercase;font-size:1.4rem;line-height:1;margin-top:.2rem;transition:color .25s;}
 .prod-card:hover .pc-title{color:var(--pink);}
 .pc-price{font-family:var(--mono);font-weight:700;font-size:.85rem;color:var(--hot);margin-top:.4rem;}
+.shop-more{margin:clamp(2rem,5vw,3.2rem) 0 0;color:var(--muted);font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;line-height:1.7;}
 .qtybox{display:inline-flex;align-items:center;border:1px solid rgba(255,134,189,.3);border-radius:999px;overflow:hidden;}
 .qtybox button{width:38px;height:40px;font-size:1.1rem;color:var(--paper);}
 .qtybox span{min-width:34px;text-align:center;font-family:var(--mono);font-weight:700;font-size:.9rem;}
@@ -126,7 +127,7 @@ body.cart-open #cartDrawer{transform:none;}
 .foot .cred span{color:var(--pink);font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;margin-right:.7rem;}
 .foot .mk{font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;color:var(--muted);opacity:.6;text-transform:uppercase;text-align:right;}
 
-@media (max-width:760px){.lang{display:none;}.shop-hero{grid-template-columns:1fr;}}
+@media (max-width:760px){.lang{display:none;}.shop-hero{grid-template-columns:1fr;}.prod-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;}.pc-title{font-size:clamp(1rem,5vw,1.4rem);overflow-wrap:anywhere;}.pc-cat{font-size:.48rem;}.pc-price{font-size:.76rem;}.shop-more{margin-top:2rem;}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important;}}
 </style>
 <link rel="stylesheet" href="site-chrome.css?v=20260830b" />
@@ -204,7 +205,7 @@ cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRe
 cheer.addEventListener("pointermove",function(e){if(!drag)return;if(Math.abs(e.movementX)+Math.abs(e.movementY)>1)drag.moved=true;var w=cheer.offsetWidth,h=cheer.offsetHeight;var nx=Math.max(4,Math.min(innerWidth-w-4,e.clientX-drag.dx)),ny=Math.max(4,Math.min(innerHeight-h-4,e.clientY-drag.dy));cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";});
 cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
 </script>
-<script src="shop-20260830i.js?v=20260830-lang-a"></script>
+  <script src="shop-20260830i.js?v=20260830-reward-a"></script>
 <script src="page-transition.js?v=20260830b"></script>
 </body>
 </html>
