@@ -70,7 +70,7 @@
   var laneMembers = ["TORAO", "HARUKA", "TOMA", "MINAMI"];
   var CHARGE_KEY = "tsukumo99-live-charge-v1";
   var ACHIEVEMENT_KEY = "tsukumo99-live-achievement-v1";
-  var ACHIEVEMENT_SEEN_KEY = "tsukumo99-live-achievement-seen-v1";
+  var LEGACY_ACHIEVEMENT_SEEN_KEY = "tsukumo99-live-achievement-seen-v1";
   var trackColor = { solid: "#ec0050", soft: "rgba(236,0,80,.2)", pale: "rgba(255,134,189,.78)" };
   var laneColors = [trackColor, trackColor, trackColor, trackColor];
   var cropRects = [
@@ -152,8 +152,15 @@
   var openingNoteCounts = countOpeningNotes();
   var chargeGainByLane = openingNoteCounts.map(function (count) { return count ? 99 / count : 99; });
   var chargeValues = loadChargeValues();
-  var achievementEarned = readStoredValue(ACHIEVEMENT_KEY) === "1";
-  var achievementPending = achievementEarned && readStoredValue(ACHIEVEMENT_SEEN_KEY) !== "1";
+  var achievementEarned = readStoredValue(ACHIEVEMENT_KEY) === "1" || chargeValues.every(function (value) { return value >= 99; });
+  var achievementPending = achievementEarned;
+
+  if (achievementEarned) {
+    try {
+      window.localStorage.setItem(ACHIEVEMENT_KEY, "1");
+      window.localStorage.removeItem(LEGACY_ACHIEVEMENT_SEEN_KEY);
+    } catch (error) {}
+  }
 
   var geometry = {
     width: 1,
@@ -526,7 +533,7 @@
     achievementPending = true;
     try {
       window.localStorage.setItem(ACHIEVEMENT_KEY, "1");
-      window.localStorage.removeItem(ACHIEVEMENT_SEEN_KEY);
+      window.localStorage.removeItem(LEGACY_ACHIEVEMENT_SEEN_KEY);
     } catch (error) {}
     showAudioStatus("成就解锁：月云的兵");
     playSound("full");
@@ -579,7 +586,7 @@
     try {
       window.localStorage.removeItem(CHARGE_KEY);
       window.localStorage.removeItem(ACHIEVEMENT_KEY);
-      window.localStorage.removeItem(ACHIEVEMENT_SEEN_KEY);
+      window.localStorage.removeItem(LEGACY_ACHIEVEMENT_SEEN_KEY);
     } catch (error) {}
     renderChargeValues();
     updateScore();
@@ -1770,10 +1777,6 @@
     if (event.key !== "Enter" && event.key !== " ") return;
     event.preventDefault();
     advanceBeEnding();
-  });
-  achievementExit.addEventListener("click", function () {
-    achievementPending = false;
-    try { window.localStorage.setItem(ACHIEVEMENT_SEEN_KEY, "1"); } catch (error) {}
   });
   achievementRestart.addEventListener("click", restartAchievementRun);
   soundButton.addEventListener("click", function () {

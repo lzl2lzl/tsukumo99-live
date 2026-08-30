@@ -1,0 +1,32 @@
+.be-page .be-destruction-line {
+  max-width: none;
+  white-space: nowrap;
+  text-wrap: nowrap;
+}
+
+.be-page-center {
+  align-content: center;
+  justify-items: center;
+  width: 100%;
+  padding-block: 0;
+  text-align: center;
+}
+
+.be-page-center::before {
+  display: none;
+}
+
+.be-page-center h1 {
+  max-width: none;
+  font-size: clamp(2rem, 5vw, 5rem);
+  line-height: 1;
+  white-space: nowrap;
+  text-wrap: nowrap;
+}
+
+@media (max-height: 560px) {
+  .be-page-center h1 {
+    max-width: none;
+    font-size: clamp(1.75rem, 5.5vw, 3rem);
+  }
+}

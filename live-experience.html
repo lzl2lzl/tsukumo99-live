@@ -13,6 +13,8 @@
   <link rel="preload" as="image" href="assets/live/lane-l.png" />
   <link rel="preload" as="image" href="assets/live/utsugi-helper.png" />
   <link rel="stylesheet" href="live-experience-20260830q.css" />
+  <link rel="stylesheet" href="live-ending-20260830s.css" />
+  <script src="site-language.js?v=20260830a"></script>
 </head>
 <body>
   <main class="broadcast" id="broadcast">
@@ -195,19 +197,19 @@
           <span>BAD ENDING</span>
           <output id="beProgress">1 / 4</output>
         </div>
-        <article class="be-page is-active" data-be-page="0">
+        <article class="be-page be-page-intro is-active" data-be-page="0">
           <p class="be-opening-line" data-be-line>怎么回事？？</p>
-          <h1 data-be-line>你没能阻止月云了毁灭偶像……</h1>
+          <p class="be-destruction-line" data-be-line>你没能阻止月云了毁灭偶像……</p>
         </article>
         <article class="be-page" data-be-page="1" aria-hidden="true">
           <strong class="be-status" data-be-line>进入【BE结局—偶像毁灭后的世界】</strong>
           <p data-be-line>此时此刻，如果你抬头往天上看，</p>
           <p data-be-line>你会看见天上掉月云了吧唧，偶像全都被砸晕了……</p>
         </article>
-        <article class="be-page" data-be-page="2" aria-hidden="true">
+        <article class="be-page be-page-center" data-be-page="2" aria-hidden="true">
           <h1 data-be-line>你说你什么都没看见？</h1>
         </article>
-        <article class="be-page" data-be-page="3" aria-hidden="true">
+        <article class="be-page be-page-center" data-be-page="3" aria-hidden="true">
           <h1 data-be-line>哈哈，因为你被骗了~</h1>
         </article>
         <footer class="be-actions">
@@ -233,6 +235,7 @@
     <div class="screen-flash" aria-hidden="true"></div>
     <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
   </main>
+  <script src="live-state-20260830s.js"></script>
   <script src="live-experience-20260830q.js"></script>
 </body>
 </html>
