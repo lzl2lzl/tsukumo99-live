@@ -12,7 +12,7 @@
   <link rel="preload" as="image" href="assets/live/lane-o2.png" />
   <link rel="preload" as="image" href="assets/live/lane-l.png" />
   <link rel="preload" as="image" href="assets/live/utsugi-helper.png" />
-  <link rel="stylesheet" href="live-experience.css" />
+  <link rel="stylesheet" href="live-experience.css?v=20260830c" />
 </head>
 <body>
   <main class="broadcast" id="broadcast">
@@ -44,6 +44,7 @@
       </div>
       <div class="head-actions">
         <button type="button" id="soundButton" aria-pressed="true">SOUND ON</button>
+        <button type="button" class="fullscreen-button" id="fullscreenButton" aria-label="进入全屏" hidden>全屏</button>
         <a href="index.html">EXIT</a>
       </div>
     </header>
@@ -82,10 +83,10 @@
       <div class="hit-callout" id="hitCallout" aria-hidden="true">HIT</div>
       <div class="effect-layer" id="effectLayer" aria-hidden="true"></div>
 
-      <button type="button" class="utsugi-assist" id="utsugiAssist" aria-label="宇都木无敌模式：点击开启，再次点击关闭" aria-pressed="false" disabled>
+      <button type="button" class="utsugi-assist" id="utsugiAssist" aria-label="宇都木代打 OFF：点击呼叫宇都木" aria-pressed="false" disabled>
         <span class="utsugi-portrait" aria-hidden="true"></span>
-        <span class="utsugi-copy"><b>宇都木应援</b><small id="assistStatus">AUTO PERFECT OFF</small></span>
-        <span class="assist-count" id="assistCount" aria-hidden="true">OFF</span>
+        <span class="utsugi-copy"><b>宇都木救救我</b></span>
+        <span class="assist-count" id="assistCount">宇都木代打 OFF</span>
       </button>
 
       <div class="utsugi-autoplay" id="utsugiAutoplay" aria-hidden="true">
@@ -94,7 +95,7 @@
       </div>
 
       <div class="ryo-taunt" id="ryoTaunt" aria-hidden="true">
-        <span></span><p>哈哈，没打中～</p>
+        <span></span><p>哈哈，没打中~</p>
       </div>
 
       <div class="lane-controls" aria-label="ZOOL 舞台效果按钮">
@@ -117,7 +118,6 @@
       <div class="signal-rings" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="invite-live"><i></i> LIVE NOW</div>
       <h1 id="inviteTitle">直播正在进行</h1>
-      <p>需要横屏观看本场 LIVE 吗？</p>
       <div class="sound-note"><b>开启声音</b><span>建议佩戴耳机</span></div>
       <button type="button" id="joinButton">横屏进入 LIVE</button>
       <a href="index.html">暂不观看</a>
@@ -127,15 +127,39 @@
       <div class="phone-shape"><i></i></div>
       <b>ROTATE FOR LIVE</b>
       <p>请将设备横向放置</p>
-      <small>如果画面没有旋转，请关闭屏幕方向锁定</small>
+      <button type="button" class="fullscreen-button rotate-fullscreen" id="rotateFullscreenButton" hidden>全屏横屏</button>
     </section>
 
     <section class="round-gate" id="roundGate" role="dialog" aria-modal="true" aria-labelledby="roundTitle" hidden>
-      <span>LIVE INTERACTION</span>
-      <h1 id="roundTitle">ZOOL<br />ROUND</h1>
-      <p>跟随舞台脉冲，在目标抵达圆键时按下；长条目标持续按住。支持双押，每回合 30 秒。点击宇都木可开启或关闭无敌代打。</p>
-      <button type="button" id="startButton">START ROUND</button>
-      <small id="loadStatus">点击后开启声音</small>
+      <div class="rule-shell">
+        <header class="rule-head">
+          <h1 id="roundTitle">游戏规则</h1>
+          <output id="guideProgress" aria-live="polite">1 / 2</output>
+        </header>
+        <div class="rule-pages">
+          <article class="rule-page is-active" data-guide-page="0">
+            <h2>通过假装打音游为乐队应援！</h2>
+            <div class="rule-lanes" aria-hidden="true"><i>Z</i><i>O</i><i>O</i><i>L</i></div>
+            <p>在目标抵达圆键时按下，每次命中都会为对应偶像储能。全员达到 99% 时，将会触发特别成就~</p>
+            <p><b>每回合 30 秒，难度递增！</b>不要打超过 9.9 回合，会有可怕的事发生……</p>
+          </article>
+          <article class="rule-page rule-trouble" data-guide-page="1" aria-hidden="true">
+            <div class="rule-character rule-ryo">
+              <span aria-hidden="true"></span>
+              <div><h2>小心月云了捣乱！</h2><p>他会突然飞过、挡住视线，甚至伸手妨碍你按键。</p></div>
+            </div>
+            <div class="rule-character rule-utsugi">
+              <img src="assets/live/utsugi-helper.png" alt="挥舞荧光棒的宇都木经纪人" />
+              <div><h2>什么，你说你懒得点屏幕？</h2><p>呼叫宇都木经纪人代打！</p></div>
+            </div>
+          </article>
+        </div>
+        <footer class="rule-actions">
+          <button type="button" class="rule-back" id="guideBack" hidden>上一页</button>
+          <div class="rule-dots" aria-label="规则页数"><i class="is-active"></i><i></i></div>
+          <button type="button" id="startButton">下一页</button>
+        </footer>
+      </div>
     </section>
 
     <section class="result-gate" id="resultGate" role="dialog" aria-modal="true" aria-labelledby="resultTitle" hidden>
@@ -167,13 +191,10 @@
       </div>
     </section>
 
-    <div class="cutin" id="cutin" aria-hidden="true">
-      <div></div><span>CORE SIGNAL</span>
-    </div>
     <div class="violet-sweep" aria-hidden="true"></div>
     <div class="screen-flash" aria-hidden="true"></div>
     <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
   </main>
-  <script src="live-experience.js"></script>
+  <script src="live-experience.js?v=20260830c"></script>
 </body>
 </html>

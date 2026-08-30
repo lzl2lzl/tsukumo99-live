@@ -7,7 +7,10 @@
   var rotateGate = document.getElementById("rotateGate");
   var roundGate = document.getElementById("roundGate");
   var startButton = document.getElementById("startButton");
-  var loadStatus = document.getElementById("loadStatus");
+  var guideBack = document.getElementById("guideBack");
+  var guideProgress = document.getElementById("guideProgress");
+  var guidePages = Array.prototype.slice.call(document.querySelectorAll("[data-guide-page]"));
+  var guideDots = Array.prototype.slice.call(document.querySelectorAll(".rule-dots i"));
   var resultGate = document.getElementById("resultGate");
   var resultScore = document.getElementById("resultScore");
   var resultMaxCombo = document.getElementById("resultMaxCombo");
@@ -18,6 +21,8 @@
   var downloadCertificate = document.getElementById("downloadCertificate");
   var closeAchievement = document.getElementById("closeAchievement");
   var soundButton = document.getElementById("soundButton");
+  var fullscreenButton = document.getElementById("fullscreenButton");
+  var rotateFullscreenButton = document.getElementById("rotateFullscreenButton");
   var roundNumber = document.getElementById("roundNumber");
   var roundTimer = document.getElementById("roundTimer");
   var hitCount = document.getElementById("hitCount");
@@ -29,7 +34,6 @@
   var hitCallout = document.getElementById("hitCallout");
   var audioStatus = document.getElementById("audioStatus");
   var utsugiAssist = document.getElementById("utsugiAssist");
-  var assistStatus = document.getElementById("assistStatus");
   var assistCount = document.getElementById("assistCount");
   var utsugiAutoplay = document.getElementById("utsugiAutoplay");
   var ryoTaunt = document.getElementById("ryoTaunt");
@@ -86,6 +90,7 @@
 
   var state = "idle";
   var mobileAccepted = false;
+  var guidePage = 0;
   var currentRound = 1;
   var hits = 0;
   var combo = 0;
@@ -343,7 +348,6 @@
 
   function triggerEffect(effect, x, y) {
     restartClass("fx-hit", 250);
-    if (effect === "core") restartClass("fx-core", 1550);
     if (effect === "violet") restartClass("fx-violet", 1350);
     if (effect === "bubble") spawnBubbles(x, y, 18);
     playSound(effect);
@@ -954,8 +958,8 @@
     utsugiAssist.disabled = state !== "playing";
     utsugiAssist.classList.toggle("assist-active", assistActive);
     utsugiAssist.setAttribute("aria-pressed", String(assistActive));
-    assistStatus.textContent = assistActive ? "AUTO PERFECT ON" : "AUTO PERFECT OFF";
-    assistCount.textContent = assistActive ? "ON" : "OFF";
+    assistCount.textContent = assistActive ? "宇都木代打 ON" : "宇都木代打 OFF";
+    utsugiAssist.setAttribute("aria-label", assistActive ? "宇都木代打 ON：点击停止代打" : "宇都木代打 OFF：点击呼叫宇都木");
     utsugiAutoplay.classList.toggle("is-active", assistActive);
     if (assistActive) moveUtsugiToLane(1, true);
     else utsugiAutoplay.classList.remove("is-tapping");
@@ -964,7 +968,7 @@
   function toggleAssist() {
     if (state !== "playing") return;
     setAssist(!assistActive);
-    showAudioStatus(assistActive ? "宇都木已加入：无敌代打 ON" : "宇都木已退场：无敌代打 OFF");
+    showAudioStatus(assistActive ? "宇都木代打 ON" : "宇都木代打 OFF");
     if (assistActive) {
       playSound("full");
       vibrate([18, 28, 18]);
@@ -975,23 +979,41 @@
   function showRyoTaunt() {
     if (!ryoTaunt) return;
     window.clearTimeout(tauntTimer);
-    ryoTaunt.classList.remove("show", "is-right");
-    if (misses % 2 === 0) ryoTaunt.classList.add("is-right");
+    ryoTaunt.classList.remove("show");
     ryoTaunt.getBoundingClientRect();
     ryoTaunt.classList.add("show");
-    tauntTimer = window.setTimeout(function () { ryoTaunt.classList.remove("show"); }, 1080);
+    tauntTimer = window.setTimeout(function () { ryoTaunt.classList.remove("show"); }, 1220);
   }
 
   function spawnRyoObstacle() {
     if (state !== "playing" || reduceMotion) return;
     var variants = ["obstacle-peek", "obstacle-hand", "obstacle-sweep"];
     var variant = variants[Math.floor(Math.random() * variants.length)];
-    var lane = Math.floor(Math.random() * 4);
-    var padRect = laneButtons[lane].querySelector(".letter").getBoundingClientRect();
     var obstacle = document.createElement("i");
     obstacle.className = "ryo-obstacle " + variant;
-    obstacle.style.setProperty("--obstacle-x", padRect.left + padRect.width / 2 + "px");
-    obstacle.style.setProperty("--obstacle-y", 22 + Math.random() * 31 + "%");
+    if (variant === "obstacle-hand") {
+      var lane = Math.floor(Math.random() * 4);
+      var padRect = laneButtons[lane].querySelector(".letter").getBoundingClientRect();
+      obstacle.style.setProperty("--obstacle-x", padRect.left + padRect.width / 2 + "px");
+      obstacle.style.setProperty("--obstacle-y-px", padRect.top + padRect.height / 2 + "px");
+      obstacle.style.setProperty("--obstacle-size", Math.max(padRect.width, padRect.height) * 1.2 + "px");
+      obstacle.setAttribute("aria-label", "月云了挡住了这个按键");
+      obstacle.addEventListener("pointerdown", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        vibrate([12, 18, 12]);
+      });
+    } else if (variant === "obstacle-peek") {
+      obstacle.classList.add(Math.random() < .5 ? "is-left" : "is-right");
+      var peekCopy = document.createElement("b");
+      peekCopy.textContent = "挡你视线~";
+      obstacle.appendChild(peekCopy);
+    } else {
+      obstacle.style.setProperty("--obstacle-y", 18 + Math.random() * 26 + "%");
+      var sweepCopy = document.createElement("b");
+      sweepCopy.textContent = "啦啦啦~~~";
+      obstacle.appendChild(sweepCopy);
+    }
     obstacleLayer.appendChild(obstacle);
     window.setTimeout(function () { obstacle.remove(); }, 1750);
   }
@@ -1067,8 +1089,7 @@
     resultGate.hidden = true;
     achievementGate.hidden = true;
     startButton.disabled = false;
-    startButton.textContent = "START ROUND";
-    loadStatus.textContent = "点击后开启声音";
+    startButton.textContent = "开始游戏";
     laneButtons.forEach(function (button) {
       button.disabled = false;
       button.classList.remove("pressed", "holding-pad");
@@ -1091,9 +1112,20 @@
     if (state === "loading" || state === "playing") return;
     state = "loading";
     startButton.disabled = true;
-    startButton.textContent = "CONNECTING...";
-    loadStatus.textContent = "正在接入现场音效";
+    startButton.textContent = "正在接入...";
     loadAudio().then(startRound);
+  }
+
+  function renderGuide() {
+    guidePages.forEach(function (page, index) {
+      var active = index === guidePage;
+      page.classList.toggle("is-active", active);
+      page.setAttribute("aria-hidden", String(!active));
+    });
+    guideDots.forEach(function (dot, index) { dot.classList.toggle("is-active", index === guidePage); });
+    guideProgress.textContent = guidePage + 1 + " / " + guidePages.length;
+    guideBack.hidden = guidePage === 0;
+    startButton.textContent = guidePage === guidePages.length - 1 ? "开始游戏" : "下一页";
   }
 
   function loadCertificateImages() {
@@ -1225,7 +1257,66 @@
     return window.matchMedia("(orientation: portrait)").matches;
   }
 
+  function fullscreenElement() {
+    return document.fullscreenElement || document.webkitFullscreenElement || null;
+  }
+
+  function fullscreenSupported() {
+    return !!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen);
+  }
+
+  function requestImmersiveView() {
+    var root = document.documentElement;
+    var request = root.requestFullscreen || root.webkitRequestFullscreen;
+    var fullscreenRequest = Promise.resolve();
+    if (request && !fullscreenElement()) {
+      try {
+        fullscreenRequest = Promise.resolve(request.call(root)).catch(function () {});
+      } catch (error) {
+        fullscreenRequest = Promise.resolve();
+      }
+    }
+    return fullscreenRequest.then(function () {
+      if (screen.orientation && screen.orientation.lock) {
+        return screen.orientation.lock("landscape").catch(function () {});
+      }
+    }).finally(function () {
+      window.setTimeout(function () {
+        syncViewportHeight();
+        resizeCanvas();
+        syncOrientation();
+        syncFullscreenButtons();
+      }, 120);
+    });
+  }
+
+  function toggleFullscreen() {
+    if (!fullscreenElement()) {
+      requestImmersiveView();
+      return;
+    }
+    var exit = document.exitFullscreen || document.webkitExitFullscreen;
+    if (!exit) return;
+    try { Promise.resolve(exit.call(document)).catch(function () {}); } catch (error) {}
+  }
+
+  function syncFullscreenButtons() {
+    var available = isMobile && fullscreenSupported();
+    var active = !!fullscreenElement();
+    fullscreenButton.hidden = !available;
+    fullscreenButton.textContent = active ? "退出全屏" : "全屏";
+    fullscreenButton.setAttribute("aria-label", active ? "退出全屏" : "进入全屏");
+    rotateFullscreenButton.hidden = !(available && mobileAccepted && isPortrait());
+  }
+
+  function syncViewportHeight() {
+    var viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    if (viewportHeight) document.documentElement.style.setProperty("--live-viewport-height", Math.round(viewportHeight) + "px");
+  }
+
   function syncOrientation() {
+    syncViewportHeight();
+    syncFullscreenButtons();
     if (!isMobile || !mobileAccepted) return;
     var portrait = isPortrait();
     rotateGate.hidden = !portrait;
@@ -1248,13 +1339,7 @@
     mobileAccepted = true;
     mobileInvite.hidden = true;
     loadAudio();
-    var fullscreenRequest = Promise.resolve();
-    if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
-      fullscreenRequest = document.documentElement.requestFullscreen().catch(function () {});
-    }
-    fullscreenRequest.then(function () {
-      if (screen.orientation && screen.orientation.lock) screen.orientation.lock("landscape").catch(function () {});
-    });
+    requestImmersiveView();
     syncOrientation();
     window.setTimeout(resizeCanvas, 120);
   }
@@ -1273,7 +1358,20 @@
   document.addEventListener("pointerup", function (event) { handleLaneUp("pointer-" + event.pointerId); });
   document.addEventListener("pointercancel", function (event) { handleLaneUp("pointer-" + event.pointerId); });
   joinButton.addEventListener("click", enterMobileLive);
-  startButton.addEventListener("click", prepareRound);
+  startButton.addEventListener("click", function () {
+    if (guidePage < guidePages.length - 1) {
+      guidePage += 1;
+      renderGuide();
+      return;
+    }
+    prepareRound();
+  });
+  guideBack.addEventListener("click", function () {
+    guidePage = Math.max(0, guidePage - 1);
+    renderGuide();
+  });
+  fullscreenButton.addEventListener("click", toggleFullscreen);
+  rotateFullscreenButton.addEventListener("click", requestImmersiveView);
   utsugiAssist.addEventListener("click", toggleAssist);
   encoreButton.addEventListener("click", function () {
     currentRound += 1;
@@ -1318,6 +1416,19 @@
       syncOrientation();
     }, 120);
   });
+  window.addEventListener("pageshow", function () {
+    syncViewportHeight();
+    syncFullscreenButtons();
+    window.setTimeout(resizeCanvas, 80);
+  });
+  document.addEventListener("fullscreenchange", syncFullscreenButtons);
+  document.addEventListener("webkitfullscreenchange", syncFullscreenButtons);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", function () {
+      syncViewportHeight();
+      resizeCanvas();
+    });
+  }
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) releaseAllInputs(true);
     if (!audioContext) return;
@@ -1327,6 +1438,9 @@
 
   setSound(true);
   renderChargeValues();
+  renderGuide();
+  syncViewportHeight();
+  syncFullscreenButtons();
   resizeCanvas();
   if (isMobile) mobileInvite.hidden = false;
   else roundGate.hidden = false;
