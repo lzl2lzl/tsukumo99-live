@@ -866,19 +866,15 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 .achievement-rays{position:absolute;left:50%;top:50%;width:min(78vw,78vh);aspect-ratio:1;transform:translate(-50%,-50%);background:conic-gradient(from 0deg,transparent 0 8deg,rgba(255,134,189,.13) 8deg 13deg,transparent 13deg 29deg);-webkit-mask:radial-gradient(circle,transparent 0 20%,#000 55%,transparent 75%);mask:radial-gradient(circle,transparent 0 20%,#000 55%,transparent 75%);animation:achievementSpin 18s linear infinite;pointer-events:none}
 .achievement-live{position:relative;padding:.3rem .55rem;background:var(--hot);font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.17em}
 .achievement-gate h1{position:relative;margin:.35rem 0 .25rem;font-family:var(--display);font-size:clamp(3.8rem,10vw,6rem);line-height:.86;letter-spacing:-.03em;text-shadow:0 10px 2.8rem rgba(236,0,80,.55)}
-.achievement-gate>p{position:relative;max-width:34rem;margin:.25rem 0 .8rem;color:var(--muted);font-size:.88rem;line-height:1.55}
-.achievement-charge{position:relative;display:grid;grid-template-columns:repeat(4,clamp(42px,5.1vw,68px));gap:.35rem;margin-bottom:.72rem}
-.achievement-charge i{position:relative;aspect-ratio:.72;border:1px solid var(--paper);background:linear-gradient(0deg,rgba(236,0,80,.72) 0 99%,transparent 99%),var(--portrait) center/cover no-repeat;box-shadow:0 8px 1.2rem rgba(18,0,5,.72);font-style:normal}
-.achievement-charge b{position:absolute;left:50%;bottom:.22rem;transform:translateX(-50%);padding:.12rem .2rem;background:var(--ink);font-family:var(--mono);font-size:.45rem}
-.certificate-name{position:relative;display:grid;grid-template-columns:auto minmax(12rem,20rem);align-items:center;gap:.7rem;font-family:var(--mono);font-size:.58rem;color:var(--muted)}
-.certificate-name input{width:100%;min-height:44px;padding:.55rem .68rem;border:1px solid rgba(255,134,189,.6);border-radius:0;outline:0;background:rgba(18,0,5,.78);color:var(--paper);font:600 16px var(--body);box-shadow:0 7px 1.2rem rgba(18,0,5,.52)}
-.certificate-name input:focus{border-color:var(--paper);box-shadow:0 8px 1.6rem rgba(18,0,5,.72),0 0 1rem rgba(255,134,189,.32)}
-.certificate-name input::placeholder{color:#c891a2}
-.certificate-error{position:relative;min-height:1.05rem;margin:.22rem 0;color:var(--pink);font-size:.68rem}
-.achievement-actions{position:relative;display:flex;border:1px solid rgba(255,134,189,.42)}
-.achievement-actions button{min-width:10.5rem;min-height:46px;padding:.66rem .8rem;background:rgba(18,0,5,.86);font-family:var(--mono);font-size:.6rem;letter-spacing:.06em}
-.achievement-actions button:first-child{background:var(--paper);color:var(--ink);font-weight:700}
-.achievement-actions button:hover{background:var(--crimson);color:var(--paper)}
+.achievement-gate>p{position:relative;max-width:35rem;margin:.45rem 0 1.15rem;color:var(--muted);font-size:.88rem;line-height:1.65;text-wrap:balance}
+.achievement-actions{position:relative;display:grid;grid-template-columns:repeat(2,minmax(10.5rem,1fr));width:min(100%,31rem);border:1px solid rgba(255,134,189,.42)}
+.achievement-actions button,.achievement-actions a{display:grid;place-items:center;min-height:48px;padding:.7rem 1rem;background:rgba(18,0,5,.86);color:var(--paper);font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-decoration:none}
+.achievement-actions button{background:var(--paper);color:var(--ink);font-weight:700}
+.achievement-actions button:disabled{background:var(--hot);color:var(--paper);cursor:default}
+.achievement-actions button:not(:disabled):hover,.achievement-actions a:hover{background:var(--crimson);color:var(--paper)}
+.achievement-actions a{border-left:1px solid rgba(255,134,189,.42)}
+.achievement-cart-status{position:relative;min-height:1.1rem;margin-top:.5rem;color:var(--pink);font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;opacity:0;transform:translateY(-.2rem);transition:opacity .24s ease,transform .24s ease}
+.achievement-cart-status.show{opacity:1;transform:none}
 @keyframes achievementSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 
 .violet-sweep{z-index:54;opacity:0;background:linear-gradient(112deg,transparent 16%,rgba(199,88,255,.48) 45%,rgba(255,134,189,.38) 53%,transparent 78%);transform:translateX(-100%)}
@@ -961,12 +957,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
   .achievement-gate{padding:.7rem 1.2rem}
   .achievement-live{font-size:.48rem}
   .achievement-gate h1{margin:.2rem 0 .1rem;font-size:clamp(2.7rem,8vw,4.2rem)}
-  .achievement-gate>p{max-width:30rem;margin:.15rem 0 .45rem;font-size:.7rem;line-height:1.35}
-  .achievement-charge{grid-template-columns:repeat(4,clamp(34px,5vw,48px));margin-bottom:.42rem}
-  .certificate-name{grid-template-columns:auto minmax(10rem,18rem);font-size:.5rem}
-  .certificate-name input{min-height:40px;padding:.38rem .52rem}
-  .certificate-error{min-height:.8rem;margin:.08rem 0;font-size:.56rem}
-  .achievement-actions button{min-width:9.4rem;min-height:40px;padding:.42rem .55rem;font-size:.52rem}
+  .achievement-gate>p{max-width:30rem;margin:.25rem 0 .7rem;font-size:.7rem;line-height:1.45}
+  .achievement-actions{grid-template-columns:repeat(2,minmax(8.8rem,1fr));width:min(100%,27rem)}
+  .achievement-actions button,.achievement-actions a{min-height:42px;padding:.48rem .65rem;font-size:.54rem}
+  .achievement-cart-status{min-height:.8rem;margin-top:.25rem;font-size:.54rem}
 }
 
 @media (max-width:760px) and (orientation:landscape){

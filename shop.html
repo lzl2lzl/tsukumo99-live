@@ -110,6 +110,7 @@ body.cart-open #cartDrawer{transform:none;}
 .ci-mid{flex:1;min-width:0;}
 .ci-title{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:.95rem;}
 .ci-price{font-family:var(--mono);font-size:.7rem;color:var(--hot);margin:.15rem 0 .5rem;}
+.ci-reward-meta{margin-top:.22rem;color:var(--pink);font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;}
 .ci-remove{font-family:var(--mono);font-size:.85rem;color:var(--muted);align-self:flex-start;}
 .cart-foot{border-top:1px solid rgba(255,134,189,.16);padding-top:1rem;display:flex;flex-direction:column;gap:.7rem;}
 .cart-sub{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
@@ -202,7 +203,7 @@ cheer.addEventListener("pointerdown",function(e){var r=cheer.getBoundingClientRe
 cheer.addEventListener("pointermove",function(e){if(!drag)return;if(Math.abs(e.movementX)+Math.abs(e.movementY)>1)drag.moved=true;var w=cheer.offsetWidth,h=cheer.offsetHeight;var nx=Math.max(4,Math.min(innerWidth-w-4,e.clientX-drag.dx)),ny=Math.max(4,Math.min(innerHeight-h-4,e.clientY-drag.dy));cheer.style.left=nx+"px";cheer.style.top=ny+"px";cheer.style.right="auto";cheer.style.bottom="auto";});
 cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=null;});
 </script>
-<script src="shop.js"></script>
+<script src="shop.js?v=20260830e"></script>
 <script src="page-transition.js"></script>
 </body>
 </html>

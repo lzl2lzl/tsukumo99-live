@@ -1,5 +1,5 @@
 /* TSUKUMO99 · DiŹ — Shop + cart + mock checkout (offline, vanilla).
-   One product (the album) for now; cart persists in localStorage; checkout is a
+   Products and unlocked LIVE rewards persist in localStorage; checkout is a
    pure front-end simulation — no real payment, no data leaves the browser. */
 (function(){
   "use strict";
@@ -20,7 +20,18 @@
     format:{cn:"限定盤 · CD + 纪念卡 + 挂牌",jp:"限定盤 · CD + カード + ラミネート",en:"Limited edition · CD + card + laminate"},
     tracks:["NEW SENSATION","BREAK THE LIMITATION","FIRE","WHAT YOU WANT","IMPERIAL CHAIN","NEVER LOSE MY RULE","ZONE OF OVERLAP","LOOK AT","POISONOUS GANGSTER"]
   };
-  var PRODUCTS={}; PRODUCTS[PRODUCT.id]=PRODUCT;
+  var ACHIEVEMENT_PRODUCT={
+    id:"live-achievement-cert",
+    cover:"assets/goods-tsukumo-soldier.svg",
+    price:0,
+    cat:{cn:"证书",jp:"証明書",en:"CERTIFICATE"},
+    title:"月云的兵",
+    listing:false,
+    lockedQty:2
+  };
+  var PRODUCTS={};
+  PRODUCTS[PRODUCT.id]=PRODUCT;
+  PRODUCTS[ACHIEVEMENT_PRODUCT.id]=ACHIEVEMENT_PRODUCT;
   function prod(id){return PRODUCTS[id];}
 
   var T={
@@ -31,8 +42,8 @@
         coTitle:"结算",backShop:"← 返回商店",order:"订单",ship:"收货信息",name:"收货人姓名",
         phone:"手机号（选填）",address:"收货地址（选填）",pay:"支付方式",
         card:"卡号",exp:"有效期",cvv:"CVV",total:"合计",freeShip:"包邮",payNow:"立即支付",paying:"支付中…",
-        okTitle:"支付成功",orderNo:"订单号",receiver:"收货人",amount:"实付",
-        thanks:"感谢支持 · 这是一次模拟下单",backShop2:"返回商店",needName:"请填写虚构的收货人姓名",
+        okTitle:"支付成功",orderNo:"订单号",receiver:"收货人",amount:"实付",reward:"已解锁特典",
+        backShop2:"返回商店",needName:"请填写虚构的收货人姓名",
         namePH:"仅供娱乐，请勿填写真实信息",phonePH:"仅供娱乐，请勿填写真实信息",addrPH:"仅供娱乐，请勿填写真实信息",cardPH:"0000 0000 0000 0000"},
     jp:{kicker:"GOODS · 数量限定",shopTitle:"グッズ",limited:"限定 / LIMITED",addCart:"カートに入れる",buyNow:"今すぐ購入",
         tracklist:"収録曲",format:"仕様",ships:"世界配送",
@@ -41,8 +52,8 @@
         coTitle:"お会計",backShop:"← ショップに戻る",order:"注文",ship:"お届け先",name:"お名前",
         phone:"電話番号（任意）",address:"住所（任意）",pay:"お支払い方法",
         card:"カード番号",exp:"有効期限",cvv:"CVV",total:"合計",freeShip:"送料無料",payNow:"支払う",paying:"処理中…",
-        okTitle:"支払い完了",orderNo:"注文番号",receiver:"お届け先",amount:"支払額",
-        thanks:"ご支援ありがとうございます · これはシミュレーションです",backShop2:"ショップへ戻る",needName:"架空のお名前を入力してください",
+        okTitle:"支払い完了",orderNo:"注文番号",receiver:"お届け先",amount:"支払額",reward:"アンロック特典",
+        backShop2:"ショップへ戻る",needName:"架空のお名前を入力してください",
         namePH:"娯楽用です。実際の個人情報は入力しないでください",phonePH:"娯楽用です。実際の個人情報は入力しないでください",addrPH:"娯楽用です。実際の個人情報は入力しないでください",cardPH:"0000 0000 0000 0000"},
     en:{kicker:"GOODS · LIMITED DROP",shopTitle:"GOODS",limited:"LIMITED",addCart:"ADD TO CART",buyNow:"BUY NOW",
         tracklist:"TRACKLIST",format:"FORMAT",ships:"WORLDWIDE SHIPPING",
@@ -51,8 +62,8 @@
         coTitle:"CHECKOUT",backShop:"← Back to shop",order:"Order",ship:"Shipping",name:"Recipient name",
         phone:"Phone (optional)",address:"Address (optional)",pay:"Payment",
         card:"Card number",exp:"Expiry",cvv:"CVV",total:"Total",freeShip:"Free",payNow:"Pay now",paying:"Processing…",
-        okTitle:"Payment complete",orderNo:"Order",receiver:"Recipient",amount:"Paid",
-        thanks:"Thanks for the support · this was a simulated order",backShop2:"Back to shop",needName:"Please enter a fictional recipient name",
+        okTitle:"Payment complete",orderNo:"Order",receiver:"Recipient",amount:"Paid",reward:"UNLOCKED REWARD",
+        backShop2:"Back to shop",needName:"Please enter a fictional recipient name",
         namePH:"For entertainment only. Do not enter real personal information.",phonePH:"For entertainment only. Do not enter real personal information.",addrPH:"For entertainment only. Do not enter real personal information.",cardPH:"0000 0000 0000 0000"}
   };
 
@@ -64,13 +75,22 @@
   var order=null;                               // set after mock payment
 
   /* ---------------- cart (localStorage) ---------------- */
-  function getCart(){try{return JSON.parse(localStorage.getItem("dizCart")||"[]");}catch(e){return [];}}
+  function getCart(){
+    try{
+      var parsed=JSON.parse(localStorage.getItem("dizCart")||"[]");
+      if(!Array.isArray(parsed))return [];
+      return parsed.filter(function(item){return item&&prod(item.id);}).map(function(item){
+        var p=prod(item.id),qty=Math.max(1,Math.floor(Number(item.qty)||1));
+        return {id:item.id,qty:p.lockedQty||qty};
+      });
+    }catch(e){return [];}
+  }
   function saveCart(c){try{localStorage.setItem("dizCart",JSON.stringify(c));}catch(e){} updateBadge();}
   function cartCount(){return getCart().reduce(function(s,i){return s+i.qty;},0);}
-  function subtotal(){return getCart().reduce(function(s,i){return s+i.qty*prod(i.id).price;},0);}
+  function subtotal(){return getCart().reduce(function(s,i){var p=prod(i.id);return s+i.qty*p.price;},0);}
   function addToCart(id,n){var c=getCart(),it=null;c.forEach(function(x){if(x.id===id)it=x;});
     if(it)it.qty+=n;else c.push({id:id,qty:n});saveCart(c);}
-  function setQty(id,q){var c=getCart();c=c.map(function(x){return x.id===id?{id:id,qty:q}:x;}).filter(function(x){return x.qty>0;});saveCart(c);}
+  function setQty(id,q){var c=getCart(),p=prod(id);c=c.map(function(x){return x.id===id?{id:id,qty:q>0&&p&&p.lockedQty?p.lockedQty:q}:x;}).filter(function(x){return x.qty>0;});saveCart(c);}
 
   function updateBadge(){var b=byId("cartCount");if(!b)return;var n=cartCount();b.textContent=n;b.style.display=n>0?"grid":"none";}
 
@@ -78,7 +98,7 @@
   function renderOverview(){
     var app=byId("shopApp"); if(!app) return;
     var t=T[LANG];
-    var cards=Object.keys(PRODUCTS).map(function(id){var p=PRODUCTS[id];
+    var cards=Object.keys(PRODUCTS).filter(function(id){return PRODUCTS[id].listing!==false;}).map(function(id){var p=PRODUCTS[id];
       return '<a class="prod-card" href="product.html?id='+id+'">'
         +'<div class="pc-cover"><img src="'+p.cover+'" alt="'+p.title+'" /><span class="pc-badge">'+t.limited+'</span></div>'
         +'<div class="pc-cat">'+esc(p.cat[LANG])+'</div>'
@@ -132,16 +152,16 @@
     if(!c.length){
       items='<div class="cart-empty">'+t.cartEmpty+'</div>';
     } else {
-      items='<div class="cart-items">'+c.map(function(i){var p=prod(i.id);
+      items='<div class="cart-items">'+c.map(function(i){var p=prod(i.id),locked=!!p.lockedQty;
         return '<div class="cart-item">'
           +'<img class="ci-cover" src="'+p.cover+'" alt="" />'
           +'<div class="ci-mid"><div class="ci-title">'+p.title+'</div>'
-            +'<div class="ci-price">'+money(p.price)+'</div>'
-            +'<div class="qtybox sm">'
+            +(locked?'<div class="ci-reward-meta">'+esc(p.cat[LANG])+' ×'+i.qty+'</div>':'<div class="ci-price">'+money(p.price)+'</div>')
+            +(locked?'':'<div class="qtybox sm">'
               +'<button data-act="cdec" data-id="'+p.id+'" aria-label="-">−</button>'
               +'<span>'+i.qty+'</span>'
               +'<button data-act="cinc" data-id="'+p.id+'" aria-label="+">+</button>'
-            +'</div>'
+            +'</div>')
           +'</div>'
           +'<button class="ci-remove" data-act="crm" data-id="'+p.id+'" aria-label="'+t.remove+'">✕</button>'
           +'</div>';}).join("")+'</div>';
@@ -175,7 +195,7 @@
     var rows=c.map(function(i){var p=prod(i.id);
       return '<div class="co-line"><img src="'+p.cover+'" alt="" />'
         +'<div class="col-mid"><div class="col-t">'+p.title+'</div><div class="col-q">'+esc(p.cat[LANG])+' · ×'+i.qty+'</div></div>'
-        +'<div class="col-p">'+money(p.price*i.qty)+'</div></div>';}).join("");
+        +'<div class="col-p">'+(p.lockedQty?t.reward:money(p.price*i.qty))+'</div></div>';}).join("");
 
     app.innerHTML=
       '<a class="co-back" href="shop.html">'+t.backShop+'</a>'
@@ -213,7 +233,6 @@
         +'<div class="ok-row"><span>'+t.receiver+'</span><b>'+esc(order.name)+'</b></div>'
         +'<div class="ok-row"><span>'+t.amount+'</span><b>'+money(order.amount)+'</b></div>'
       +'</div>'
-      +'<p class="ok-thanks">'+t.thanks+'</p>'
       +'<a class="btn-primary" href="shop.html">'+t.backShop2+'</a>'
       +'</div>';
   }

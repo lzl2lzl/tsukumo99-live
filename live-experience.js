@@ -16,10 +16,8 @@
   var resultMaxCombo = document.getElementById("resultMaxCombo");
   var encoreButton = document.getElementById("encoreButton");
   var achievementGate = document.getElementById("achievementGate");
-  var certificateName = document.getElementById("certificateName");
-  var certificateError = document.getElementById("certificateError");
-  var downloadCertificate = document.getElementById("downloadCertificate");
-  var closeAchievement = document.getElementById("closeAchievement");
+  var addAchievementCart = document.getElementById("addAchievementCart");
+  var achievementCartStatus = document.getElementById("achievementCartStatus");
   var soundButton = document.getElementById("soundButton");
   var fullscreenButton = document.getElementById("fullscreenButton");
   var rotateFullscreenButton = document.getElementById("rotateFullscreenButton");
@@ -49,6 +47,8 @@
   var laneMembers = ["TORAO", "HARUKA", "TOMA", "MINAMI"];
   var CHARGE_KEY = "tsukumo99-live-charge-v1";
   var ACHIEVEMENT_KEY = "tsukumo99-live-achievement-v1";
+  var CART_KEY = "dizCart";
+  var ACHIEVEMENT_PRODUCT_ID = "live-achievement-cert";
   var laneColors = [
     { solid: "#a9776a", soft: "rgba(169,119,106,.25)", pale: "rgba(223,189,180,.86)" },
     { solid: "#a6c9ae", soft: "rgba(166,201,174,.23)", pale: "rgba(222,241,226,.88)" },
@@ -1082,7 +1082,7 @@
       if (!isMobile || !window.matchMedia("(orientation: portrait)").matches) {
         achievementGate.hidden = !achievementPending;
         resultGate.hidden = achievementPending;
-        if (achievementPending) window.setTimeout(function () { certificateName.focus(); }, 180);
+        if (achievementPending) window.setTimeout(function () { addAchievementCart.focus(); }, 180);
       }
     }, 320);
   }
@@ -1147,129 +1147,40 @@
     startButton.textContent = guidePage === guidePages.length - 1 ? "开始游戏" : "下一页";
   }
 
-  function loadCertificateImages() {
-    return Promise.all(performerCards.map(function (card) {
-      var image = card.querySelector("img");
-      if (image.complete && image.naturalWidth) return image;
-      return new Promise(function (resolve) {
-        image.addEventListener("load", function () { resolve(image); }, { once: true });
-        image.addEventListener("error", function () { resolve(null); }, { once: true });
-      });
-    }));
-  }
-
-  function renderCertificate(name) {
-    return loadCertificateImages().then(function (images) {
-      var certificate = document.createElement("canvas");
-      certificate.width = 1600;
-      certificate.height = 1100;
-      var drawing = certificate.getContext("2d");
-      var background = drawing.createRadialGradient(800, 455, 80, 800, 500, 890);
-      background.addColorStop(0, "#8d002c");
-      background.addColorStop(.48, "#3a0014");
-      background.addColorStop(1, "#120005");
-      drawing.fillStyle = background;
-      drawing.fillRect(0, 0, 1600, 1100);
-
-      drawing.strokeStyle = "#ec0050";
-      drawing.lineWidth = 8;
-      drawing.strokeRect(42, 42, 1516, 1016);
-      drawing.strokeStyle = "rgba(255,244,247,.58)";
-      drawing.lineWidth = 2;
-      drawing.strokeRect(66, 66, 1468, 968);
-
-      drawing.textAlign = "center";
-      drawing.fillStyle = "#ff86bd";
-      drawing.font = "700 28px 'Space Mono', monospace";
-      drawing.fillText("TSUKUMO99 LIVE · ACHIEVEMENT CERTIFICATE", 800, 150);
-      drawing.fillStyle = "#fff4f7";
-      drawing.font = "700 132px Oswald, sans-serif";
-      drawing.fillText("月云的兵", 800, 305);
-      drawing.fillStyle = "#e4afbf";
-      drawing.font = "32px sans-serif";
-      drawing.fillText("授予", 800, 384);
-      drawing.fillStyle = "#fff4f7";
-      var nameSize = 64;
-      drawing.font = "700 " + nameSize + "px sans-serif";
-      while (drawing.measureText(name).width > 1120 && nameSize > 38) {
-        nameSize -= 2;
-        drawing.font = "700 " + nameSize + "px sans-serif";
-      }
-      drawing.fillText(name, 800, 470);
-      drawing.fillStyle = "#e4afbf";
-      drawing.font = "30px sans-serif";
-      drawing.fillText("四轨应援能量均达到 99%，正式成为月云的兵。", 800, 535);
-
-      var cardWidth = 178;
-      var cardHeight = 242;
-      var gap = 28;
-      var startX = (1600 - (cardWidth * 4 + gap * 3)) / 2;
-      images.forEach(function (image, lane) {
-        var x = startX + lane * (cardWidth + gap);
-        var y = 606;
-        drawing.save();
-        drawing.beginPath();
-        drawing.rect(x, y, cardWidth, cardHeight);
-        drawing.clip();
-        if (image) {
-          var scale = Math.max(cardWidth / image.naturalWidth, cardHeight / image.naturalHeight);
-          var width = image.naturalWidth * scale;
-          var height = image.naturalHeight * scale;
-          drawing.drawImage(image, x + (cardWidth - width) / 2, y + (cardHeight - height) / 2, width, height);
-        } else {
-          drawing.fillStyle = "#3a0014";
-          drawing.fillRect(x, y, cardWidth, cardHeight);
-        }
-        var fill = drawing.createLinearGradient(0, y + cardHeight, 0, y);
-        fill.addColorStop(0, laneColors[lane].solid);
-        fill.addColorStop(.7, laneColors[lane].soft);
-        fill.addColorStop(1, "rgba(255,244,247,.08)");
-        drawing.fillStyle = fill;
-        drawing.fillRect(x, y + 2, cardWidth, cardHeight - 2);
-        drawing.restore();
-        drawing.strokeStyle = "#fff4f7";
-        drawing.lineWidth = 3;
-        drawing.strokeRect(x, y, cardWidth, cardHeight);
-        drawing.fillStyle = "#120005";
-        drawing.fillRect(x + 44, y + 194, 90, 34);
-        drawing.fillStyle = "#fff4f7";
-        drawing.font = "700 22px 'Space Mono', monospace";
-        drawing.fillText("99%", x + cardWidth / 2, y + 220);
-      });
-
-      drawing.fillStyle = "#e4afbf";
-      drawing.font = "22px 'Space Mono', monospace";
-      drawing.fillText("UNOFFICIAL FAN-MADE COMMEMORATIVE CERTIFICATE · " + new Intl.DateTimeFormat("zh-CN").format(new Date()), 800, 965);
-      return certificate;
-    });
-  }
-
-  function saveCertificate() {
-    var name = certificateName.value.trim();
-    if (!name) {
-      certificateError.textContent = "请先填写持证人姓名。";
-      certificateName.focus();
-      return;
+  function achievementInCart() {
+    try {
+      var cart = JSON.parse(window.localStorage.getItem(CART_KEY) || "[]");
+      return Array.isArray(cart) && cart.some(function (item) { return item && item.id === ACHIEVEMENT_PRODUCT_ID; });
+    } catch (error) {
+      return false;
     }
-    certificateError.textContent = "";
-    downloadCertificate.disabled = true;
-    downloadCertificate.textContent = "正在生成…";
-    renderCertificate(name).then(function (certificate) {
-      certificate.toBlob(function (blob) {
-        if (!blob) return;
-        var link = document.createElement("a");
-        var safeName = name.replace(/[\\/:*?\"<>|]/g, "-");
-        link.href = URL.createObjectURL(blob);
-        link.download = "月云的兵-" + safeName + ".png";
-        link.click();
-        window.setTimeout(function () { URL.revokeObjectURL(link.href); }, 1500);
-      }, "image/png");
-    }).catch(function () {
-      certificateError.textContent = "证书生成失败，请稍后再试。";
-    }).finally(function () {
-      downloadCertificate.disabled = false;
-      downloadCertificate.textContent = "下载证书 PNG";
-    });
+  }
+
+  function showAchievementCartStatus(message, isError) {
+    achievementCartStatus.textContent = message;
+    achievementCartStatus.classList.toggle("is-error", !!isError);
+    achievementCartStatus.classList.add("show");
+  }
+
+  function syncAchievementCartState() {
+    var added = achievementInCart();
+    addAchievementCart.disabled = added;
+    addAchievementCart.textContent = added ? "已加入购物车" : "加入购物车";
+    if (added) showAchievementCartStatus("已加入购物车", false);
+  }
+
+  function addAchievementToCart() {
+    try {
+      var cart = JSON.parse(window.localStorage.getItem(CART_KEY) || "[]");
+      if (!Array.isArray(cart)) cart = [];
+      var item = cart.find(function (entry) { return entry && entry.id === ACHIEVEMENT_PRODUCT_ID; });
+      if (item) item.qty = 2;
+      else cart.push({ id: ACHIEVEMENT_PRODUCT_ID, qty: 2 });
+      window.localStorage.setItem(CART_KEY, JSON.stringify(cart));
+      syncAchievementCartState();
+    } catch (error) {
+      showAchievementCartStatus("加入失败，请确认浏览器允许保存网站数据后重试。", true);
+    }
   }
 
   function isPortrait() {
@@ -1396,13 +1307,7 @@
     currentRound += 1;
     startRound();
   });
-  downloadCertificate.addEventListener("click", saveCertificate);
-  certificateName.addEventListener("input", function () { certificateError.textContent = ""; });
-  closeAchievement.addEventListener("click", function () {
-    achievementGate.hidden = true;
-    achievementPending = false;
-    if (state === "result") resultGate.hidden = false;
-  });
+  addAchievementCart.addEventListener("click", addAchievementToCart);
   soundButton.addEventListener("click", function () {
     setSound(!soundOn);
     showAudioStatus(soundOn ? "声音已开启" : "声音已关闭");
@@ -1457,6 +1362,7 @@
 
   setSound(true);
   renderChargeValues();
+  syncAchievementCartState();
   renderGuide();
   syncViewportHeight();
   syncFullscreenButtons();

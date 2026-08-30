@@ -12,7 +12,7 @@
   <link rel="preload" as="image" href="assets/live/lane-o2.png" />
   <link rel="preload" as="image" href="assets/live/lane-l.png" />
   <link rel="preload" as="image" href="assets/live/utsugi-helper.png" />
-  <link rel="stylesheet" href="live-experience.css?v=20260830d" />
+  <link rel="stylesheet" href="live-experience.css?v=20260830e" />
 </head>
 <body>
   <main class="broadcast" id="broadcast">
@@ -176,25 +176,18 @@
       <div class="achievement-rays" aria-hidden="true"></div>
       <span class="achievement-live">ACHIEVEMENT UNLOCKED</span>
       <h1 id="achievementTitle">月云的兵</h1>
-      <p>四位成员的应援能量均已达到 99%。留下你的名字，领取本场 LIVE 的非官方粉丝纪念证书。</p>
-      <div class="achievement-charge" aria-label="四轨能量全部达到百分之九十九">
-        <i style="--portrait:url('assets/live/lane-o2.png')"><b>99%</b></i>
-        <i style="--portrait:url('assets/live/lane-z.png')"><b>99%</b></i>
-        <i style="--portrait:url('assets/live/lane-l.png')"><b>99%</b></i>
-        <i style="--portrait:url('assets/live/lane-o1.png')"><b>99%</b></i>
-      </div>
-      <label class="certificate-name" for="certificateName"><span>持证人姓名</span><input id="certificateName" maxlength="30" autocomplete="name" placeholder="输入你的名字" /></label>
-      <small class="certificate-error" id="certificateError" role="alert"></small>
+      <p>恭喜你已获得成就“月云的兵”及限定证书！请前往商店，在购物车填写地址发货。</p>
       <div class="achievement-actions">
-        <button type="button" id="downloadCertificate">下载证书 PNG</button>
-        <button type="button" id="closeAchievement">返回结算</button>
+        <button type="button" id="addAchievementCart">加入购物车</button>
+        <a href="index.html">退出游戏</a>
       </div>
+      <small class="achievement-cart-status" id="achievementCartStatus" role="status" aria-live="polite"></small>
     </section>
 
     <div class="violet-sweep" aria-hidden="true"></div>
     <div class="screen-flash" aria-hidden="true"></div>
     <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
   </main>
-  <script src="live-experience.js?v=20260830d"></script>
+  <script src="live-experience.js?v=20260830e"></script>
 </body>
 </html>
