@@ -24,8 +24,9 @@
   var beSignal = document.getElementById("beSignal");
   var beProgress = document.getElementById("beProgress");
   var beBack = document.getElementById("beBack");
-  var beNext = document.getElementById("beNext");
+  var beContinue = document.getElementById("beContinue");
   var beExit = document.getElementById("beExit");
+  var beBadgeStorm = document.getElementById("beBadgeStorm");
   var bePages = Array.prototype.slice.call(document.querySelectorAll("[data-be-page]"));
   var achievementGate = document.getElementById("achievementGate");
   if (achievementGate && !document.getElementById("achievementExit")) {
@@ -131,6 +132,7 @@
   var lastCropIndex = -1;
   var assistActive = false;
   var bePage = 0;
+  var beLineStep = 0;
   var beEndingPending = false;
   var beWeatherFrame = 0;
   var beWeatherRunning = false;
@@ -1526,25 +1528,75 @@
     startButton.textContent = guidePage === guidePages.length - 1 ? "开始游戏" : "下一页";
   }
 
+  function getBeLines(page) {
+    return page ? Array.prototype.slice.call(page.querySelectorAll("[data-be-line]")) : [];
+  }
+
+  function createBadgeStorm() {
+    var fragment = document.createDocumentFragment();
+    beBadgeStorm.innerHTML = "";
+    for (var index = 0; index < 36; index += 1) {
+      var badge = document.createElement("i");
+      badge.className = "crop-" + index % 4;
+      badge.style.setProperty("--badge-left", Math.random() * 98 + "%");
+      badge.style.setProperty("--badge-size", 34 + Math.random() * 46 + "px");
+      badge.style.setProperty("--badge-duration", 3.4 + Math.random() * 3.2 + "s");
+      badge.style.setProperty("--badge-delay", -Math.random() * 5.8 + "s");
+      badge.style.setProperty("--badge-drift", -8 + Math.random() * 16 + "vw");
+      badge.style.setProperty("--badge-spin", -180 + Math.random() * 720 + "deg");
+      fragment.appendChild(badge);
+    }
+    beBadgeStorm.appendChild(fragment);
+  }
+
   function renderBeEnding() {
     bePages.forEach(function (page, index) {
       var active = index === bePage;
       page.classList.toggle("is-active", active);
       page.setAttribute("aria-hidden", String(!active));
+      getBeLines(page).forEach(function (line, lineIndex) {
+        line.classList.toggle("is-revealed", active && lineIndex <= beLineStep);
+      });
     });
     beProgress.textContent = bePage + 1 + " / " + bePages.length;
     beGate.classList.toggle("is-bad-world", bePage === 1);
-    beGate.classList.toggle("is-fakeout", bePage === 2);
-    beSignal.lastChild.nodeValue = bePage === 1 ? "BAD END" : bePage === 2 ? "SIGNAL RESTORED" : "SIGNAL LOST";
+    beGate.classList.toggle("is-fakeout", bePage === 3);
+    beSignal.lastChild.nodeValue = bePage === 3 ? "SIGNAL BACK" : "SIGNAL LOST";
+    if (bePage === 1 && !beBadgeStorm.classList.contains("is-active")) {
+      createBadgeStorm();
+      beBadgeStorm.classList.add("is-active");
+    } else if (bePage !== 1) {
+      beBadgeStorm.classList.remove("is-active");
+    }
     beBack.hidden = bePage === 0;
-    beNext.hidden = bePage === bePages.length - 1;
     beExit.hidden = bePage !== bePages.length - 1;
+    beContinue.hidden = bePage === bePages.length - 1;
+  }
+
+  function advanceBeEnding() {
+    var lines = getBeLines(bePages[bePage]);
+    if (beLineStep < lines.length - 1) {
+      beLineStep += 1;
+      renderBeEnding();
+      playNextTapSound();
+      vibrate(8);
+      return;
+    }
+    if (bePage >= bePages.length - 1) return;
+    bePage += 1;
+    beLineStep = 0;
+    renderBeEnding();
+    playSound(bePage === 1 ? "violet" : bePage === 3 ? "full" : "bubble");
+    vibrate(bePage === 1 ? [18, 26, 18] : 10);
   }
 
   function resetBeEnding() {
     bePage = 0;
+    beLineStep = 0;
     beCloudOpening = 0;
     beCloudOpeningTarget = 0;
+    beBadgeStorm.innerHTML = "";
+    beBadgeStorm.classList.remove("is-active");
     beGate.classList.remove("is-cleared", "is-bad-world", "is-fakeout", "is-lightning");
     beStormIntro.hidden = false;
     beStormIntro.removeAttribute("aria-hidden");
@@ -1558,6 +1610,8 @@
   function revealBeEnding() {
     beGate.classList.add("is-cleared");
     beCloudOpeningTarget = 1;
+    playSound("full");
+    vibrate([16, 32, 18]);
     if (reduceMotion) {
       beCloudOpening = 1;
       startBeWeather();
@@ -1568,7 +1622,7 @@
       beStormIntro.setAttribute("aria-hidden", "true");
       beStory.hidden = false;
       renderBeEnding();
-      beNext.focus();
+      beStory.focus({ preventScroll: true });
     }, reduceMotion ? 0 : 900);
   }
 
@@ -1701,13 +1755,21 @@
     startRound();
   });
   beReveal.addEventListener("click", revealBeEnding);
-  beBack.addEventListener("click", function () {
+  beBack.addEventListener("click", function (event) {
+    event.stopPropagation();
     bePage = Math.max(0, bePage - 1);
+    beLineStep = Math.max(0, getBeLines(bePages[bePage]).length - 1);
     renderBeEnding();
+    playSound("bubble");
   });
-  beNext.addEventListener("click", function () {
-    bePage = Math.min(bePages.length - 1, bePage + 1);
-    renderBeEnding();
+  beStory.addEventListener("click", function (event) {
+    if (event.target.closest("a,button")) return;
+    advanceBeEnding();
+  });
+  beStory.addEventListener("keydown", function (event) {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    advanceBeEnding();
   });
   achievementExit.addEventListener("click", function () {
     achievementPending = false;
