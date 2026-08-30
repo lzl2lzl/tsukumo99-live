@@ -12,7 +12,7 @@
   <link rel="preload" as="image" href="assets/live/lane-o2.png" />
   <link rel="preload" as="image" href="assets/live/lane-l.png" />
   <link rel="preload" as="image" href="assets/live/utsugi-helper.png" />
-  <link rel="stylesheet" href="live-experience.css?v=20260830e" />
+  <link rel="stylesheet" href="live-experience.css?v=20260830h" />
 </head>
 <body>
   <main class="broadcast" id="broadcast">
@@ -44,7 +44,7 @@
       </div>
       <div class="head-actions">
         <button type="button" id="soundButton" aria-pressed="true">SOUND ON</button>
-        <button type="button" class="fullscreen-button" id="fullscreenButton" aria-label="进入全屏" hidden>全屏</button>
+        <button type="button" class="fullscreen-button" id="fullscreenButton" aria-label="开启全屏" hidden>开启全屏</button>
         <a href="index.html">EXIT</a>
       </div>
     </header>
@@ -83,10 +83,9 @@
       <div class="hit-callout" id="hitCallout" aria-hidden="true">HIT</div>
       <div class="effect-layer" id="effectLayer" aria-hidden="true"></div>
 
-      <button type="button" class="utsugi-assist" id="utsugiAssist" aria-label="宇都木代打 OFF：点击呼叫宇都木" aria-pressed="false" disabled>
+      <button type="button" class="utsugi-assist" id="utsugiAssist" aria-label="宇都木救救！点击呼叫代打" aria-pressed="false" disabled>
         <span class="utsugi-portrait" aria-hidden="true"></span>
-        <span class="utsugi-copy"><b>宇都木救救我</b></span>
-        <span class="assist-count" id="assistCount">宇都木代打 OFF</span>
+        <span class="utsugi-copy"><b>宇都木救救！</b><small>HELP</small></span>
       </button>
 
       <div class="utsugi-autoplay" id="utsugiAutoplay" aria-hidden="true">
@@ -127,7 +126,7 @@
       <div class="phone-shape"><i></i></div>
       <b>ROTATE FOR LIVE</b>
       <p>请将设备横向放置</p>
-      <button type="button" class="fullscreen-button rotate-fullscreen" id="rotateFullscreenButton" hidden>全屏横屏</button>
+      <button type="button" class="fullscreen-button rotate-fullscreen" id="rotateFullscreenButton" hidden>开启全屏</button>
     </section>
 
     <section class="round-gate" id="roundGate" role="dialog" aria-modal="true" aria-labelledby="roundTitle" hidden>
@@ -138,7 +137,7 @@
         </header>
         <div class="rule-pages">
           <article class="rule-page is-active" data-guide-page="0">
-            <h2>通过假装打音游为乐队应援！</h2>
+            <h2>假装打音游为乐队应援！</h2>
             <div class="rule-lanes" aria-hidden="true"><i>Z</i><i>O</i><i>O</i><i>L</i></div>
             <p>在目标抵达圆键时按下，每次命中都会为对应偶像储能。全员达到 99% 时，将会触发特别成就~</p>
             <p><b>每回合 30 秒，难度递增！</b>不要打超过 9.9 回合，会有可怕的事发生……</p>
@@ -149,8 +148,8 @@
               <div><h2>小心月云了捣乱！</h2><p>他会突然飞过、挡住视线，甚至伸手妨碍你按键。</p></div>
             </div>
             <div class="rule-character rule-utsugi">
-              <img src="assets/live/utsugi-helper.png" alt="挥舞荧光棒的宇都木经纪人" />
-              <div><h2>什么，你说你懒得点屏幕？</h2><p>呼叫宇都木经纪人代打！</p></div>
+              <span class="rule-utsugi-avatar" role="img" aria-label="宇都木经纪人"></span>
+              <div><h2>你说你懒得点屏幕？</h2><p>呼叫宇都木经纪人代打！</p></div>
             </div>
           </article>
         </div>
@@ -172,6 +171,30 @@
       </div>
     </section>
 
+    <section class="be-gate" id="beGate" role="dialog" aria-modal="true" aria-labelledby="beTitle" hidden>
+      <div class="be-rain" aria-hidden="true"></div>
+      <div class="be-clouds" aria-hidden="true"><i></i><i></i><i></i></div>
+      <button type="button" class="be-reveal" id="beReveal">拨开乌云</button>
+      <div class="be-story" id="beStory" hidden>
+        <article class="be-page is-active" data-be-page="0">
+          <h1 id="beTitle">怎么回事？？<br />你没能阻止月云了毁灭偶像……</h1>
+        </article>
+        <article class="be-page" data-be-page="1" aria-hidden="true">
+          <strong class="be-status">进入【BE结局—偶像毁灭后的世界】</strong>
+          <p>此时此刻，如果你抬头往天上看，你会看见天上掉月云了吧唧，偶像全都被砸晕了……</p>
+        </article>
+        <article class="be-page" data-be-page="2" aria-hidden="true">
+          <h1>你说你什么都没看见？</h1>
+          <p>哈哈，因为你被骗了~</p>
+        </article>
+        <footer class="be-actions">
+          <button type="button" id="beBack" hidden>上一页</button>
+          <button type="button" id="beNext">下一页</button>
+          <a href="index.html" id="beExit" hidden>退出游戏</a>
+        </footer>
+      </div>
+    </section>
+
     <section class="achievement-gate" id="achievementGate" role="dialog" aria-modal="true" aria-labelledby="achievementTitle" hidden>
       <div class="achievement-rays" aria-hidden="true"></div>
       <span class="achievement-live">ACHIEVEMENT UNLOCKED</span>
@@ -189,6 +212,6 @@
     <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
   </main>
   <script src="live-achievement-cart.js?v=20260830a"></script>
-  <script src="live-experience.js?v=20260830f"></script>
+  <script src="live-experience.js?v=20260830h"></script>
 </body>
 </html>

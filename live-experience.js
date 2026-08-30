@@ -15,6 +15,13 @@
   var resultScore = document.getElementById("resultScore");
   var resultMaxCombo = document.getElementById("resultMaxCombo");
   var encoreButton = document.getElementById("encoreButton");
+  var beGate = document.getElementById("beGate");
+  var beReveal = document.getElementById("beReveal");
+  var beStory = document.getElementById("beStory");
+  var beBack = document.getElementById("beBack");
+  var beNext = document.getElementById("beNext");
+  var beExit = document.getElementById("beExit");
+  var bePages = Array.prototype.slice.call(document.querySelectorAll("[data-be-page]"));
   var achievementGate = document.getElementById("achievementGate");
   if (achievementGate && !document.getElementById("addAchievementCart")) {
     achievementGate.innerHTML = '<div class="achievement-rays" aria-hidden="true"></div>'
@@ -40,7 +47,6 @@
   var hitCallout = document.getElementById("hitCallout");
   var audioStatus = document.getElementById("audioStatus");
   var utsugiAssist = document.getElementById("utsugiAssist");
-  var assistCount = document.getElementById("assistCount");
   var utsugiAutoplay = document.getElementById("utsugiAutoplay");
   var ryoTaunt = document.getElementById("ryoTaunt");
   var laneButtons = Array.prototype.slice.call(document.querySelectorAll(".lane-button"));
@@ -51,19 +57,15 @@
   var TRAVEL_MS = 3200;
   var PERFECT_WINDOW = 78;
   var GOOD_WINDOW = 175;
+  var ROUND_LABELS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "9.9"];
   var laneLetters = ["Z", "O", "O", "L"];
   var laneMembers = ["TORAO", "HARUKA", "TOMA", "MINAMI"];
   var CHARGE_KEY = "tsukumo99-live-charge-v1";
   var ACHIEVEMENT_KEY = "tsukumo99-live-achievement-v1";
   var CART_KEY = "dizCart";
   var ACHIEVEMENT_PRODUCT_ID = "live-achievement-cert";
-  var laneColors = [
-    { solid: "#a9776a", soft: "rgba(169,119,106,.25)", pale: "rgba(223,189,180,.86)" },
-    { solid: "#a6c9ae", soft: "rgba(166,201,174,.23)", pale: "rgba(222,241,226,.88)" },
-    { solid: "#c34a5c", soft: "rgba(195,74,92,.25)", pale: "rgba(244,178,187,.86)" },
-    { solid: "#e0cfab", soft: "rgba(224,207,171,.23)", pale: "rgba(255,244,219,.9)" }
-  ];
   var trackColor = { solid: "#ec0050", soft: "rgba(236,0,80,.2)", pale: "rgba(255,134,189,.78)" };
+  var laneColors = [trackColor, trackColor, trackColor, trackColor];
   var cropRects = [
     { name: "脸", x: .11, y: .13, w: .38, h: .43 },
     { name: "眼睛", x: .21, y: .23, w: .22, h: .22 },
@@ -123,6 +125,8 @@
   var noteSequence = 0;
   var lastCropIndex = -1;
   var assistActive = false;
+  var bePage = 0;
+  var beEndingPending = false;
   var chargeValues = loadChargeValues();
   var achievementEarned = readStoredValue(ACHIEVEMENT_KEY) === "1";
   var achievementPending = achievementEarned && !achievementInCart();
@@ -984,8 +988,7 @@
     utsugiAssist.disabled = state !== "playing";
     utsugiAssist.classList.toggle("assist-active", assistActive);
     utsugiAssist.setAttribute("aria-pressed", String(assistActive));
-    assistCount.textContent = assistActive ? "宇都木代打 ON" : "宇都木代打 OFF";
-    utsugiAssist.setAttribute("aria-label", assistActive ? "宇都木代打 ON：点击停止代打" : "宇都木代打 OFF：点击呼叫宇都木");
+    utsugiAssist.setAttribute("aria-label", assistActive ? "宇都木正在代打，点击停止" : "宇都木救救！点击呼叫代打");
     utsugiAutoplay.classList.toggle("is-active", assistActive);
     if (assistActive) moveUtsugiToLane(1, true);
     else utsugiAutoplay.classList.remove("is-tapping");
@@ -1013,7 +1016,7 @@
 
   function spawnRyoObstacle() {
     if (state !== "playing" || reduceMotion) return;
-    var variants = ["obstacle-peek", "obstacle-hand", "obstacle-sweep"];
+    var variants = ["obstacle-peek", "obstacle-hand", "obstacle-hand", "obstacle-hand", "obstacle-sweep"];
     var variant = variants[Math.floor(Math.random() * variants.length)];
     var obstacle = document.createElement("i");
     obstacle.className = "ryo-obstacle " + variant;
@@ -1049,7 +1052,7 @@
     obstacleTimer = window.setTimeout(function () {
       spawnRyoObstacle();
       scheduleObstacle();
-    }, 4700 + Math.random() * 2500);
+    }, 2800 + Math.random() * 1800);
   }
 
   function clearObstacles() {
@@ -1085,14 +1088,22 @@
     playSound("full");
     resultScore.textContent = padNumber(hits, 3);
     resultMaxCombo.textContent = padNumber(maxCombo, 3);
+    beEndingPending = currentRound >= ROUND_LABELS.length && !chargeValues.every(function (value) { return value >= 99; });
+    encoreButton.hidden = currentRound >= ROUND_LABELS.length;
     renderCanvas(performance.now());
     window.setTimeout(function () {
       if (!isMobile || !window.matchMedia("(orientation: portrait)").matches) {
-        achievementGate.hidden = !achievementPending;
-        resultGate.hidden = achievementPending;
-        if (achievementPending) window.setTimeout(function () { addAchievementCart.focus(); }, 180);
+        showRoundOutcome();
       }
     }, 320);
+  }
+
+  function showRoundOutcome() {
+    beGate.hidden = !beEndingPending;
+    achievementGate.hidden = beEndingPending || !achievementPending;
+    resultGate.hidden = beEndingPending || achievementPending;
+    if (beEndingPending) resetBeEnding();
+    else if (achievementPending) window.setTimeout(function () { addAchievementCart.focus(); }, 180);
   }
 
   function startRound() {
@@ -1110,11 +1121,13 @@
     clearObstacles();
     resizeCanvas();
     updateScore();
-    roundNumber.textContent = padNumber(currentRound, 2);
+    roundNumber.textContent = ROUND_LABELS[Math.min(currentRound - 1, ROUND_LABELS.length - 1)];
     roundTimer.textContent = "00:30";
     roundGate.hidden = true;
     resultGate.hidden = true;
+    beGate.hidden = true;
     achievementGate.hidden = true;
+    encoreButton.hidden = false;
     startButton.disabled = false;
     startButton.textContent = "开始游戏";
     laneButtons.forEach(function (button) {
@@ -1139,7 +1152,7 @@
     if (state === "loading" || state === "playing") return;
     state = "loading";
     startButton.disabled = true;
-    startButton.textContent = "正在接入...";
+    startButton.textContent = "加载中……";
     loadAudio().then(startRound);
   }
 
@@ -1153,6 +1166,36 @@
     guideProgress.textContent = guidePage + 1 + " / " + guidePages.length;
     guideBack.hidden = guidePage === 0;
     startButton.textContent = guidePage === guidePages.length - 1 ? "开始游戏" : "下一页";
+  }
+
+  function renderBeEnding() {
+    bePages.forEach(function (page, index) {
+      var active = index === bePage;
+      page.classList.toggle("is-active", active);
+      page.setAttribute("aria-hidden", String(!active));
+    });
+    beBack.hidden = bePage === 0;
+    beNext.hidden = bePage === bePages.length - 1;
+    beExit.hidden = bePage !== bePages.length - 1;
+  }
+
+  function resetBeEnding() {
+    bePage = 0;
+    beGate.classList.remove("is-cleared");
+    beReveal.hidden = false;
+    beStory.hidden = true;
+    renderBeEnding();
+    window.setTimeout(function () { beReveal.focus(); }, 120);
+  }
+
+  function revealBeEnding() {
+    beGate.classList.add("is-cleared");
+    beReveal.hidden = true;
+    window.setTimeout(function () {
+      beStory.hidden = false;
+      renderBeEnding();
+      beNext.focus();
+    }, reduceMotion ? 0 : 620);
   }
 
   function achievementInCart() {
@@ -1242,8 +1285,8 @@
     var available = isMobile && fullscreenSupported();
     var active = !!fullscreenElement();
     fullscreenButton.hidden = !available;
-    fullscreenButton.textContent = active ? "退出全屏" : "全屏";
-    fullscreenButton.setAttribute("aria-label", active ? "退出全屏" : "进入全屏");
+    fullscreenButton.textContent = active ? "退出全屏" : "开启全屏";
+    fullscreenButton.setAttribute("aria-label", active ? "退出全屏" : "开启全屏");
     rotateFullscreenButton.hidden = !(available && mobileAccepted && isPortrait());
   }
 
@@ -1263,6 +1306,7 @@
       if (state === "result") {
         resultGate.hidden = true;
         achievementGate.hidden = true;
+        beGate.hidden = true;
       }
       return;
     }
@@ -1271,8 +1315,7 @@
       roundGate.hidden = achievementPending;
     }
     if (state === "result") {
-      achievementGate.hidden = !achievementPending;
-      resultGate.hidden = achievementPending;
+      showRoundOutcome();
     }
   }
 
@@ -1315,8 +1358,18 @@
   rotateFullscreenButton.addEventListener("click", requestImmersiveView);
   utsugiAssist.addEventListener("click", toggleAssist);
   encoreButton.addEventListener("click", function () {
+    if (currentRound >= ROUND_LABELS.length) return;
     currentRound += 1;
     startRound();
+  });
+  beReveal.addEventListener("click", revealBeEnding);
+  beBack.addEventListener("click", function () {
+    bePage = Math.max(0, bePage - 1);
+    renderBeEnding();
+  });
+  beNext.addEventListener("click", function () {
+    bePage = Math.min(bePages.length - 1, bePage + 1);
+    renderBeEnding();
   });
   addAchievementCart.addEventListener("click", addAchievementToCart);
   soundButton.addEventListener("click", function () {
