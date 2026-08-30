@@ -1,7 +1,6 @@
 /* Shared navigation and footer details for every standard site page. */
 
-.menu-list a{font-size:clamp(2.2rem,7vw,4.4rem)!important;}
-.menu-list a .no{display:none!important;}
+.tsu-mark{width:150px;height:auto;color:var(--paper);opacity:.85;}
 
 .foot{padding:clamp(2.4rem,6vh,4rem) clamp(1.2rem,5vw,3.4rem) clamp(3rem,8vh,5rem);border-top:1px solid rgba(255,134,189,.16);display:flex;flex-direction:column;gap:1.6rem;background:var(--ink);position:relative;z-index:2;}
 .foot .disc{font-family:var(--mono);font-size:.58rem;line-height:1.95;color:var(--muted);max-width:58rem;margin:0;}
@@ -18,9 +17,5 @@
   .topbar-right{flex:0 0 auto;gap:.6rem!important;}
   .topbar-right .live-now{min-width:58px;padding:.42rem .52rem;}
   .burger{flex:0 0 30px;width:30px;}
-  #menu{overflow-y:auto;padding-top:4.5rem!important;}
-  .menu-list{justify-content:flex-start!important;flex:0 0 auto!important;margin:auto 0!important;}
-  .menu-list a{font-size:clamp(2.15rem,11vw,3.55rem)!important;padding:.2rem 0!important;}
-  .menu-lang{margin-top:.65rem!important;}
   .foot .cred span{min-width:7.4rem;}
 }
