@@ -12,7 +12,7 @@
   <link rel="preload" as="image" href="assets/live/lane-o2.png" />
   <link rel="preload" as="image" href="assets/live/lane-l.png" />
   <link rel="preload" as="image" href="assets/live/utsugi-helper.png" />
-  <link rel="stylesheet" href="live-experience-20260830h.css?v=20260830i" />
+  <link rel="stylesheet" href="live-experience-20260830h.css?v=20260830j" />
 </head>
 <body>
   <main class="broadcast" id="broadcast">
@@ -37,7 +37,7 @@
         <b>TSUKUMO99</b><span>UNOFFICIAL FANWEB</span>
       </a>
       <div class="round-readout" aria-live="polite">
-        <span>ROUND <b id="roundNumber">01</b></span>
+        <span>ROUND <b id="roundNumber">1</b></span>
         <strong id="roundTimer">00:30</strong>
         <span>HIT <b id="hitCount">000</b></span>
         <span>COMBO <b id="comboCount">000</b></span>
@@ -162,12 +162,11 @@
     </section>
 
     <section class="result-gate" id="resultGate" role="dialog" aria-modal="true" aria-labelledby="resultTitle" hidden>
-      <span>ROUND COMPLETE</span>
+      <span id="resultRoundLabel">ROUND 1</span>
       <h1 id="resultTitle">HIT <b id="resultScore">000</b></h1>
-      <p>MAX COMBO <b id="resultMaxCombo">000</b>　直播仍在继续。</p>
       <div class="result-actions">
-        <button type="button" id="encoreButton">NEXT ROUND</button>
-        <a href="index.html">LEAVE LIVE</a>
+        <button type="button" id="encoreButton">下一关</button>
+        <a href="index.html">退出游戏</a>
       </div>
     </section>
 
@@ -228,6 +227,6 @@
     <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
   </main>
   <script src="live-achievement-cart.js?v=20260830a"></script>
-  <script src="live-experience-20260830h.js?v=20260830i"></script>
+  <script src="live-experience-20260830h.js?v=20260830j"></script>
 </body>
 </html>

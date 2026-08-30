@@ -12,8 +12,8 @@
   var guidePages = Array.prototype.slice.call(document.querySelectorAll("[data-guide-page]"));
   var guideDots = Array.prototype.slice.call(document.querySelectorAll(".rule-dots i"));
   var resultGate = document.getElementById("resultGate");
+  var resultRoundLabel = document.getElementById("resultRoundLabel");
   var resultScore = document.getElementById("resultScore");
-  var resultMaxCombo = document.getElementById("resultMaxCombo");
   var encoreButton = document.getElementById("encoreButton");
   var beGate = document.getElementById("beGate");
   var beReveal = document.getElementById("beReveal");
@@ -61,9 +61,11 @@
   var ROUND_MS = 30000;
   var BEAT_MS = 500;
   var TRAVEL_MS = 3200;
-  var PERFECT_WINDOW = 78;
-  var GOOD_WINDOW = 175;
   var ROUND_LABELS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "9.9"];
+  var ROUND_DIFFICULTY_RATIO = Math.pow(4, 1 / (ROUND_LABELS.length - 1));
+  var coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+  var PERFECT_WINDOW = coarsePointer ? 105 : 86;
+  var GOOD_WINDOW = coarsePointer ? 230 : 190;
   var laneLetters = ["Z", "O", "O", "L"];
   var laneMembers = ["TORAO", "HARUKA", "TOMA", "MINAMI"];
   var CHARGE_KEY = "tsukumo99-live-charge-v1";
@@ -120,7 +122,6 @@
   var obstacleTimer = 0;
   var helperTapTimer = 0;
   var tauntTimer = 0;
-  var achievementEndTimer = 0;
   var statusTimer = 0;
   var effectTimers = {};
   var performerTimers = [0, 0, 0, 0];
@@ -133,6 +134,9 @@
   var assistActive = false;
   var bePage = 0;
   var beEndingPending = false;
+  var currentRoundProfile = getRoundProfile(1);
+  var openingNoteCounts = countOpeningNotes();
+  var chargeGainByLane = openingNoteCounts.map(function (count) { return count ? 99 / count : 99; });
   var chargeValues = loadChargeValues();
   var achievementEarned = readStoredValue(ACHIEVEMENT_KEY) === "1";
   var achievementPending = achievementEarned && !achievementInCart();
@@ -170,6 +174,75 @@
     return String(value).padStart(length, "0");
   }
 
+  function roundTo25(value) {
+    return Math.max(250, Math.round(value / 25) * 25);
+  }
+
+  function getRoundProfile(round) {
+    var index = clamp(Math.round(Number(round) || 1) - 1, 0, ROUND_LABELS.length - 1);
+    var difficulty = .5 * Math.pow(ROUND_DIFFICULTY_RATIO, index);
+    var progress = index / (ROUND_LABELS.length - 1);
+    return {
+      index: index,
+      label: ROUND_LABELS[index],
+      difficulty: difficulty,
+      stepMs: roundTo25(BEAT_MS / difficulty),
+      holdRate: index === 0 ? 0 : .035 * difficulty,
+      chordRate: index < 2 ? 0 : .045 * difficulty,
+      obstacleMeanMs: 3700 / difficulty,
+      obstacleJitter: .22,
+      obstacleDuration: Math.round(1450 + 600 * progress),
+      handChance: .5 + .2 * progress
+    };
+  }
+
+  function occursAtRate(step, rate, phase) {
+    if (!rate) return false;
+    return Math.floor((step + 1) * rate + phase) > Math.floor(step * rate + phase);
+  }
+
+  function createRoundPlan(round, startTime) {
+    var profile = getRoundProfile(round);
+    var pattern = lanePatterns[profile.index % lanePatterns.length];
+    var laneBusyUntil = [0, 0, 0, 0];
+    var plan = [];
+    var hitAt = startTime + TRAVEL_MS;
+    var finalHitAt = startTime + ROUND_MS - 320;
+    var step = 0;
+    while (hitAt <= finalHitAt) {
+      var lane = pattern[step % pattern.length];
+      for (var attempt = 0; attempt < 4 && laneBusyUntil[lane] > hitAt; attempt += 1) lane = (lane + 1) % 4;
+
+      var candidateHoldDuration = Math.max(650, Math.round(profile.stepMs * (step % 2 ? 2 : 2.5)));
+      var isHold = profile.index > 0 && occursAtRate(step, profile.holdRate, .8) && hitAt + candidateHoldDuration <= startTime + ROUND_MS - 250;
+      var isOpeningChord = profile.index === 1 && hitAt + profile.stepMs > finalHitAt;
+      var isChord = !isHold && (isOpeningChord || occursAtRate(step, profile.chordRate, .43));
+      var holdDuration = isHold ? candidateHoldDuration : 0;
+      var chordId = isChord ? "chord-" + profile.label + "-" + step : "";
+
+      plan.push({ lane: lane, hitAt: hitAt, kind: isHold ? "hold" : "tap", holdDuration: holdDuration, chord: chordId });
+      if (isHold) laneBusyUntil[lane] = hitAt + holdDuration + profile.stepMs * .4;
+      if (isChord) {
+        var secondLane = (lane + 2) % 4;
+        for (var secondAttempt = 0; secondAttempt < 4 && (secondLane === lane || laneBusyUntil[secondLane] > hitAt); secondAttempt += 1) secondLane = (secondLane + 1) % 4;
+        if (secondLane !== lane && laneBusyUntil[secondLane] <= hitAt) {
+          plan.push({ lane: secondLane, hitAt: hitAt, kind: "tap", holdDuration: 0, chord: chordId });
+        }
+      }
+      hitAt += profile.stepMs;
+      step += 1;
+    }
+    return plan;
+  }
+
+  function countOpeningNotes() {
+    var counts = [0, 0, 0, 0];
+    [1, 2].forEach(function (round) {
+      createRoundPlan(round, 0).forEach(function (note) { counts[note.lane] += 1; });
+    });
+    return counts;
+  }
+
   function readStoredValue(key) {
     try { return window.localStorage.getItem(key); } catch (error) { return null; }
   }
@@ -191,12 +264,13 @@
   function renderChargeValues() {
     performerCards.forEach(function (card, lane) {
       var value = chargeValues[lane];
+      var displayValue = Math.min(99, Math.floor(value + .0001));
       var output = card.querySelector(".charge-value");
       card.style.setProperty("--charge", value);
       card.style.setProperty("--charge-empty", 100 - value);
       card.classList.toggle("is-full", value >= 99);
-      card.setAttribute("aria-label", laneLetters[lane] + " 轨道 " + laneMembers[lane] + "，应援能量 " + value + "%");
-      if (output) output.textContent = value + "%";
+      card.setAttribute("aria-label", laneLetters[lane] + " 轨道 " + laneMembers[lane] + "，应援能量 " + displayValue + "%");
+      if (output) output.textContent = displayValue + "%";
     });
   }
 
@@ -208,15 +282,12 @@
     showAudioStatus("成就解锁：月云的兵");
     playSound("full");
     vibrate([24, 34, 24, 34, 60]);
-    window.clearTimeout(achievementEndTimer);
-    achievementEndTimer = window.setTimeout(function () {
-      if (state === "playing") endRound();
-    }, 720);
   }
 
   function chargePerformer(lane) {
     if (chargeValues[lane] >= 99) return;
-    chargeValues[lane] = Math.min(99, chargeValues[lane] + 1);
+    var nextValue = chargeValues[lane] + chargeGainByLane[lane];
+    chargeValues[lane] = nextValue >= 98.999 ? 99 : Math.min(99, nextValue);
     saveChargeValues();
     renderChargeValues();
     if (chargeValues[lane] >= 99) celebrateFullCard(lane);
@@ -765,27 +836,9 @@
 
   function buildChart(startTime) {
     chartNotes = [];
-    var pattern = lanePatterns[(currentRound - 1) % lanePatterns.length];
-    var laneBusyUntil = [0, 0, 0, 0];
-    var hitAt = startTime + TRAVEL_MS;
-    var step = 0;
-    while (hitAt <= startTime + ROUND_MS - 320) {
-      var lane = pattern[step % pattern.length];
-      for (var attempt = 0; attempt < 4 && laneBusyUntil[lane] > hitAt; attempt += 1) lane = (lane + 1) % 4;
-      var isHold = step > 2 && (step % 11 === 5 || step % 17 === 9);
-      var holdDuration = isHold ? (step % 2 ? BEAT_MS * 1.5 : BEAT_MS * 2) : 0;
-      var chordId = "";
-      if (!isHold && step > 0 && step % 8 === 7) chordId = "chord-" + step;
-      addChartNote(lane, hitAt, isHold ? "hold" : "tap", holdDuration, chordId);
-      if (isHold) laneBusyUntil[lane] = hitAt + holdDuration + BEAT_MS * .45;
-      if (chordId) {
-        var secondLane = (lane + 2) % 4;
-        if (laneBusyUntil[secondLane] > hitAt) secondLane = (secondLane + 1) % 4;
-        addChartNote(secondLane, hitAt, "tap", 0, chordId);
-      }
-      hitAt += BEAT_MS;
-      step += 1;
-    }
+    createRoundPlan(currentRound, startTime).forEach(function (note) {
+      addChartNote(note.lane, note.hitAt, note.kind, note.holdDuration, note.chord);
+    });
   }
 
   function launchPerfectBeam(lane) {
@@ -1022,8 +1075,8 @@
 
   function spawnRyoObstacle() {
     if (state !== "playing" || reduceMotion) return;
-    var variants = ["obstacle-peek", "obstacle-hand", "obstacle-hand", "obstacle-hand", "obstacle-sweep"];
-    var variant = variants[Math.floor(Math.random() * variants.length)];
+    var obstacleRoll = Math.random();
+    var variant = obstacleRoll < currentRoundProfile.handChance ? "obstacle-hand" : (obstacleRoll < currentRoundProfile.handChance + (1 - currentRoundProfile.handChance) * .48 ? "obstacle-peek" : "obstacle-sweep");
     var obstacle = document.createElement("i");
     obstacle.className = "ryo-obstacle " + variant;
     if (variant === "obstacle-hand") {
@@ -1050,15 +1103,16 @@
       obstacle.appendChild(sweepCopy);
     }
     obstacleLayer.appendChild(obstacle);
-    window.setTimeout(function () { obstacle.remove(); }, 1750);
+    window.setTimeout(function () { obstacle.remove(); }, currentRoundProfile.obstacleDuration);
   }
 
   function scheduleObstacle() {
     if (state !== "playing") return;
+    var jitter = 1 + (Math.random() * 2 - 1) * currentRoundProfile.obstacleJitter;
     obstacleTimer = window.setTimeout(function () {
       spawnRyoObstacle();
       scheduleObstacle();
-    }, 2800 + Math.random() * 1800);
+    }, currentRoundProfile.obstacleMeanMs * jitter);
   }
 
   function clearObstacles() {
@@ -1084,7 +1138,6 @@
     if (state !== "playing") return;
     state = "result";
     window.cancelAnimationFrame(frameRequest);
-    window.clearTimeout(achievementEndTimer);
     setAssist(false);
     clearObstacles();
     roundTimer.textContent = "00:00";
@@ -1092,8 +1145,8 @@
     laneButtons.forEach(function (button) { button.disabled = true; });
     broadcast.classList.remove("is-playing");
     playSound("full");
+    resultRoundLabel.textContent = "ROUND " + ROUND_LABELS[Math.min(currentRound - 1, ROUND_LABELS.length - 1)];
     resultScore.textContent = padNumber(hits, 3);
-    resultMaxCombo.textContent = padNumber(maxCombo, 3);
     beEndingPending = currentRound >= ROUND_LABELS.length && !chargeValues.every(function (value) { return value >= 99; });
     encoreButton.hidden = currentRound >= ROUND_LABELS.length;
     renderCanvas(performance.now());
@@ -1123,10 +1176,10 @@
     laneOwners = [null, null, null, null];
     lanePulseEnds = [0, 0, 0, 0];
     assistActive = false;
-    window.clearTimeout(achievementEndTimer);
     clearObstacles();
     resizeCanvas();
     updateScore();
+    currentRoundProfile = getRoundProfile(currentRound);
     roundNumber.textContent = ROUND_LABELS[Math.min(currentRound - 1, ROUND_LABELS.length - 1)];
     roundTimer.textContent = "00:30";
     roundGate.hidden = true;
