@@ -25,38 +25,35 @@
 
   var T={
     cn:{kicker:"GOODS · 限定发售",shopTitle:"周边",limited:"限定 / LIMITED",addCart:"加入购物车",buyNow:"立即购买",
-        tracklist:"曲目",format:"规格",ships:"全球配送 · 模拟",
+        tracklist:"曲目",format:"规格",ships:"全球配送",
         cart:"购物车",cartEmpty:"购物车是空的",continueShop:"继续购物",qty:"数量",remove:"移除",
-        subtotal:"小计",checkout:"去结算",note:"商品、库存与配送均为虚构占位，仅用于演示下单流程。",
+        subtotal:"小计",checkout:"去结算",
         coTitle:"结算",backShop:"← 返回商店",order:"订单",ship:"收货信息",name:"收货人姓名",
-        phone:"手机号（选填）",address:"收货地址（选填）",pay:"支付方式",mockPay:"模拟银行卡 · 可留空",
+        phone:"手机号（选填）",address:"收货地址（选填）",pay:"支付方式",
         card:"卡号",exp:"有效期",cvv:"CVV",total:"合计",freeShip:"包邮",payNow:"立即支付",paying:"支付中…",
-        mockNote:"纯前端模拟：不会发生真实支付，也不会上传或收集任何信息。",
         okTitle:"支付成功",orderNo:"订单号",receiver:"收货人",amount:"实付",
-        thanks:"感谢支持 · 这是一次模拟下单",backShop2:"返回商店",needName:"请填写收货人姓名",
-        namePH:"将印在订单上的名字",phonePH:"仅本地演示，可留空",addrPH:"仅本地演示，可留空",cardPH:"0000 0000 0000 0000"},
+        thanks:"感谢支持 · 这是一次模拟下单",backShop2:"返回商店",needName:"请填写虚构的收货人姓名",
+        namePH:"仅供娱乐，请勿填写真实信息",phonePH:"仅供娱乐，请勿填写真实信息",addrPH:"仅供娱乐，请勿填写真实信息",cardPH:"0000 0000 0000 0000"},
     jp:{kicker:"GOODS · 数量限定",shopTitle:"グッズ",limited:"限定 / LIMITED",addCart:"カートに入れる",buyNow:"今すぐ購入",
-        tracklist:"収録曲",format:"仕様",ships:"世界配送 · シミュレーション",
+        tracklist:"収録曲",format:"仕様",ships:"世界配送",
         cart:"カート",cartEmpty:"カートは空です",continueShop:"買い物を続ける",qty:"数量",remove:"削除",
-        subtotal:"小計",checkout:"レジへ進む",note:"商品・在庫・配送はすべて架空のプレースホルダーで、購入フローのデモ用です。",
+        subtotal:"小計",checkout:"レジへ進む",
         coTitle:"お会計",backShop:"← ショップに戻る",order:"注文",ship:"お届け先",name:"お名前",
-        phone:"電話番号（任意）",address:"住所（任意）",pay:"お支払い方法",mockPay:"ダミーカード · 空欄可",
+        phone:"電話番号（任意）",address:"住所（任意）",pay:"お支払い方法",
         card:"カード番号",exp:"有効期限",cvv:"CVV",total:"合計",freeShip:"送料無料",payNow:"支払う",paying:"処理中…",
-        mockNote:"フロントエンドのみのシミュレーション：実際の決済も情報収集も行いません。",
         okTitle:"支払い完了",orderNo:"注文番号",receiver:"お届け先",amount:"支払額",
-        thanks:"ご支援ありがとうございます · これはシミュレーションです",backShop2:"ショップへ戻る",needName:"お名前を入力してください",
-        namePH:"注文に印字される名前",phonePH:"ローカルデモのみ · 空欄可",addrPH:"ローカルデモのみ · 空欄可",cardPH:"0000 0000 0000 0000"},
+        thanks:"ご支援ありがとうございます · これはシミュレーションです",backShop2:"ショップへ戻る",needName:"架空のお名前を入力してください",
+        namePH:"娯楽用です。実際の個人情報は入力しないでください",phonePH:"娯楽用です。実際の個人情報は入力しないでください",addrPH:"娯楽用です。実際の個人情報は入力しないでください",cardPH:"0000 0000 0000 0000"},
     en:{kicker:"GOODS · LIMITED DROP",shopTitle:"GOODS",limited:"LIMITED",addCart:"ADD TO CART",buyNow:"BUY NOW",
-        tracklist:"TRACKLIST",format:"FORMAT",ships:"WORLDWIDE · SIMULATED",
+        tracklist:"TRACKLIST",format:"FORMAT",ships:"WORLDWIDE SHIPPING",
         cart:"CART",cartEmpty:"Your cart is empty",continueShop:"Continue shopping",qty:"QTY",remove:"Remove",
-        subtotal:"Subtotal",checkout:"Checkout",note:"Product, stock and shipping are fictional placeholders — a demo of the ordering flow only.",
+        subtotal:"Subtotal",checkout:"Checkout",
         coTitle:"CHECKOUT",backShop:"← Back to shop",order:"Order",ship:"Shipping",name:"Recipient name",
-        phone:"Phone (optional)",address:"Address (optional)",pay:"Payment",mockPay:"Dummy card · may be left blank",
+        phone:"Phone (optional)",address:"Address (optional)",pay:"Payment",
         card:"Card number",exp:"Expiry",cvv:"CVV",total:"Total",freeShip:"Free",payNow:"Pay now",paying:"Processing…",
-        mockNote:"Front-end simulation only: no real payment, nothing uploaded or collected.",
         okTitle:"Payment complete",orderNo:"Order",receiver:"Recipient",amount:"Paid",
-        thanks:"Thanks for the support · this was a simulated order",backShop2:"Back to shop",needName:"Please enter a recipient name",
-        namePH:"Name to print on the order",phonePH:"Local demo only · optional",addrPH:"Local demo only · optional",cardPH:"0000 0000 0000 0000"}
+        thanks:"Thanks for the support · this was a simulated order",backShop2:"Back to shop",needName:"Please enter a fictional recipient name",
+        namePH:"For entertainment only. Do not enter real personal information.",phonePH:"For entertainment only. Do not enter real personal information.",addrPH:"For entertainment only. Do not enter real personal information.",cardPH:"0000 0000 0000 0000"}
   };
 
   /* ---------------- state ---------------- */
@@ -89,8 +86,7 @@
         +'<div class="pc-price">'+money(p.price)+'</div></a>';}).join("");
     app.innerHTML=
       '<div class="shop-head"><p class="shop-ey"><b>DiŹ</b>'+t.kicker+'</p><h1 class="shop-h1">'+t.shopTitle+'</h1></div>'
-      +'<div class="prod-grid">'+cards+'</div>'
-      +'<p class="shop-note">'+esc(t.note)+'</p>';
+      +'<div class="prod-grid">'+cards+'</div>';
   }
 
   /* ---------------- detail page ---------------- */
@@ -126,8 +122,7 @@
         +'</div>'
         +'<div class="ship-line">◈ '+t.ships+'</div>'
       +'</div>'
-      +'</section>'
-      +'<p class="shop-note">'+esc(t.note)+'</p>';
+      +'</section>';
   }
 
   function renderCart(){
@@ -197,10 +192,9 @@
           +field("name",t.name,form.name,t.namePH)
           +field("phone",t.phone,form.phone,t.phonePH)
           +field("address",t.address,form.address,t.addrPH)
-          +'<div class="co-sec-h">'+t.pay+'<em>'+t.mockPay+'</em></div>'
+          +'<div class="co-sec-h">'+t.pay+'</div>'
           +field("card",t.card,form.card,t.cardPH)
           +'<div class="co-two">'+field("exp",t.exp,form.exp,"MM/YY")+field("cvv",t.cvv,form.cvv,"000")+'</div>'
-          +'<p class="co-mock">'+esc(t.mockNote)+'</p>'
           +'<button class="btn-pay" data-act="pay">'+t.payNow+' · '+money(subtotal())+'</button>'
           +'<p class="co-err" id="coErr"></p>'
         +'</section>'
