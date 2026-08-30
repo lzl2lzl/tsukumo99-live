@@ -12,7 +12,7 @@
   <link rel="preload" as="image" href="assets/live/lane-o2.png" />
   <link rel="preload" as="image" href="assets/live/lane-l.png" />
   <link rel="preload" as="image" href="assets/live/utsugi-helper.png" />
-  <link rel="stylesheet" href="live-experience.css?v=20260830c" />
+  <link rel="stylesheet" href="live-experience.css?v=20260830d" />
 </head>
 <body>
   <main class="broadcast" id="broadcast">
@@ -51,26 +51,26 @@
 
     <section class="playfield" aria-label="ZOOL 四轨直播互动游戏">
       <div class="performer-deck" id="performerDeck" aria-label="四条轨道对应角色">
-        <figure class="performer-card card-z" data-lane="0" aria-label="Z 轨道角色">
-          <img src="assets/live/lane-z.png" alt="" />
-          <span class="charge-fill" aria-hidden="true"><i></i></span>
-          <output class="charge-value">0%</output>
-          <i class="card-signal" aria-hidden="true"></i>
-        </figure>
-        <figure class="performer-card card-o1" data-lane="1" aria-label="第一个 O 轨道角色">
-          <img src="assets/live/lane-o1.png" alt="" />
-          <span class="charge-fill" aria-hidden="true"><i></i></span>
-          <output class="charge-value">0%</output>
-          <i class="card-signal" aria-hidden="true"></i>
-        </figure>
-        <figure class="performer-card card-o2" data-lane="2" aria-label="第二个 O 轨道角色">
+        <figure class="performer-card card-z" data-lane="0" aria-label="Z 轨道 TORAO">
           <img src="assets/live/lane-o2.png" alt="" />
           <span class="charge-fill" aria-hidden="true"><i></i></span>
           <output class="charge-value">0%</output>
           <i class="card-signal" aria-hidden="true"></i>
         </figure>
-        <figure class="performer-card card-l" data-lane="3" aria-label="L 轨道角色">
+        <figure class="performer-card card-o1" data-lane="1" aria-label="第一个 O 轨道 HARUKA">
+          <img src="assets/live/lane-z.png" alt="" />
+          <span class="charge-fill" aria-hidden="true"><i></i></span>
+          <output class="charge-value">0%</output>
+          <i class="card-signal" aria-hidden="true"></i>
+        </figure>
+        <figure class="performer-card card-o2" data-lane="2" aria-label="第二个 O 轨道 TOMA">
           <img src="assets/live/lane-l.png" alt="" />
+          <span class="charge-fill" aria-hidden="true"><i></i></span>
+          <output class="charge-value">0%</output>
+          <i class="card-signal" aria-hidden="true"></i>
+        </figure>
+        <figure class="performer-card card-l" data-lane="3" aria-label="L 轨道 MINAMI">
+          <img src="assets/live/lane-o1.png" alt="" />
           <span class="charge-fill" aria-hidden="true"><i></i></span>
           <output class="charge-value">0%</output>
           <i class="card-signal" aria-hidden="true"></i>
@@ -99,16 +99,16 @@
       </div>
 
       <div class="lane-controls" aria-label="ZOOL 舞台效果按钮">
-        <button type="button" class="lane-button lane-z" data-lane="0" data-effect="core" aria-label="Z 轨道判定键">
+        <button type="button" class="lane-button lane-z" data-lane="0" aria-label="Z 轨道判定键">
           <span class="letter">Z</span>
         </button>
-        <button type="button" class="lane-button lane-o1" data-lane="1" data-effect="bubble" aria-label="第一个 O 轨道判定键">
+        <button type="button" class="lane-button lane-o1" data-lane="1" aria-label="第一个 O 轨道判定键">
           <span class="letter">O</span>
         </button>
-        <button type="button" class="lane-button lane-o2" data-lane="2" data-effect="bubble" aria-label="第二个 O 轨道判定键">
+        <button type="button" class="lane-button lane-o2" data-lane="2" aria-label="第二个 O 轨道判定键">
           <span class="letter">O</span>
         </button>
-        <button type="button" class="lane-button lane-l" data-lane="3" data-effect="violet" aria-label="L 轨道判定键">
+        <button type="button" class="lane-button lane-l" data-lane="3" aria-label="L 轨道判定键">
           <span class="letter">L</span>
         </button>
       </div>
@@ -178,10 +178,10 @@
       <h1 id="achievementTitle">月云的兵</h1>
       <p>四位成员的应援能量均已达到 99%。留下你的名字，领取本场 LIVE 的非官方粉丝纪念证书。</p>
       <div class="achievement-charge" aria-label="四轨能量全部达到百分之九十九">
-        <i style="--portrait:url('assets/live/lane-z.png')"><b>99%</b></i>
-        <i style="--portrait:url('assets/live/lane-o1.png')"><b>99%</b></i>
         <i style="--portrait:url('assets/live/lane-o2.png')"><b>99%</b></i>
+        <i style="--portrait:url('assets/live/lane-z.png')"><b>99%</b></i>
         <i style="--portrait:url('assets/live/lane-l.png')"><b>99%</b></i>
+        <i style="--portrait:url('assets/live/lane-o1.png')"><b>99%</b></i>
       </div>
       <label class="certificate-name" for="certificateName"><span>持证人姓名</span><input id="certificateName" maxlength="30" autocomplete="name" placeholder="输入你的名字" /></label>
       <small class="certificate-error" id="certificateError" role="alert"></small>
@@ -195,6 +195,6 @@
     <div class="screen-flash" aria-hidden="true"></div>
     <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
   </main>
-  <script src="live-experience.js?v=20260830c"></script>
+  <script src="live-experience.js?v=20260830d"></script>
 </body>
 </html>

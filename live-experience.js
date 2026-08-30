@@ -46,15 +46,16 @@
   var PERFECT_WINDOW = 78;
   var GOOD_WINDOW = 175;
   var laneLetters = ["Z", "O", "O", "L"];
+  var laneMembers = ["TORAO", "HARUKA", "TOMA", "MINAMI"];
   var CHARGE_KEY = "tsukumo99-live-charge-v1";
   var ACHIEVEMENT_KEY = "tsukumo99-live-achievement-v1";
-  var laneEffects = ["core", "bubble", "bubble", "violet"];
   var laneColors = [
-    { solid: "#ec0050", soft: "rgba(236,0,80,.25)", pale: "rgba(255,134,189,.7)" },
-    { solid: "#ff86bd", soft: "rgba(255,134,189,.2)", pale: "rgba(255,244,247,.78)" },
-    { solid: "#ff86bd", soft: "rgba(255,134,189,.2)", pale: "rgba(255,244,247,.78)" },
-    { solid: "#c758ff", soft: "rgba(199,88,255,.22)", pale: "rgba(239,195,255,.8)" }
+    { solid: "#a9776a", soft: "rgba(169,119,106,.25)", pale: "rgba(223,189,180,.86)" },
+    { solid: "#a6c9ae", soft: "rgba(166,201,174,.23)", pale: "rgba(222,241,226,.88)" },
+    { solid: "#c34a5c", soft: "rgba(195,74,92,.25)", pale: "rgba(244,178,187,.86)" },
+    { solid: "#e0cfab", soft: "rgba(224,207,171,.23)", pale: "rgba(255,244,219,.9)" }
   ];
+  var trackColor = { solid: "#ec0050", soft: "rgba(236,0,80,.2)", pale: "rgba(255,134,189,.78)" };
   var cropRects = [
     { name: "脸", x: .11, y: .13, w: .38, h: .43 },
     { name: "眼睛", x: .21, y: .23, w: .22, h: .22 },
@@ -77,6 +78,7 @@
     core: "assets/audio/grape-nectar/main-core.wav",
     full: "assets/audio/grape-nectar/full.wav"
   };
+  var tapSoundSequence = ["core", "bubble", "violet"];
 
   var heroImage = new Image();
   heroImage.src = "assets/hero-desktop-square.jpg";
@@ -134,6 +136,7 @@
   var activeSources = {};
   var loadingPromise = null;
   var soundOn = true;
+  var tapSoundIndex = 0;
 
   Object.keys(audioFiles).forEach(function (name) { fallbackAudio[name] = null; });
 
@@ -174,7 +177,7 @@
       card.style.setProperty("--charge", value);
       card.style.setProperty("--charge-empty", 100 - value);
       card.classList.toggle("is-full", value >= 99);
-      card.setAttribute("aria-label", laneLetters[lane] + " 轨道角色，应援能量 " + value + "%");
+      card.setAttribute("aria-label", laneLetters[lane] + " 轨道 " + laneMembers[lane] + "，应援能量 " + value + "%");
       if (output) output.textContent = value + "%";
     });
   }
@@ -198,6 +201,7 @@
     chargeValues[lane] = Math.min(99, chargeValues[lane] + 1);
     saveChargeValues();
     renderChargeValues();
+    if (chargeValues[lane] >= 99) celebrateFullCard(lane);
     if (chargeValues.every(function (value) { return value >= 99; })) unlockAchievement();
   }
 
@@ -309,6 +313,12 @@
     } catch (error) {}
   }
 
+  function playNextTapSound() {
+    var name = tapSoundSequence[tapSoundIndex];
+    tapSoundIndex = (tapSoundIndex + 1) % tapSoundSequence.length;
+    playSound(name);
+  }
+
   function vibrate(pattern) {
     if (navigator.vibrate) navigator.vibrate(pattern);
   }
@@ -330,28 +340,38 @@
     window.setTimeout(function () { button.classList.remove("firing"); }, 180);
   }
 
-  function spawnBubbles(x, y, count) {
+  function spawnBubbles(x, y, count, color, variant) {
     if (reduceMotion) return;
     for (var index = 0; index < count; index += 1) {
       var particle = document.createElement("i");
-      particle.className = "bubble-particle";
+      particle.className = "bubble-particle" + (variant === "charge" ? " charge-bubble" : "");
       particle.style.left = x - 12 + Math.random() * 24 + "px";
       particle.style.top = y - 8 + Math.random() * 18 + "px";
+      particle.style.setProperty("--bubble-color", color || "#ff86bd");
       particle.style.setProperty("--drift", -70 + Math.random() * 140 + "px");
       particle.style.animationDelay = Math.random() * .12 + "s";
       effectLayer.appendChild(particle);
       window.setTimeout((function (node) {
         return function () { node.remove(); };
-      })(particle), 1700);
+      })(particle), variant === "charge" ? 2050 : 1700);
     }
   }
 
-  function triggerEffect(effect, x, y) {
+  function celebrateFullCard(lane) {
+    var card = performerCards[lane];
+    if (!card) return;
+    card.classList.remove("just-full");
+    card.getBoundingClientRect();
+    card.classList.add("just-full");
+    var rect = card.getBoundingClientRect();
+    spawnBubbles(rect.left + rect.width / 2, rect.bottom - 6, 28, laneColors[lane].solid, "charge");
+    vibrate([18, 24, 18, 24, 42]);
+    window.setTimeout(function () { card.classList.remove("just-full"); }, 1450);
+  }
+
+  function triggerEffect() {
     restartClass("fx-hit", 250);
-    if (effect === "violet") restartClass("fx-violet", 1350);
-    if (effect === "bubble") spawnBubbles(x, y, 18);
-    playSound(effect);
-    vibrate(effect === "bubble" ? [12, 20, 12] : 20);
+    vibrate(20);
   }
 
   function showJudgment(label, tone) {
@@ -460,8 +480,8 @@
     for (var lane = 0; lane < 4; lane += 1) {
       var gradient = context.createLinearGradient(0, top, 0, bottom);
       gradient.addColorStop(0, "rgba(255,244,247,.025)");
-      gradient.addColorStop(.45, laneColors[lane].soft);
-      gradient.addColorStop(1, laneColors[lane].soft);
+      gradient.addColorStop(.45, trackColor.soft);
+      gradient.addColorStop(1, trackColor.soft);
       context.save();
       context.globalAlpha = alpha * (now < lanePulseEnds[lane] ? .9 : .48);
       context.beginPath();
@@ -480,7 +500,7 @@
         return function (amount) { return boundaryPosition(edge, amount); };
       })(boundary), false);
       context.lineWidth = boundary === 0 || boundary === 4 ? 1.45 : 1;
-      context.strokeStyle = boundary === 4 ? "rgba(199,88,255,.65)" : "rgba(236,0,80,.62)";
+      context.strokeStyle = "rgba(236,0,80,.62)";
       context.shadowColor = "rgba(236,0,80,.48)";
       context.shadowBlur = 10;
       context.globalAlpha = alpha;
@@ -493,8 +513,8 @@
       context.beginPath();
       traceCurve(function (amount) { return lanePosition(lane, amount); }, false);
       context.lineWidth = now < lanePulseEnds[lane] ? 2.2 : .8;
-      context.strokeStyle = now < lanePulseEnds[lane] ? laneColors[lane].pale : "rgba(255,244,247,.18)";
-      context.shadowColor = laneColors[lane].solid;
+      context.strokeStyle = now < lanePulseEnds[lane] ? trackColor.pale : "rgba(255,244,247,.18)";
+      context.shadowColor = trackColor.solid;
       context.shadowBlur = now < lanePulseEnds[lane] ? 18 : 0;
       context.globalAlpha = alpha;
       context.stroke();
@@ -709,7 +729,6 @@
     chartNotes.push({
       id: ++noteSequence,
       lane: lane,
-      effect: laneEffects[lane],
       letter: laneLetters[lane],
       crop: pickCrop(),
       kind: kind || "tap",
@@ -804,8 +823,7 @@
     pulseLane(note.lane, label.indexOf("PERFECT") !== -1 ? 620 : 360);
     pulsePerformer(note.lane, label.indexOf("PERFECT") !== -1);
     chargePerformer(note.lane);
-    var padRect = laneButtons[note.lane].querySelector(".letter").getBoundingClientRect();
-    triggerEffect(note.effect, padRect.left + padRect.width / 2, padRect.top + padRect.height / 2);
+    triggerEffect();
   }
 
   function missNote(note, label, tone, now) {
@@ -832,7 +850,7 @@
       activeInputs[token].note = note;
       laneButtons[note.lane].classList.add("holding-pad");
     }
-    showJudgment(auto ? "UTSUGI HOLD" : "HOLD", "hold");
+    showJudgment("HOLD", "hold");
     pulseLane(note.lane, 520);
     vibrate(16);
   }
@@ -844,8 +862,7 @@
       activeInputs[note.inputToken].note = null;
     }
     laneButtons[note.lane].classList.remove("holding-pad");
-    var prefix = note.autoHold ? "UTSUGI " : "HOLD ";
-    resolveNote(note, prefix + (note.grade || "PERFECT"), note.grade === "GOOD" ? "hold" : "perfect", now);
+    resolveNote(note, "HOLD " + (note.grade || "PERFECT"), note.grade === "GOOD" ? "hold" : "perfect", now);
   }
 
   function breakHold(note, now) {
@@ -896,6 +913,7 @@
 
   function handleLaneDown(lane, token) {
     if (state !== "playing" || lane < 0 || lane > 3 || activeInputs[token] || laneOwners[lane] !== null) return;
+    playNextTapSound();
     laneOwners[lane] = token;
     activeInputs[token] = { lane: lane, hold: false, note: null };
     laneButtons[lane].classList.add("pressed");
@@ -932,7 +950,7 @@
       moveUtsugiToLane(note.lane);
       fireButton(laneButtons[note.lane]);
       if (note.kind === "hold") beginHold(note, null, "PERFECT", true);
-      else resolveNote(note, "UTSUGI PERFECT", "perfect", now);
+      else resolveNote(note, "PERFECT", "perfect", now);
     });
   }
 
@@ -1075,6 +1093,7 @@
     combo = 0;
     maxCombo = 0;
     misses = 0;
+    tapSoundIndex = 0;
     activeInputs = {};
     laneOwners = [null, null, null, null];
     lanePulseEnds = [0, 0, 0, 0];
@@ -1202,8 +1221,8 @@
           drawing.fillRect(x, y, cardWidth, cardHeight);
         }
         var fill = drawing.createLinearGradient(0, y + cardHeight, 0, y);
-        fill.addColorStop(0, lane === 3 ? "rgba(199,88,255,.9)" : "rgba(236,0,80,.9)");
-        fill.addColorStop(.7, "rgba(255,134,189,.22)");
+        fill.addColorStop(0, laneColors[lane].solid);
+        fill.addColorStop(.7, laneColors[lane].soft);
         fill.addColorStop(1, "rgba(255,244,247,.08)");
         drawing.fillStyle = fill;
         drawing.fillRect(x, y + 2, cardWidth, cardHeight - 2);
