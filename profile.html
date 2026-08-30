@@ -184,19 +184,19 @@ document.getElementById("close").onclick=function(){b.classList.remove("menu-ope
 var WORDS=['NEW SENSATION','BREAK THE LIMITATION','FIRE','WHAT YOU WANT','IMPERIAL CHAIN','NEVER LOSE MY RULE','ZONE OF OVERLAP','LOOK AT','POISONOUS GANGSTER','TSUKUMO99','DiŹ','WORLD TOUR 2026'];
 var FACES={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
 var MEMBERS=[
- {key:'Ryo',full:'Tsukumo Ryo',hair:'#7b63b8',ink:'#241a44',role:{cn:'主唱',en:'VOCAL'},bio:{cn:'占位简介 · 待补真实文案。'}},
- {key:'Haruka',full:'Isumi Haruka',hair:'#a6c9ae',ink:'#274332',role:{cn:'吉他',en:'GUITAR'},bio:{cn:'占位简介 · 待补真实文案。'}},
- {key:'Toma',full:'Inumaru Toma',hair:'#c34a5c',ink:'#3d0f18',role:{cn:'贝斯',en:'BASS'},bio:{cn:'占位简介 · 待补真实文案。'}},
- {key:'Minami',full:'Natsume Minami',hair:'#e0cfab',ink:'#5c4622',role:{cn:'键盘',en:'KEYS'},bio:{cn:'占位简介 · 待补真实文案。'}},
- {key:'Torao',full:'Mido Torao',hair:'#a9776a',ink:'#43261d',role:{cn:'鼓',en:'DRUMS'},bio:{cn:'占位简介 · 待补真实文案。'}},
- {key:'Shiro',full:'Utsugi Shiro',hair:'#b6bccd',ink:'#33384a',role:{cn:'经纪人',en:'MANAGER'},bio:{cn:'占位简介 · 待补真实文案。'}}
+ {key:'Ryo',full:'Tsukumo Ryo',hair:'#7b63b8',ink:'#241a44',role:{cn:'主唱',jp:'ボーカル',en:'VOCAL'},bio:{cn:'占位简介 · 待补真实文案。'}},
+ {key:'Toma',full:'Inumaru Toma',hair:'#c34a5c',ink:'#3d0f18',role:{cn:'吉他',jp:'ギター',en:'GUITAR'},bio:{cn:'占位简介 · 待补真实文案。'}},
+ {key:'Haruka',full:'Isumi Haruka',hair:'#a6c9ae',ink:'#274332',role:{cn:'鼓',jp:'ドラム',en:'DRUMS'},bio:{cn:'占位简介 · 待补真实文案。'}},
+ {key:'Minami',full:'Natsume Minami',hair:'#e0cfab',ink:'#5c4622',role:{cn:'键盘',jp:'キーボード',en:'KEYBOARD'},bio:{cn:'占位简介 · 待补真实文案。'}},
+ {key:'Torao',full:'Mido Torao',hair:'#a9776a',ink:'#43261d',role:{cn:'贝斯',jp:'ベース',en:'BASS'},bio:{cn:'占位简介 · 待补真实文案。'}},
+ {key:'Shiro',full:'Utsugi Shiro',hair:'#b6bccd',ink:'#33384a',role:{cn:'经纪人',jp:'マネージャー',en:'MANAGER'},bio:{cn:'占位简介 · 待补真实文案。'}}
 ];
 var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var field=document.getElementById('field'),stage=document.getElementById('stage'),
     knob=document.getElementById('knob'),knobPips=document.getElementById('knobPips'),knobName=document.getElementById('knobName'),
     lyric=document.getElementById('lyric'),hint=document.getElementById('hint'),profile=document.getElementById('profile'),
     flash=document.getElementById('flash'),ring=document.getElementById('ring'),toggle=document.getElementById('toggle');
-var phase='off',ki=null;
+var phase='off',ki=null,currentLang='cn',currentMember=null;
 
 function rnd(n){return Math.floor(Math.random()*n);}
 function buildField(){
@@ -253,10 +253,13 @@ function settle(){
   showProfile(m);ribbons('exit');setField(false);hint.textContent='再拨一次 · 换一位';
 }
 function showProfile(m){
+  currentMember=m;
+  var localRole=m.role[currentLang]||m.role.cn;
+  var roleText=currentLang==='en'?localRole:localRole+' · '+m.role.en;
   profile.innerHTML='<div class="pbg" style="background:linear-gradient(160deg,'+m.hair+'44,#170006 62%);">'+
     '<div class="pinit" style="color:'+m.hair+';">'+m.key+'</div>'+
     '<div class="ptop"><div class="prole" style="color:'+m.hair+';">TSUKUMO99 · '+m.role.en+'</div><div class="pname">'+m.full+'</div></div>'+
-    '<div class="pbot"><div class="pchip" style="color:'+m.hair+';border-color:'+m.hair+'66;">'+m.role.cn+' · '+m.role.en+'</div><p>'+m.bio.cn+'</p></div></div>';
+    '<div class="pbot"><div class="pchip" style="color:'+m.hair+';border-color:'+m.hair+'66;">'+roleText+'</div><p>'+m.bio.cn+'</p></div></div>';
   profile.style.display='block';
 }
 /* interaction: tap = roll / re-roll · drag knob left (from a result) = back to first screen */
@@ -296,7 +299,7 @@ toggle.addEventListener('pointercancel',function(){if(pd&&pd.drag){knob.style.tr
 
 buildField();setKnobPips(5);setField(false);ribbons('park');
 
-document.querySelectorAll("button[data-lang]").forEach(function(btn){btn.onclick=function(){var L=btn.dataset.lang;document.querySelectorAll("button[data-lang]").forEach(function(x){x.classList.toggle("on",x.dataset.lang===L);});};});
+document.querySelectorAll("button[data-lang]").forEach(function(btn){btn.onclick=function(){currentLang=btn.dataset.lang;document.querySelectorAll("button[data-lang]").forEach(function(x){x.classList.toggle("on",x.dataset.lang===currentLang);});if(currentMember&&phase==='result')showProfile(currentMember);};});
 
 var frames=[];for(var i=0;i<7;i++){frames.push("assets/cheer-frame-"+i+".webp");new Image().src=frames[i];}
 var cheer=document.getElementById("cheer"),cImg=document.getElementById("cheerImg"),playing=false,drag=null;
