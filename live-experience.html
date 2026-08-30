@@ -12,11 +12,27 @@
   <link rel="preload" as="image" href="assets/live/lane-o2.png" />
   <link rel="preload" as="image" href="assets/live/lane-l.png" />
   <link rel="preload" as="image" href="assets/live/utsugi-helper.png" />
-  <link rel="stylesheet" href="live-experience-20260830q.css" />
+  <style>
+    html:not(.live-ready) body{margin:0;overflow:hidden;background:#120005}
+    html:not(.live-ready) .broadcast{visibility:hidden}
+    .live-boot{position:fixed;z-index:9999;inset:0;display:grid;place-content:center;gap:1rem;background:radial-gradient(circle at 50% 42%,#3a0014,#120005 68%);color:#fff4f7;text-align:center;transition:opacity .28s ease,visibility .28s ease}
+    .live-boot b{font:700 clamp(.72rem,2.4vw,1rem)/1 ui-monospace,"Space Mono",monospace;letter-spacing:.28em}
+    .live-boot span{display:flex;justify-content:center;gap:.45rem}
+    .live-boot i{width:7px;height:7px;border-radius:50%;background:#ec0050;animation:liveBootPulse .9s ease-in-out infinite}
+    .live-boot i:nth-child(2){animation-delay:.14s}.live-boot i:nth-child(3){animation-delay:.28s}
+    html.live-ready .live-boot{opacity:0;visibility:hidden;pointer-events:none}
+    @keyframes liveBootPulse{0%,100%{opacity:.22;transform:scale(.72)}50%{opacity:1;transform:scale(1.15)}}
+    @media(prefers-reduced-motion:reduce){.live-boot,.live-boot i{animation:none;transition:none}}
+  </style>
+  <link rel="stylesheet" href="live-experience-20260830q.css?v=20260830b" />
   <link rel="stylesheet" href="live-ending-20260830s.css" />
   <script src="site-language.js?v=20260830a"></script>
 </head>
 <body>
+  <div class="live-boot" id="liveBoot" role="status" aria-live="polite">
+    <b>CONNECTING LIVE SIGNAL</b>
+    <span aria-hidden="true"><i></i><i></i><i></i></span>
+  </div>
   <main class="broadcast" id="broadcast">
     <div class="stage-art" aria-hidden="true"></div>
     <div class="stage-shade" aria-hidden="true"></div>
@@ -236,6 +252,6 @@
     <div class="audio-status" id="audioStatus" role="status" aria-live="polite"></div>
   </main>
   <script src="live-state-20260830s.js"></script>
-  <script src="live-experience-20260830q.js"></script>
+  <script src="live-experience-20260830q.js?v=20260830b"></script>
 </body>
 </html>

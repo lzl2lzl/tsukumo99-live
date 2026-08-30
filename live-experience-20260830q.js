@@ -1845,4 +1845,11 @@
     achievementGate.hidden = !achievementPending;
     roundGate.hidden = achievementPending;
   }
+  window.requestAnimationFrame(function () {
+    window.requestAnimationFrame(function () {
+      document.documentElement.classList.add("live-ready");
+      var liveBoot = document.getElementById("liveBoot");
+      if (liveBoot) window.setTimeout(function () { liveBoot.remove(); }, 360);
+    });
+  });
 })();

@@ -260,7 +260,7 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
   .hero-title{font-size:clamp(4.4rem,30vw,8rem);}
   .hero-tourline{font-size:11px;margin-top:14px;}
   .hero-tagline{font-size:clamp(1rem,4.4vw,1.35rem);}
-  .hero-more{display:none;}
+  .hero-more{display:inline-flex;min-height:44px;margin-top:.65rem;padding:.45rem 0;}
   .hero-flow{opacity:calc(var(--hero-stage-opacity,1) * .45);}
   .hero-typefield{opacity:.045;}
   .lang{display:none;}
@@ -279,7 +279,7 @@ main>.sec:first-child{border-top:0;padding-top:clamp(4.4rem,11vh,7.5rem);}
 .menu-lang button.on::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--hot);}
 </style>
 <link rel="stylesheet" href="live-entry.css" />
-<link rel="stylesheet" href="site-chrome.css" />
+<link rel="stylesheet" href="site-chrome.css?v=20260830b" />
 <script src="site-language.js?v=20260830a"></script>
 </head>
 <body>
@@ -597,6 +597,6 @@ cheer.addEventListener("pointerup",function(){if(drag&&!drag.moved)wave();drag=n
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12,rootMargin:"0px 0px -8% 0px"});
 document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
 </script>
-<script src="page-transition.js?v=20260830-cheer-audio"></script>
+<script src="page-transition.js?v=20260830b"></script>
 </body>
 </html>

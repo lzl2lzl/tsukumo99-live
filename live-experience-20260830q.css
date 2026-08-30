@@ -828,9 +828,9 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--paper);outline-offs
 .result-gate p b{font-family:var(--mono);color:var(--paper)}
 .result-gate h1 b{color:var(--pink)}
 .rule-shell{position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto;width:min(760px,92vw);max-height:min(86dvh,560px);padding:clamp(1rem,2.4vw,1.8rem);border-top:1px solid rgba(255,134,189,.5);border-bottom:1px solid rgba(255,134,189,.28);background:linear-gradient(135deg,rgba(58,0,20,.92),rgba(18,0,5,.88));box-shadow:0 24px 5rem rgba(18,0,5,.58);text-align:left}
-.rule-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding-bottom:.75rem;border-bottom:1px solid rgba(255,134,189,.26)}
+.rule-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding-bottom:.75rem;border-bottom:1px solid rgba(255,134,189,.26)}
 .rule-head h1{margin:0;font-family:var(--display);font-size:clamp(2.7rem,6vw,4.2rem);line-height:.9;letter-spacing:-.02em}
-.rule-head output{font:700 .62rem var(--mono);letter-spacing:.12em;color:var(--pink)}
+.rule-head output{display:block;padding-bottom:.06em;font:700 .62rem/1 var(--mono);letter-spacing:.12em;color:var(--pink);white-space:nowrap}
 .rule-pages{position:relative;min-height:15.5rem;overflow:hidden}
 .rule-page{display:none;align-content:center;gap:.8rem;height:100%;padding:1rem 0}
 .rule-page.is-active{display:grid}

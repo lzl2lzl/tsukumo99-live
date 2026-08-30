@@ -19,6 +19,18 @@
   }
   var curtain=makeCurtain();
   document.body.prepend(curtain);
+
+  (function initMenuLiveEntry(){
+    var menu=document.getElementById("menu");
+    if(!menu||menu.querySelector(".menu-live-entry"))return;
+    var labels={cn:"进入正在进行的 LIVE",jp:"開催中のLIVEへ",en:"Enter the live show"};
+    var link=document.createElement("a");
+    link.className="menu-live-entry";
+    link.href="live-experience.html";
+    link.setAttribute("aria-label",labels[window.DiZLang]||labels.cn);
+    link.innerHTML="<span>LIVE</span><i aria-hidden=\"true\"></i>";
+    menu.insertBefore(link,menu.firstChild);
+  })();
   if(arrival){
     curtain.style.transform="translate3d(0,-8%,0)";
     requestAnimationFrame(function(){requestAnimationFrame(function(){curtain.style.transform="";curtain.classList.add("is-revealing");});});
