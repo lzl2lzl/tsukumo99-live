@@ -41,6 +41,19 @@
     window.setTimeout(function(){loader.classList.add("is-leaving");window.setTimeout(function(){loader.remove();},reduce?170:420);},reduce?80:800);
   }
 
+  // Warm the seven animation frames before the first manual tap. Returning
+  // visitors may keep the discovery flag after the image cache is evicted;
+  // without this, a slow mobile connection can spend the whole first wave
+  // downloading frames and make the button appear unresponsive.
+  (function preloadCheerFrames(){
+    if(!document.getElementById("cheer"))return;
+    for(var frameIndex=0;frameIndex<7;frameIndex+=1){
+      var frameImage=new Image();
+      frameImage.decoding="async";
+      frameImage.src="assets/cheer-frame-"+frameIndex+".webp";
+    }
+  })();
+
   // Utsugi's floating cheer button is shared by every non-LIVE page. Each
   // deliberate tap advances through the three supplied sound layers; a pause
   // resets the sequence so the next interaction starts from the core again.
@@ -85,14 +98,16 @@
 
       var audio=ensureSounds()[soundStep];
       if(activeSound&&activeSound!==audio){
-        activeSound.pause();
-        activeSound.currentTime=0;
+        try{activeSound.pause();}catch(error){}
+        try{if(activeSound.readyState>0)activeSound.currentTime=0;}catch(error){}
       }
-      audio.pause();
-      audio.currentTime=0;
+      try{audio.pause();}catch(error){}
+      try{if(audio.readyState>0)audio.currentTime=0;}catch(error){}
       activeSound=audio;
-      var promise=audio.play();
-      if(promise&&typeof promise.catch==="function")promise.catch(function(){});
+      try{
+        var promise=audio.play();
+        if(promise&&typeof promise.catch==="function")promise.catch(function(){});
+      }catch(error){}
 
       cheer.dataset.soundLayer=String(soundStep+1);
       soundStep=(soundStep+1)%sources.length;
@@ -104,8 +119,12 @@
     }
 
     window.wave=function(){
-      playCheerSound();
-      return originalWave.apply(this,arguments);
+      // The visual response must never depend on mobile audio support. Some
+      // browsers throw while a WAV element is still loading, so animate first
+      // and isolate every audio failure from the interaction.
+      var result=originalWave.apply(this,arguments);
+      try{playCheerSound();}catch(error){}
+      return result;
     };
 
     // Native buttons emit a detail=0 click for keyboard and assistive-tech
@@ -126,10 +145,12 @@
   // unreliable on phones. Capture-phase listeners supersede those handlers.
   (function initCheerPointerGesture(){
     var cheer=document.getElementById("cheer");
-    if(!cheer||cheer.dataset.pointerGesture==="2")return;
-    cheer.dataset.pointerGesture="2";
+    if(!cheer||cheer.dataset.pointerGesture==="3")return;
+    cheer.dataset.pointerGesture="3";
     var gesture=null;
     var tapSlop=10;
+    var lastPointerWaveAt=0;
+    var suppressClickUntil=0;
 
     function finishPointer(pointerId){
       try{if(cheer.hasPointerCapture(pointerId))cheer.releasePointerCapture(pointerId);}catch(error){}
@@ -172,7 +193,12 @@
       var shouldWave=!gesture.moved;
       finishPointer(event.pointerId);
       event.stopImmediatePropagation();
-      if(shouldWave&&typeof window.wave==="function")window.wave();
+      if(shouldWave&&typeof window.wave==="function"){
+        lastPointerWaveAt=Date.now();
+        window.wave();
+      }else{
+        suppressClickUntil=Date.now()+700;
+      }
     },true);
 
     cheer.addEventListener("pointercancel",function(event){
@@ -183,6 +209,17 @@
     cheer.addEventListener("lostpointercapture",function(event){
       if(gesture&&gesture.pointerId===event.pointerId)gesture=null;
     });
+
+    // A semantic click is the most reliable activation signal across Android,
+    // iOS and in-app browsers. Use it as a fallback when a browser drops the
+    // pointerup event, while de-duplicating the normal pointerup + click pair.
+    cheer.addEventListener("click",function(event){
+      if(event.detail===0)return;
+      var now=Date.now();
+      if(now<suppressClickUntil){event.preventDefault();return;}
+      if(now-lastPointerWaveAt<700)return;
+      if(typeof window.wave==="function")window.wave();
+    },true);
   })();
 
   // Make the floating helper discoverable with the same frame animation used
