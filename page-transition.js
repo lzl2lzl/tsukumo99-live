@@ -121,6 +121,70 @@
     });
   })();
 
+  // Own the helper's pointer gesture in one shared implementation. The older
+  // page-local handlers treated a 1px touch wobble as a drag, which made taps
+  // unreliable on phones. Capture-phase listeners supersede those handlers.
+  (function initCheerPointerGesture(){
+    var cheer=document.getElementById("cheer");
+    if(!cheer||cheer.dataset.pointerGesture==="2")return;
+    cheer.dataset.pointerGesture="2";
+    var gesture=null;
+    var tapSlop=10;
+
+    function finishPointer(pointerId){
+      try{if(cheer.hasPointerCapture(pointerId))cheer.releasePointerCapture(pointerId);}catch(error){}
+      gesture=null;
+    }
+
+    cheer.addEventListener("pointerdown",function(event){
+      if(event.pointerType==="mouse"&&event.button!==0)return;
+      var rect=cheer.getBoundingClientRect();
+      gesture={
+        pointerId:event.pointerId,
+        startX:event.clientX,
+        startY:event.clientY,
+        offsetX:event.clientX-rect.left,
+        offsetY:event.clientY-rect.top,
+        moved:false
+      };
+      try{cheer.setPointerCapture(event.pointerId);}catch(error){}
+      event.stopImmediatePropagation();
+    },true);
+
+    cheer.addEventListener("pointermove",function(event){
+      if(!gesture||gesture.pointerId!==event.pointerId)return;
+      var distance=Math.hypot(event.clientX-gesture.startX,event.clientY-gesture.startY);
+      if(!gesture.moved&&distance>=tapSlop)gesture.moved=true;
+      if(gesture.moved){
+        var width=cheer.offsetWidth,height=cheer.offsetHeight;
+        var x=Math.max(4,Math.min(innerWidth-width-4,event.clientX-gesture.offsetX));
+        var y=Math.max(4,Math.min(innerHeight-height-4,event.clientY-gesture.offsetY));
+        cheer.style.left=x+"px";
+        cheer.style.top=y+"px";
+        cheer.style.right="auto";
+        cheer.style.bottom="auto";
+      }
+      event.stopImmediatePropagation();
+    },true);
+
+    cheer.addEventListener("pointerup",function(event){
+      if(!gesture||gesture.pointerId!==event.pointerId)return;
+      var shouldWave=!gesture.moved;
+      finishPointer(event.pointerId);
+      event.stopImmediatePropagation();
+      if(shouldWave&&typeof window.wave==="function")window.wave();
+    },true);
+
+    cheer.addEventListener("pointercancel",function(event){
+      if(!gesture||gesture.pointerId!==event.pointerId)return;
+      finishPointer(event.pointerId);
+      event.stopImmediatePropagation();
+    },true);
+    cheer.addEventListener("lostpointercapture",function(event){
+      if(gesture&&gesture.pointerId===event.pointerId)gesture=null;
+    });
+  })();
+
   // Make the floating helper discoverable with the same frame animation used
   // by a real tap. Keep the cue silent so mobile autoplay rules never block it.
   (function initCheerDiscovery(){
